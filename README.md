@@ -25,24 +25,21 @@
 
 ## 🚀 About Me
 
-```javascript
-const akm = {
-    name: "Akm Tasdikul Islam",
-    role: "Full-Stack MERN Developer & AI Automation Expert",
-    location: "Dhaka, Bangladesh 🇧🇩",
-    education: "B.Sc. in CSE @ Bangladesh University of Professionals",
-    workingOn: "Building scalable web applications & AI workflows",
-    learning: ["Cloud Technologies", "Advanced Algorithms", "DevOps"],
-    hobbies: ["Programming", "Problem Solving", "Building Cool Stuff"],
-    funFact: "I turn coffee into code ☕ → 💻"
-};
-```
+<img align="right" alt="Coding" width="400" src="https://media.giphy.com/media/Y4ak9Ki2GZCbJxAnJD/giphy.gif">
 
-<div align="center">
-  
-### 💻 **"Code is poetry written in logic"**
+### Hey! I'm Akm 👨‍💻
 
-</div>
+I'm a **Full-Stack MERN Developer** and **AI Automation Expert** from Bangladesh, passionate about transforming ideas into powerful web applications. With over **2 years of hands-on experience**, I specialize in building scalable, production-ready solutions that solve real-world problems.
+
+🎓 Currently pursuing **B.Sc. in Computer Science & Engineering** at **Bangladesh University of Professionals**
+
+💼 I build everything from modern **e-commerce platforms** to **complex automation workflows** using **n8n** and AI technologies
+
+🌟 My code philosophy: **Clean, efficient, and scalable** — Every line should serve a purpose
+
+⚡ Fun fact: I achieved **GPA 5.00** in both SSC & HSC, and now I'm applying that same dedication to craft exceptional digital experiences
+
+<br clear="right"/>
 
 ---
 
@@ -122,85 +119,82 @@ const akm = {
 
 ---
 
-## 💼 What I Do
+## 💼 What I Build
+
+<table>
+<tr>
+<td width="50%">
+
+### 🌐 Web Applications
+Building full-stack applications with **React**, **Node.js**, and **MongoDB** that are fast, responsive, and user-friendly. From concept to deployment, I handle the entire development lifecycle.
+
+</td>
+<td width="50%">
+
+### 🤖 AI Automation
+Expert in **n8n** workflows — creating intelligent automation systems that integrate AI capabilities, streamline business processes, and connect multiple platforms seamlessly.
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+### 🎨 Modern UIs
+Crafting beautiful, responsive interfaces with **Next.js**, **Tailwind CSS**, and modern design principles. Every pixel matters, every interaction counts.
+
+</td>
+<td width="50%">
+
+### ⚡ Backend Systems
+Developing robust RESTful APIs, authentication systems, and database architectures that scale. Performance and security are non-negotiable.
+
+</td>
+</tr>
+</table>
+
+---
+
+## 🎯 What I'm Up To
 
 <div align="center">
 
-```mermaid
-mindmap
-  root((Akm Tasdikul))
-    Full Stack Development
-      Frontend
-        React.js
-        Next.js
-        Tailwind CSS
-      Backend
-        Node.js
-        Express.js
-        RESTful APIs
-    Automation
-      n8n Workflows
-      AI Integration
-      Process Automation
-    Database Design
-      MongoDB
-      MySQL
-      Firebase
-    Solutions
-      E-commerce
-      Web Apps
-      Custom Tools
-```
+<img src="https://media.giphy.com/media/SWoSkN6DxTszqIKEqv/giphy.gif" width="300" alt="Developer">
+
+**🔨 Building** production-ready web apps with cutting-edge tech  
+**📚 Exploring** cloud technologies, system design, and advanced algorithms  
+**🚀 Contributing** to open-source and collaborating on exciting projects  
+**💡 Innovating** with AI integrations and automation solutions  
 
 </div>
 
 ---
 
-## 🎯 Current Focus
+## 🏆 Milestones & Recognition
 
 <div align="center">
 
-| 🔭 Currently Working On | 🌱 Learning | 💬 Ask Me About |
-|:---:|:---:|:---:|
-| Building AI-powered web apps | Cloud Technologies & DevOps | MERN Stack, n8n Automation |
-| Scalable backend systems | Advanced algorithms | Full-Stack Development |
-| Automation workflows | System Design | API Development & Integration |
-
-</div>
-
----
-
-## 🏆 Achievements
-
-<div align="center">
-
-```yaml
-Education:
-  - 🎓 B.Sc. in Computer Science & Engineering
-  - 📚 GPA 5.00 in both SSC & HSC
-  - 🏅 General Category Scholarship in SSC
-  
-Experience:
-  - 💻 2+ years in Full-Stack Development
-  - 🤖 n8n Automation Expert
-  - 🌐 Built 10+ production-ready web applications
-  
-Skills:
-  - ⚡ MERN Stack Specialist
-  - 🔥 AI Workflow Integration
-  - 🎨 Modern UI/UX Implementation
-```
-
-</div>
-
----
-
-## 📈 Coding Activity
-
-<div align="center">
-  
-<!--START_SECTION:waka-->
-<!--END_SECTION:waka-->
+<table>
+<tr>
+<td align="center" width="33%">
+<img src="https://media.giphy.com/media/l0HlQXlQ3nHyLMvte/giphy.gif" width="80"><br>
+<b>Academic Excellence</b><br>
+🎓 GPA 5.00 in SSC & HSC<br>
+🏅 Scholarship Recipient
+</td>
+<td align="center" width="33%">
+<img src="https://media.giphy.com/media/LmNwrBhejkK9EFP504/giphy.gif" width="80"><br>
+<b>Development Experience</b><br>
+💻 2+ Years in MERN Stack<br>
+🚀 10+ Projects Delivered
+</td>
+<td align="center" width="33%">
+<img src="https://media.giphy.com/media/KzKgTJEaJNuhauhGEo/giphy.gif" width="80"><br>
+<b>Specialized Skills</b><br>
+🤖 n8n Automation Expert<br>
+⚡ Full-Stack Specialist
+</td>
+</tr>
+</table>
 
 </div>
 
@@ -222,11 +216,13 @@ Skills:
 
 ---
 
-## 💡 Random Dev Quote
+## 💡 Dev Wisdom
 
 <div align="center">
   
-![](https://quotes-github-readme.vercel.app/api?type=horizontal&theme=tokyonight)
+<img src="https://quotes-github-readme.vercel.app/api?type=horizontal&theme=tokyonight" alt="Random Dev Quote"/>
+
+**💭 "First, solve the problem. Then, write the code." — John Johnson**
 
 </div>
 
