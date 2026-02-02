@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 
 interface TechItem {
@@ -9,9 +10,10 @@ interface TechMarqueeProps {
   items: TechItem[];
   direction?: "left" | "right";
   speed?: "slow" | "normal" | "fast";
+  className?: string;
 }
 
-const TechMarquee = ({ items, direction = "left", speed = "normal" }: TechMarqueeProps) => {
+const TechMarquee = ({ items, direction = "left", speed = "normal", className }: TechMarqueeProps) => {
   const speedClass = {
     slow: "animate-marquee-slow",
     normal: "animate-marquee",
@@ -21,7 +23,7 @@ const TechMarquee = ({ items, direction = "left", speed = "normal" }: TechMarque
   const duplicatedItems = [...items, ...items];
 
   return (
-    <div className="overflow-hidden py-4">
+    <div className={cn("overflow-hidden py-4", className)}>
       <motion.div
         className={`flex gap-8 ${speedClass[speed]} ${direction === "right" ? "[animation-direction:reverse]" : ""}`}
         style={{ width: "max-content" }}

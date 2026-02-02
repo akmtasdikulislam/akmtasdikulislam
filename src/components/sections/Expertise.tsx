@@ -57,9 +57,9 @@ const Expertise = () => {
         />
 
         {/* Tech Marquee - Dual Rows */}
-        <div className="mb-12 -mx-4 md:mx-0 space-y-4">
-          <TechMarquee items={row1} direction="left" speed="normal" />
-          <TechMarquee items={row2} direction="right" speed="slow" />
+        <div className="mb-12 -mx-4 md:mx-0 space-y-0">
+          <TechMarquee items={row1} direction="left" speed="normal" className="py-2" />
+          <TechMarquee items={row2} direction="right" speed="slow" className="py-2" />
         </div>
 
         {/* Programming Languages Section */}
