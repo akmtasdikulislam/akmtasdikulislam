@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { useCodingProfilesContent, useContactContent } from '@/hooks/useHomepageContent';
 import { supabase } from '@/integrations/supabase/client';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Loader2, Plus, Save, Trash2, Upload } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
@@ -87,17 +87,107 @@ const ContactEditor = () => {
         setProfiles(profiles.map(p => p.id === id ? { ...p, icon_url: publicUrl } : p));
     };
 
-    if (contactLoading || profilesLoading) return <div className="flex justify-center p-8"><Loader2 className="animate-spin" /></div>;
+    const { data: messagesData, isLoading: messagesLoading } = useQuery({
+        queryKey: ['contact_messages'],
+        queryFn: async () => {
+            const { data, error } = await supabase
+                .from('contact_messages')
+                .select('*')
+                .order('created_at', { ascending: false });
+            if (error) throw error;
+            return data;
+        }
+    });
+
+    const updateMessageMutation = useMutation({
+        mutationFn: async ({ id, is_read }: { id: string, is_read: boolean }) => {
+            await supabase.from('contact_messages').update({ is_read }).eq('id', id);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['contact_messages'] });
+        }
+    });
+
+    const deleteMessageMutation = useMutation({
+        mutationFn: async (id: string) => {
+            await supabase.from('contact_messages').delete().eq('id', id);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['contact_messages'] });
+            toast({ title: 'Message deleted' });
+        }
+    });
+
+    if (contactLoading || profilesLoading || messagesLoading) return <div className="flex justify-center p-8"><Loader2 className="animate-spin" /></div>;
+
+    const unreadCount = messagesData?.filter(m => !m.is_read).length || 0;
 
     return (
         <div className="space-y-6">
             <h2 className="text-3xl font-bold tracking-tight">Contact & Profiles</h2>
 
-            <Tabs defaultValue="info">
+            <Tabs defaultValue="messages">
                 <TabsList>
+                    <TabsTrigger value="messages" className="relative">
+                        Messages
+                        {unreadCount > 0 && (
+                            <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary text-[10px] text-primary-foreground rounded-full flex items-center justify-center animate-pulse">
+                                {unreadCount}
+                            </span>
+                        )}
+                    </TabsTrigger>
                     <TabsTrigger value="info">Contact Info</TabsTrigger>
                     <TabsTrigger value="profiles">Coding Profiles</TabsTrigger>
                 </TabsList>
+
+                <TabsContent value="messages" className="space-y-4">
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Inbound Messages</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            {messagesData?.length === 0 ? (
+                                <p className="text-center text-muted-foreground py-8">No messages yet.</p>
+                            ) : (
+                                <div className="space-y-4">
+                                    {messagesData?.map((msg) => (
+                                        <div
+                                            key={msg.id}
+                                            className={`p-4 rounded-lg border transition-all ${msg.is_read ? 'bg-muted/30 opacity-70' : 'bg-card border-primary/20 shadow-sm'}`}
+                                        >
+                                            <div className="flex justify-between items-start mb-2">
+                                                <div>
+                                                    <h3 className="font-semibold text-lg">{msg.subject}</h3>
+                                                    <p className="text-sm text-muted-foreground">From: <span className="text-foreground">{msg.name}</span> ({msg.email})</p>
+                                                    <p className="text-xs text-muted-foreground">{new Date(msg.created_at).toLocaleString()}</p>
+                                                </div>
+                                                <div className="flex gap-2">
+                                                    <Button
+                                                        size="sm"
+                                                        variant="outline"
+                                                        onClick={() => updateMessageMutation.mutate({ id: msg.id, is_read: !msg.is_read })}
+                                                    >
+                                                        {msg.is_read ? 'Mark Unread' : 'Mark Read'}
+                                                    </Button>
+                                                    <Button
+                                                        size="icon"
+                                                        variant="destructive"
+                                                        onClick={() => deleteMessageMutation.mutate(msg.id)}
+                                                    >
+                                                        <Trash2 className="h-4 w-4" />
+                                                    </Button>
+                                                </div>
+                                            </div>
+                                            <div className="mt-4 text-sm whitespace-pre-wrap text-foreground/90 bg-muted/50 p-3 rounded border">
+                                                {msg.message}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </CardContent>
+                    </Card>
+                </TabsContent>
 
                 <TabsContent value="info">
                     <Card>

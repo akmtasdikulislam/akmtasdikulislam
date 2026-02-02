@@ -4,11 +4,13 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useCodingProfilesContent, useContactContent } from "@/hooks/useHomepageContent";
+import { supabase } from "@/integrations/supabase/client";
 import { motion } from "framer-motion";
 import {
+  Loader2,
   Mail,
   MapPin,
-  Send,
+  Send
 } from "lucide-react";
 import { useState } from "react";
 
@@ -24,13 +26,37 @@ const Contact = () => {
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Message sent!",
-      description: "Thank you for reaching out. I'll get back to you soon!",
-    });
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    setIsSubmitting(true);
+
+    try {
+      const { error } = await supabase.from('contact_messages').insert([{
+        name: formData.name,
+        email: formData.email,
+        subject: formData.subject,
+        message: formData.message
+      }]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Message sent!",
+        description: "Thank you for reaching out. I'll get back to you soon!",
+      });
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    } catch (error: any) {
+      console.error("Error sending message:", error);
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
@@ -130,9 +156,19 @@ const Contact = () => {
                 />
               </div>
 
-              <Button type="submit" size="lg" variant="glow" className="w-full min-h-[48px]">
-                <Send className="w-4 h-4" />
-                Send Message
+              <Button
+                type="submit"
+                size="lg"
+                variant="glow"
+                className="w-full min-h-[48px]"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Send className="w-4 h-4" />
+                )}
+                {isSubmitting ? "Sending..." : "Send Message"}
               </Button>
             </form>
           </motion.div>
