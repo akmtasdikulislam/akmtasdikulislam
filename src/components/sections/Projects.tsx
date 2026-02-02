@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import SectionHeading from "@/components/ui/SectionHeading";
+import { useSectionHeading } from "@/hooks/useHomepageContent";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
@@ -49,14 +50,15 @@ const Projects = () => {
       if (error && error.code !== 'PGRST116') {
         console.error('Error fetching section visibility:', error);
       }
-      return data ? data.is_visible : true;
+      return data ? (data as any).is_visible : true;
     },
-    initialData: true,
-    staleTime: 0,
   });
 
-  if (sectionVisible === false) return null;
+  const { data: heading, isLoading: headingLoading } = useSectionHeading('projects');
 
+  if (loading || headingLoading) {
+    return null;
+  }
   return (
     <section id="projects" className="py-24 relative overflow-hidden">
       {/* Background */}
@@ -65,10 +67,10 @@ const Projects = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         <SectionHeading
-          badge="Portfolio"
-          title="Featured"
-          highlight="Projects"
-          description="A showcase of my recent work and side projects"
+          badge={heading?.section_badge || "Portfolio"}
+          title={heading?.section_title || "Featured"}
+          highlight={heading?.section_highlight || "Projects"}
+          description={heading?.section_description || "Check out some of my recent work and side projects"}
         />
 
         {/* Projects grid */}

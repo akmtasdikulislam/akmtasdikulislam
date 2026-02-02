@@ -1,3 +1,4 @@
+import SectionHeadingEditor from '@/components/admin/SectionHeadingEditor';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -23,7 +24,11 @@ const ContactEditor = () => {
         location: '',
         location_url: '',
         available_for_work: true,
-        available_text: 'Available for Work'
+        available_text: 'Available for Work',
+        linkedin_url: '',
+        upwork_url: '',
+        linkedin_label: 'Connect on LinkedIn',
+        upwork_label: 'Hire me on Upwork'
     });
     const [profiles, setProfiles] = useState<any[]>([]);
     const [freelanceProfiles, setFreelanceProfiles] = useState<any[]>([]);
@@ -175,6 +180,7 @@ const ContactEditor = () => {
     return (
         <div className="space-y-6">
             <h2 className="text-3xl font-bold tracking-tight">Contact & Profiles</h2>
+            <SectionHeadingEditor sectionKey="contact" />
 
             <Tabs defaultValue="messages">
                 <TabsList>
@@ -256,6 +262,42 @@ const ContactEditor = () => {
                                 <div className="space-y-1">
                                     <Label>Location Maps Link</Label>
                                     <Input value={contact.location_url || ''} onChange={(e) => setContact({ ...contact, location_url: e.target.value })} />
+                                </div>
+                            </div>
+                            <div className="grid md:grid-cols-2 gap-4">
+                                <div className="space-y-1">
+                                    <Label>Upwork Profile URL</Label>
+                                    <Input 
+                                      value={contact.upwork_url || ''} 
+                                      onChange={(e) => setContact({ ...contact, upwork_url: e.target.value })} 
+                                      placeholder="https://www.upwork.com/freelancers/..."
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <Label>LinkedIn Profile URL</Label>
+                                    <Input 
+                                      value={contact.linkedin_url || ''} 
+                                      onChange={(e) => setContact({ ...contact, linkedin_url: e.target.value })} 
+                                      placeholder="https://www.linkedin.com/in/..."
+                                    />
+                                </div>
+                            </div>
+                            <div className="grid md:grid-cols-2 gap-4">
+                                <div className="space-y-1">
+                                    <Label>Upwork Button Text</Label>
+                                    <Input 
+                                      value={contact.upwork_label || ''} 
+                                      onChange={(e) => setContact({ ...contact, upwork_label: e.target.value })} 
+                                      placeholder="Hire me on Upwork"
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <Label>LinkedIn Button Text</Label>
+                                    <Input 
+                                      value={contact.linkedin_label || ''} 
+                                      onChange={(e) => setContact({ ...contact, linkedin_label: e.target.value })} 
+                                      placeholder="Connect on LinkedIn"
+                                    />
                                 </div>
                             </div>
                             <div className="flex items-center gap-4 pt-4 border-t">

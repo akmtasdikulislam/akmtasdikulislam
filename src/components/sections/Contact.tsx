@@ -3,14 +3,14 @@ import { Input } from "@/components/ui/input";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { useCodingProfilesContent, useContactContent, useFreelanceProfilesContent } from "@/hooks/useHomepageContent";
+import { useCodingProfilesContent, useContactContent, useFreelanceProfilesContent, useSectionHeading } from "@/hooks/useHomepageContent";
 import { supabase } from "@/integrations/supabase/client";
 import { motion } from "framer-motion";
 import {
-  Loader2,
-  Mail,
-  MapPin,
-  Send
+    Loader2,
+    Mail,
+    MapPin,
+    Send
 } from "lucide-react";
 import { useState } from "react";
 
@@ -19,6 +19,9 @@ const Contact = () => {
   const { data: contact } = useContactContent();
   const { data: profiles } = useCodingProfilesContent();
   const { data: freelanceProfiles } = useFreelanceProfilesContent();
+  const { data: heading, isLoading: headingLoading } = useSectionHeading('contact');
+
+
 
   const [formData, setFormData] = useState({
     name: "",
@@ -69,6 +72,8 @@ const Contact = () => {
   const displayProfiles = profiles || [];
   const displayFreelance = freelanceProfiles || [];
 
+  if (headingLoading) return null;
+
   return (
     <section id="contact" className="py-24 relative overflow-hidden bg-secondary/10">
       {/* Background */}
@@ -77,10 +82,10 @@ const Contact = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         <SectionHeading
-          badge="Contact"
-          title="Get In"
-          highlight="Touch"
-          description="Have a project in mind? Let's work together!"
+          badge={heading?.section_badge || "Contact"}
+          title={heading?.section_title || "Get In"}
+          highlight={heading?.section_highlight || "Touch"}
+          description={heading?.section_description || "Have a project in mind? Let's discuss how we can work together"}
         />
 
         <div className="grid lg:grid-cols-2 gap-12">
@@ -237,12 +242,52 @@ const Contact = () => {
               </motion.div>
             )}
 
+            {/* Hire buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="flex flex-wrap gap-4"
+            >
+              {contact?.upwork_url && (
+                <a 
+                  href={contact.upwork_url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-8 h-11 rounded-md text-sm font-medium bg-[#14a800] hover:bg-[#14a800]/90 text-white glow-green transition-all active:scale-[0.98]"
+                >
+                  <img 
+                    src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/upwork.svg" 
+                    alt="Upwork" 
+                    className="w-4 h-4 invert"
+                  />
+                  {contact.upwork_label || "Hire me on Upwork"}
+                </a>
+              )}
+              {contact?.linkedin_url && (
+                <a 
+                  href={contact.linkedin_url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-8 h-11 rounded-md text-sm font-medium bg-[#0077b5] hover:bg-[#0077b5]/90 text-white transition-all active:scale-[0.98]"
+                >
+                  <img 
+                    src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/linkedin.svg" 
+                    alt="LinkedIn" 
+                    className="w-4 h-4 invert"
+                  />
+                  {contact.linkedin_label || "Connect on LinkedIn"}
+                </a>
+              )}
+            </motion.div>
+
             {/* Profiles */}
             <div className="space-y-6">
               {displayProfiles.length > 0 && (
                 <div>
                   <h4 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-4">
-                    Online Profiles
+                    Coding Profiles
                   </h4>
                   <div className="flex flex-wrap gap-3">
                     {displayProfiles.map((profile: any) => (
@@ -271,7 +316,7 @@ const Contact = () => {
               {displayFreelance.length > 0 && (
                 <div>
                   <h4 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-4">
-                    Freelance Platforms
+                    Freelance/Work Profiles
                   </h4>
                   <div className="flex flex-wrap gap-3">
                     {displayFreelance.map((profile: any) => (

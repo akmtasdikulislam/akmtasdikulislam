@@ -1,6 +1,6 @@
 import { useAllHomepageContent } from '@/hooks/useHomepageContent';
 import { motion } from 'framer-motion';
-import { BookOpen, Edit, Home, Layout, MessageSquare, Settings } from 'lucide-react';
+import { BookOpen, Edit, Home, Layout, MessageSquare, Settings, Target } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const HomepageEditor = () => {
@@ -46,6 +46,14 @@ const HomepageEditor = () => {
             path: '/admin/homepage/settings',
             color: 'text-pink-500',
             bg: 'bg-pink-500/10',
+        },
+        {
+            title: 'Why Choose Me',
+            description: 'Manage reasons, stats, and section headings',
+            icon: Target,
+            path: '/admin/homepage/why-choose-me',
+            color: 'text-yellow-500',
+            bg: 'bg-yellow-500/10',
         },
     ];
 

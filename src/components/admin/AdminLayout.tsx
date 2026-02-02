@@ -3,25 +3,26 @@ import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
-  Award,
-  Briefcase,
-  ChevronDown,
-  ChevronRight,
-  Code,
-  FileText,
-  FolderKanban,
-  Home,
-  LayoutDashboard,
-  LogOut,
-  Menu,
-  MessageSquare, // For Services or Contact
-  Phone,
-  Quote,
-  Settings,
-  Terminal,
-  User,
-  X,
-  Zap
+    Award,
+    Briefcase,
+    ChevronDown,
+    ChevronRight,
+    Code,
+    FileText,
+    FolderKanban,
+    Home,
+    LayoutDashboard,
+    LogOut,
+    Menu,
+    MessageSquare, // For Services or Contact
+    Phone,
+    Quote,
+    Settings,
+    Target,
+    Terminal,
+    User,
+    X,
+    Zap
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
@@ -45,35 +46,38 @@ const navSections: NavSection[] = [
     ],
   },
   {
-    title: 'Homepage Content',
+    title: 'Site Sections',
     items: [
-      { icon: LayoutDashboard, label: 'Overview', path: '/admin/homepage' },
-      { icon: Home, label: 'Hero Section', path: '/admin/homepage/hero' },
       { icon: LayoutDashboard, label: 'Navbar', path: '/admin/homepage/navbar' },
+      { icon: Home, label: 'Hero Section', path: '/admin/homepage/hero' },
       { icon: MessageSquare, label: 'About', path: '/admin/homepage/about' },
-
+      { icon: Target, label: 'Why Choose Me', path: '/admin/homepage/why-choose-me' },
       { icon: Code, label: 'Expertise', path: '/admin/homepage/expertise' },
       { icon: Zap, label: 'Services', path: '/admin/homepage/services' },
-      { icon: Quote, label: 'Testimonials', path: '/admin/homepage/testimonials' },
+      { icon: Quote, label: 'Testimonials', path: '/admin/testimonials' },
       { icon: Phone, label: 'Contact', path: '/admin/homepage/contact' },
       { icon: Terminal, label: 'Footer', path: '/admin/homepage/footer' },
-      { icon: Settings, label: 'Settings', path: '/admin/homepage/settings' },
     ],
   },
   {
-    title: 'Content Management',
+    title: 'Collections',
     items: [
       { icon: FolderKanban, label: 'Projects', path: '/admin/projects' },
       { icon: FileText, label: 'Blog Posts', path: '/admin/blogs' },
     ],
   },
   {
-    title: 'Profile & Resume',
+    title: 'Professional',
     items: [
       { icon: User, label: 'Author Profile', path: '/admin/author' },
       { icon: Award, label: 'Certifications', path: '/admin/certifications' },
       { icon: Briefcase, label: 'Work History', path: '/admin/work-history' },
-      { icon: Quote, label: 'Testimonials', path: '/admin/testimonials' },
+    ],
+  },
+  {
+    title: 'System',
+    items: [
+      { icon: Settings, label: 'Site Settings', path: '/admin/homepage/settings' },
     ],
   },
 ];
@@ -84,7 +88,7 @@ const AdminLayout = () => {
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
-  const [expandedSections, setExpandedSections] = useState<string[]>(['Overview', 'Homepage Content', 'Content Management', 'Profile & Resume']);
+  const [expandedSections, setExpandedSections] = useState<string[]>(['Overview', 'Site Sections', 'Collections', 'Professional', 'System']);
 
   useEffect(() => {
     if (!loading && (!user || !isAdmin)) {
@@ -133,7 +137,7 @@ const AdminLayout = () => {
         )}
       </AnimatePresence>
 
-      <div className="min-h-screen bg-background flex">
+      <div className="h-screen bg-background flex overflow-hidden">
         {/* Mobile overlay */}
         {sidebarOpen && (
           <div
@@ -245,7 +249,7 @@ const AdminLayout = () => {
         </aside>
 
         {/* Main content */}
-        <main className="flex-1 flex flex-col min-h-screen min-w-0">
+        <main className="flex-1 flex flex-col h-full min-w-0 overflow-hidden">
           {/* Mobile header */}
           <header className="lg:hidden sticky top-0 z-30 bg-background border-b border-border p-4 flex items-center justify-between">
             <button

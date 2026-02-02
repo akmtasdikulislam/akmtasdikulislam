@@ -12,7 +12,29 @@ import {
     getServices,
     getTestimonials
 } from '@/integrations/supabase/homepageQueries';
+import { getSectionHeading } from '@/integrations/supabase/sectionHeadingQueries';
+import { getAllWhyChooseData } from '@/integrations/supabase/whyChooseMeQueries';
 import { useQuery } from '@tanstack/react-query';
+
+// ... (existing code)
+
+// Hook for Section Headings
+export const useSectionHeading = (sectionKey: string) => {
+    return useQuery({
+        queryKey: ['homepage', 'section_heading', sectionKey],
+        queryFn: () => getSectionHeading(sectionKey),
+        staleTime: 1000 * 60 * 5,
+    });
+};
+
+// Hook for Why Choose Me section
+export const useWhyChooseMeContent = () => {
+    return useQuery({
+        queryKey: ['homepage', 'why-choose-me'],
+        queryFn: getAllWhyChooseData,
+        staleTime: 1000 * 60 * 5,
+    });
+};
 
 // Hook for Hero section data
 export const useHeroContent = () => {
@@ -137,3 +159,6 @@ export const useFreelanceProfilesContent = () => {
         staleTime: 1000 * 60 * 5,
     });
 };
+
+// Hook for Why Choose Me section
+

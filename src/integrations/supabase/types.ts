@@ -242,6 +242,7 @@ export type Database = {
           display_order: number | null
           id: string
           is_featured: boolean | null
+          is_visible: boolean | null
           name: string
           position: string | null
           rating: number | null
@@ -255,6 +256,7 @@ export type Database = {
           display_order?: number | null
           id?: string
           is_featured?: boolean | null
+          is_visible?: boolean | null
           name: string
           position?: string | null
           rating?: number | null
@@ -268,6 +270,7 @@ export type Database = {
           display_order?: number | null
           id?: string
           is_featured?: boolean | null
+          is_visible?: boolean | null
           name?: string
           position?: string | null
           rating?: number | null
@@ -726,15 +729,25 @@ export type Database = {
           description: string
           contact_email: string
           copyright_text: string
+          quick_links: any
+          service_links: any
+          connect_title: string
+          connect_text: string
+          connect_button_text: string
           created_at: string
           updated_at: string
         }
         Insert: {
           id?: string
-          logo_text?: string
-          description?: string
-          contact_email?: string
-          copyright_text?: string
+          logo_text: string
+          description: string
+          contact_email: string
+          copyright_text: string
+          quick_links?: any
+          service_links?: any
+          connect_title?: string
+          connect_text?: string
+          connect_button_text?: string
           created_at?: string
           updated_at?: string
         }
@@ -744,6 +757,11 @@ export type Database = {
           description?: string
           contact_email?: string
           copyright_text?: string
+          quick_links?: any
+          service_links?: any
+          connect_title?: string
+          connect_text?: string
+          connect_button_text?: string
           created_at?: string
           updated_at?: string
         }
@@ -818,6 +836,39 @@ export type Database = {
         }
         Relationships: []
       }
+      homepage_section_headings: {
+        Row: {
+          id: string
+          section_key: string
+          section_badge: string | null
+          section_title: string | null
+          section_highlight: string | null
+          section_description: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          section_key: string
+          section_badge?: string | null
+          section_title?: string | null
+          section_highlight?: string | null
+          section_description?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          section_key?: string
+          section_badge?: string | null
+          section_title?: string | null
+          section_highlight?: string | null
+          section_description?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       homepage_services: {
         Row: {
             id: string
@@ -846,45 +897,6 @@ export type Database = {
             icon_name?: string | null
             features?: string[] | null
             display_order?: number | null
-            created_at?: string
-            updated_at?: string | null
-        }
-        Relationships: []
-      }
-      homepage_testimonials: {
-        Row: {
-            id: string
-            name: string
-            role: string | null
-            content: string
-            avatar_url: string | null
-            rating: number | null
-            display_order: number | null
-            is_visible: boolean | null
-            created_at: string
-            updated_at: string | null
-        }
-        Insert: {
-            id?: string
-            name: string
-            role?: string | null
-            content: string
-            avatar_url?: string | null
-            rating?: number | null
-            display_order?: number | null
-            is_visible?: boolean | null
-            created_at?: string
-            updated_at?: string | null
-        }
-        Update: {
-            id?: string
-            name?: string
-            role?: string | null
-            content?: string
-            avatar_url?: string | null
-            rating?: number | null
-            display_order?: number | null
-            is_visible?: boolean | null
             created_at?: string
             updated_at?: string | null
         }
@@ -928,6 +940,10 @@ export type Database = {
             location_url: string | null
             available_for_work: boolean | null
             available_text: string | null
+            linkedin_url: string | null
+            upwork_url: string | null
+            linkedin_label: string | null
+            upwork_label: string | null
             created_at: string
             updated_at: string | null
         }
@@ -938,6 +954,8 @@ export type Database = {
             location_url?: string | null
             available_for_work?: boolean | null
             available_text?: string | null
+            linkedin_url?: string | null
+            upwork_url?: string | null
             created_at?: string
             updated_at?: string | null
         }
@@ -948,8 +966,64 @@ export type Database = {
             location_url?: string | null
             available_for_work?: boolean | null
             available_text?: string | null
+            linkedin_url?: string | null
+            upwork_url?: string | null
             created_at?: string
             updated_at?: string | null
+        }
+        Relationships: []
+      }
+      homepage_footer_quick_links: {
+        Row: {
+          id: string
+          name: string
+          href: string
+          display_order: number | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          href: string
+          display_order?: number | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          href?: string
+          display_order?: number | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      homepage_footer_service_links: {
+        Row: {
+          id: string
+          name: string
+          href: string
+          display_order: number | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          href: string
+          display_order?: number | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          href?: string
+          display_order?: number | null
+          created_at?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -983,6 +1057,39 @@ export type Database = {
           og_image_url?: string | null
           created_at?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      analytics_visitor_logs: {
+        Row: {
+          id: string
+          page_path: string
+          referrer: string | null
+          user_agent: string | null
+          screen_resolution: string | null
+          load_time_ms: number | null
+          created_at: string
+          session_id: string | null
+        }
+        Insert: {
+          id?: string
+          page_path: string
+          referrer?: string | null
+          user_agent?: string | null
+          screen_resolution?: string | null
+          load_time_ms?: number | null
+          created_at?: string
+          session_id?: string | null
+        }
+        Update: {
+          id?: string
+          page_path?: string
+          referrer?: string | null
+          user_agent?: string | null
+          screen_resolution?: string | null
+          load_time_ms?: number | null
+          created_at?: string
+          session_id?: string | null
         }
         Relationships: []
       }

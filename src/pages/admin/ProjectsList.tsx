@@ -1,12 +1,13 @@
+import SectionHeadingEditor from '@/components/admin/SectionHeadingEditor';
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -47,7 +48,7 @@ const ProjectsList = () => {
         .single();
 
       if (error && error.code !== 'PGRST116') throw error;
-      return data ? data.is_visible : true;
+      return data ? (data as any).is_visible : true;
     },
     staleTime: 0, // Ensure fresh data
   });
@@ -161,6 +162,8 @@ const ProjectsList = () => {
           </Button>
         </div>
       </div>
+
+      <SectionHeadingEditor sectionKey="projects" />
 
       {/* Search */}
       <div className="relative">

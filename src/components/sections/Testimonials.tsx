@@ -1,19 +1,20 @@
 import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
 } from '@/components/ui/carousel';
 import SectionHeading from '@/components/ui/SectionHeading';
-import { useTestimonialsContent } from '@/hooks/useHomepageContent';
+import { useSectionHeading, useTestimonialsContent } from '@/hooks/useHomepageContent';
 import Autoplay from 'embla-carousel-autoplay';
 import { Quote, Star, User } from 'lucide-react';
 
 const Testimonials = () => {
   const { data: testimonials = [], isLoading: loading } = useTestimonialsContent();
+  const { data: heading, isLoading: headingLoading } = useSectionHeading('testimonials');
 
-  if (loading || !testimonials || testimonials.length === 0) {
+  if (loading || headingLoading || !testimonials || testimonials.length === 0) {
     return null;
   }
 
@@ -28,10 +29,10 @@ const Testimonials = () => {
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
       <div className="container mx-auto px-4 relative z-10">
         <SectionHeading
-          badge="Testimonials"
-          title="Client"
-          highlight="Stories"
-          description="What others say about working with me"
+          badge={heading?.section_badge || "Testimonials"}
+          title={heading?.section_title || "Client"}
+          highlight={heading?.section_highlight || "Stories"}
+          description={heading?.section_description || "What others say about working with me"}
         />
 
         <div className="mt-12 max-w-5xl mx-auto">
@@ -69,9 +70,9 @@ const Testimonials = () => {
 
                     <div className="flex items-center gap-4 mt-auto">
                       <div className="w-12 h-12 rounded-full overflow-hidden bg-secondary border border-border flex-shrink-0">
-                        {item.image_url ? (
+                        {item.avatar_url ? (
                           <img
-                            src={item.image_url}
+                            src={item.avatar_url}
                             alt={item.name}
                             className="w-full h-full object-cover"
                           />

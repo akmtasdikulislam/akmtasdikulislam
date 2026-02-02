@@ -135,7 +135,21 @@ export interface HomepageFooter {
   logo_text: string;
   description: string;
   contact_email: string;
+  quick_links: { name: string; href: string }[];
+  service_links: { name: string; href: string }[];
+  connect_title: string;
+  connect_text: string;
+  connect_button_text: string;
   copyright_text: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface HomepageFooterLink {
+  id: string;
+  name: string;
+  href: string;
+  display_order: number;
   created_at: string;
   updated_at: string;
 }
@@ -188,11 +202,13 @@ export interface HomepageService {
 export interface HomepageTestimonial {
   id: string;
   name: string;
-  role: string | null;
+  position: string | null;
+  company: string | null;
   content: string;
   avatar_url: string | null;
   rating: number;
   display_order: number;
+  is_featured: boolean;
   is_visible: boolean;
   created_at: string;
   updated_at?: string;
@@ -215,6 +231,10 @@ export interface HomepageContactInfo {
   location_url: string | null;
   available_for_work: boolean;
   available_text: string | null;
+  linkedin_url: string | null;
+  upwork_url: string | null;
+  linkedin_label: string | null;
+  upwork_label: string | null;
   created_at: string;
   updated_at?: string;
 }

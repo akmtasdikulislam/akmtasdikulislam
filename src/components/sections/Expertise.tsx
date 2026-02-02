@@ -1,12 +1,13 @@
 import SectionHeading from "@/components/ui/SectionHeading";
 import TechMarquee from "@/components/ui/TechMarquee";
-import { useExpertiseContent } from "@/hooks/useHomepageContent";
+import { useExpertiseContent, useSectionHeading } from "@/hooks/useHomepageContent";
 import { motion } from "framer-motion";
 
 const Expertise = () => {
-  const { data, isLoading } = useExpertiseContent();
+  const { data, isLoading: contentLoading } = useExpertiseContent();
+  const { data: heading, isLoading: headingLoading } = useSectionHeading('expertise');
 
-  if (isLoading) return null;
+  if (contentLoading || headingLoading) return null;
 
   const techs = data?.techs || [];
   const cards = data?.cards || [];
@@ -50,10 +51,10 @@ const Expertise = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         <SectionHeading
-          badge="My Skills"
-          title="Tech"
-          highlight="Expertise"
-          description="Technologies and tools I work with to bring ideas to life"
+          badge={heading?.section_badge || "My Skills"}
+          title={heading?.section_title || "Tech"}
+          highlight={heading?.section_highlight || "Expertise"}
+          description={heading?.section_description || "Technologies and tools I work with to bring ideas to life"}
         />
 
         {/* Tech Marquee - Dual Rows */}

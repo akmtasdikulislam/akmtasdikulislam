@@ -28,7 +28,7 @@ import HeroEditor from "./pages/admin/HeroEditor";
 import HomepageEditor from "./pages/admin/HomepageEditor";
 import NavbarEditor from "./pages/admin/NavbarEditor";
 import ServicesEditor from "./pages/admin/ServicesEditor";
-import TestimonialsEditor from "./pages/admin/TestimonialsEditor";
+import WhyChooseMeEditor from "./pages/admin/WhyChooseMeEditor";
 import WorkHistoryList from "./pages/admin/WorkHistoryList";
 import AdminAuth from "./pages/AdminAuth";
 import AllBlogs from "./pages/AllBlogs";
@@ -50,7 +50,10 @@ const queryClient = new QueryClient({
 // Track if this is the very first time the app is loading in this browser session (reset on refresh)
 let isInitialAppLoad = true;
 
+import { useAnalytics } from "./hooks/useAnalytics";
+
 const AppContent = () => {
+  useAnalytics();
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(() => {
     // Only show loader if it's the initial load AND we are landing on the homepage
@@ -99,7 +102,7 @@ const AppContent = () => {
           <Route path="homepage/settings" element={<GeneralSettings />} />
           <Route path="homepage/expertise" element={<ExpertiseEditor />} />
           <Route path="homepage/services" element={<ServicesEditor />} />
-          <Route path="homepage/testimonials" element={<TestimonialsEditor />} />
+          <Route path="homepage/why-choose-me" element={<WhyChooseMeEditor />} />
           <Route path="homepage/contact" element={<ContactEditor />} />
         </Route>
 

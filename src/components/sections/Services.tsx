@@ -1,6 +1,6 @@
 import SectionHeading from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/button";
-import { useServicesContent } from "@/hooks/useHomepageContent";
+import { useSectionHeading, useServicesContent } from "@/hooks/useHomepageContent";
 import { motion } from "framer-motion";
 import * as LucideIcons from "lucide-react";
 
@@ -11,9 +11,10 @@ const getIcon = (name: string) => {
 };
 
 const Services = () => {
-  const { data: services, isLoading } = useServicesContent();
+  const { data: services, isLoading: contentLoading } = useServicesContent();
+  const { data: heading, isLoading: headingLoading } = useSectionHeading('services');
 
-  if (isLoading) return null;
+  if (contentLoading || headingLoading) return null;
 
   const displayServices = services || [];
 
@@ -25,10 +26,10 @@ const Services = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         <SectionHeading
-          badge="Services"
-          title="How Can I"
-          highlight="Help You?"
-          description="Comprehensive solutions tailored to your needs"
+          badge={heading?.section_badge || "Services"}
+          title={heading?.section_title || "How Can I"}
+          highlight={heading?.section_highlight || "Help You?"}
+          description={heading?.section_description || "Comprehensive solutions tailored to your needs"}
         />
 
         {/* Services grid */}

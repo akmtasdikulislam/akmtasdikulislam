@@ -8,6 +8,7 @@ import type {
     HomepageExpertiseCard,
     HomepageExpertiseTech,
     HomepageFooter,
+    HomepageFooterLink,
     HomepageFreelanceProfile,
     HomepageGeneral,
     HomepageHero,
@@ -22,6 +23,7 @@ import type {
     HomepageTestimonial
 } from '@/types/homepage';
 import { supabase } from './client';
+export { getAllWhyChooseData } from './whyChooseMeQueries';
 
 // ============================================================================
 // HERO SECTION QUERIES
@@ -276,6 +278,94 @@ export const updateFooterContent = async (footer: Partial<HomepageFooter>) => {
 };
 
 // ============================================================================
+// FOOTER LINKS QUERIES
+// ============================================================================
+
+export const getFooterQuickLinks = async () => {
+  const { data, error } = await supabase
+    .from('homepage_footer_quick_links')
+    .select('*')
+    .order('display_order', { ascending: true });
+
+  if (error) throw error;
+  return data as HomepageFooterLink[];
+};
+
+export const updateFooterQuickLink = async (link: Partial<HomepageFooterLink>) => {
+  const { data, error } = await supabase
+    .from('homepage_footer_quick_links')
+    .update(link)
+    .eq('id', link.id!)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
+};
+
+export const createFooterQuickLink = async (link: Omit<HomepageFooterLink, 'id' | 'created_at' | 'updated_at'>) => {
+  const { data, error } = await supabase
+    .from('homepage_footer_quick_links')
+    .insert(link)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
+};
+
+export const deleteFooterQuickLink = async (id: string) => {
+  const { error } = await supabase
+    .from('homepage_footer_quick_links')
+    .delete()
+    .eq('id', id);
+
+  if (error) throw error;
+};
+
+export const getFooterServiceLinks = async () => {
+  const { data, error } = await supabase
+    .from('homepage_footer_service_links')
+    .select('*')
+    .order('display_order', { ascending: true });
+
+  if (error) throw error;
+  return data as HomepageFooterLink[];
+};
+
+export const updateFooterServiceLink = async (link: Partial<HomepageFooterLink>) => {
+  const { data, error } = await supabase
+    .from('homepage_footer_service_links')
+    .update(link)
+    .eq('id', link.id!)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
+};
+
+export const createFooterServiceLink = async (link: Omit<HomepageFooterLink, 'id' | 'created_at' | 'updated_at'>) => {
+  const { data, error } = await supabase
+    .from('homepage_footer_service_links')
+    .insert(link)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
+};
+
+export const deleteFooterServiceLink = async (id: string) => {
+  const { error } = await supabase
+    .from('homepage_footer_service_links')
+    .delete()
+    .eq('id', id);
+
+  if (error) throw error;
+};
+
+// ============================================================================
 // GENERAL SETTINGS QUERIES
 // ============================================================================
 
@@ -339,12 +429,14 @@ export const getAllAboutData = async () => {
 };
 
 export const getAllFooterData = async () => {
-  const [footer, socialLinks] = await Promise.all([
+  const [footer, socialLinks, quickLinks, serviceLinks] = await Promise.all([
     getFooterContent(),
     getSocialLinks(),
+    getFooterQuickLinks(),
+    getFooterServiceLinks(),
   ]);
 
-  return { footer, socialLinks };
+  return { footer, socialLinks, quickLinks, serviceLinks };
 };
 
 // ============================================================================
@@ -487,17 +579,22 @@ export const deleteService = async (id: string) => {
 
 export const getTestimonials = async () => {
     const { data, error } = await supabase
-      .from('homepage_testimonials')
+      .from('testimonials')
       .select('*')
       .order('display_order', { ascending: true });
     
     if (error) throw error;
-    return data as HomepageTestimonial[];
+    return (data || []).map(t => ({
+      ...t,
+      is_visible: t.is_visible ?? true,
+      is_featured: t.is_featured ?? false,
+      display_order: t.display_order ?? 0
+    })) as HomepageTestimonial[];
 };
 
 export const updateTestimonial = async (item: Partial<HomepageTestimonial>) => {
     const { data, error } = await supabase
-      .from('homepage_testimonials')
+      .from('testimonials')
       .update(item)
       .eq('id', item.id!)
       .select()
@@ -509,7 +606,7 @@ export const updateTestimonial = async (item: Partial<HomepageTestimonial>) => {
 
 export const createTestimonial = async (item: Omit<HomepageTestimonial, 'id' | 'created_at'>) => {
     const { data, error } = await supabase
-      .from('homepage_testimonials')
+      .from('testimonials')
       .insert(item)
       .select()
       .single();
@@ -520,7 +617,7 @@ export const createTestimonial = async (item: Omit<HomepageTestimonial, 'id' | '
 
 export const deleteTestimonial = async (id: string) => {
     const { error } = await supabase
-      .from('homepage_testimonials')
+      .from('testimonials')
       .delete()
       .eq('id', id);
     

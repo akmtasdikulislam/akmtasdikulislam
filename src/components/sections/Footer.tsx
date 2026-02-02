@@ -39,7 +39,7 @@ const Footer = () => {
     );
   }
 
-  const { footer, socialLinks } = data;
+  const { footer, socialLinks, quickLinks, serviceLinks } = data;
 
   // Map social links to include icons
   const mappedSocialLinks = socialLinks.map((link) => {
@@ -127,8 +127,8 @@ const Footer = () => {
               Quick Links
             </h4>
             <ul className="space-y-3">
-              {quickLinks.map((link) => (
-                <li key={link.name}>
+              {quickLinks.length > 0 ? quickLinks.map((link) => (
+                <li key={link.id}>
                   <a
                     href={link.href}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
@@ -136,6 +136,15 @@ const Footer = () => {
                     <span className="text-primary">&gt;</span>
                     {link.name}
                   </a>
+                </li>
+              )) : [
+                { name: "Home", href: "#home" },
+                { name: "About", href: "#about" },
+                { name: "Skills", href: "#expertise" },
+                { name: "Projects", href: "#projects" },
+              ].map((link) => (
+                 <li key={link.name}>
+                  <a href={link.href} className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"><span className="text-primary">&gt;</span>{link.name}</a>
                 </li>
               ))}
             </ul>
@@ -148,8 +157,8 @@ const Footer = () => {
               Services
             </h4>
             <ul className="space-y-3">
-              {services.map((service) => (
-                <li key={service.name}>
+              {serviceLinks.length > 0 ? serviceLinks.map((service) => (
+                <li key={service.id}>
                   <a
                     href={service.href}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
@@ -157,6 +166,15 @@ const Footer = () => {
                     <span className="text-primary">&gt;</span>
                     {service.name}
                   </a>
+                </li>
+              )) : [
+                { name: "Web Development", href: "#services" },
+                { name: "UI/UX Design", href: "#services" },
+                { name: "n8n Automation", href: "#services" },
+                { name: "E-commerce", href: "#services" },
+              ].map((service) => (
+                <li key={service.name}>
+                  <a href={service.href} className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"><span className="text-primary">&gt;</span>{service.name}</a>
                 </li>
               ))}
             </ul>
@@ -166,15 +184,15 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4 flex items-center gap-2">
               <Terminal className="w-4 h-4 text-primary" />
-              Let's Connect
+              {footer.connect_title || "Let's Connect"}
             </h4>
             <p className="text-sm text-muted-foreground mb-4">
-              Interested in working together? Let's discuss your project.
+              {footer.connect_text || "Interested in working together? Let's discuss your project."}
             </p>
             <Button variant="glow" asChild className="w-full">
               <a href="#contact">
                 <Mail className="w-4 h-4" />
-                Get in Touch
+                {footer.connect_button_text || "Get in Touch"}
               </a>
             </Button>
           </div>

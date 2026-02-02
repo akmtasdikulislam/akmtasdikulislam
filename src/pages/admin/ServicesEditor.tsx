@@ -1,3 +1,4 @@
+import SectionHeadingEditor from '@/components/admin/SectionHeadingEditor';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -70,6 +71,8 @@ const ServicesEditor = () => {
                 <h2 className="text-3xl font-bold tracking-tight">Services Editor</h2>
                 <Button onClick={addNewService}><Plus className="mr-2 h-4 w-4" /> Add Service</Button>
             </div>
+
+            <SectionHeadingEditor sectionKey="services" />
 
             <div className="grid gap-6">
                 {services.map((service, index) => (

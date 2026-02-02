@@ -1,3 +1,4 @@
+import SectionHeadingEditor from '@/components/admin/SectionHeadingEditor';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -135,6 +136,8 @@ const ExpertiseEditor = () => {
             <div className="flex justify-between items-center">
                 <h2 className="text-3xl font-bold tracking-tight">Expertise Editor</h2>
             </div>
+
+            <SectionHeadingEditor sectionKey="expertise" />
 
             <Tabs defaultValue="techs">
                 <TabsList>

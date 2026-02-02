@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button";
 import SectionHeading from "@/components/ui/SectionHeading";
+import { useSectionHeading } from "@/hooks/useHomepageContent";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { motion } from "framer-motion";
 import { ArrowRight, Calendar, Clock, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
-import { toast } from "sonner";
 
 interface BlogPost {
   id: string;
@@ -67,15 +67,15 @@ const Blog = () => {
         .eq('status', 'published')
         .order('published_at', { ascending: false })
         .limit(3);
-
-      if (error) {
-        console.error('Error loading blogs:', error);
-        toast.error('Failed to load blog posts');
-        throw error;
-      }
+      if (error) throw error;
       return data as BlogPost[];
     },
   });
+
+  const { data: heading, isLoading: headingLoading } = useSectionHeading('blog');
+
+  // Use DB posts or fallback
+  const displayPosts = posts.length > 0 ? posts : staticPosts;
 
   const formatDate = (dateString: string | null) => {
     if (!dateString) return '';
@@ -98,13 +98,13 @@ const Blog = () => {
       if (error && error.code !== 'PGRST116') {
         console.error('Error fetching section visibility:', error);
       }
-      return data ? data.is_visible : true;
+      return data ? (data as any).is_visible : true;
     },
     initialData: true,
     staleTime: 0,
   });
 
-  if (sectionVisible === false) return null;
+  if (sectionVisible === false || loading || headingLoading) return null;
 
   return (
     <section id="blog" className="py-24 relative overflow-hidden">
@@ -114,15 +114,15 @@ const Blog = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         <SectionHeading
-          badge="Blog"
-          title="Blog &"
-          highlight="Insights"
-          description="Thoughts, tutorials, and insights from my development journey"
+          badge={heading?.section_badge || "Blog"}
+          title={heading?.section_title || "Blog &"}
+          highlight={heading?.section_highlight || "Insights"}
+          description={heading?.section_description || "Thoughts, tutorials, and insights from my development journey"}
         />
 
         {/* Blog grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {posts.map((post, index) => (
+          {displayPosts.map((post, index) => (
             <Link key={post.id} to={`/blog/${post.slug}`}>
               <motion.article
                 initial={{ opacity: 0, y: 30 }}

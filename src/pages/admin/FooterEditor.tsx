@@ -5,9 +5,18 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { useFooterContent } from '@/hooks/useHomepageContent';
-import { supabase } from '@/integrations/supabase/client';
+import {
+    createFooterQuickLink,
+    createFooterServiceLink,
+    deleteFooterQuickLink,
+    deleteFooterServiceLink,
+    updateFooterContent,
+    updateFooterQuickLink,
+    updateFooterServiceLink
+} from '@/integrations/supabase/homepageQueries';
+import { HomepageFooterLink } from '@/types/homepage';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Loader2, Save } from 'lucide-react';
+import { Loader2, Plus, Save, Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const FooterEditor = () => {
@@ -20,135 +29,256 @@ const FooterEditor = () => {
         description: '',
         contact_email: '',
         copyright_text: '',
+        connect_title: '',
+        connect_text: '',
+        connect_button_text: '',
     });
 
     useEffect(() => {
-        if (data) {
+        if (data?.footer) {
             setFooterData({
-                logo_text: data.footer.logo_text,
-                description: data.footer.description,
-                contact_email: data.footer.contact_email,
-                copyright_text: data.footer.copyright_text,
+                logo_text: data.footer.logo_text || '',
+                description: data.footer.description || '',
+                contact_email: data.footer.contact_email || '',
+                copyright_text: data.footer.copyright_text || '',
+                connect_title: data.footer.connect_title || '',
+                connect_text: data.footer.connect_text || '',
+                connect_button_text: data.footer.connect_button_text || '',
             });
         }
     }, [data]);
 
+    // Mutations for Footer Content
     const updateFooterMutation = useMutation({
-        mutationFn: async (updatedData: typeof footerData) => {
-            const { data: result, error } = await supabase
-                .from('homepage_footer')
-                .update(updatedData)
-                .eq('id', data!.footer.id)
-                .select()
-                .single();
-
-            if (error) throw error;
-            return result;
-        },
+        mutationFn: (updatedData: typeof footerData) => updateFooterContent({ ...updatedData, id: data!.footer.id }),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['homepage', 'footer'] });
-            toast({
-                title: 'Success',
-                description: 'Footer updated successfully',
-            });
+            toast({ title: 'Success', description: 'Footer info updated' });
         },
-        onError: (error: any) => {
-            toast({
-                title: 'Error',
-                description: error.message || 'Failed to update footer',
-                variant: 'destructive',
-            });
+    });
+
+    // Mutations for Quick Links
+    const addQuickLinkMutation = useMutation({
+        mutationFn: (link: { name: string; href: string; display_order: number }) => createFooterQuickLink(link),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['homepage', 'footer'] });
+            toast({ title: 'Success', description: 'Quick link added' });
+        },
+    });
+
+    const updateQuickLinkMutation = useMutation({
+        mutationFn: (link: Partial<HomepageFooterLink>) => updateFooterQuickLink(link),
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: ['homepage', 'footer'] }),
+    });
+
+    const deleteQuickLinkMutation = useMutation({
+        mutationFn: (id: string) => deleteFooterQuickLink(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['homepage', 'footer'] });
+            toast({ title: 'Success', description: 'Link deleted' });
+        },
+    });
+
+    // Mutations for Service Links
+    const addServiceLinkMutation = useMutation({
+        mutationFn: (link: { name: string; href: string; display_order: number }) => createFooterServiceLink(link),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['homepage', 'footer'] });
+            toast({ title: 'Success', description: 'Service link added' });
+        },
+    });
+
+    const updateServiceLinkMutation = useMutation({
+        mutationFn: (link: Partial<HomepageFooterLink>) => updateFooterServiceLink(link),
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: ['homepage', 'footer'] }),
+    });
+
+    const deleteServiceLinkMutation = useMutation({
+        mutationFn: (id: string) => deleteFooterServiceLink(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['homepage', 'footer'] });
+            toast({ title: 'Success', description: 'Link deleted' });
         },
     });
 
     if (isLoading) {
-        return (
-            <div className="flex items-center justify-center h-64">
-                <Loader2 className="w-8 h-8 animate-spin text-primary" />
-            </div>
-        );
+        return <div className="flex justify-center p-12"><Loader2 className="w-8 h-8 animate-spin" /></div>;
     }
 
     return (
-        <div className="space-y-6 max-w-4xl pb-20">
+        <div className="space-y-8 max-w-5xl pb-20">
             <div>
-                <h1 className="text-2xl sm:text-3xl font-bold">Footer Configuration</h1>
-                <p className="text-muted-foreground mt-1">
-                    Edit the footer content, copyright, and contact info
-                </p>
+                <h1 className="text-3xl font-bold">Footer Management</h1>
+                <p className="text-muted-foreground">Manage all footer elements including links and content.</p>
             </div>
 
+            {/* Basic Info */}
             <Card>
                 <CardHeader>
                     <CardTitle>Footer Information</CardTitle>
-                    <CardDescription>Main content displayed in the footer</CardDescription>
+                    <CardDescription>Main branding and copyright info</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                    <div className="grid gap-4 md:grid-cols-2">
-                        <div>
-                            <Label htmlFor="logo">Logo Text *</Label>
-                            <Input
-                                id="logo"
-                                value={footerData.logo_text}
-                                onChange={(e) => setFooterData({ ...footerData, logo_text: e.target.value })}
-                                placeholder="AKM"
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <Label>Logo Text</Label>
+                            <Input 
+                                value={footerData.logo_text} 
+                                onChange={(e) => setFooterData({...footerData, logo_text: e.target.value})}
                             />
                         </div>
-                        <div>
-                            <Label htmlFor="email">Contact Email *</Label>
-                            <Input
-                                id="email"
-                                value={footerData.contact_email}
-                                onChange={(e) => setFooterData({ ...footerData, contact_email: e.target.value })}
-                                placeholder="email@example.com"
+                        <div className="space-y-2">
+                            <Label>Contact Email</Label>
+                            <Input 
+                                value={footerData.contact_email} 
+                                onChange={(e) => setFooterData({...footerData, contact_email: e.target.value})}
                             />
                         </div>
                     </div>
-
-                    <div>
-                        <Label htmlFor="desc">Description *</Label>
-                        <Textarea
-                            id="desc"
-                            value={footerData.description}
-                            onChange={(e) => setFooterData({ ...footerData, description: e.target.value })}
-                            placeholder="Brief description aimed at site visitors"
+                    <div className="space-y-2">
+                        <Label>Description</Label>
+                        <Textarea 
+                            value={footerData.description} 
+                            onChange={(e) => setFooterData({...footerData, description: e.target.value})}
                             rows={3}
                         />
                     </div>
-
-                    <div>
-                        <Label htmlFor="copyright">Copyright Text *</Label>
-                        <Input
-                            id="copyright"
-                            value={footerData.copyright_text}
-                            onChange={(e) => setFooterData({ ...footerData, copyright_text: e.target.value })}
-                            placeholder="© 2026 Akm Tasdikul Islam. All rights reserved."
+                    <div className="space-y-2">
+                        <Label>Copyright Text</Label>
+                        <Input 
+                            value={footerData.copyright_text} 
+                            onChange={(e) => setFooterData({...footerData, copyright_text: e.target.value})}
                         />
                     </div>
-
                     <Button onClick={() => updateFooterMutation.mutate(footerData)} disabled={updateFooterMutation.isPending}>
-                        {updateFooterMutation.isPending ? (
-                            <>
-                                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                                Saving...
-                            </>
-                        ) : (
-                            <>
-                                <Save className="w-4 h-4 mr-2" />
-                                Save Footer
-                            </>
-                        )}
+                        {updateFooterMutation.isPending ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
+                        Save Basic Info
                     </Button>
                 </CardContent>
             </Card>
 
-            <div className="bg-yellow-50 dark:bg-yellow-900/10 border border-yellow-200 dark:border-yellow-900 rounded-lg p-4">
-                <p className="text-sm text-yellow-800 dark:text-yellow-200">
-                    <strong>Note:</strong> Social links are managed in the Hero Editor as they are shared across the site.
-                    Vertical navigation links and Service links are currently hardcoded or derived from the main navigation.
-                </p>
-            </div>
+            {/* Connect Section */}
+            <Card>
+                <CardHeader>
+                    <CardTitle>Connect CTA Section</CardTitle>
+                    <CardDescription>Manage the "Let's Connect" section in the footer</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                        <Label>CTA Title</Label>
+                        <Input 
+                            value={footerData.connect_title} 
+                            onChange={(e) => setFooterData({...footerData, connect_title: e.target.value})}
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <Label>CTA Text</Label>
+                        <Textarea 
+                            value={footerData.connect_text} 
+                            onChange={(e) => setFooterData({...footerData, connect_text: e.target.value})}
+                            rows={3}
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <Label>Button Text</Label>
+                        <Input 
+                            value={footerData.connect_button_text} 
+                            onChange={(e) => setFooterData({...footerData, connect_button_text: e.target.value})}
+                        />
+                    </div>
+                    <Button onClick={() => updateFooterMutation.mutate(footerData)} disabled={updateFooterMutation.isPending}>
+                        <Save className="w-4 h-4 mr-2" />
+                        Save Connect Info
+                    </Button>
+                </CardContent>
+            </Card>
+
+            {/* Quick Links */}
+            <LinkManager 
+                title="Quick Links" 
+                links={data?.quickLinks || []} 
+                onAdd={(name, href) => addQuickLinkMutation.mutate({ name, href, display_order: (data?.quickLinks?.length || 0) + 1 })}
+                onUpdate={(id, name, href) => updateQuickLinkMutation.mutate({ id, name, href })}
+                onDelete={(id) => deleteQuickLinkMutation.mutate(id)}
+                isPending={addQuickLinkMutation.isPending || updateQuickLinkMutation.isPending}
+            />
+
+            {/* Service Links */}
+            <LinkManager 
+                title="Service Links" 
+                links={data?.serviceLinks || []} 
+                onAdd={(name, href) => addServiceLinkMutation.mutate({ name, href, display_order: (data?.serviceLinks?.length || 0) + 1 })}
+                onUpdate={(id, name, href) => updateServiceLinkMutation.mutate({ id, name, href })}
+                onDelete={(id) => deleteServiceLinkMutation.mutate(id)}
+                isPending={addServiceLinkMutation.isPending || updateServiceLinkMutation.isPending}
+            />
         </div>
+    );
+};
+
+interface LinkManagerProps {
+    title: string;
+    links: HomepageFooterLink[];
+    onAdd: (name: string, href: string) => void;
+    onUpdate: (id: string, name: string, href: string) => void;
+    onDelete: (id: string) => void;
+    isPending: boolean;
+}
+
+const LinkManager = ({ title, links, onAdd, onUpdate, onDelete, isPending }: LinkManagerProps) => {
+    const [newName, setNewName] = useState('');
+    const [newHref, setNewHref] = useState('');
+
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle>{title}</CardTitle>
+                <CardDescription>Manage individual links by name and destination</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+                <div className="space-y-3">
+                    {links.map((link) => (
+                        <div key={link.id} className="flex gap-3 items-end border-b border-border pb-4 last:border-0">
+                            <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <div className="space-y-1">
+                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Label</Label>
+                                    <Input 
+                                        value={link.name} 
+                                        onChange={(e) => onUpdate(link.id, e.target.value, link.href)}
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Href (URL/ID)</Label>
+                                    <Input 
+                                        value={link.href} 
+                                        onChange={(e) => onUpdate(link.id, link.name, e.target.value)}
+                                    />
+                                </div>
+                            </div>
+                            <Button variant="ghost" size="icon" onClick={() => onDelete(link.id)} className="text-destructive hover:text-destructive hover:bg-destructive/10">
+                                <Trash2 className="w-4 h-4" />
+                            </Button>
+                        </div>
+                    ))}
+                </div>
+
+                <div className="bg-muted/50 p-4 rounded-lg space-y-3">
+                    <p className="text-sm font-semibold flex items-center gap-2"><Plus className="w-4 h-4" /> Add New {title.slice(0, -1)}</p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <Input placeholder="Link Label" value={newName} onChange={e => setNewName(e.target.value)} />
+                        <Input placeholder="Href (e.g. #about or https://...)" value={newHref} onChange={e => setNewHref(e.target.value)} />
+                    </div>
+                    <Button 
+                        disabled={!newName || !newHref || isPending} 
+                        onClick={() => { onAdd(newName, newHref); setNewName(''); setNewHref(''); }}
+                        className="w-full sm:w-auto"
+                    >
+                        {isPending ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Plus className="w-4 h-4 mr-2" />}
+                        Add Link
+                    </Button>
+                </div>
+            </CardContent>
+        </Card>
     );
 };
 
