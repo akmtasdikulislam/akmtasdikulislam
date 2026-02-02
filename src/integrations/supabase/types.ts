@@ -1016,6 +1016,36 @@ export type Database = {
         }
         Relationships: []
       }
+      homepage_freelance_profiles: {
+        Row: {
+          id: string
+          platform: string
+          url: string
+          icon_url: string | null
+          display_order: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          platform: string
+          url: string
+          icon_url?: string | null
+          display_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          platform?: string
+          url?: string
+          icon_url?: string | null
+          display_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

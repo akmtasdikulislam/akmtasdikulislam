@@ -1,15 +1,16 @@
 import {
-  getAllAboutData,
-  getAllFooterData,
-  getAllHeroData,
-  getAllNavbarData,
-  getCodingProfiles,
-  getContactInfo,
-  getExpertiseCards,
-  getExpertiseTechs,
-  getGeneralSettings,
-  getServices,
-  getTestimonials,
+    getAllAboutData,
+    getAllFooterData,
+    getAllHeroData,
+    getAllNavbarData,
+    getCodingProfiles,
+    getContactInfo,
+    getExpertiseCards,
+    getExpertiseTechs,
+    getFreelanceProfiles,
+    getGeneralSettings,
+    getServices,
+    getTestimonials
 } from '@/integrations/supabase/homepageQueries';
 import { useQuery } from '@tanstack/react-query';
 
@@ -124,6 +125,15 @@ export const useContactContent = () => {
     return useQuery({
         queryKey: ['homepage', 'contact'],
         queryFn: getContactInfo,
+        staleTime: 1000 * 60 * 5,
+    });
+};
+
+// Hook for Freelance Profiles
+export const useFreelanceProfilesContent = () => {
+    return useQuery({
+        queryKey: ['homepage', 'freelance_profiles'],
+        queryFn: getFreelanceProfiles,
         staleTime: 1000 * 60 * 5,
     });
 };

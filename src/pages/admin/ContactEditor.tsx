@@ -5,7 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
-import { useCodingProfilesContent, useContactContent } from '@/hooks/useHomepageContent';
+import { useCodingProfilesContent, useContactContent, useFreelanceProfilesContent } from '@/hooks/useHomepageContent';
 import { supabase } from '@/integrations/supabase/client';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Loader2, Plus, Save, Trash2, Upload } from 'lucide-react';
@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react';
 const ContactEditor = () => {
     const { data: contactData, isLoading: contactLoading } = useContactContent();
     const { data: profilesData, isLoading: profilesLoading } = useCodingProfilesContent();
+    const { data: freelanceData, isLoading: freelanceLoading } = useFreelanceProfilesContent();
     const { toast } = useToast();
     const queryClient = useQueryClient();
 
@@ -25,11 +26,13 @@ const ContactEditor = () => {
         available_text: 'Available for Work'
     });
     const [profiles, setProfiles] = useState<any[]>([]);
+    const [freelanceProfiles, setFreelanceProfiles] = useState<any[]>([]);
 
     useEffect(() => {
         if (contactData) setContact(contactData);
         if (profilesData) setProfiles(profilesData);
-    }, [contactData, profilesData]);
+        if (freelanceData) setFreelanceProfiles(freelanceData);
+    }, [contactData, profilesData, freelanceData]);
 
     const updateContactMutation = useMutation({
         mutationFn: async (data: any) => {
@@ -48,12 +51,34 @@ const ContactEditor = () => {
                 delete newItem.id;
                 await supabase.from('homepage_coding_profiles').insert(newItem);
             } else {
-                await supabase.from('homepage_coding_profiles').update(item).eq('id', item.id);
+                const { ...updateItem } = item;
+                delete updateItem.created_at;
+                delete updateItem.updated_at;
+                await supabase.from('homepage_coding_profiles').update(updateItem).eq('id', item.id);
             }
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['homepage', 'coding_profiles'] });
             toast({ title: 'Profile updated' });
+        }
+    });
+
+    const updateFreelanceMutation = useMutation({
+        mutationFn: async (item: any) => {
+            if (item.id.startsWith('temp-')) {
+                const { ...newItem } = item;
+                delete newItem.id;
+                await supabase.from('homepage_freelance_profiles').insert(newItem);
+            } else {
+                const { ...updateItem } = item;
+                delete updateItem.created_at;
+                delete updateItem.updated_at;
+                await supabase.from('homepage_freelance_profiles').update(updateItem).eq('id', item.id);
+            }
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['homepage', 'freelance_profiles'] });
+            toast({ title: 'Freelance Profile updated' });
         }
     });
 
@@ -67,6 +92,16 @@ const ContactEditor = () => {
         }
     });
 
+    const deleteFreelanceMutation = useMutation({
+        mutationFn: async (id: string) => {
+            await supabase.from('homepage_freelance_profiles').delete().eq('id', id);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['homepage', 'freelance_profiles'] });
+            toast({ title: 'Freelance Profile deleted' });
+        }
+    });
+
     const addNewProfile = () => {
         setProfiles([...profiles, {
             id: `temp-${Date.now()}`,
@@ -77,14 +112,29 @@ const ContactEditor = () => {
         }]);
     };
 
-    const handleIconUpload = async (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
+    const addNewFreelance = () => {
+        setFreelanceProfiles([...freelanceProfiles, {
+            id: `temp-${Date.now()}`,
+            platform: 'New Platform',
+            url: '',
+            icon_url: '',
+            display_order: freelanceProfiles.length + 1
+        }]);
+    };
+
+    const handleIconUpload = async (e: React.ChangeEvent<HTMLInputElement>, id: string, type: 'coding' | 'freelance') => {
         const file = e.target.files?.[0];
         if (!file) return;
         const filePath = `profile-icon-${Math.random()}.${file.name.split('.').pop()}`;
         const { error } = await supabase.storage.from('portfolio').upload(filePath, file);
         if (error) { toast({ title: 'Upload failed' }); return; }
         const { data: { publicUrl } } = supabase.storage.from('portfolio').getPublicUrl(filePath);
-        setProfiles(profiles.map(p => p.id === id ? { ...p, icon_url: publicUrl } : p));
+
+        if (type === 'coding') {
+            setProfiles(profiles.map(p => p.id === id ? { ...p, icon_url: publicUrl } : p));
+        } else {
+            setFreelanceProfiles(freelanceProfiles.map(p => p.id === id ? { ...p, icon_url: publicUrl } : p));
+        }
     };
 
     const { data: messagesData, isLoading: messagesLoading } = useQuery({
@@ -138,6 +188,7 @@ const ContactEditor = () => {
                     </TabsTrigger>
                     <TabsTrigger value="info">Contact Info</TabsTrigger>
                     <TabsTrigger value="profiles">Coding Profiles</TabsTrigger>
+                    <TabsTrigger value="freelance">Freelance Profiles</TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="messages" className="space-y-4">
@@ -227,7 +278,7 @@ const ContactEditor = () => {
                                         {profile.icon_url ? <img src={profile.icon_url} className="w-8 h-8 object-contain" /> : <span className="text-xs">No Icon</span>}
                                         <label className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 cursor-pointer text-white text-xs rounded">
                                             <Upload className="h-4 w-4" />
-                                            <input type="file" className="hidden" accept="image/*" onChange={(e) => handleIconUpload(e, profile.id)} />
+                                            <input type="file" className="hidden" accept="image/*" onChange={(e) => handleIconUpload(e, profile.id, 'coding')} />
                                         </label>
                                     </div>
                                     <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -243,6 +294,39 @@ const ContactEditor = () => {
                                     <div className="flex gap-2">
                                         <Button size="icon" variant="ghost" onClick={() => updateProfileMutation.mutate(profile)}><Save className="h-4 w-4" /></Button>
                                         <Button size="icon" variant="destructive" onClick={() => deleteProfileMutation.mutate(profile.id)}><Trash2 className="h-4 w-4" /></Button>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        ))}
+                    </div>
+                </TabsContent>
+
+                <TabsContent value="freelance" className="space-y-4">
+                    <Button onClick={addNewFreelance}><Plus className="mr-2 h-4 w-4" /> Add Freelance Profile</Button>
+                    <div className="grid gap-4">
+                        {freelanceProfiles.map((profile) => (
+                            <Card key={profile.id}>
+                                <CardContent className="p-4 flex items-center gap-4">
+                                    <div className="w-12 h-12 border rounded flex items-center justify-center bg-secondary/20 relative group">
+                                        {profile.icon_url ? <img src={profile.icon_url} className="w-8 h-8 object-contain" /> : <span className="text-xs">No Icon</span>}
+                                        <label className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 cursor-pointer text-white text-xs rounded">
+                                            <Upload className="h-4 w-4" />
+                                            <input type="file" className="hidden" accept="image/*" onChange={(e) => handleIconUpload(e, profile.id, 'freelance')} />
+                                        </label>
+                                    </div>
+                                    <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div className="space-y-1">
+                                            <Label>Platform Name</Label>
+                                            <Input value={profile.platform} onChange={(e) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, platform: e.target.value } : p))} />
+                                        </div>
+                                        <div className="space-y-1 md:col-span-2">
+                                            <Label>Profile URL</Label>
+                                            <Input value={profile.url} onChange={(e) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, url: e.target.value } : p))} />
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <Button size="icon" variant="ghost" onClick={() => updateFreelanceMutation.mutate(profile)}><Save className="h-4 w-4" /></Button>
+                                        <Button size="icon" variant="destructive" onClick={() => deleteFreelanceMutation.mutate(profile.id)}><Trash2 className="h-4 w-4" /></Button>
                                     </div>
                                 </CardContent>
                             </Card>

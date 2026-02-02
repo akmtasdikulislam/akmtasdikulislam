@@ -8,6 +8,7 @@ import type {
     HomepageExpertiseCard,
     HomepageExpertiseTech,
     HomepageFooter,
+    HomepageFreelanceProfile,
     HomepageGeneral,
     HomepageHero,
     HomepageHeroBadge,
@@ -18,7 +19,7 @@ import type {
     HomepageNavLink,
     HomepageService,
     HomepageSocialLink,
-    HomepageTestimonial,
+    HomepageTestimonial
 } from '@/types/homepage';
 import { supabase } from './client';
 
@@ -592,4 +593,50 @@ export const updateContactInfo = async (info: Partial<HomepageContactInfo>) => {
     
     if (error) throw error;
     return data;
+};
+
+// ============================================================================
+// FREELANCE PROFILES QUERIES
+// ============================================================================
+
+export const getFreelanceProfiles = async () => {
+    const { data, error } = await supabase
+      .from('homepage_freelance_profiles')
+      .select('*')
+      .order('display_order', { ascending: true });
+    
+    if (error) throw error;
+    return data as HomepageFreelanceProfile[];
+};
+
+export const updateFreelanceProfile = async (item: Partial<HomepageFreelanceProfile>) => {
+    const { data, error } = await supabase
+      .from('homepage_freelance_profiles')
+      .update(item)
+      .eq('id', item.id!)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+};
+
+export const createFreelanceProfile = async (item: Omit<HomepageFreelanceProfile, 'id' | 'created_at' | 'updated_at'>) => {
+    const { data, error } = await supabase
+      .from('homepage_freelance_profiles')
+      .insert(item)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+};
+
+export const deleteFreelanceProfile = async (id: string) => {
+    const { error } = await supabase
+      .from('homepage_freelance_profiles')
+      .delete()
+      .eq('id', id);
+    
+    if (error) throw error;
 };

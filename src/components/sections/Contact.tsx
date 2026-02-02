@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { useCodingProfilesContent, useContactContent } from "@/hooks/useHomepageContent";
+import { useCodingProfilesContent, useContactContent, useFreelanceProfilesContent } from "@/hooks/useHomepageContent";
 import { supabase } from "@/integrations/supabase/client";
 import { motion } from "framer-motion";
 import {
@@ -18,6 +18,7 @@ const Contact = () => {
   const { toast } = useToast();
   const { data: contact } = useContactContent();
   const { data: profiles } = useCodingProfilesContent();
+  const { data: freelanceProfiles } = useFreelanceProfilesContent();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -66,6 +67,7 @@ const Contact = () => {
   };
 
   const displayProfiles = profiles || [];
+  const displayFreelance = freelanceProfiles || [];
 
   return (
     <section id="contact" className="py-24 relative overflow-hidden bg-secondary/10">
@@ -236,34 +238,65 @@ const Contact = () => {
             )}
 
             {/* Profiles */}
-            {displayProfiles.length > 0 && (
-              <div>
-                <h4 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-4">
-                  Online Profiles
-                </h4>
-                <div className="flex flex-wrap gap-3">
-                  {displayProfiles.map((profile: any) => (
-                    <motion.a
-                      key={profile.id}
-                      href={profile.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.05 }}
-                      className="px-4 py-2 bg-card border border-border rounded-lg text-sm transition-all flex items-center gap-2 group hover:border-primary/50"
-                    >
-                      {profile.icon_url && <img
-                        src={profile.icon_url}
-                        alt={profile.platform}
-                        className="w-5 h-5 object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
-                      />}
-                      <span className="text-muted-foreground group-hover:text-foreground transition-colors">
-                        {profile.platform}
-                      </span>
-                    </motion.a>
-                  ))}
+            <div className="space-y-6">
+              {displayProfiles.length > 0 && (
+                <div>
+                  <h4 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-4">
+                    Online Profiles
+                  </h4>
+                  <div className="flex flex-wrap gap-3">
+                    {displayProfiles.map((profile: any) => (
+                      <motion.a
+                        key={profile.id}
+                        href={profile.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.05 }}
+                        className="px-4 py-2 bg-card border border-border rounded-lg text-sm transition-all flex items-center gap-2 group hover:border-primary/50"
+                      >
+                        {profile.icon_url && <img
+                          src={profile.icon_url}
+                          alt={profile.platform}
+                          className="w-5 h-5 object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                        />}
+                        <span className="text-muted-foreground group-hover:text-foreground transition-colors">
+                          {profile.platform}
+                        </span>
+                      </motion.a>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+
+              {displayFreelance.length > 0 && (
+                <div>
+                  <h4 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-4">
+                    Freelance Platforms
+                  </h4>
+                  <div className="flex flex-wrap gap-3">
+                    {displayFreelance.map((profile: any) => (
+                      <motion.a
+                        key={profile.id}
+                        href={profile.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.05 }}
+                        className="px-4 py-2 bg-card border border-border rounded-lg text-sm transition-all flex items-center gap-2 group hover:border-primary/50 shadow-glow-sm hover:shadow-primary/20"
+                      >
+                        {profile.icon_url && <img
+                          src={profile.icon_url}
+                          alt={profile.platform}
+                          className="w-5 h-5 object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                        />}
+                        <span className="text-muted-foreground group-hover:text-foreground transition-colors">
+                          {profile.platform}
+                        </span>
+                      </motion.a>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </motion.div>
         </div>
       </div>
