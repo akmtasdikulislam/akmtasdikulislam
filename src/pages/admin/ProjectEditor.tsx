@@ -336,30 +336,32 @@ const ProjectEditor = () => {
         animate={{ opacity: 1, y: 0 }}
       >
         {/* Header */}
-        <div className="flex items-center gap-4 mb-8">
-          <Button variant="ghost" size="icon" onClick={() => navigate('/admin/projects')}>
-            <ArrowLeft className="w-5 h-5" />
-          </Button>
-          <div className="flex-1">
-            <h1 className="text-2xl sm:text-3xl font-bold">{isNew ? 'New Project' : 'Edit Project'}</h1>
-            <p className="text-muted-foreground mt-1">
-              {isNew ? 'Create a new portfolio project' : 'Update project details'}
-            </p>
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6 sm:mb-8">
+          <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
+            <Button variant="ghost" size="icon" onClick={() => navigate('/admin/projects')} className="shrink-0">
+              <ArrowLeft className="w-5 h-5" />
+            </Button>
+            <div className="min-w-0">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold truncate">{isNew ? 'New Project' : 'Edit Project'}</h1>
+              <p className="text-sm text-muted-foreground mt-1 truncate">
+                {isNew ? 'Create a new portfolio project' : 'Update project details'}
+              </p>
+            </div>
           </div>
-          <div className="flex flex-wrap items-center gap-2">
-            <Button variant="outline" onClick={() => navigate('/admin/projects')}>
+          <div className="flex items-center gap-2 ml-auto sm:ml-0">
+            <Button variant="outline" onClick={() => navigate('/admin/projects')} className="min-h-[44px]">
               Cancel
             </Button>
-            <Button onClick={handleSubmit} disabled={saving}>
+            <Button onClick={handleSubmit} disabled={saving} className="min-h-[44px]">
               {saving ? (
                 <span className="flex items-center gap-2">
                   <span className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                  Saving...
+                  <span className="hidden sm:inline">Saving...</span>
                 </span>
               ) : (
                 <span className="flex items-center gap-2">
                   <Save className="w-4 h-4" />
-                  Save Changes
+                  <span className="hidden sm:inline">Save Changes</span>
                 </span>
               )}
             </Button>
@@ -684,7 +686,7 @@ const ProjectEditor = () => {
               </div>
 
               {formData.gallery.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mt-4">
                   {formData.gallery.map((url, index) => (
                     <div key={index} className="relative group aspect-video rounded-lg overflow-hidden border border-border bg-secondary">
                       <img src={url} alt={`Gallery ${index}`} className="w-full h-full object-cover" />

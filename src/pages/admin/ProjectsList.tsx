@@ -193,10 +193,10 @@ const ProjectsList = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.05 }}
-              className="bg-card border border-border rounded-xl p-4 flex flex-col sm:flex-row sm:items-center gap-4"
+              className="bg-card border border-border rounded-xl p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 w-full max-w-full overflow-hidden"
             >
               {/* Thumbnail */}
-              <div className="w-full sm:w-24 h-24 sm:h-16 rounded-lg overflow-hidden bg-secondary flex-shrink-0">
+              <div className="w-full sm:w-20 md:w-24 h-32 sm:h-20 md:h-24 rounded-lg overflow-hidden bg-secondary flex-shrink-0">
                 {project.image ? (
                   <img
                     src={project.image}
@@ -211,23 +211,23 @@ const ProjectsList = () => {
               </div>
 
               {/* Info */}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <h3 className="font-semibold truncate">{project.title}</h3>
+              <div className="flex-1 min-w-0 space-y-2">
+                <div className="flex items-start sm:items-center gap-2 flex-wrap">
+                  <h3 className="font-semibold text-base sm:text-lg break-words">{project.title}</h3>
                   {project.featured && (
-                    <span className="text-xs px-2 py-0.5 bg-yellow-500/10 text-yellow-500 rounded-full">
+                    <span className="text-xs px-2 py-0.5 bg-yellow-500/10 text-yellow-500 rounded-full whitespace-nowrap flex-shrink-0">
                       Featured
                     </span>
                   )}
                 </div>
-                <p className="text-sm text-muted-foreground truncate mt-1">
+                <p className="text-sm text-muted-foreground line-clamp-2 break-words">
                   {project.description}
                 </p>
-                <div className="flex items-center gap-2 mt-2">
-                  <span className="text-xs px-2 py-1 bg-secondary rounded-md">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-xs px-2 py-1 bg-secondary rounded-md whitespace-nowrap">
                     {project.category}
                   </span>
-                  <span className={`text-xs px-2 py-1 rounded-full ${project.status === 'published'
+                  <span className={`text-xs px-2 py-1 rounded-full whitespace-nowrap ${project.status === 'published'
                     ? 'bg-primary/10 text-primary'
                     : 'bg-muted text-muted-foreground'
                     }`}>
@@ -237,12 +237,13 @@ const ProjectsList = () => {
               </div>
 
               {/* Actions */}
-              <div className="grid grid-cols-2 gap-1.5 sm:flex sm:gap-2 flex-shrink-0">
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 flex-shrink-0">
                 <Button
                   variant="outline"
                   size="icon"
                   onClick={() => toggleStatus(project)}
                   title={project.status === 'published' ? 'Unpublish' : 'Publish'}
+                  className="min-h-[44px] min-w-[44px]"
                 >
                   {project.status === 'published' ? (
                     <EyeOff className="w-4 h-4" />
@@ -251,13 +252,13 @@ const ProjectsList = () => {
                   )}
                 </Button>
                 {project.status === 'published' && (
-                  <Button variant="outline" size="icon" asChild>
+                  <Button variant="outline" size="icon" asChild className="min-h-[44px] min-w-[44px]">
                     <Link to={`/project/${project.slug}`} target="_blank">
                       <ExternalLink className="w-4 h-4" />
                     </Link>
                   </Button>
                 )}
-                <Button variant="outline" size="icon" asChild>
+                <Button variant="outline" size="icon" asChild className="min-h-[44px] min-w-[44px]">
                   <Link to={`/admin/projects/${project.id}`}>
                     <Edit className="w-4 h-4" />
                   </Link>
@@ -266,7 +267,7 @@ const ProjectsList = () => {
                   variant="outline"
                   size="icon"
                   onClick={() => setDeleteId(project.id)}
-                  className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                  className="text-destructive hover:bg-destructive hover:text-destructive-foreground min-h-[44px] min-w-[44px]"
                 >
                   <Trash2 className="w-4 h-4" />
                 </Button>

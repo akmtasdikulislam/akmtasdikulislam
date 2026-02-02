@@ -85,8 +85,8 @@ const BlogEditorSidebar = ({ formData, setFormData, categories }: BlogEditorSide
   };
 
   return (
-    <div className="w-80 shrink-0 border-l border-border bg-card/30 overflow-y-auto">
-      <div className="p-4 space-y-6">
+    <div className="w-full lg:w-80 shrink-0 border-l border-border bg-card/30 overflow-y-auto lg:relative absolute lg:static inset-0 z-40 lg:z-auto">
+      <div className="p-4 sm:p-6 space-y-6">
         {/* Cover Image */}
         <div className="space-y-3">
           <Label className="text-sm font-medium">Cover Image</Label>

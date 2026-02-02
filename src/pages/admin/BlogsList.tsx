@@ -249,12 +249,13 @@ const BlogsList = () => {
               </div>
 
               {/* Actions */}
-              <div className="grid grid-cols-2 gap-1.5 sm:flex sm:gap-2 flex-shrink-0">
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 flex-shrink-0">
                 <Button
                   variant="outline"
                   size="icon"
                   onClick={() => toggleStatus(post)}
                   title={post.status === 'published' ? 'Unpublish' : 'Publish'}
+                  className="min-h-[44px] min-w-[44px]"
                 >
                   {post.status === 'published' ? (
                     <EyeOff className="w-4 h-4" />
@@ -263,13 +264,13 @@ const BlogsList = () => {
                   )}
                 </Button>
                 {post.status === 'published' && (
-                  <Button variant="outline" size="icon" asChild>
+                  <Button variant="outline" size="icon" asChild className="min-h-[44px] min-w-[44px]">
                     <Link to={`/blog/${post.slug}`} target="_blank">
                       <ExternalLink className="w-4 h-4" />
                     </Link>
                   </Button>
                 )}
-                <Button variant="outline" size="icon" asChild>
+                <Button variant="outline" size="icon" asChild className="min-h-[44px] min-w-[44px]">
                   <Link to={`/admin/blogs/${post.id}`}>
                     <Edit className="w-4 h-4" />
                   </Link>
@@ -278,7 +279,7 @@ const BlogsList = () => {
                   variant="outline"
                   size="icon"
                   onClick={() => setDeleteId(post.id)}
-                  className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                  className="text-destructive hover:bg-destructive hover:text-destructive-foreground min-h-[44px] min-w-[44px]"
                 >
                   <Trash2 className="w-4 h-4" />
                 </Button>

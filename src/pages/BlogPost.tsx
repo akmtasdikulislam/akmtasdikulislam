@@ -5,7 +5,6 @@ import AuthorCard from "@/components/ui/AuthorCard";
 import { Button } from "@/components/ui/button";
 import CodeBlock from "@/components/ui/CodeBlock";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import CustomCursor from "@/components/ui/CustomCursor";
 import GlowingParticle from "@/components/ui/GlowingParticle";
 import LinkPreviewCard from "@/components/ui/LinkPreviewCard";
 import RelatedItems from "@/components/ui/RelatedItems";
@@ -751,7 +750,6 @@ const BlogPost = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <CustomCursor />
       <GlowingParticle />
       <Navbar />
 

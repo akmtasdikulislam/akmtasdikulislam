@@ -90,7 +90,9 @@ const App = () => {
       <AuthProvider>
         <TooltipProvider>
           <BrowserRouter>
-            <AppContent />
+            <CursorProvider>
+              <AppContent />
+            </CursorProvider>
           </BrowserRouter>
         </TooltipProvider>
       </AuthProvider>

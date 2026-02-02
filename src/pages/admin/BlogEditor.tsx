@@ -195,34 +195,35 @@ const BlogEditor = () => {
         className="shrink-0"
       >
         {/* Header */}
-        <div className="flex items-center justify-between gap-4 px-6 py-4 border-b border-border bg-card/50">
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" onClick={() => navigate('/admin/blogs')}>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 px-4 sm:px-6 py-4 border-b border-border bg-card/50">
+          <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+            <Button variant="ghost" size="icon" onClick={() => navigate('/admin/blogs')} className="shrink-0">
               <ArrowLeft className="w-5 h-5" />
             </Button>
-            <div>
-              <h1 className="text-xl font-bold">{isNew ? 'New Blog Post' : 'Edit Blog Post'}</h1>
-              <p className="text-sm text-muted-foreground">
+            <div className="min-w-0">
+              <h1 className="text-lg sm:text-xl font-bold truncate">{isNew ? 'New Blog Post' : 'Edit Blog Post'}</h1>
+              <p className="text-xs sm:text-sm text-muted-foreground truncate">
                 {formData.read_time} min read • {formData.status === 'published' ? 'Published' : 'Draft'}
               </p>
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+          <div className="flex flex-wrap items-center gap-2">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="text-xs sm:text-sm"
             >
-              {sidebarOpen ? <EyeOff className="w-4 h-4 mr-2" /> : <Eye className="w-4 h-4 mr-2" />}
-              {sidebarOpen ? 'Hide' : 'Show'} Settings
+              {sidebarOpen ? <EyeOff className="w-4 h-4 sm:mr-2" /> : <Eye className="w-4 h-4 sm:mr-2" />}
+              <span className="hidden sm:inline">{sidebarOpen ? 'Hide' : 'Show'} Settings</span>
             </Button>
 
             <Select
               value={formData.status}
               onValueChange={(value) => setFormData(prev => ({ ...prev, status: value }))}
             >
-              <SelectTrigger className="w-32">
+              <SelectTrigger className="w-24 sm:w-32">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -231,16 +232,16 @@ const BlogEditor = () => {
               </SelectContent>
             </Select>
 
-            <Button onClick={() => handleSubmit()} disabled={saving}>
+            <Button onClick={() => handleSubmit()} disabled={saving} className="min-h-[44px]">
               {saving ? (
                 <span className="flex items-center gap-2">
                   <span className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                  Saving...
+                  <span className="hidden sm:inline">Saving...</span>
                 </span>
               ) : (
                 <span className="flex items-center gap-2">
                   <Save className="w-4 h-4" />
-                  {isNew ? 'Publish' : 'Save'}
+                  <span className="hidden sm:inline">{isNew ? 'Publish' : 'Save'}</span>
                 </span>
               )}
             </Button>
@@ -249,7 +250,15 @@ const BlogEditor = () => {
       </motion.div>
 
       {/* Main content area */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex overflow-hidden relative">
+        {/* Mobile sidebar backdrop */}
+        {sidebarOpen && (
+          <div
+            className="lg:hidden fixed inset-0 bg-black/50 z-30"
+            onClick={() => setSidebarOpen(false)}
+          />
+        )}
+
         {/* Editor panel - shows real-time preview */}
         <div className="flex-1 overflow-y-auto">
           <div className="max-w-4xl mx-auto py-6 sm:py-8 px-4 sm:px-6">

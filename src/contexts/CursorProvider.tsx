@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { createContext, ReactNode, useEffect, useState } from 'react';
 
 interface TouchRipple {
   id: number;
@@ -7,30 +7,52 @@ interface TouchRipple {
   y: number;
 }
 
-const CustomCursor = () => {
+interface CursorContextType {
+  mousePosition: { x: number; y: number };
+  isHovering: boolean;
+  isClicking: boolean;
+  isUsingTouch: boolean;
+}
+
+export const CursorContext = createContext<CursorContextType | null>(null);
+
+interface CursorProviderProps {
+  children: ReactNode;
+}
+
+export const CursorProvider = ({ children }: CursorProviderProps) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
   const [isUsingTouch, setIsUsingTouch] = useState(false);
   const [touchRipples, setTouchRipples] = useState<TouchRipple[]>([]);
 
-  // Dynamically detect input method - mouse or touch
+  // Enhanced input detection system
   useEffect(() => {
-    // Check initial state
+    // Initial detection: Check for touch capabilities
     const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    setIsUsingTouch(hasTouch);
+    const hasMouse = matchMedia('(pointer: fine)').matches;
+    
+    // If device has both capabilities, default to mouse unless touch is used first
+    // If only touch, start in touch mode
+    if (hasTouch && !hasMouse) {
+      setIsUsingTouch(true);
+    }
   }, []);
 
   useEffect(() => {
+    // Mouse movement handler - indicates mouse input
     const updateMousePosition = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
-      // When mouse moves, we're using mouse input
+      // When mouse moves, switch to mouse mode
       setIsUsingTouch(false);
     };
 
+    // Mouse interaction handlers
     const handleMouseDown = () => setIsClicking(true);
     const handleMouseUp = () => setIsClicking(false);
 
+    // Hover detection for interactive elements
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (
@@ -48,7 +70,7 @@ const CustomCursor = () => {
       setIsHovering(false);
     };
 
-    // Touch event handler for ripple effects
+    // Touch event handler - indicates touch input
     const handleTouchStart = (e: TouchEvent) => {
       // When touch is used, switch to touch mode
       setIsUsingTouch(true);
@@ -68,12 +90,24 @@ const CustomCursor = () => {
       }, 800);
     };
 
+    // Pointer event handler for hybrid device detection
+    const handlePointerMove = (e: PointerEvent) => {
+      // PointerEvent provides pointerType which can be 'mouse', 'pen', or 'touch'
+      if (e.pointerType === 'touch') {
+        setIsUsingTouch(true);
+      } else if (e.pointerType === 'mouse' || e.pointerType === 'pen') {
+        setIsUsingTouch(false);
+      }
+    };
+
+    // Add all event listeners
     window.addEventListener('mousemove', updateMousePosition);
     window.addEventListener('mousedown', handleMouseDown);
     window.addEventListener('mouseup', handleMouseUp);
     document.addEventListener('mouseover', handleMouseOver);
     document.addEventListener('mouseout', handleMouseOut);
     window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('pointermove', handlePointerMove);
 
     return () => {
       window.removeEventListener('mousemove', updateMousePosition);
@@ -82,11 +116,21 @@ const CustomCursor = () => {
       document.removeEventListener('mouseover', handleMouseOver);
       document.removeEventListener('mouseout', handleMouseOut);
       window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('pointermove', handlePointerMove);
     };
   }, []);
 
+  const contextValue: CursorContextType = {
+    mousePosition,
+    isHovering,
+    isClicking,
+    isUsingTouch,
+  };
+
   return (
-    <>
+    <CursorContext.Provider value={contextValue}>
+      {children}
+      
       {/* Touch Ripples - only on touch devices */}
       {touchRipples.map(ripple => (
         <div key={ripple.id}>
@@ -255,8 +299,6 @@ const CustomCursor = () => {
           }
         }
       `}</style>
-    </>
+    </CursorContext.Provider>
   );
 };
-
-export default CustomCursor;

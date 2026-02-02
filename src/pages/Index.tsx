@@ -8,7 +8,6 @@ import Navbar from "@/components/sections/Navbar";
 import Projects from "@/components/sections/Projects";
 import Services from "@/components/sections/Services";
 import WhyChooseMe from "@/components/sections/WhyChooseMe";
-import CustomCursor from "@/components/ui/CustomCursor";
 import GlowingParticle from "@/components/ui/GlowingParticle";
 
 import Certifications from "@/components/sections/Certifications";
@@ -18,7 +17,6 @@ import Testimonials from "@/components/sections/Testimonials";
 const Index = () => {
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
-      <CustomCursor />
       <GlowingParticle />
       <Navbar />
       <Hero />

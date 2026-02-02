@@ -1,5 +1,4 @@
 import HackerTextLoader from '@/components/loaders/HackerTextLoader';
-import CustomCursor from '@/components/ui/CustomCursor';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -68,7 +67,6 @@ const AdminLayout = () => {
 
   return (
     <>
-      <CustomCursor />
       {/* Hacker Text Loader */}
       <AnimatePresence>
         {pageLoading && (

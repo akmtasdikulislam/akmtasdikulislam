@@ -2,7 +2,6 @@ import PasswordCrackLoader from "@/components/loaders/PasswordCrackLoader";
 import Footer from "@/components/sections/Footer";
 import Navbar from "@/components/sections/Navbar";
 import { Button } from "@/components/ui/button";
-import CustomCursor from "@/components/ui/CustomCursor";
 import GlowingParticle from "@/components/ui/GlowingParticle";
 import ProjectDetailsSidebar from "@/components/ui/ProjectDetailsSidebar";
 import { supabase } from "@/integrations/supabase/client";
@@ -169,7 +168,6 @@ const ProjectDetail = () => {
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
-      <CustomCursor />
       <GlowingParticle />
       <Navbar />
 
