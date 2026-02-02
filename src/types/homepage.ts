@@ -150,3 +150,71 @@ export interface HomepageGeneral {
   created_at: string;
   updated_at: string;
 }
+
+export interface HomepageExpertiseTech {
+  id: string;
+  name: string;
+  icon_url: string;
+  category: string;
+  is_marquee: boolean;
+  in_expertise_grid: boolean;
+  display_order: number;
+  invert_icon: boolean;
+  created_at: string;
+  updated_at?: string;
+}
+
+export interface HomepageExpertiseCard {
+  id: string;
+  title: string;
+  description: string;
+  icon_url: string;
+  display_order: number;
+  created_at: string;
+  updated_at?: string;
+}
+
+export interface HomepageService {
+  id: string;
+  title: string;
+  description: string;
+  icon_name: string;
+  features: string[];
+  display_order: number;
+  created_at: string;
+  updated_at?: string;
+}
+
+export interface HomepageTestimonial {
+  id: string;
+  name: string;
+  role: string | null;
+  content: string;
+  avatar_url: string | null;
+  rating: number;
+  display_order: number;
+  is_visible: boolean;
+  created_at: string;
+  updated_at?: string;
+}
+
+export interface HomepageCodingProfile {
+  id: string;
+  platform: string;
+  url: string;
+  icon_url: string | null;
+  display_order: number;
+  created_at: string;
+  updated_at?: string;
+}
+
+export interface HomepageContactInfo {
+  id: string;
+  email: string | null;
+  location: string | null;
+  location_url: string | null;
+  available_for_work: boolean;
+  available_text: string | null;
+  created_at: string;
+  updated_at?: string;
+}

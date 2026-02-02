@@ -7,18 +7,21 @@ import {
   Briefcase,
   ChevronDown,
   ChevronRight,
+  Code,
   FileText,
   FolderKanban,
   Home,
   LayoutDashboard,
   LogOut,
   Menu,
-  MessageSquare,
+  MessageSquare, // For Services or Contact
+  Phone,
   Quote,
   Settings,
   Terminal,
   User,
-  X
+  X,
+  Zap
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
@@ -48,6 +51,11 @@ const navSections: NavSection[] = [
       { icon: Home, label: 'Hero Section', path: '/admin/homepage/hero' },
       { icon: LayoutDashboard, label: 'Navbar', path: '/admin/homepage/navbar' },
       { icon: MessageSquare, label: 'About', path: '/admin/homepage/about' },
+
+      { icon: Code, label: 'Expertise', path: '/admin/homepage/expertise' },
+      { icon: Zap, label: 'Services', path: '/admin/homepage/services' },
+      { icon: Quote, label: 'Testimonials', path: '/admin/homepage/testimonials' },
+      { icon: Phone, label: 'Contact', path: '/admin/homepage/contact' },
       { icon: Terminal, label: 'Footer', path: '/admin/homepage/footer' },
       { icon: Settings, label: 'Settings', path: '/admin/homepage/settings' },
     ],

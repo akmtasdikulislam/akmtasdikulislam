@@ -3,6 +3,10 @@ import type {
     HomepageAboutHighlight,
     HomepageAboutInterest,
     HomepageAboutValue,
+    HomepageCodingProfile,
+    HomepageContactInfo,
+    HomepageExpertiseCard,
+    HomepageExpertiseTech,
     HomepageFooter,
     HomepageGeneral,
     HomepageHero,
@@ -12,7 +16,9 @@ import type {
     HomepageHeroTech,
     HomepageNavbar,
     HomepageNavLink,
+    HomepageService,
     HomepageSocialLink,
+    HomepageTestimonial,
 } from '@/types/homepage';
 import { supabase } from './client';
 
@@ -338,4 +344,252 @@ export const getAllFooterData = async () => {
   ]);
 
   return { footer, socialLinks };
+};
+
+// ============================================================================
+// EXPERTISE QUERIES
+// ============================================================================
+
+export const getExpertiseTechs = async () => {
+  const { data, error } = await supabase
+    .from('homepage_expertise_techs')
+    .select('*')
+    .order('display_order', { ascending: true });
+  
+  if (error) throw error;
+  return data as HomepageExpertiseTech[];
+};
+
+export const updateExpertiseTech = async (tech: Partial<HomepageExpertiseTech>) => {
+  const { data, error } = await supabase
+    .from('homepage_expertise_techs')
+    .update(tech)
+    .eq('id', tech.id!)
+    .select()
+    .single();
+  
+  if (error) throw error;
+  return data;
+};
+
+export const createExpertiseTech = async (tech: Omit<HomepageExpertiseTech, 'id' | 'created_at'>) => {
+  const { data, error } = await supabase
+    .from('homepage_expertise_techs')
+    .insert(tech)
+    .select()
+    .single();
+  
+  if (error) throw error;
+  return data;
+};
+
+export const deleteExpertiseTech = async (id: string) => {
+  const { error } = await supabase
+    .from('homepage_expertise_techs')
+    .delete()
+    .eq('id', id);
+  
+  if (error) throw error;
+};
+
+export const getExpertiseCards = async () => {
+    const { data, error } = await supabase
+      .from('homepage_expertise_cards')
+      .select('*')
+      .order('display_order', { ascending: true });
+    
+    if (error) throw error;
+    return data as HomepageExpertiseCard[];
+  };
+
+export const updateExpertiseCard = async (card: Partial<HomepageExpertiseCard>) => {
+    const { data, error } = await supabase
+      .from('homepage_expertise_cards')
+      .update(card)
+      .eq('id', card.id!)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+};
+
+export const createExpertiseCard = async (card: Omit<HomepageExpertiseCard, 'id' | 'created_at'>) => {
+    const { data, error } = await supabase
+      .from('homepage_expertise_cards')
+      .insert(card)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+};
+
+export const deleteExpertiseCard = async (id: string) => {
+    const { error } = await supabase
+      .from('homepage_expertise_cards')
+      .delete()
+      .eq('id', id);
+    
+    if (error) throw error;
+};
+
+// ============================================================================
+// SERVICES QUERIES
+// ============================================================================
+
+export const getServices = async () => {
+    const { data, error } = await supabase
+      .from('homepage_services')
+      .select('*')
+      .order('display_order', { ascending: true });
+    
+    if (error) throw error;
+    return data as HomepageService[];
+};
+
+export const updateService = async (service: Partial<HomepageService>) => {
+    const { data, error } = await supabase
+      .from('homepage_services')
+      .update(service)
+      .eq('id', service.id!)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+};
+
+export const createService = async (service: Omit<HomepageService, 'id' | 'created_at'>) => {
+    const { data, error } = await supabase
+      .from('homepage_services')
+      .insert(service)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+};
+
+export const deleteService = async (id: string) => {
+    const { error } = await supabase
+      .from('homepage_services')
+      .delete()
+      .eq('id', id);
+    
+    if (error) throw error;
+};
+
+// ============================================================================
+// TESTIMONIALS QUERIES
+// ============================================================================
+
+export const getTestimonials = async () => {
+    const { data, error } = await supabase
+      .from('homepage_testimonials')
+      .select('*')
+      .order('display_order', { ascending: true });
+    
+    if (error) throw error;
+    return data as HomepageTestimonial[];
+};
+
+export const updateTestimonial = async (item: Partial<HomepageTestimonial>) => {
+    const { data, error } = await supabase
+      .from('homepage_testimonials')
+      .update(item)
+      .eq('id', item.id!)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+};
+
+export const createTestimonial = async (item: Omit<HomepageTestimonial, 'id' | 'created_at'>) => {
+    const { data, error } = await supabase
+      .from('homepage_testimonials')
+      .insert(item)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+};
+
+export const deleteTestimonial = async (id: string) => {
+    const { error } = await supabase
+      .from('homepage_testimonials')
+      .delete()
+      .eq('id', id);
+    
+    if (error) throw error;
+};
+
+// ============================================================================
+// CODING PROFILES & CONTACT
+// ============================================================================
+
+export const getCodingProfiles = async () => {
+    const { data, error } = await supabase
+      .from('homepage_coding_profiles')
+      .select('*')
+      .order('display_order', { ascending: true });
+    
+    if (error) throw error;
+    return data as HomepageCodingProfile[];
+};
+
+export const updateCodingProfile = async (item: Partial<HomepageCodingProfile>) => {
+    const { data, error } = await supabase
+      .from('homepage_coding_profiles')
+      .update(item)
+      .eq('id', item.id!)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+};
+
+export const createCodingProfile = async (item: Omit<HomepageCodingProfile, 'id' | 'created_at'>) => {
+    const { data, error } = await supabase
+      .from('homepage_coding_profiles')
+      .insert(item)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+};
+
+export const deleteCodingProfile = async (id: string) => {
+    const { error } = await supabase
+      .from('homepage_coding_profiles')
+      .delete()
+      .eq('id', id);
+    
+    if (error) throw error;
+};
+
+export const getContactInfo = async () => {
+    const { data, error } = await supabase
+      .from('homepage_contact_info')
+      .select('*')
+      .single();
+    
+    if (error) throw error;
+    return data as HomepageContactInfo;
+};
+
+export const updateContactInfo = async (info: Partial<HomepageContactInfo>) => {
+    const { data, error } = await supabase
+      .from('homepage_contact_info')
+      .update(info)
+      .eq('id', info.id!)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
 };

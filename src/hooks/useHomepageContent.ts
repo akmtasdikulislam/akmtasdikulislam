@@ -1,9 +1,15 @@
 import {
-    getAllAboutData,
-    getAllFooterData,
-    getAllHeroData,
-    getAllNavbarData,
-    getGeneralSettings,
+  getAllAboutData,
+  getAllFooterData,
+  getAllHeroData,
+  getAllNavbarData,
+  getCodingProfiles,
+  getContactInfo,
+  getExpertiseCards,
+  getExpertiseTechs,
+  getGeneralSettings,
+  getServices,
+  getTestimonials,
 } from '@/integrations/supabase/homepageQueries';
 import { useQuery } from '@tanstack/react-query';
 
@@ -69,4 +75,55 @@ export const useAllHomepageContent = () => {
     isLoading: hero.isLoading || navbar.isLoading || about.isLoading || footer.isLoading || general.isLoading,
     isError: hero.isError || navbar.isError || about.isError || footer.isError || general.isError,
   };
+};
+
+// Hook for Expertise data
+export const useExpertiseContent = () => {
+  return useQuery({
+    queryKey: ['homepage', 'expertise'],
+    queryFn: async () => {
+        const [techs, cards] = await Promise.all([
+            getExpertiseTechs(),
+            getExpertiseCards()
+        ]);
+        return { techs, cards };
+    },
+    staleTime: 1000 * 60 * 5,
+  });
+};
+
+// Hook for Services data
+export const useServicesContent = () => {
+    return useQuery({
+        queryKey: ['homepage', 'services'],
+        queryFn: getServices,
+        staleTime: 1000 * 60 * 5,
+    });
+};
+
+// Hook for Testimonials
+export const useTestimonialsContent = () => {
+    return useQuery({
+        queryKey: ['homepage', 'testimonials'],
+        queryFn: getTestimonials,
+        staleTime: 1000 * 60 * 5,
+    });
+};
+
+// Hook for Coding Profiles
+export const useCodingProfilesContent = () => {
+    return useQuery({
+        queryKey: ['homepage', 'coding_profiles'],
+        queryFn: getCodingProfiles,
+        staleTime: 1000 * 60 * 5,
+    });
+};
+
+// Hook for Contact Info
+export const useContactContent = () => {
+    return useQuery({
+        queryKey: ['homepage', 'contact'],
+        queryFn: getContactInfo,
+        staleTime: 1000 * 60 * 5,
+    });
 };

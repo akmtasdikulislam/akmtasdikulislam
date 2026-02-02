@@ -749,6 +749,210 @@ export type Database = {
         }
         Relationships: []
       }
+      homepage_expertise_techs: {
+        Row: {
+          id: string
+          name: string
+          icon_url: string | null
+          category: string
+          is_marquee: boolean | null
+          in_expertise_grid: boolean | null
+          display_order: number | null
+          invert_icon: boolean | null
+          created_at: string
+          updated_at: string | null
+        }
+        Insert: {
+          id?: string
+          name: string
+          icon_url?: string | null
+          category: string
+          is_marquee?: boolean | null
+          in_expertise_grid?: boolean | null
+          display_order?: number | null
+          invert_icon?: boolean | null
+          created_at?: string
+          updated_at?: string | null
+        }
+        Update: {
+          id?: string
+          name?: string
+          icon_url?: string | null
+          category?: string
+          is_marquee?: boolean | null
+          in_expertise_grid?: boolean | null
+          display_order?: number | null
+          invert_icon?: boolean | null
+          created_at?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      homepage_expertise_cards: {
+        Row: {
+          id: string
+          title: string
+          description: string | null
+          icon_url: string | null
+          display_order: number | null
+          created_at: string
+          updated_at: string | null
+        }
+        Insert: {
+          id?: string
+          title: string
+          description?: string | null
+          icon_url?: string | null
+          display_order?: number | null
+          created_at?: string
+          updated_at?: string | null
+        }
+        Update: {
+          id?: string
+          title?: string
+          description?: string | null
+          icon_url?: string | null
+          display_order?: number | null
+          created_at?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      homepage_services: {
+        Row: {
+            id: string
+            title: string
+            description: string | null
+            icon_name: string | null
+            features: string[] | null
+            display_order: number | null
+            created_at: string
+            updated_at: string | null
+        }
+        Insert: {
+            id?: string
+            title: string
+            description?: string | null
+            icon_name?: string | null
+            features?: string[] | null
+            display_order?: number | null
+            created_at?: string
+            updated_at?: string | null
+        }
+        Update: {
+            id?: string
+            title?: string
+            description?: string | null
+            icon_name?: string | null
+            features?: string[] | null
+            display_order?: number | null
+            created_at?: string
+            updated_at?: string | null
+        }
+        Relationships: []
+      }
+      homepage_testimonials: {
+        Row: {
+            id: string
+            name: string
+            role: string | null
+            content: string
+            avatar_url: string | null
+            rating: number | null
+            display_order: number | null
+            is_visible: boolean | null
+            created_at: string
+            updated_at: string | null
+        }
+        Insert: {
+            id?: string
+            name: string
+            role?: string | null
+            content: string
+            avatar_url?: string | null
+            rating?: number | null
+            display_order?: number | null
+            is_visible?: boolean | null
+            created_at?: string
+            updated_at?: string | null
+        }
+        Update: {
+            id?: string
+            name?: string
+            role?: string | null
+            content?: string
+            avatar_url?: string | null
+            rating?: number | null
+            display_order?: number | null
+            is_visible?: boolean | null
+            created_at?: string
+            updated_at?: string | null
+        }
+        Relationships: []
+      }
+      homepage_coding_profiles: {
+        Row: {
+            id: string
+            platform: string
+            url: string
+            icon_url: string | null
+            display_order: number | null
+            created_at: string
+            updated_at: string | null
+        }
+        Insert: {
+            id?: string
+            platform: string
+            url: string
+            icon_url?: string | null
+            display_order?: number | null
+            created_at?: string
+            updated_at?: string | null
+        }
+        Update: {
+            id?: string
+            platform?: string
+            url?: string
+            icon_url?: string | null
+            display_order?: number | null
+            created_at?: string
+            updated_at?: string | null
+        }
+        Relationships: []
+      }
+      homepage_contact_info: {
+        Row: {
+            id: string
+            email: string | null
+            location: string | null
+            location_url: string | null
+            available_for_work: boolean | null
+            available_text: string | null
+            created_at: string
+            updated_at: string | null
+        }
+        Insert: {
+            id?: string
+            email?: string | null
+            location?: string | null
+            location_url?: string | null
+            available_for_work?: boolean | null
+            available_text?: string | null
+            created_at?: string
+            updated_at?: string | null
+        }
+        Update: {
+            id?: string
+            email?: string | null
+            location?: string | null
+            location_url?: string | null
+            available_for_work?: boolean | null
+            available_text?: string | null
+            created_at?: string
+            updated_at?: string | null
+        }
+        Relationships: []
+      }
       homepage_general: {
         Row: {
           id: string
