@@ -11,21 +11,36 @@ const Expertise = () => {
   const techs = data?.techs || [];
   const cards = data?.cards || [];
 
+  // Filter techs
   const programmingLanguages = techs.filter(t => t.category === 'Language');
-  // Fallback if no marquee techs
-  const allTechs = techs.length > 0 ? techs : [];
 
+  // Marquee Logic (Split into two rows)
+  const marqueeTechs = techs.filter(t => t.is_marquee !== false); // Default to true if null
+  const half = Math.ceil(marqueeTechs.length / 2);
+  const row1 = marqueeTechs.slice(0, half).map(t => ({ ...t, icon: t.icon_url || '' }));
+  const row2 = marqueeTechs.slice(half).map(t => ({ ...t, icon: t.icon_url || '' }));
+
+  // Category Logic
   const categoryMap: Record<string, { title: string; color: string }> = {
-    'Frontend': { title: 'Frontend', color: 'primary' },
-    'Framework': { title: 'Frameworks and Integrations', color: 'accent' },
-    'Backend': { title: 'Backend & Database', color: 'destructive' },
-    'Tools': { title: 'Tools & Platforms', color: 'primary' }
+    'frontend': { title: 'Frontend', color: 'primary' },
+    'framework': { title: 'Frameworks and Integrations', color: 'accent' },
+    'backend': { title: 'Backend & Database', color: 'destructive' },
+    'tools': { title: 'Tools & Platforms', color: 'primary' }
   };
 
-  const displayCategories = ['Frontend', 'Framework', 'Backend', 'Tools'].map(key => ({
-    ...categoryMap[key],
-    techs: techs.filter(t => t.category === key && t.in_expertise_grid)
-  })).filter(cat => cat.techs.length > 0);
+  const normalize = (s: string) => s ? s.toLowerCase() : '';
+
+  const displayCategories = ['frontend', 'framework', 'backend', 'tools'].map(key => {
+    const categoryTechs = techs.filter(t =>
+      normalize(t.category) === key &&
+      (t.in_expertise_grid !== false) // Default to true if null
+    );
+
+    return {
+      ...categoryMap[key],
+      techs: categoryTechs
+    };
+  }).filter(cat => cat.techs.length > 0);
 
   return (
     <section id="expertise" className="py-24 relative overflow-hidden bg-secondary/10">
@@ -41,9 +56,10 @@ const Expertise = () => {
           description="Technologies and tools I work with to bring ideas to life"
         />
 
-        {/* Tech Marquee */}
-        <div className="mb-12 -mx-4 md:mx-0">
-          <TechMarquee items={allTechs} direction="left" speed="normal" />
+        {/* Tech Marquee - Dual Rows */}
+        <div className="mb-12 -mx-4 md:mx-0 space-y-4">
+          <TechMarquee items={row1} direction="left" speed="normal" />
+          <TechMarquee items={row2} direction="right" speed="slow" />
         </div>
 
         {/* Programming Languages Section */}
