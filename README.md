@@ -11,7 +11,7 @@
   [![Email](https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:your-email)
   [![Upwork](https://img.shields.io/badge/Upwork-6FDA44?style=for-the-badge&logo=upwork&logoColor=white)](your-upwork-url)
   
-  ![Profile Views](https://komarev.com/ghpvc/?username=YOUR_USERNAME&color=3B82F6&style=for-the-badge&label=PROFILE+VIEWS)
+  ![Profile Views](https://komarev.com/ghpvc/?username=akmtasdikulislam&color=3B82F6&style=for-the-badge&label=PROFILE+VIEWS)
   
 </div>
 
