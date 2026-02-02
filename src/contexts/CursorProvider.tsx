@@ -32,7 +32,7 @@ export const CursorProvider = ({ children }: CursorProviderProps) => {
     // Initial detection: Check for touch capabilities
     const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     const hasMouse = matchMedia('(pointer: fine)').matches;
-    
+
     // If device has both capabilities, default to mouse unless touch is used first
     // If only touch, start in touch mode
     if (hasTouch && !hasMouse) {
@@ -130,7 +130,7 @@ export const CursorProvider = ({ children }: CursorProviderProps) => {
   return (
     <CursorContext.Provider value={contextValue}>
       {children}
-      
+
       {/* Touch Ripples - only on touch devices */}
       {touchRipples.map(ripple => (
         <div key={ripple.id}>
@@ -302,3 +302,5 @@ export const CursorProvider = ({ children }: CursorProviderProps) => {
     </CursorContext.Provider>
   );
 };
+
+export default CursorProvider;
