@@ -41,19 +41,47 @@ export const CursorProvider = ({ children }: CursorProviderProps) => {
   }, []);
 
   useEffect(() => {
+    let lastTouchTime = 0;
+
     // Mouse movement handler - indicates mouse input
+    // But ignore mouse events that are actually from touch
     const updateMousePosition = (e: MouseEvent) => {
+      // Ignore mouse events that occur shortly after a touch event
+      // (these are touch-emulated mouse events)
+      const timeSinceTouch = Date.now() - lastTouchTime;
+      if (timeSinceTouch < 500) {
+        return; // Ignore this mouse event, it's from a touch
+      }
+
       setMousePosition({ x: e.clientX, y: e.clientY });
-      // When mouse moves, switch to mouse mode
+      // Only switch to mouse mode if this is a real mouse event
       setIsUsingTouch(false);
     };
 
     // Mouse interaction handlers
-    const handleMouseDown = () => setIsClicking(true);
-    const handleMouseUp = () => setIsClicking(false);
+    const handleMouseDown = () => {
+      const timeSinceTouch = Date.now() - lastTouchTime;
+      if (timeSinceTouch < 500) {
+        return; // Ignore, this is from a touch
+      }
+      setIsClicking(true);
+    };
+
+    const handleMouseUp = () => {
+      const timeSinceTouch = Date.now() - lastTouchTime;
+      if (timeSinceTouch < 500) {
+        return; // Ignore, this is from a touch
+      }
+      setIsClicking(false);
+    };
 
     // Hover detection for interactive elements
     const handleMouseOver = (e: MouseEvent) => {
+      const timeSinceTouch = Date.now() - lastTouchTime;
+      if (timeSinceTouch < 500) {
+        return; // Ignore, this is from a touch
+      }
+
       const target = e.target as HTMLElement;
       if (
         target.tagName === 'A' ||
@@ -72,6 +100,9 @@ export const CursorProvider = ({ children }: CursorProviderProps) => {
 
     // Touch event handler - indicates touch input
     const handleTouchStart = (e: TouchEvent) => {
+      // Record the time of this touch event
+      lastTouchTime = Date.now();
+
       // When touch is used, switch to touch mode
       setIsUsingTouch(true);
 
@@ -94,9 +125,14 @@ export const CursorProvider = ({ children }: CursorProviderProps) => {
     const handlePointerMove = (e: PointerEvent) => {
       // PointerEvent provides pointerType which can be 'mouse', 'pen', or 'touch'
       if (e.pointerType === 'touch') {
+        lastTouchTime = Date.now();
         setIsUsingTouch(true);
       } else if (e.pointerType === 'mouse' || e.pointerType === 'pen') {
-        setIsUsingTouch(false);
+        // Only switch to mouse mode if it's been a while since last touch
+        const timeSinceTouch = Date.now() - lastTouchTime;
+        if (timeSinceTouch >= 500) {
+          setIsUsingTouch(false);
+        }
       }
     };
 
