@@ -1,0 +1,656 @@
+@import "@fontsource/space-grotesk/400.css";
+@import "@fontsource/space-grotesk/500.css";
+@import "@fontsource/space-grotesk/600.css";
+@import "@fontsource/space-grotesk/700.css";
+@import "@fontsource/jetbrains-mono/400.css";
+@import "@fontsource/jetbrains-mono/500.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 4%;
+    --foreground: 0 0% 95%;
+
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 160 84% 39%;
+    --primary-foreground: 0 0% 4%;
+
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 95%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+
+    --accent: 217 91% 60%;
+    --accent-foreground: 0 0% 95%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 95%;
+
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 160 84% 39%;
+
+    --radius: 0.5rem;
+
+    /* Custom colors */
+    --glow-green: 160 84% 39%;
+    --glow-blue: 217 91% 60%;
+    --glow-red: 0 84% 60%;
+    --terminal-green: 142 71% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased overflow-x-hidden;
+    font-family: "Space Grotesk", system-ui, sans-serif;
+  }
+
+  /* Monospace font for code elements */
+  code, pre, .font-mono {
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  }
+
+  /* Custom cursor is handled by CustomCursor.tsx component */
+
+  ::selection {
+    background-color: hsl(var(--primary) / 0.3);
+    color: hsl(var(--foreground));
+  }
+}
+
+@layer utilities {
+  /* Glow effects */
+  .glow-green {
+    box-shadow: 0 0 20px hsl(var(--glow-green) / 0.4),
+                0 0 40px hsl(var(--glow-green) / 0.2),
+                0 0 60px hsl(var(--glow-green) / 0.1);
+  }
+
+  .glow-green-sm {
+    box-shadow: 0 0 10px hsl(var(--glow-green) / 0.3),
+                0 0 20px hsl(var(--glow-green) / 0.15);
+  }
+
+  .glow-blue {
+    box-shadow: 0 0 20px hsl(var(--glow-blue) / 0.4),
+                0 0 40px hsl(var(--glow-blue) / 0.2);
+  }
+
+  .glow-red {
+    box-shadow: 0 0 20px hsl(var(--glow-red) / 0.4),
+                0 0 40px hsl(var(--glow-red) / 0.2);
+  }
+
+  .text-glow-green {
+    text-shadow: 0 0 10px hsl(var(--glow-green) / 0.5),
+                 0 0 20px hsl(var(--glow-green) / 0.3),
+                 0 0 40px hsl(var(--glow-green) / 0.2);
+  }
+
+  /* Pattern backgrounds */
+  .bg-grid-pattern {
+    background-image: 
+      linear-gradient(hsl(var(--border) / 0.5) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--border) / 0.5) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  .bg-dot-pattern {
+    background-image: radial-gradient(hsl(var(--border) / 0.8) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .bg-dashed-grid {
+    background-image: 
+      linear-gradient(90deg, transparent 49%, hsl(var(--border) / 0.4) 49%, hsl(var(--border) / 0.4) 51%, transparent 51%),
+      linear-gradient(transparent 49%, hsl(var(--border) / 0.4) 49%, hsl(var(--border) / 0.4) 51%, transparent 51%);
+    background-size: 60px 60px;
+  }
+
+  .bg-cross-pattern {
+    background-image: 
+      radial-gradient(circle at center, hsl(var(--border) / 0.4) 1px, transparent 1px),
+      linear-gradient(hsl(var(--border) / 0.15) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--border) / 0.15) 1px, transparent 1px);
+    background-size: 30px 30px, 30px 30px, 30px 30px;
+  }
+
+  .bg-diagonal-lines {
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      hsl(var(--border) / 0.2) 10px,
+      hsl(var(--border) / 0.2) 11px
+    );
+  }
+
+  /* Gradient backgrounds */
+  .bg-gradient-radial {
+    background: radial-gradient(ellipse at center, hsl(var(--primary) / 0.1) 0%, transparent 70%);
+  }
+
+  .bg-gradient-hero {
+    background: 
+      radial-gradient(ellipse at 20% 50%, hsl(var(--primary) / 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, hsl(var(--accent) / 0.1) 0%, transparent 40%);
+  }
+
+  /* Border gradient */
+  .border-gradient {
+    border: 1px solid transparent;
+    background: linear-gradient(hsl(var(--card)), hsl(var(--card))) padding-box,
+                linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)), hsl(var(--primary))) border-box;
+  }
+
+  /* Typing cursor */
+  .typing-cursor::after {
+    content: '|';
+    animation: blink 1s step-end infinite;
+    color: hsl(var(--primary));
+  }
+
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  /* Marquee animation */
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
+  }
+
+  .animate-marquee-slow {
+    animation: marquee 45s linear infinite;
+  }
+
+  /* Float animation */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  /* Scattered float animation for tech logos */
+  @keyframes float-scattered-1 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(5px, -8px) rotate(2deg); }
+    50% { transform: translate(-3px, -15px) rotate(-1deg); }
+    75% { transform: translate(8px, -5px) rotate(1deg); }
+  }
+
+  @keyframes float-scattered-2 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-8px, -5px) rotate(-2deg); }
+    50% { transform: translate(5px, -12px) rotate(1deg); }
+    75% { transform: translate(-3px, -8px) rotate(-1deg); }
+  }
+
+  @keyframes float-scattered-3 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(10px, -10px) rotate(3deg); }
+    66% { transform: translate(-5px, -5px) rotate(-2deg); }
+  }
+
+  .animate-float-1 {
+    animation: float-scattered-1 4s ease-in-out infinite;
+  }
+
+  .animate-float-2 {
+    animation: float-scattered-2 5s ease-in-out infinite;
+  }
+
+  .animate-float-3 {
+    animation: float-scattered-3 6s ease-in-out infinite;
+  }
+
+  /* Pulse glow */
+  @keyframes pulse-glow {
+    0%, 100% { 
+      box-shadow: 0 0 20px hsl(var(--primary) / 0.4);
+    }
+    50% { 
+      box-shadow: 0 0 40px hsl(var(--primary) / 0.6),
+                  0 0 60px hsl(var(--primary) / 0.3);
+    }
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  /* Animated gradient for large boxes */
+  @keyframes gradient-shift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .animated-gradient {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--primary) / 0.15) 0%,
+      hsl(var(--accent) / 0.1) 25%,
+      hsl(var(--primary) / 0.2) 50%,
+      hsl(var(--accent) / 0.1) 75%,
+      hsl(var(--primary) / 0.15) 100%
+    );
+    background-size: 300% 300%;
+    animation: gradient-shift 8s ease-in-out infinite;
+  }
+
+  /* Gradient text */
+  .text-gradient {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-green {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(142 71% 55%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Scan line effect */
+  .scanlines::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      hsl(var(--primary) / 0.03) 2px,
+      hsl(var(--primary) / 0.03) 4px
+    );
+    pointer-events: none;
+  }
+
+  /* Tech card hover */
+  .tech-card {
+    @apply relative overflow-hidden transition-all duration-300;
+  }
+
+  .tech-card::before {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.1), transparent);
+  }
+
+  .tech-card:hover::before {
+    @apply opacity-100;
+  }
+
+  .tech-card:hover {
+    @apply border-primary/50 transform scale-[1.02];
+  }
+
+  /* Service card */
+  .service-card {
+    @apply relative overflow-hidden;
+  }
+
+  .service-card::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-full h-1 bg-primary transform scale-x-0 origin-left transition-transform duration-300;
+  }
+
+  .service-card:hover::after {
+    @apply scale-x-100;
+  }
+
+  /* Interactive tag chips */
+  .tag-chip {
+    @apply transition-colors duration-200;
+  }
+
+  .tag-chip:hover {
+    @apply text-primary border-primary/50;
+  }
+
+  /* High contrast badge on images */
+  .badge-overlay {
+    @apply backdrop-blur-md;
+    background: hsl(var(--background) / 0.85);
+    border: 1px solid hsl(var(--border) / 0.5);
+  }
+
+  /* Number counter animation */
+  .counter {
+    @apply tabular-nums;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.7);
+}
+
+/* Code Block Styles for Visual Editor */
+.code-block-custom {
+  background: #282c34 !important;
+  color: #abb2bf !important;
+  border: 1px solid hsl(var(--border)) !important;
+  border-radius: 0.5rem !important;
+  padding: 1rem !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 0.875rem !important;
+  line-height: 1.5 !important;
+  overflow-x: auto !important;
+  margin: 1rem 0 !important;
+}
+
+.code-block-custom pre {
+  background: transparent !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: inherit !important;
+}
+
+.code-block-custom code {
+  background: transparent !important;
+  padding: 0 !important;
+  color: inherit !important;
+  font-size: inherit !important;
+}
+
+/* Lowlight syntax highlighting - Kamekazi Dark Theme */
+.hljs-comment { color: #7f848e !important; }
+.hljs-keyword { color: #c678dd !important; }
+.hljs-built_in,
+.hljs-selector-tag,
+.hljs-section { color: #c678dd !important; }
+.hljs-title,
+.hljs-attr,
+.hljs-selector-class,
+.hljs-selector-id { color: #61afef !important; }
+.hljs-string,
+.hljs-regexp,
+.hljs-template-variable { color: #98c379 !important; }
+.hljs-variable,
+.hljs-template-tag { color: #e06c75 !important; }
+.hljs-number,
+.hljs-literal,
+.hljs-type,
+.hljs-params { color: #d19a66 !important; }
+.hljs-operator,
+.hljs-punctuation { color: #56b6c2 !important; }
+.hljs-property,
+.hljs-attribute { color: #e06c75 !important; }
+.hljs-function { color: #61afef !important; }
+.hljs-meta { color: #abb2bf !important; }
+
+/* Code Block Component Styles */
+.code-block-wrapper {
+  margin: 1rem 0;
+}
+
+.code-content-editable [contenteditable] {
+  outline: none;
+  white-space: pre;
+  overflow-wrap: normal;
+  overflow-x: auto;
+}
+
+.code-content-editable p {
+  margin: 0;
+  font-family: 'JetBrains Mono', monospace;
+  color: #98c379;
+}
+
+/* TipTap Block Styles */
+.ProseMirror > * {
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  margin-left: -0.5rem; /* Compensate for padding */
+  margin-right: -0.5rem;
+  transition: background-color 0.2s;
+  border: 1px solid transparent; /* Prevent layout shift */
+}
+
+.ProseMirror > *:hover {
+  background-color: hsl(var(--secondary) / 0.3);
+}
+
+.ProseMirror:focus {
+  outline: none;
+}
+
+/* Ensure code blocks look good with the hover effect */
+.ProseMirror pre {
+  margin: 1.5rem 0; /* Add margin back since we might have adjusted parents */
+}
+
+/* TipTap Editor Styles */
+.ProseMirror {
+  @apply text-foreground;
+  outline: none !important;
+}
+
+.ProseMirror p {
+  @apply text-lg leading-relaxed mb-4 text-muted-foreground;
+}
+
+.ProseMirror h1 {
+  @apply text-3xl font-bold mt-10 mb-6 text-foreground;
+}
+
+.ProseMirror h2 {
+  @apply text-2xl font-bold mt-8 mb-4 text-foreground flex items-center gap-3;
+}
+
+.ProseMirror h2::before {
+  content: "";
+  @apply w-1 h-8 bg-primary rounded-full;
+}
+
+.ProseMirror h3 {
+  @apply text-xl font-semibold mt-6 mb-3 text-foreground;
+}
+
+.ProseMirror ul,
+.ProseMirror ol {
+  @apply pl-6 mb-6 text-muted-foreground text-lg;
+}
+
+.ProseMirror ul {
+  @apply list-disc;
+}
+
+.ProseMirror ol {
+  @apply list-decimal;
+}
+
+.ProseMirror li {
+  @apply mb-2;
+}
+
+.ProseMirror ul[data-type="taskList"] {
+  @apply list-none pl-0;
+}
+
+.ProseMirror ul[data-type="taskList"] li {
+  @apply flex items-start gap-2;
+}
+
+.ProseMirror ul[data-type="taskList"] li label {
+  @apply flex items-center gap-2 cursor-pointer;
+}
+
+.ProseMirror ul[data-type="taskList"] li input[type="checkbox"] {
+  @apply mt-1.5 w-4 h-4 rounded border border-muted-foreground/40;
+}
+
+.ProseMirror ul[data-type="taskList"] li input[type="checkbox"]:checked {
+  @apply bg-primary border-primary;
+}
+
+.ProseMirror blockquote {
+  @apply border-l-4 border-primary pl-6 italic text-xl text-muted-foreground my-8 py-2;
+}
+
+.ProseMirror hr {
+  @apply my-10 border-border;
+}
+
+.ProseMirror code {
+  @apply px-1.5 py-0.5 bg-secondary rounded text-sm font-mono text-foreground;
+}
+
+.ProseMirror pre {
+  @apply rounded-lg bg-[#0d1117] border border-border overflow-hidden my-6;
+}
+
+.ProseMirror pre code {
+  @apply block p-4 bg-transparent text-sm font-mono text-green-400 overflow-x-auto;
+  background: transparent !important;
+  padding: 1rem !important;
+}
+
+.ProseMirror img {
+  @apply max-w-full h-auto rounded-lg border border-border my-8;
+}
+
+.ProseMirror a {
+  @apply text-primary hover:underline cursor-pointer;
+}
+
+.ProseMirror mark {
+  @apply bg-yellow-500/30 text-inherit px-0.5 rounded;
+}
+
+.ProseMirror table {
+  @apply w-full border-collapse border border-border my-8;
+}
+
+.ProseMirror th,
+.ProseMirror td {
+  @apply p-3 border border-border text-left align-top;
+}
+
+.ProseMirror th {
+  @apply bg-secondary/30 font-semibold;
+}
+
+/* Placeholder styles */
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  @apply text-muted-foreground/50 float-left h-0 pointer-events-none;
+}
+
+/* Bubble Menu & Floating Menu Styles */
+.tippy-box[data-theme~='bubble'] {
+  @apply bg-popover border border-border rounded-lg shadow-lg;
+}
+
+.tippy-box[data-theme~='bubble'] .tippy-content {
+  @apply p-0;
+}
+
+/* Selection styles */
+.ProseMirror ::selection,
+.ProseMirror::selection {
+  background-color: hsl(var(--primary) / 0.3);
+  color: hsl(var(--foreground));
+}
+
+/* Focus within - remove default outline */
+.ProseMirror:focus-within {
+  outline: none !important;
+}
+
+/* Code block node view wrapper */
+.code-block-wrapper {
+  @apply my-6;
+}
+
+.code-block-wrapper .code-content-editable {
+  @apply w-full min-h-[120px] p-4 bg-transparent font-mono text-sm text-green-400 overflow-x-auto block outline-none;
+}
+
+.code-block-wrapper .code-content-editable p {
+  @apply m-0;
+}
+
+/* Reset ProseMirror default heading margins inside code blocks */
+.ProseMirror pre h1,
+.ProseMirror pre h2,
+.ProseMirror pre h3 {
+  margin: 0;
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.ProseMirror pre h2::before {
+  display: none;
+}
+
+/* Editor wrapper for block handles */
+.tiptap-editor-wrapper {
+  position: relative;
+}
+
+.block-handle-wrapper {
+  opacity: 1;
+  transition: opacity 0.15s ease;
+}
+
+/* Slash Commands Menu Styling */
+.slash-commands-menu {
+  min-width: 280px;
+  max-width: 320px;
+  padding: 4px;
+}
+
+.slash-commands-menu button {
+  border-radius: 6px;
+}
