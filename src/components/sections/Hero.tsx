@@ -7,29 +7,6 @@ import { motion } from "framer-motion";
 import * as LucideIcons from "lucide-react";
 import { ArrowDown, Download, Terminal } from "lucide-react";
 
-// Layout configuration from reference design
-const layoutTechs = [
-  { name: "MongoDB", position: "left-1/2 -translate-x-1/2 -top-20 md:-top-24", animation: "animate-float-1", delay: 0 },
-  { name: "Express", position: "right-0 -top-14 md:-top-16 translate-x-8 md:translate-x-12", animation: "animate-float-2", delay: 0.5 },
-  { name: "React", position: "-right-16 md:-right-20 top-8 md:top-10", animation: "animate-float-3", delay: 1 },
-  { name: "Node", position: "-right-18 md:-right-24 top-1/2 -translate-y-1/2", animation: "animate-float-1", delay: 1.5 }, // Matches Node.js
-  { name: "n8n", position: "-right-16 md:-right-20 bottom-8 md:bottom-10", animation: "animate-float-2", delay: 2 },
-  { name: "TypeScript", position: "right-0 -bottom-14 md:-bottom-16 translate-x-8 md:translate-x-12", animation: "animate-float-3", delay: 0.8 },
-  { name: "Next", position: "left-1/2 -translate-x-1/2 -bottom-20 md:-bottom-24", animation: "animate-float-1", delay: 1.2 }, // Matches Next.js
-  { name: "Java", position: "left-0 -bottom-14 md:-bottom-16 -translate-x-8 md:-translate-x-12", animation: "animate-float-2", delay: 0.3 }, // Matches JavaScript/Java
-  { name: "Tailwind", position: "-left-16 md:-left-20 bottom-8 md:bottom-10", animation: "animate-float-1", delay: 0.6 },
-  { name: "Git", position: "-left-18 md:-left-24 top-1/2 -translate-y-1/2", animation: "animate-float-3", delay: 1.8 },
-  { name: "Python", position: "-left-16 md:-left-20 top-8 md:top-10", animation: "animate-float-2", delay: 1.4 },
-  { name: "Docker", position: "left-0 -top-14 md:-top-16 -translate-x-8 md:-translate-x-12", animation: "animate-float-3", delay: 0.9 },
-];
-
-const badgeLayouts = [
-  "absolute -top-8 -right-32 md:-right-44",
-  "absolute top-1/3 -left-36 md:-left-48",
-  "absolute bottom-1/3 -right-32 md:-right-44",
-  "absolute -bottom-8 -left-32 md:-left-44"
-];
-
 const Hero = () => {
   const { data, isLoading, isError } = useHeroContent();
 
@@ -176,56 +153,44 @@ const Hero = () => {
                 className="relative"
               >
                 {/* Floating Tech Logos */}
-                {techs.map((tech) => {
-                  // Match DB tech to Layout Config
-                  const layout = layoutTechs.find(l => tech.name.includes(l.name) || l.name.includes(tech.name));
-                  // If no match, skip or use default? Skip to avoid clutter.
-                  if (!layout) return null;
-
-                  return (
+                {techs.map((tech) => (
+                  <motion.div
+                    key={tech.id}
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 0.9, scale: 1 }}
+                    transition={{ delay: tech.delay, duration: 0.5 }}
+                    whileHover={{ scale: 1.3, rotate: [0, -10, 10, 0], transition: { duration: 0.3 } }}
+                    whileTap={{ scale: 0.9 }}
+                    className={`absolute ${tech.position_class} ${tech.animation_class} hidden lg:block z-20 cursor-pointer`}
+                  >
                     <motion.div
-                      key={tech.id}
-                      initial={{ opacity: 0, scale: 0 }}
-                      animate={{ opacity: 0.9, scale: 1 }}
-                      transition={{ delay: layout.delay, duration: 0.5 }}
-                      whileHover={{ scale: 1.3, rotate: [0, -10, 10, 0], transition: { duration: 0.3 } }}
-                      whileTap={{ scale: 0.9 }}
-                      className={`absolute ${layout.position} ${layout.animation} hidden lg:block z-20 cursor-pointer`}
+                      className="w-9 h-9 p-1.5 bg-card/90 border border-border/50 rounded-lg backdrop-blur-sm shadow-lg hover:border-primary/50 hover:shadow-primary/20 hover:shadow-lg transition-all duration-300"
+                      whileHover={{ boxShadow: "0 0 20px rgba(34, 197, 94, 0.4)" }}
                     >
-                      <motion.div
-                        className="w-9 h-9 p-1.5 bg-card/90 border border-border/50 rounded-lg backdrop-blur-sm shadow-lg hover:border-primary/50 hover:shadow-primary/20 hover:shadow-lg transition-all duration-300"
-                        whileHover={{ boxShadow: "0 0 20px rgba(34, 197, 94, 0.4)" }}
-                      >
-                        <img src={tech.icon_url} alt={tech.name} className={`w-full h-full object-contain ${tech.invert ? "invert" : ""}`} />
-                      </motion.div>
+                      {tech.icon_url && <img src={tech.icon_url} alt={tech.name} className={`w-full h-full object-contain ${tech.invert ? "invert" : ""}`} />}
                     </motion.div>
-                  );
-                })}
+                  </motion.div>
+                ))}
 
                 {/* Floating Badges */}
-                {badges.map((badge, index) => {
-                  const positionClass = badgeLayouts[index];
-                  if (!positionClass) return null; // Limit to 4 badges
-
-                  return (
-                    <motion.div
-                      key={badge.id}
-                      initial={{ opacity: 0, scale: 0 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.5 + index * 0.2, duration: 0.4 }}
-                      whileHover={{ scale: 1.1, y: -5, transition: { duration: 0.2 } }}
-                      whileTap={{ scale: 0.95 }}
-                      className={`${positionClass} hidden lg:block z-10 cursor-pointer`}
+                {badges.map((badge, index) => (
+                  <motion.div
+                    key={badge.id}
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.5 + index * 0.2, duration: 0.4 }}
+                    whileHover={{ scale: 1.1, y: -5, transition: { duration: 0.2 } }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`${badge.position_class} hidden lg:block z-10 cursor-pointer`}
+                  >
+                    <motion.span
+                      className="px-3 py-1 text-xs font-mono bg-card/80 border border-border/50 rounded-full text-muted-foreground backdrop-blur-sm whitespace-nowrap hover:border-primary/50 hover:text-primary transition-all duration-300 inline-block"
+                      whileHover={{ boxShadow: "0 0 15px rgba(34, 197, 94, 0.3)" }}
                     >
-                      <motion.span
-                        className="px-3 py-1 text-xs font-mono bg-card/80 border border-border/50 rounded-full text-muted-foreground backdrop-blur-sm whitespace-nowrap hover:border-primary/50 hover:text-primary transition-all duration-300 inline-block"
-                        whileHover={{ boxShadow: "0 0 15px rgba(34, 197, 94, 0.3)" }}
-                      >
-                        {badge.badge_text}
-                      </motion.span>
-                    </motion.div>
-                  );
-                })}
+                      {badge.badge_text}
+                    </motion.span>
+                  </motion.div>
+                ))}
 
                 <div className="w-56 h-56 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-primary/30 glow-green relative bg-gradient-to-b from-primary/20 to-transparent">
                   <img src={hero.profile_photo_url || profilePhoto} alt={hero.name} className="w-full h-full object-cover object-top" />
