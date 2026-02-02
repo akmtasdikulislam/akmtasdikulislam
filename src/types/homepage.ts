@@ -23,6 +23,8 @@ export interface HomepageHeroTech {
   name: string;
   icon_url: string;
   position_class: string;
+  top_position: number;
+  left_position: number;
   animation_class: string;
   delay: number;
   invert: boolean;
@@ -35,6 +37,8 @@ export interface HomepageHeroBadge {
   id: string;
   badge_text: string;
   position_class: string;
+  top_position: number;
+  left_position: number;
   display_order: number;
   created_at: string;
   updated_at: string;

@@ -214,7 +214,11 @@ const Hero = () => {
                       transition: { duration: 0.3 }
                     }}
                     whileTap={{ scale: 0.9 }}
-                    className={`absolute ${tech.position_class} ${tech.animation_class} hidden lg:block z-20 cursor-pointer`}
+                    style={{
+                      top: tech.top_position !== undefined ? `${tech.top_position}%` : undefined,
+                      left: tech.left_position !== undefined ? `${tech.left_position}%` : undefined,
+                    }}
+                    className={`absolute ${tech.top_position === undefined ? tech.position_class : ''} ${tech.animation_class} hidden lg:block z-20 cursor-pointer`}
                   >
                     <motion.div
                       className="w-9 h-9 p-1.5 bg-card/90 border border-border/50 rounded-lg backdrop-blur-sm shadow-lg hover:border-primary/50 hover:shadow-primary/20 hover:shadow-lg transition-all duration-300"
@@ -244,7 +248,11 @@ const Hero = () => {
                       transition: { duration: 0.2 }
                     }}
                     whileTap={{ scale: 0.95 }}
-                    className={`${badge.position_class} hidden lg:block z-10 cursor-pointer`}
+                    style={{
+                      top: badge.top_position !== undefined ? `${badge.top_position}%` : undefined,
+                      left: badge.left_position !== undefined ? `${badge.left_position}%` : undefined,
+                    }}
+                    className={`absolute ${badge.top_position === undefined ? badge.position_class : ''} hidden lg:block z-10 cursor-pointer`}
                   >
                     <motion.span
                       className="px-3 py-1 text-xs font-mono bg-card/80 border border-border/50 rounded-full text-muted-foreground backdrop-blur-sm whitespace-nowrap hover:border-primary/50 hover:text-primary transition-all duration-300 inline-block"

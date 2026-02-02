@@ -142,9 +142,9 @@ export type Database = {
           display_order?: number | null
           expiry_date?: string | null
           id?: string
-          issue_date?: string
-          issuer?: string
-          title?: string
+          issue_date: string
+          issuer: string
+          title: string
           updated_at?: string
         }
         Relationships: []
@@ -337,6 +337,447 @@ export type Database = {
           position?: string
           start_date?: string
           technologies?: string[] | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      homepage_hero: {
+        Row: {
+          id: string
+          name: string
+          greeting_badge: string
+          description: string
+          profile_photo_url: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          name?: string
+          greeting_badge?: string
+          description?: string
+          profile_photo_url?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          greeting_badge?: string
+          description?: string
+          profile_photo_url?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      homepage_hero_roles: {
+        Row: {
+          id: string
+          role_text: string
+          display_order: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          role_text?: string
+          display_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          role_text?: string
+          display_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      homepage_hero_techs: {
+        Row: {
+          id: string
+          name: string
+          icon_url: string
+          position_class: string
+          animation_class: string
+          delay: number
+          invert: boolean
+          display_order: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          name?: string
+          icon_url?: string
+          position_class?: string
+          animation_class?: string
+          delay?: number
+          invert?: boolean
+          display_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          icon_url?: string
+          position_class?: string
+          animation_class?: string
+          delay?: number
+          invert?: boolean
+          display_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      homepage_hero_badges: {
+        Row: {
+          id: string
+          badge_text: string
+          position_class: string
+          display_order: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          badge_text?: string
+          position_class?: string
+          display_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          badge_text?: string
+          position_class?: string
+          display_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      homepage_hero_stats: {
+        Row: {
+          id: string
+          stat_label: string
+          stat_value: number
+          stat_suffix: string
+          display_order: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          stat_label?: string
+          stat_value?: number
+          stat_suffix?: string
+          display_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          stat_label?: string
+          stat_value?: number
+          stat_suffix?: string
+          display_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      homepage_social_links: {
+        Row: {
+          id: string
+          platform: string
+          url: string
+          icon_name: string | null
+          icon_url: string | null
+          display_order: number
+          is_visible: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          platform?: string
+          url?: string
+          icon_name?: string | null
+          icon_url?: string | null
+          display_order?: number
+          is_visible?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          platform?: string
+          url?: string
+          icon_name?: string | null
+          icon_url?: string | null
+          display_order?: number
+          is_visible?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      homepage_navbar: {
+        Row: {
+          id: string
+          logo_text: string
+          logo_icon_name: string
+          cta_button_text: string
+          cta_button_href: string
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          logo_text?: string
+          logo_icon_name?: string
+          cta_button_text?: string
+          cta_button_href?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          logo_text?: string
+          logo_icon_name?: string
+          cta_button_text?: string
+          cta_button_href?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      homepage_nav_links: {
+        Row: {
+          id: string
+          label: string
+          href: string
+          path: string
+          display_order: number
+          is_visible: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          label?: string
+          href?: string
+          path?: string
+          display_order?: number
+          is_visible?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          label?: string
+          href?: string
+          path?: string
+          display_order?: number
+          is_visible?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      homepage_about: {
+        Row: {
+          id: string
+          section_badge: string
+          section_title: string
+          section_highlight: string
+          section_description: string
+          paragraph_1: string
+          paragraph_2: string
+          paragraph_3: string
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          section_badge?: string
+          section_title?: string
+          section_highlight?: string
+          section_description?: string
+          paragraph_1?: string
+          paragraph_2?: string
+          paragraph_3?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          section_badge?: string
+          section_title?: string
+          section_highlight?: string
+          section_description?: string
+          paragraph_1?: string
+          paragraph_2?: string
+          paragraph_3?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      homepage_about_highlights: {
+        Row: {
+          id: string
+          icon_name: string
+          title: string
+          description: string
+          detail: string
+          display_order: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          icon_name?: string
+          title?: string
+          description?: string
+          detail?: string
+          display_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          icon_name?: string
+          title?: string
+          description?: string
+          detail?: string
+          display_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      homepage_about_interests: {
+        Row: {
+          id: string
+          icon_name: string
+          label: string
+          display_order: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          icon_name?: string
+          label?: string
+          display_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          icon_name?: string
+          label?: string
+          display_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      homepage_about_values: {
+        Row: {
+          id: string
+          icon_name: string
+          value_text: string
+          description: string
+          display_order: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          icon_name?: string
+          value_text?: string
+          description?: string
+          display_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          icon_name?: string
+          value_text?: string
+          description?: string
+          display_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      homepage_footer: {
+        Row: {
+          id: string
+          logo_text: string
+          description: string
+          contact_email: string
+          copyright_text: string
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          logo_text?: string
+          description?: string
+          contact_email?: string
+          copyright_text?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          logo_text?: string
+          description?: string
+          contact_email?: string
+          copyright_text?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      homepage_general: {
+        Row: {
+          id: string
+          site_title: string
+          site_description: string
+          site_keywords: string[] | null
+          favicon_url: string | null
+          og_image_url: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          site_title?: string
+          site_description?: string
+          site_keywords?: string[] | null
+          favicon_url?: string | null
+          og_image_url?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          site_title?: string
+          site_description?: string
+          site_keywords?: string[] | null
+          favicon_url?: string | null
+          og_image_url?: string | null
+          created_at?: string
           updated_at?: string
         }
         Relationships: []

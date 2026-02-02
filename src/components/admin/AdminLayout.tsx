@@ -44,6 +44,7 @@ const navSections: NavSection[] = [
   {
     title: 'Homepage Content',
     items: [
+      { icon: LayoutDashboard, label: 'Overview', path: '/admin/homepage' },
       { icon: Home, label: 'Hero Section', path: '/admin/homepage/hero' },
       { icon: LayoutDashboard, label: 'Navbar', path: '/admin/homepage/navbar' },
       { icon: MessageSquare, label: 'About', path: '/admin/homepage/about' },
@@ -184,7 +185,10 @@ const AdminLayout = () => {
                           className="space-y-1 overflow-hidden"
                         >
                           {section.items.map((item) => {
-                            const isActive = location.pathname === item.path ||
+                            const isOverview = item.path === '/admin/homepage';
+                            const isActive = isOverview
+                              ? location.pathname === item.path
+                              : location.pathname === item.path ||
                               (item.path !== '/admin' && location.pathname.startsWith(item.path));
 
                             return (
