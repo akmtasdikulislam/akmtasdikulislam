@@ -96,17 +96,17 @@ I'm a **Full-Stack MERN Developer** and **AI Automation Expert** from Bangladesh
 ## 📊 GitHub Statistics
 
 <div align="center">
-  <img width="49%" src="https://github-readme-stats.vercel.app/api?username=YOUR_USERNAME&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=3B82F6&icon_color=3B82F6&text_color=FFFFFF" alt="GitHub Stats" />
-  <img width="49%" src="https://github-readme-streak-stats.herokuapp.com/?user=YOUR_USERNAME&theme=tokyonight&hide_border=true&background=0D1117&stroke=3B82F6&ring=3B82F6&fire=EF4444&currStreakLabel=3B82F6" alt="GitHub Streak" />
+  <img width="49%" src="https://github-readme-stats.vercel.app/api?username=akmtasdikulislam&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=3B82F6&icon_color=3B82F6&text_color=FFFFFF" alt="GitHub Stats" />
+  <img width="49%" src="https://github-readme-streak-stats.herokuapp.com/?user=akmtasdikulislam&theme=tokyonight&hide_border=true&background=0D1117&stroke=3B82F6&ring=3B82F6&fire=EF4444&currStreakLabel=3B82F6" alt="GitHub Streak" />
 </div>
 
 <div align="center">
-  <img width="49%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=YOUR_USERNAME&layout=compact&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=3B82F6&text_color=FFFFFF" alt="Top Languages" />
-  <img width="49%" src="https://github-profile-trophy.vercel.app/?username=YOUR_USERNAME&theme=tokyonight&no-frame=true&no-bg=true&column=4&margin-w=15&margin-h=15" alt="GitHub Trophies" />
+  <img width="49%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=akmtasdikulislam&layout=compact&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=3B82F6&text_color=FFFFFF" alt="Top Languages" />
+  <img width="49%" src="https://github-profile-trophy.vercel.app/?username=akmtasdikulislam&theme=tokyonight&no-frame=true&no-bg=true&column=4&margin-w=15&margin-h=15" alt="GitHub Trophies" />
 </div>
 
 <div align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=YOUR_USERNAME&theme=tokyo-night&hide_border=true&bg_color=0D1117&color=3B82F6&line=3B82F6&point=FFFFFF" alt="Contribution Graph" />
+  <img src="https://github-readme-activity-graph.vercel.app/graph?username=akmtasdikulislam&theme=tokyo-night&hide_border=true&bg_color=0D1117&color=3B82F6&line=3B82F6&point=FFFFFF" alt="Contribution Graph" />
 </div>
 
 ---
@@ -114,7 +114,7 @@ I'm a **Full-Stack MERN Developer** and **AI Automation Expert** from Bangladesh
 ## 🐍 Contribution Snake
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_USERNAME/output/github-contribution-grid-snake-dark.svg" alt="Snake animation" />
+  <img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/output/github-contribution-grid-snake-dark.svg" alt="Snake animation" />
 </div>
 
 ---
@@ -204,12 +204,12 @@ Developing robust RESTful APIs, authentication systems, and database architectur
 
 <div align="center">
 
-<a href="https://github.com/YOUR_USERNAME/project1">
-  <img align="center" src="https://github-readme-stats.vercel.app/api/pin/?username=YOUR_USERNAME&repo=project1&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=3B82F6&icon_color=3B82F6&text_color=FFFFFF" />
+<a href="https://github.com/akmtasdikulislam/project1">
+  <img align="center" src="https://github-readme-stats.vercel.app/api/pin/?username=akmtasdikulislam&repo=project1&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=3B82F6&icon_color=3B82F6&text_color=FFFFFF" />
 </a>
 
-<a href="https://github.com/YOUR_USERNAME/project2">
-  <img align="center" src="https://github-readme-stats.vercel.app/api/pin/?username=YOUR_USERNAME&repo=project2&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=3B82F6&icon_color=3B82F6&text_color=FFFFFF" />
+<a href="https://github.com/akmtasdikulislam/project2">
+  <img align="center" src="https://github-readme-stats.vercel.app/api/pin/?username=akmtasdikulislam&repo=project2&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=3B82F6&icon_color=3B82F6&text_color=FFFFFF" />
 </a>
 
 </div>
@@ -259,7 +259,7 @@ I'm always excited to work on innovative projects and collaborate with other dev
 
 <div align="center">
   
-### ⭐ From [YOUR_USERNAME](https://github.com/YOUR_USERNAME) with 💙
+### ⭐ From [akmtasdikulislam](https://github.com/akmtasdikulislam) with 💙
 
 <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=18&duration=2000&pause=1000&color=3B82F6&center=true&vCenter=true&width=600&lines=Thanks+for+visiting!+%F0%9F%91%8B;Let's+build+something+amazing+together!+%F0%9F%9A%80;Happy+Coding!+%F0%9F%92%BB" alt="Typing SVG" />
 
