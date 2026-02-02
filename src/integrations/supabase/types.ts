@@ -600,9 +600,7 @@ export type Database = {
           section_title: string
           section_highlight: string
           section_description: string
-          paragraph_1: string
-          paragraph_2: string
-          paragraph_3: string
+          main_content: string | null
           created_at: string
           updated_at: string
         }
@@ -612,9 +610,7 @@ export type Database = {
           section_title?: string
           section_highlight?: string
           section_description?: string
-          paragraph_1?: string
-          paragraph_2?: string
-          paragraph_3?: string
+          main_content?: string | null
           created_at?: string
           updated_at?: string
         }
@@ -624,9 +620,7 @@ export type Database = {
           section_title?: string
           section_highlight?: string
           section_description?: string
-          paragraph_1?: string
-          paragraph_2?: string
-          paragraph_3?: string
+          main_content?: string | null
           created_at?: string
           updated_at?: string
         }

@@ -1,3 +1,4 @@
+import TipTapEditor from '@/components/editor/TipTapEditor';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -9,7 +10,9 @@ import { useAboutContent } from '@/hooks/useHomepageContent';
 import { supabase } from '@/integrations/supabase/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { GripVertical, Loader2, Plus, Save, Trash2 } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+
+
 
 const AboutEditor = () => {
     const { data, isLoading } = useAboutContent();
@@ -21,9 +24,7 @@ const AboutEditor = () => {
         section_title: '',
         section_highlight: '',
         section_description: '',
-        paragraph_1: '',
-        paragraph_2: '',
-        paragraph_3: '',
+        main_content: '',
     });
 
     const [highlights, setHighlights] = useState<Array<{ id?: string; title: string; description: string; detail: string; icon_name: string; display_order: number }>>([]);
@@ -32,20 +33,40 @@ const AboutEditor = () => {
 
     useEffect(() => {
         if (data) {
+            const ensureJson = (content: string) => {
+                try {
+                    if (content && content.trim()) {
+                        JSON.parse(content);
+                        return content;
+                    }
+                    return JSON.stringify({
+                        type: 'doc',
+                        content: [{ type: 'paragraph', content: [] }]
+                    });
+                } catch (e) {
+                    return JSON.stringify({
+                        type: 'doc',
+                        content: [{ type: 'paragraph', content: [{ type: 'text', text: content || '' }] }]
+                    });
+                }
+            };
+
             setAboutData({
-                section_badge: data.about.section_badge,
-                section_title: data.about.section_title,
-                section_highlight: data.about.section_highlight,
-                section_description: data.about.section_description,
-                paragraph_1: data.about.paragraph_1,
-                paragraph_2: data.about.paragraph_2,
-                paragraph_3: data.about.paragraph_3,
+                section_badge: data.about.section_badge || '',
+                section_title: data.about.section_title || '',
+                section_highlight: data.about.section_highlight || '',
+                section_description: data.about.section_description || '',
+                main_content: ensureJson((data.about as any).main_content || ''),
             });
             setHighlights(data.highlights);
             setInterests(data.interests);
             setValues(data.values);
         }
     }, [data]);
+
+    const handleContentChange = useCallback((json: string) => {
+        setAboutData(prev => ({ ...prev, main_content: json }));
+    }, []);
 
     const updateAboutMutation = useMutation({
         mutationFn: async (updatedData: typeof aboutData) => {
@@ -193,37 +214,19 @@ const AboutEditor = () => {
                     <Card>
                         <CardHeader>
                             <CardTitle>Main Content</CardTitle>
-                            <CardDescription>The three paragraphs of about text</CardDescription>
+                            <CardDescription>The primary text describing you and your background</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div>
-                                <Label htmlFor="p1">Paragraph 1</Label>
-                                <Textarea
-                                    id="p1"
-                                    value={aboutData.paragraph_1}
-                                    onChange={(e) => setAboutData({ ...aboutData, paragraph_1: e.target.value })}
-                                    rows={3}
-                                />
-                            </div>
-
-                            <div>
-                                <Label htmlFor="p2">Paragraph 2</Label>
-                                <Textarea
-                                    id="p2"
-                                    value={aboutData.paragraph_2}
-                                    onChange={(e) => setAboutData({ ...aboutData, paragraph_2: e.target.value })}
-                                    rows={3}
-                                />
-                            </div>
-
-                            <div>
-                                <Label htmlFor="p3">Paragraph 3</Label>
-                                <Textarea
-                                    id="p3"
-                                    value={aboutData.paragraph_3}
-                                    onChange={(e) => setAboutData({ ...aboutData, paragraph_3: e.target.value })}
-                                    rows={3}
-                                />
+                                <Label htmlFor="main_content">About Content</Label>
+                                <p className="text-xs text-muted-foreground mb-4">Write your story using the rich text editor below.</p>
+                                <div className="border border-border rounded-xl p-2 bg-background/50">
+                                    <TipTapEditor
+                                        content={aboutData.main_content}
+                                        onChange={handleContentChange}
+                                        placeholder="Start writing your story here..."
+                                    />
+                                </div>
                             </div>
 
                             <Button onClick={() => updateAboutMutation.mutate(aboutData)} disabled={updateAboutMutation.isPending}>

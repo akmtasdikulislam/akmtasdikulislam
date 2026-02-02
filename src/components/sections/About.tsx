@@ -2,11 +2,11 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import { useAboutContent } from "@/hooks/useHomepageContent";
 import { motion } from "framer-motion";
 import * as LucideIcons from "lucide-react";
+import React from 'react';
 
 const About = () => {
   const { data, isLoading, isError } = useAboutContent();
 
-  // Show loading skeleton
   if (isLoading) {
     return (
       <section id="about" className="py-24 relative overflow-hidden">
@@ -20,7 +20,6 @@ const About = () => {
     );
   }
 
-  // Show error state
   if (isError || !data) {
     return (
       <section id="about" className="py-24 relative overflow-hidden">
@@ -57,18 +56,11 @@ const About = () => {
             transition={{ duration: 0.6 }}
             className="space-y-6"
           >
-            <div className="p-4 sm:p-6 bg-card border border-border rounded-xl">
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                {about.paragraph_1}
-              </p>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                {about.paragraph_2}
-              </p>
-              <p className="text-muted-foreground leading-relaxed">
-                {about.paragraph_3}
-              </p>
+            <div className="p-6 bg-card border border-border rounded-xl">
+              <div className="text-muted-foreground leading-relaxed">
+                {renderContent(about.main_content || '')}
+              </div>
             </div>
-
           </motion.div>
 
           {/* Right - Highlights grid */}
@@ -91,7 +83,7 @@ const About = () => {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
                   whileHover={{ y: -5 }}
-                  className="p-4 sm:p-6 bg-card border border-border rounded-xl tech-card group"
+                  className="p-6 bg-card border border-border rounded-xl tech-card group"
                 >
                   <div className="w-12 h-12 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center mb-4 group-hover:glow-green-sm transition-all">
                     <IconComponent className="w-6 h-6 text-primary" />
@@ -114,34 +106,32 @@ const About = () => {
           className="mt-12"
         >
           <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-            {/* @ts-ignore */}
-            {LucideIcons.Lightbulb && <LucideIcons.Lightbulb className="w-5 h-5 text-primary" />}
+            <LucideIcons.Lightbulb className="w-5 h-5 text-primary" />
             My Interests
           </h3>
           <div className="flex flex-wrap gap-3">
-            {interests.map((interest, index) => {
-              // @ts-ignore - dynamic icon lookup
-              const IconComponent = LucideIcons[interest.icon_name] || LucideIcons.Code2;
-
+            {interests.map((item, index) => {
+              // @ts-ignore
+              const IconComponent = LucideIcons[item.icon_name] || LucideIcons.Heart;
               return (
                 <motion.div
-                  key={interest.id}
+                  key={item.id}
                   initial={{ opacity: 0, scale: 0.8 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
                   whileHover={{ scale: 1.05, y: -2 }}
-                  className="px-4 py-2 bg-card border border-border rounded-full flex items-center gap-2 hover:border-primary/50 transition-all group tag-chip"
+                  className="px-4 py-2 bg-card border border-border rounded-full flex items-center gap-2 hover:border-primary/50 transition-all group tag-chip cursor-default"
                 >
                   <IconComponent className="w-4 h-4 text-primary" />
-                  <span className="text-sm">{interest.label}</span>
+                  <span className="text-sm">{item.label}</span>
                 </motion.div>
               );
             })}
           </div>
         </motion.div>
 
-        {/* Core values - Row layout with icons and descriptions */}
+        {/* Core values - Row layout */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -150,15 +140,13 @@ const About = () => {
           className="mt-16"
         >
           <h3 className="text-lg font-semibold mb-6 flex items-center gap-2">
-            {/* @ts-ignore */}
-            {LucideIcons.Target && <LucideIcons.Target className="w-5 h-5 text-primary" />}
+            <LucideIcons.Target className="w-5 h-5 text-primary" />
             Core Values
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {values.map((item, index) => {
-              // @ts-ignore - dynamic icon lookup
-              const IconComponent = LucideIcons[item.icon_name] || LucideIcons.Target;
-
+              // @ts-ignore
+              const IconComponent = LucideIcons[item.icon_name] || LucideIcons.Zap;
               return (
                 <motion.div
                   key={item.id}
@@ -184,4 +172,104 @@ const About = () => {
   );
 };
 
+// --- TipTap Rendering Helpers ---
+
+const renderContent = (content: string) => {
+  try {
+    const parsed = JSON.parse(content);
+    if (parsed && typeof parsed === 'object' && parsed.type === 'doc' && Array.isArray(parsed.content)) {
+      return parsed.content.map((node: any, index: number) => renderTipTapNode(node, index));
+    }
+    return <div className="whitespace-pre-line">{content}</div>;
+  } catch (e) {
+    return <div className="whitespace-pre-line">{content}</div>;
+  }
+};
+
+const renderTipTapNode = (node: any, index: number): React.ReactNode => {
+  const style: React.CSSProperties = {};
+  if (node.attrs && node.attrs.textAlign) {
+    style.textAlign = node.attrs.textAlign;
+  }
+
+  switch (node.type) {
+    case 'text':
+      let textNode: React.ReactNode = node.text;
+      if (node.marks) {
+        node.marks.forEach((mark: any) => {
+          if (mark.type === 'bold') textNode = <strong key={mark.type}>{textNode}</strong>;
+          if (mark.type === 'italic') textNode = <em key={mark.type}>{textNode}</em>;
+          if (mark.type === 'underline') textNode = <u key={mark.type}>{textNode}</u>;
+          if (mark.type === 'link') textNode = (
+            <a 
+              key={mark.type} 
+              href={mark.attrs.href} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-primary hover:underline transition-all"
+            >
+              {textNode}
+            </a>
+          );
+        });
+      }
+      return textNode;
+
+    case 'paragraph':
+      return (
+        <p key={index} style={style} className="mb-4 last:mb-0">
+          {node.content?.map((child: any, i: number) => (
+            <React.Fragment key={i}>{renderTipTapNode(child, i)}</React.Fragment>
+          ))}
+        </p>
+      );
+
+    case 'bulletList':
+      return (
+        <ul key={index} className="list-disc list-inside space-y-1 mb-4 ml-2">
+          {node.content?.map((child: any, i: number) => (
+            <React.Fragment key={i}>{renderTipTapNode(child, i)}</React.Fragment>
+          ))}
+        </ul>
+      );
+
+    case 'orderedList':
+      return (
+        <ol key={index} className="list-decimal list-inside space-y-1 mb-4 ml-2">
+          {node.content?.map((child: any, i: number) => (
+            <React.Fragment key={i}>{renderTipTapNode(child, i)}</React.Fragment>
+          ))}
+        </ol>
+      );
+
+    case 'listItem':
+      return (
+        <li key={index}>
+          {node.content?.map((child: any, i: number) => (
+            <React.Fragment key={i}>{renderTipTapNode(child, i)}</React.Fragment>
+          ))}
+        </li>
+      );
+
+    case 'heading':
+      const Level = `h${node.attrs.level}` as keyof JSX.IntrinsicElements;
+      const classes = {
+        1: "text-2xl font-bold mb-4",
+        2: "text-xl font-bold mb-3",
+        3: "text-lg font-semibold mb-2"
+      };
+      return (
+        <Level key={index} style={style} className={(classes as any)[node.attrs.level]}>
+          {node.content?.map((child: any, i: number) => (
+            <React.Fragment key={i}>{renderTipTapNode(child, i)}</React.Fragment>
+          ))}
+        </Level>
+      );
+
+    default:
+      return null;
+  }
+};
+
 export default About;
+
