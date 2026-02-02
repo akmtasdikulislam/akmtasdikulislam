@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/button';
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -132,8 +132,8 @@ const ProfileDropdown = () => {
           )}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-96 p-0">
-        <div className="p-4 space-y-4 max-h-[80vh] overflow-y-auto">
+      <DropdownMenuContent align="end" className="w-[calc(100vw-2rem)] sm:w-96 p-0">
+        <div className="p-4 space-y-4 max-h-[60vh] sm:max-h-[80vh] overflow-y-auto">
           {/* Header */}
           <div className="border-b border-border pb-3">
             <h3 className="font-semibold text-lg">Author Profile</h3>
@@ -213,7 +213,7 @@ const ProfileDropdown = () => {
           {/* Social Links */}
           <div className="space-y-2">
             <Label className="text-xs">Social Links</Label>
-            
+
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center flex-shrink-0">
                 <Github className="w-4 h-4 text-muted-foreground" />
