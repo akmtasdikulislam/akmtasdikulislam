@@ -5,27 +5,68 @@ import { AnimatePresence, motion } from 'framer-motion';
 import {
   Award,
   Briefcase,
+  ChevronDown,
+  ChevronRight,
   FileText,
   FolderKanban,
   Home,
   LayoutDashboard,
   LogOut,
   Menu,
+  MessageSquare,
   Quote,
+  Settings,
   Terminal,
+  User,
   X
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 
-const navItems = [
-  { icon: LayoutDashboard, label: 'Dashboard', path: '/admin' },
-  { icon: FolderKanban, label: 'Projects', path: '/admin/projects' },
-  { icon: FileText, label: 'Blog Posts', path: '/admin/blogs' },
+interface NavSection {
+  title: string;
+  items: NavItem[];
+}
 
-  { icon: Award, label: 'Certifications', path: '/admin/certifications' },
-  { icon: Briefcase, label: 'Work History', path: '/admin/work-history' },
-  { icon: Quote, label: 'Testimonials', path: '/admin/testimonials' },
+interface NavItem {
+  icon: any;
+  label: string;
+  path: string;
+}
+
+const navSections: NavSection[] = [
+  {
+    title: 'Overview',
+    items: [
+      { icon: LayoutDashboard, label: 'Dashboard', path: '/admin' },
+    ],
+  },
+  {
+    title: 'Homepage Content',
+    items: [
+      { icon: Home, label: 'Hero Section', path: '/admin/homepage/hero' },
+      { icon: LayoutDashboard, label: 'Navbar', path: '/admin/homepage/navbar' },
+      { icon: MessageSquare, label: 'About', path: '/admin/homepage/about' },
+      { icon: Terminal, label: 'Footer', path: '/admin/homepage/footer' },
+      { icon: Settings, label: 'Settings', path: '/admin/homepage/settings' },
+    ],
+  },
+  {
+    title: 'Content Management',
+    items: [
+      { icon: FolderKanban, label: 'Projects', path: '/admin/projects' },
+      { icon: FileText, label: 'Blog Posts', path: '/admin/blogs' },
+    ],
+  },
+  {
+    title: 'Profile & Resume',
+    items: [
+      { icon: User, label: 'Author Profile', path: '/admin/author' },
+      { icon: Award, label: 'Certifications', path: '/admin/certifications' },
+      { icon: Briefcase, label: 'Work History', path: '/admin/work-history' },
+      { icon: Quote, label: 'Testimonials', path: '/admin/testimonials' },
+    ],
+  },
 ];
 
 const AdminLayout = () => {
@@ -34,6 +75,7 @@ const AdminLayout = () => {
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
+  const [expandedSections, setExpandedSections] = useState<string[]>(['Overview', 'Homepage Content', 'Content Management', 'Profile & Resume']);
 
   useEffect(() => {
     if (!loading && (!user || !isAdmin)) {
@@ -41,16 +83,17 @@ const AdminLayout = () => {
     }
   }, [user, isAdmin, loading, navigate]);
 
-  // Page loader - hide when auth check completes
-  useEffect(() => {
-    if (!loading && user && isAdmin) {
-      // Loader will hide itself via onComplete callback
-    }
-  }, [loading, user, isAdmin]);
-
   const handleSignOut = async () => {
     await signOut();
     navigate('/admin/auth');
+  };
+
+  const toggleSection = (title: string) => {
+    setExpandedSections(prev =>
+      prev.includes(title)
+        ? prev.filter(t => t !== title)
+        : [...prev, title]
+    );
   };
 
   if (loading) {
@@ -102,7 +145,7 @@ const AdminLayout = () => {
                 <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center">
                   <Terminal className="w-5 h-5 text-primary" />
                 </div>
-                <span className="font-bold text-lg">CMS Admin</span>
+                <span className="font-bold text-lg">CMS Panel</span>
               </Link>
               <button
                 className="lg:hidden text-muted-foreground hover:text-foreground"
@@ -113,26 +156,58 @@ const AdminLayout = () => {
             </div>
 
             {/* Navigation */}
-            <nav className="flex-1 p-4 space-y-1">
-              {navItems.map((item) => {
-                const isActive = location.pathname === item.path ||
-                  (item.path !== '/admin' && location.pathname.startsWith(item.path));
+            <nav className="flex-1 p-4 space-y-6 overflow-y-auto">
+              {navSections.map((section) => {
+                const isExpanded = expandedSections.includes(section.title);
 
                 return (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    onClick={() => setSidebarOpen(false)}
-                    className={cn(
-                      "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors",
-                      isActive
-                        ? "bg-primary/10 text-primary border border-primary/30"
-                        : "text-muted-foreground hover:bg-secondary hover:text-foreground"
-                    )}
-                  >
-                    <item.icon className="w-5 h-5" />
-                    <span className="font-medium">{item.label}</span>
-                  </Link>
+                  <div key={section.title}>
+                    <button
+                      onClick={() => toggleSection(section.title)}
+                      className="flex items-center justify-between w-full px-2 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider hover:text-foreground transition-colors mb-2"
+                    >
+                      <span>{section.title}</span>
+                      {isExpanded ? (
+                        <ChevronDown className="w-3 h-3" />
+                      ) : (
+                        <ChevronRight className="w-3 h-3" />
+                      )}
+                    </button>
+
+                    <AnimatePresence initial={false}>
+                      {isExpanded && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="space-y-1 overflow-hidden"
+                        >
+                          {section.items.map((item) => {
+                            const isActive = location.pathname === item.path ||
+                              (item.path !== '/admin' && location.pathname.startsWith(item.path));
+
+                            return (
+                              <Link
+                                key={item.path}
+                                to={item.path}
+                                onClick={() => setSidebarOpen(false)}
+                                className={cn(
+                                  "flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors text-sm",
+                                  isActive
+                                    ? "bg-primary/10 text-primary border border-primary/30"
+                                    : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+                                )}
+                              >
+                                <item.icon className="w-4 h-4 flex-shrink-0" />
+                                <span className="font-medium">{item.label}</span>
+                              </Link>
+                            );
+                          })}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 );
               })}
             </nav>
@@ -167,7 +242,7 @@ const AdminLayout = () => {
             >
               <Menu className="w-6 h-6" />
             </button>
-            <span className="font-bold">CMS Admin</span>
+            <span className="font-bold">CMS Panel</span>
             <div className="w-6" />
           </header>
 

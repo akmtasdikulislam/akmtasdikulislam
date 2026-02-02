@@ -17,6 +17,14 @@ import ProjectEditor from "./pages/admin/ProjectEditor";
 import ProjectsList from "./pages/admin/ProjectsList";
 import TestimonialsList from "./pages/admin/TestimonialsList";
 
+
+
+import AboutEditor from "./pages/admin/AboutEditor";
+import FooterEditor from "./pages/admin/FooterEditor";
+import GeneralSettings from "./pages/admin/GeneralSettings";
+import HeroEditor from "./pages/admin/HeroEditor";
+import HomepageEditor from "./pages/admin/HomepageEditor";
+import NavbarEditor from "./pages/admin/NavbarEditor";
 import WorkHistoryList from "./pages/admin/WorkHistoryList";
 import AdminAuth from "./pages/AdminAuth";
 import AllBlogs from "./pages/AllBlogs";
@@ -76,6 +84,15 @@ const AppContent = () => {
           <Route path="certifications" element={<CertificationsList />} />
           <Route path="work-history" element={<WorkHistoryList />} />
           <Route path="testimonials" element={<TestimonialsList />} />
+
+
+          {/* Homepage Content Routes */}
+          <Route path="homepage" element={<HomepageEditor />} />
+          <Route path="homepage/hero" element={<HeroEditor />} />
+          <Route path="homepage/navbar" element={<NavbarEditor />} />
+          <Route path="homepage/about" element={<AboutEditor />} />
+          <Route path="homepage/footer" element={<FooterEditor />} />
+          <Route path="homepage/settings" element={<GeneralSettings />} />
         </Route>
 
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

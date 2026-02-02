@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
+import { useFooterContent } from "@/hooks/useHomepageContent";
 import { motion } from "framer-motion";
-import { ArrowUp, Github, Linkedin, Mail, Terminal } from "lucide-react";
+import * as LucideIcons from "lucide-react";
+import { ArrowUp, Mail, Terminal } from "lucide-react";
 
 const quickLinks = [
   { name: "Home", href: "#home" },
@@ -16,18 +18,49 @@ const services = [
   { name: "E-commerce", href: "#services" },
 ];
 
-const socialLinks = [
-  { icon: Github, href: "https://github.com/akmtasdikulislam", label: "GitHub" },
-  { icon: Linkedin, href: "https://www.linkedin.com/in/akmtasdikulislam", label: "LinkedIn" },
-  { icon: null, href: "https://www.upwork.com/freelancers/~01fe1fc80c8877ffe2", label: "Upwork", isUpwork: true },
-  { icon: null, href: "#", label: "Fiverr", isFiverr: true },
-  { icon: Mail, href: "mailto:akmtasdikulislam@gmail.com", label: "Email" },
-];
-
 const Footer = () => {
+  const { data, isLoading } = useFooterContent();
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  // Show loading or fallback
+  if (isLoading || !data) {
+    return (
+      <footer className="relative py-16 border-t border-border">
+        <div className="absolute inset-0 bg-grid-pattern opacity-20" />
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="flex items-center justify-center">
+            <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+          </div>
+        </div>
+      </footer>
+    );
+  }
+
+  const { footer, socialLinks } = data;
+
+  // Map social links to include icons
+  const mappedSocialLinks = socialLinks.map((link) => {
+    let icon = null;
+
+    if (link.icon_name) {
+      // @ts-ignore - dynamic icon lookup
+      const IconComponent = LucideIcons[link.icon_name];
+      icon = IconComponent;
+    }
+
+    return {
+      ...link,
+      icon,
+      isUpwork: link.platform.toLowerCase() === 'upwork',
+      isFiverr: link.platform.toLowerCase() === 'fiverr',
+    };
+  });
+
+  // @ts-ignore
+  const LogoIcon = LucideIcons.Terminal;
 
   return (
     <footer className="relative py-16 border-t border-border">
@@ -48,46 +81,40 @@ const Footer = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
-          {/* Brand column - Same logo as navbar */}
+          {/* Brand column */}
           <div className="space-y-4">
             <a href="#home" className="flex items-center gap-2 group">
               <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center group-hover:glow-green-sm transition-all">
-                <Terminal className="w-5 h-5 text-primary" />
+                <LogoIcon className="w-5 h-5 text-primary" />
               </div>
               <span className="text-xl font-bold tracking-wider">
-                AKM<span className="text-primary">.</span>
+                {footer.logo_text}<span className="text-primary">.</span>
               </span>
             </a>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              CSE undergraduate at Bangladesh University of Professionals. Specializing in MERN stack development and n8n automation workflows.
+              {footer.description}
             </p>
-            {/* Social links - Updated order: GitHub, LinkedIn, Upwork, Email */}
+            {/* Social links */}
             <div className="flex items-center gap-3 pt-2">
-              {socialLinks.map((social) => (
+              {mappedSocialLinks.map((social) => (
                 <motion.a
-                  key={social.label}
-                  href={social.href}
+                  key={social.id}
+                  href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                   className="w-9 h-9 rounded-lg bg-card border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
                 >
-                  {social.isUpwork ? (
+                  {social.isUpwork || social.isFiverr ? (
                     <img
-                      src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/upwork.svg"
-                      alt="Upwork"
+                      src={social.icon_url!}
+                      alt={social.platform}
                       className="w-4 h-4 invert opacity-70"
                     />
-                  ) : social.isFiverr ? (
-                    <img
-                      src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/fiverr.svg"
-                      alt="Fiverr"
-                      className="w-4 h-4 invert opacity-70"
-                    />
-                  ) : (
+                  ) : social.icon ? (
                     <social.icon className="w-4 h-4" />
-                  )}
+                  ) : null}
                 </motion.a>
               ))}
             </div>
@@ -156,9 +183,7 @@ const Footer = () => {
         {/* Copyright */}
         <div className="mt-12 pt-8 border-t border-border">
           <p className="text-sm text-center text-muted-foreground">
-            &copy; {new Date().getFullYear()}{" "}
-            <span className="text-foreground font-medium">Akm Tasdikul Islam</span>.
-            All rights reserved.
+            {footer.copyright_text}
           </p>
         </div>
       </div>
