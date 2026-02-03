@@ -171,6 +171,16 @@ const NavbarEditor = () => {
                                 </div>
                             </div>
 
+                            <div className="bg-muted/50 p-3 rounded-lg text-sm">
+                                <p className="font-medium mb-1">Branding Configuration:</p>
+                                <ul className="space-y-1 text-muted-foreground">
+                                    <li>• <strong>Logo Text:</strong> Brand name or initials (e.g., "AKM")</li>
+                                    <li>• <strong>Logo Icon:</strong> Lucide icon identifier (e.g., "Terminal", "Code2")</li>
+                                    <li>• <strong>CTA Text:</strong> The text on your header button (e.g., "Hire Me")</li>
+                                    <li>• <strong>CTA Link:</strong> Destination for the button (e.g., "#contact" or "/hire")</li>
+                                </ul>
+                            </div>
+
                             <Button onClick={() => updateNavbarMutation.mutate(navbarData)} disabled={updateNavbarMutation.isPending}>
                                 {updateNavbarMutation.isPending ? (
                                     <>
