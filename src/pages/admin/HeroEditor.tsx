@@ -242,6 +242,17 @@ const HeroEditor = () => {
                                     </Button>
                                 </div>
                             </div>
+
+                            <div className="bg-muted/50 p-3 rounded-lg text-sm">
+                                <p className="font-medium mb-1">Hero Configuration:</p>
+                                <ul className="space-y-1 text-muted-foreground">
+                                    <li>• <strong>Your Name:</strong> Main title displayed in the hero section.</li>
+                                    <li>• <strong>Greeting Badge:</strong> Small highlighted text above your name.</li>
+                                    <li>• <strong>Description:</strong> Introduction text explaining what you do.</li>
+                                    <li>• <strong>Profile Photo:</strong> Your main avatar image.</li>
+                                </ul>
+                            </div>
+
                             <Button onClick={() => updateHeroMutation.mutate(heroData)} disabled={updateHeroMutation.isPending}>
                                 <Save className="w-4 h-4 mr-2" />
                                 Save Basic Info
@@ -281,6 +292,15 @@ const HeroEditor = () => {
                                     </div>
                                 ))}
                             </div>
+
+                            <div className="bg-muted/50 p-3 rounded-lg text-sm">
+                                <p className="font-medium mb-1">Roles Configuration:</p>
+                                <ul className="space-y-1 text-muted-foreground">
+                                    <li>• <strong>Typewriter Roles:</strong> List of titles that rotate in the hero animation.</li>
+                                    <li>• <strong>Order:</strong> Use the drag handle (left) to reorder how roles appear.</li>
+                                </ul>
+                            </div>
+
                             <div className="flex gap-3 mt-6">
                                 <Button onClick={() => setRoles([...roles, { role_text: '', display_order: roles.length }])} variant="outline" className="flex-1">
                                     <Plus className="w-4 h-4 mr-2" /> Add Role
@@ -322,6 +342,16 @@ const HeroEditor = () => {
                                     </Button>
                                 </div>
                             ))}
+
+                            <div className="bg-muted/50 p-3 rounded-lg text-sm">
+                                <p className="font-medium mb-1">Stats Configuration:</p>
+                                <ul className="space-y-1 text-muted-foreground">
+                                    <li>• <strong>Label:</strong> Explanation of the number (e.g. "Projects Completed").</li>
+                                    <li>• <strong>Value:</strong> The numeric data to display.</li>
+                                    <li>• <strong>Suffix:</strong> Character shown after the number (e.g. "+", "%").</li>
+                                </ul>
+                            </div>
+
                             <div className="flex gap-3 mt-6">
                                 <Button onClick={() => setStats([...stats, { stat_label: '', stat_value: 0, stat_suffix: '+', display_order: stats.length }])} variant="outline" className="flex-1">
                                     <Plus className="w-4 h-4 mr-2" /> Add Stat
@@ -780,6 +810,15 @@ const HeroEditor = () => {
                                     </div>
                                 );
                             })}
+
+                            <div className="bg-muted/50 p-3 rounded-lg text-sm">
+                                <p className="font-medium mb-1">Badges Configuration:</p>
+                                <ul className="space-y-1 text-muted-foreground">
+                                    <li>• <strong>Badge Text:</strong> Content displayed in the floating badge.</li>
+                                    <li>• <strong>Position:</strong> Corner presets for absolute placement in the hero.</li>
+                                </ul>
+                            </div>
+
                             <div className="flex gap-3 mt-6">
                                 <Button onClick={() => setBadges([...badges, { badge_text: '', position_class: 'absolute', display_order: badges.length }])} variant="outline" className="flex-1">
                                     <Plus className="w-4 h-4 mr-2" /> Add Badge
