@@ -457,6 +457,16 @@ const ContactEditor = () => {
                             </Card>
                         ))}
                     </div>
+
+                    <div className="bg-muted/50 p-3 rounded-lg text-sm mt-8">
+                        <p className="font-medium mb-1">Coding Profile Configuration:</p>
+                        <ul className="space-y-1 text-muted-foreground">
+                            <li>• <strong>Platform Name:</strong> The site where your profile is hosted (e.g., "LeetCode", "GitHub").</li>
+                            <li>• <strong>Profile Link:</strong> The direct URL to your public profile page.</li>
+                            <li>• <strong>Icon:</strong> Upload a platform logo or use a direct image/SVG URL.</li>
+                            <li>• <strong>Visibility:</strong> Use the "Active" toggle to control whether this profile appears on your public portfolio.</li>
+                        </ul>
+                    </div>
                 </TabsContent>
 
                 <TabsContent value="freelance" className="space-y-6 mt-10 max-w-6xl mx-auto w-full px-4">
@@ -587,6 +597,16 @@ const ContactEditor = () => {
                                 </CardContent>
                             </Card>
                         ))}
+                    </div>
+
+                    <div className="bg-muted/50 p-3 rounded-lg text-sm mt-8">
+                        <p className="font-medium mb-1">Freelance Profile Configuration:</p>
+                        <ul className="space-y-1 text-muted-foreground">
+                            <li>• <strong>Platform Name:</strong> The marketplace where you are active (e.g., "Upwork", "Fiverr").</li>
+                            <li>• <strong>Profile Link:</strong> Your public profile or portfolio URL on that platform.</li>
+                            <li>• <strong>Icon:</strong> Visual branding for the platform (Upload or URL).</li>
+                            <li>• <strong>Visibility:</strong> Control the display status of this freelance profile on your portfolio.</li>
+                        </ul>
                     </div>
                 </TabsContent>
             </Tabs>
