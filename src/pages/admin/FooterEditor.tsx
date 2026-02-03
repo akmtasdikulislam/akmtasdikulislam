@@ -222,6 +222,14 @@ const FooterEditor = () => {
                         onDelete={(id) => deleteQuickLinkMutation.mutate(id)}
                         isPending={addQuickLinkMutation.isPending || updateQuickLinkMutation.isPending}
                     />
+
+                    <div className="bg-muted/50 p-3 rounded-lg text-sm mt-6">
+                        <p className="font-medium mb-1">Quick Links Configuration:</p>
+                        <ul className="space-y-1 text-muted-foreground">
+                            <li>• <strong>Label:</strong> The clickable text shown to the user (e.g., "About").</li>
+                            <li>• <strong>Href:</strong> Use "#about" for section anchors or "https://..." for external links.</li>
+                        </ul>
+                    </div>
                 </TabsContent>
 
                 <TabsContent value="services" className="mt-10 max-w-6xl mx-auto w-full px-4">
@@ -234,6 +242,14 @@ const FooterEditor = () => {
                         onDelete={(id) => deleteServiceLinkMutation.mutate(id)}
                         isPending={addServiceLinkMutation.isPending || updateServiceLinkMutation.isPending}
                     />
+
+                    <div className="bg-muted/50 p-3 rounded-lg text-sm mt-6">
+                        <p className="font-medium mb-1">Service Links Configuration:</p>
+                        <ul className="space-y-1 text-muted-foreground">
+                            <li>• <strong>Label:</strong> The service name shown to the user (e.g., "Web Design").</li>
+                            <li>• <strong>Href:</strong> Destination URL or anchor for the service detail.</li>
+                        </ul>
+                    </div>
                 </TabsContent>
             </Tabs>
         </div>
