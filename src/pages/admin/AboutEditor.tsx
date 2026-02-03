@@ -299,9 +299,10 @@ const AboutEditor = () => {
                                                 />
                                             </div>
                                             <Button
-                                                variant="outline"
-                                                size="icon"
+                                                variant="ghost"
+                                                className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
                                                 onClick={() => setHighlights(highlights.filter((_, i) => i !== index))}
+                                                title="Delete Highlight"
                                             >
                                                 <Trash2 className="w-4 h-4" />
                                             </Button>
@@ -310,28 +311,30 @@ const AboutEditor = () => {
                                 </Card>
                             ))}
 
-                            <Button
-                                onClick={() => setHighlights([...highlights, { title: '', description: '', detail: '', icon_name: '', display_order: highlights.length }])}
-                                variant="outline"
-                                className="w-full"
-                            >
-                                <Plus className="w-4 h-4 mr-2" />
-                                Add Highlight
-                            </Button>
+                            <div className="flex gap-3 mt-6">
+                                <Button
+                                    onClick={() => setHighlights([...highlights, { title: '', description: '', detail: '', icon_name: '', display_order: highlights.length }])}
+                                    variant="outline"
+                                    className="flex-1"
+                                >
+                                    <Plus className="w-4 h-4 mr-2" />
+                                    Add Highlight
+                                </Button>
 
-                            <Button onClick={() => updateHighlightsMutation.mutate(highlights)} disabled={updateHighlightsMutation.isPending} className="w-full">
-                                {updateHighlightsMutation.isPending ? (
-                                    <>
-                                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                                        Saving...
-                                    </>
-                                ) : (
-                                    <>
-                                        <Save className="w-4 h-4 mr-2" />
-                                        Save Highlights
-                                    </>
-                                )}
-                            </Button>
+                                <Button onClick={() => updateHighlightsMutation.mutate(highlights)} disabled={updateHighlightsMutation.isPending} className="flex-1">
+                                    {updateHighlightsMutation.isPending ? (
+                                        <>
+                                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                            Saving...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Save className="w-4 h-4 mr-2" />
+                                            Save Highlights
+                                        </>
+                                    )}
+                                </Button>
+                            </div>
                         </CardContent>
                     </Card>
                 </TabsContent>
@@ -368,9 +371,10 @@ const AboutEditor = () => {
                                             className="flex-1"
                                         />
                                         <Button
-                                            variant="outline"
-                                            size="icon"
+                                            variant="ghost"
+                                            className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
                                             onClick={() => setInterests(interests.filter((_, i) => i !== index))}
+                                            title="Delete Interest"
                                         >
                                             <Trash2 className="w-4 h-4" />
                                         </Button>
@@ -378,28 +382,30 @@ const AboutEditor = () => {
                                 ))}
                             </div>
 
-                            <Button
-                                onClick={() => setInterests([...interests, { label: '', icon_name: '', display_order: interests.length }])}
-                                variant="outline"
-                                className="w-full"
-                            >
-                                <Plus className="w-4 h-4 mr-2" />
-                                Add Interest
-                            </Button>
+                            <div className="flex gap-3 mt-6">
+                                <Button
+                                    onClick={() => setInterests([...interests, { label: '', icon_name: '', display_order: interests.length }])}
+                                    variant="outline"
+                                    className="flex-1"
+                                >
+                                    <Plus className="w-4 h-4 mr-2" />
+                                    Add Interest
+                                </Button>
 
-                            <Button onClick={() => updateInterestsMutation.mutate(interests)} disabled={updateInterestsMutation.isPending} className="w-full">
-                                {updateInterestsMutation.isPending ? (
-                                    <>
-                                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                                        Saving...
-                                    </>
-                                ) : (
-                                    <>
-                                        <Save className="w-4 h-4 mr-2" />
-                                        Save Interests
-                                    </>
-                                )}
-                            </Button>
+                                <Button onClick={() => updateInterestsMutation.mutate(interests)} disabled={updateInterestsMutation.isPending} className="flex-1">
+                                    {updateInterestsMutation.isPending ? (
+                                        <>
+                                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                            Saving...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Save className="w-4 h-4 mr-2" />
+                                            Save Interests
+                                        </>
+                                    )}
+                                </Button>
+                            </div>
                         </CardContent>
                     </Card>
                 </TabsContent>
@@ -449,9 +455,10 @@ const AboutEditor = () => {
                                                 />
                                             </div>
                                             <Button
-                                                variant="outline"
-                                                size="icon"
+                                                variant="ghost"
+                                                className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
                                                 onClick={() => setValues(values.filter((_, i) => i !== index))}
+                                                title="Delete Value"
                                             >
                                                 <Trash2 className="w-4 h-4" />
                                             </Button>
@@ -460,28 +467,30 @@ const AboutEditor = () => {
                                 </Card>
                             ))}
 
-                            <Button
-                                onClick={() => setValues([...values, { value_text: '', description: '', icon_name: '', display_order: values.length }])}
-                                variant="outline"
-                                className="w-full"
-                            >
-                                <Plus className="w-4 h-4 mr-2" />
-                                Add Value
-                            </Button>
+                            <div className="flex gap-3 mt-6">
+                                <Button
+                                    onClick={() => setValues([...values, { value_text: '', description: '', icon_name: '', display_order: values.length }])}
+                                    variant="outline"
+                                    className="flex-1"
+                                >
+                                    <Plus className="w-4 h-4 mr-2" />
+                                    Add Value
+                                </Button>
 
-                            <Button onClick={() => updateValuesMutation.mutate(values)} disabled={updateValuesMutation.isPending} className="w-full">
-                                {updateValuesMutation.isPending ? (
-                                    <>
-                                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                                        Saving...
-                                    </>
-                                ) : (
-                                    <>
-                                        <Save className="w-4 h-4 mr-2" />
-                                        Save Values
-                                    </>
-                                )}
-                            </Button>
+                                <Button onClick={() => updateValuesMutation.mutate(values)} disabled={updateValuesMutation.isPending} className="flex-1">
+                                    {updateValuesMutation.isPending ? (
+                                        <>
+                                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                            Saving...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Save className="w-4 h-4 mr-2" />
+                                            Save Values
+                                        </>
+                                    )}
+                                </Button>
+                            </div>
                         </CardContent>
                     </Card>
                 </TabsContent>
