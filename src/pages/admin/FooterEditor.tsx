@@ -170,6 +170,16 @@ const FooterEditor = () => {
                             </div>
                         </CardContent>
                     </Card>
+
+                    <div className="bg-muted/50 p-3 rounded-lg text-sm mt-6">
+                        <p className="font-medium mb-1">Basic Info Configuration:</p>
+                        <ul className="space-y-1 text-muted-foreground">
+                            <li>• <strong>Logo Text:</strong> Your brand name or logo text shown in the footer.</li>
+                            <li>• <strong>Contact Email:</strong> The primary email for business inquiries.</li>
+                            <li>• <strong>Description:</strong> A short professional summary or bio.</li>
+                            <li>• <strong>Copyright:</strong> The year and credit line displayed at the very bottom.</li>
+                        </ul>
+                    </div>
                 </TabsContent>
 
                 <TabsContent value="connect" className="mt-10 max-w-6xl mx-auto w-full px-4">
@@ -210,6 +220,15 @@ const FooterEditor = () => {
                             </div>
                         </CardContent>
                     </Card>
+
+                    <div className="bg-muted/50 p-3 rounded-lg text-sm mt-6">
+                        <p className="font-medium mb-1">Connect CTA Configuration:</p>
+                        <ul className="space-y-1 text-muted-foreground">
+                            <li>• <strong>CTA Title:</strong> The attention-grabbing heading to start a conversation.</li>
+                            <li>• <strong>CTA Text:</strong> Supporting copy that explains why users should reach out.</li>
+                            <li>• <strong>Button Text:</strong> Clear call-to-action label (e.g., "Hire Me").</li>
+                        </ul>
+                    </div>
                 </TabsContent>
 
                 <TabsContent value="quick" className="mt-10 max-w-6xl mx-auto w-full px-4">
