@@ -180,26 +180,36 @@ const ContactEditor = () => {
     const unreadCount = messagesData?.filter(m => !m.is_read).length || 0;
 
     return (
-        <div className="space-y-6">
-            <h2 className="text-3xl font-bold tracking-tight">Contact & Profiles</h2>
-            <SectionHeadingEditor sectionKey="contact" />
+        <div className="space-y-6 w-full pb-20">
+            <div className="max-w-6xl mx-auto w-full px-4">
+                <h2 className="text-3xl font-bold tracking-tight">Contact & Profiles</h2>
+                <p className="text-muted-foreground mt-1">
+                    Manage your contact information, social links, and messages
+                </p>
+            </div>
 
-            <Tabs defaultValue="messages">
-                <TabsList>
-                    <TabsTrigger value="messages" className="relative">
-                        Messages
-                        {unreadCount > 0 && (
-                            <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary text-[10px] text-primary-foreground rounded-full flex items-center justify-center animate-pulse">
-                                {unreadCount}
-                            </span>
-                        )}
-                    </TabsTrigger>
-                    <TabsTrigger value="info">Contact Info</TabsTrigger>
-                    <TabsTrigger value="profiles">Coding Profiles</TabsTrigger>
-                    <TabsTrigger value="freelance">Freelance Profiles</TabsTrigger>
-                </TabsList>
+            <div className="max-w-6xl mx-auto w-full px-4">
+                <SectionHeadingEditor sectionKey="contact" />
+            </div>
 
-                <TabsContent value="messages" className="space-y-4">
+            <Tabs defaultValue="messages" className="w-full">
+                <div className="flex justify-center w-full px-4">
+                    <TabsList className="inline-flex h-auto p-1 bg-muted/40 backdrop-blur-sm border border-border/50 rounded-xl overflow-x-auto max-w-full">
+                        <TabsTrigger value="messages" className="relative px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">
+                            Messages
+                            {unreadCount > 0 && (
+                                <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary text-[10px] text-primary-foreground rounded-full flex items-center justify-center animate-pulse">
+                                    {unreadCount}
+                                </span>
+                            )}
+                        </TabsTrigger>
+                        <TabsTrigger value="info" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Contact Info</TabsTrigger>
+                        <TabsTrigger value="profiles" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Coding Profiles</TabsTrigger>
+                        <TabsTrigger value="freelance" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Freelance Profiles</TabsTrigger>
+                    </TabsList>
+                </div>
+
+                <TabsContent value="messages" className="space-y-6 mt-10 max-w-6xl mx-auto w-full px-4">
                     <Card>
                         <CardHeader>
                             <CardTitle>Inbound Messages</CardTitle>
@@ -248,7 +258,7 @@ const ContactEditor = () => {
                     </Card>
                 </TabsContent>
 
-                <TabsContent value="info">
+                <TabsContent value="info" className="mt-10 max-w-6xl mx-auto w-full px-4">
                     <Card>
                         <CardHeader><CardTitle>General Information</CardTitle></CardHeader>
                         <CardContent className="space-y-4">
@@ -269,63 +279,69 @@ const ContactEditor = () => {
                             <div className="grid md:grid-cols-2 gap-4">
                                 <div className="space-y-1">
                                     <Label>Upwork Profile URL</Label>
-                                    <Input 
-                                      value={contact.upwork_url || ''} 
-                                      onChange={(e) => setContact({ ...contact, upwork_url: e.target.value })} 
-                                      placeholder="https://www.upwork.com/freelancers/..."
+                                    <Input
+                                        value={contact.upwork_url || ''}
+                                        onChange={(e) => setContact({ ...contact, upwork_url: e.target.value })}
+                                        placeholder="https://www.upwork.com/freelancers/..."
                                     />
                                 </div>
                                 <div className="space-y-1">
                                     <Label>LinkedIn Profile URL</Label>
-                                    <Input 
-                                      value={contact.linkedin_url || ''} 
-                                      onChange={(e) => setContact({ ...contact, linkedin_url: e.target.value })} 
-                                      placeholder="https://www.linkedin.com/in/..."
+                                    <Input
+                                        value={contact.linkedin_url || ''}
+                                        onChange={(e) => setContact({ ...contact, linkedin_url: e.target.value })}
+                                        placeholder="https://www.linkedin.com/in/..."
                                     />
                                 </div>
                             </div>
                             <div className="grid md:grid-cols-2 gap-4">
                                 <div className="space-y-1">
                                     <Label>Upwork Button Text</Label>
-                                    <Input 
-                                      value={contact.upwork_label || ''} 
-                                      onChange={(e) => setContact({ ...contact, upwork_label: e.target.value })} 
-                                      placeholder="Hire me on Upwork"
+                                    <Input
+                                        value={contact.upwork_label || ''}
+                                        onChange={(e) => setContact({ ...contact, upwork_label: e.target.value })}
+                                        placeholder="Hire me on Upwork"
                                     />
                                 </div>
                                 <div className="space-y-1">
                                     <Label>LinkedIn Button Text</Label>
-                                    <Input 
-                                      value={contact.linkedin_label || ''} 
-                                      onChange={(e) => setContact({ ...contact, linkedin_label: e.target.value })} 
-                                      placeholder="Connect on LinkedIn"
+                                    <Input
+                                        value={contact.linkedin_label || ''}
+                                        onChange={(e) => setContact({ ...contact, linkedin_label: e.target.value })}
+                                        placeholder="Connect on LinkedIn"
                                     />
                                 </div>
                             </div>
-                            <div className="flex items-center gap-4 pt-4 border-t">
-                                <Switch checked={contact.available_for_work} onCheckedChange={(c) => setContact({ ...contact, available_for_work: c })} />
-                                <Label>Available For Work Status</Label>
-                                <Input className="w-64" value={contact.available_text || ''} onChange={(e) => setContact({ ...contact, available_text: e.target.value })} placeholder="Status Text" />
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-4 border-t">
+                                <div className="flex items-center gap-4">
+                                    <Switch checked={contact.available_for_work} onCheckedChange={(c) => setContact({ ...contact, available_for_work: c })} />
+                                    <Label>Available For Work</Label>
+                                </div>
+                                <Input className="flex-1 max-w-xs" value={contact.available_text || ''} onChange={(e) => setContact({ ...contact, available_text: e.target.value })} placeholder="Status Text" />
                             </div>
-                            <Button onClick={() => updateContactMutation.mutate(contact)}><Save className="mr-2 h-4 w-4" /> Save General Info</Button>
+                            <div className="flex justify-end pt-4 border-t">
+                                <Button onClick={() => updateContactMutation.mutate(contact)} variant="outline">
+                                    <Save className="mr-2 h-4 w-4" /> Save General Info
+                                </Button>
+                            </div>
                         </CardContent>
                     </Card>
                 </TabsContent>
 
-                <TabsContent value="profiles" className="space-y-6">
+                <TabsContent value="profiles" className="space-y-6 mt-10 max-w-6xl mx-auto w-full px-4">
                     <div className="flex items-center justify-between">
                         <h3 className="text-xl font-semibold opacity-80">Coding Profiles</h3>
                         <Button onClick={addNewProfile} className="shadow-glow-sm">
                             <Plus className="mr-2 h-4 w-4" /> Add Profile
                         </Button>
                     </div>
-                    
+
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                         {profiles.map((profile) => (
                             <Card key={profile.id} className="group relative overflow-hidden border-border/50 bg-card/40 backdrop-blur-md hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 flex flex-col h-full">
                                 {/* Decorative Gradient Backdrop */}
                                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                                
+
                                 <CardContent className="p-5 flex flex-col flex-1 relative z-10">
                                     {/* Tile Header: Icon & Actions */}
                                     <div className="flex items-start justify-between mb-4">
@@ -345,8 +361,8 @@ const ContactEditor = () => {
                                             </div>
                                             {/* Discreet Switcher */}
                                             <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 z-20">
-                                                <Tabs 
-                                                    value={profile.icon_type || 'upload'} 
+                                                <Tabs
+                                                    value={profile.icon_type || 'upload'}
                                                     onValueChange={(v) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, icon_type: v } : p))}
                                                     className="w-[52px] shadow-2xl"
                                                 >
@@ -361,19 +377,19 @@ const ContactEditor = () => {
                                                 </Tabs>
                                             </div>
                                         </div>
-                                        
+
                                         <div className="flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                            <Button 
-                                                size="icon" 
-                                                variant="ghost" 
+                                            <Button
+                                                size="icon"
+                                                variant="ghost"
                                                 className="h-8 w-8 hover:bg-primary/20 hover:text-primary transition-colors"
                                                 onClick={() => updateProfileMutation.mutate(profile)}
                                             >
                                                 <Save className="h-4 w-4" />
                                             </Button>
-                                            <Button 
-                                                size="icon" 
-                                                variant="ghost" 
+                                            <Button
+                                                size="icon"
+                                                variant="ghost"
                                                 className="h-8 w-8 hover:bg-destructive/20 hover:text-destructive transition-colors"
                                                 onClick={() => deleteProfileMutation.mutate(profile.id)}
                                             >
@@ -385,11 +401,11 @@ const ContactEditor = () => {
                                     {/* Tile Body: Title & Info */}
                                     <div className="flex-1 space-y-3">
                                         <div>
-                                            <Input 
-                                                value={profile.platform} 
+                                            <Input
+                                                value={profile.platform}
                                                 className="h-auto font-bold text-lg bg-transparent border-none p-0 focus-visible:ring-0 placeholder:opacity-50"
                                                 placeholder="Platform Name"
-                                                onChange={(e) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, platform: e.target.value } : p))} 
+                                                onChange={(e) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, platform: e.target.value } : p))}
                                             />
                                             <div className="h-0.5 w-8 bg-primary/40 rounded-full mt-0.5 group-hover:w-full transition-all duration-500" />
                                         </div>
@@ -397,28 +413,28 @@ const ContactEditor = () => {
                                         <div className="space-y-2.5 pt-1">
                                             <div className="space-y-1">
                                                 <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Profile Link</Label>
-                                                <Input 
-                                                    value={profile.url} 
+                                                <Input
+                                                    value={profile.url}
                                                     className="bg-background/20 h-8 text-[11px] border-border/30 focus:border-primary/50 transition-colors"
                                                     placeholder="URL..."
-                                                    onChange={(e) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, url: e.target.value } : p))} 
+                                                    onChange={(e) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, url: e.target.value } : p))}
                                                 />
                                             </div>
-                                            
+
                                             {profile.icon_type === 'url' && (
                                                 <div className="space-y-1 animate-in fade-in duration-300">
                                                     <Label className="text-[10px] uppercase tracking-widest text-primary font-bold">Icon URL</Label>
-                                                    <Input 
-                                                        value={profile.icon_url || ''} 
-                                                        placeholder="Custom URL..." 
+                                                    <Input
+                                                        value={profile.icon_url || ''}
+                                                        placeholder="Custom URL..."
                                                         className="bg-background/20 h-8 text-[11px] border-primary/20 focus:border-primary transition-colors"
-                                                        onChange={(e) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, icon_url: e.target.value } : p))} 
+                                                        onChange={(e) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, icon_url: e.target.value } : p))}
                                                     />
                                                 </div>
                                             )}
                                         </div>
                                     </div>
-                                    
+
                                     {/* Visibility & Status */}
                                     <div className="mt-4 flex items-center justify-between border-t border-border/30 pt-4">
                                         <div className="flex items-center gap-2">
@@ -429,7 +445,7 @@ const ContactEditor = () => {
                                         </div>
                                         <div className="flex items-center gap-2">
                                             <Label htmlFor={`visible-${profile.id}`} className="text-[9px] uppercase tracking-widest opacity-40 font-bold cursor-pointer">Visible</Label>
-                                            <Switch 
+                                            <Switch
                                                 id={`visible-${profile.id}`}
                                                 checked={profile.is_visible !== false}
                                                 onCheckedChange={(checked) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, is_visible: checked } : p))}
@@ -443,7 +459,7 @@ const ContactEditor = () => {
                     </div>
                 </TabsContent>
 
-                <TabsContent value="freelance" className="space-y-6">
+                <TabsContent value="freelance" className="space-y-6 mt-10 max-w-6xl mx-auto w-full px-4">
                     <div className="flex items-center justify-between">
                         <h3 className="text-xl font-semibold opacity-80">Freelance Profiles</h3>
                         <Button onClick={addNewFreelance} className="shadow-glow-sm">
@@ -456,7 +472,7 @@ const ContactEditor = () => {
                             <Card key={profile.id} className="group relative overflow-hidden border-border/50 bg-card/40 backdrop-blur-md hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 flex flex-col h-full">
                                 {/* Decorative Gradient Backdrop */}
                                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                                
+
                                 <CardContent className="p-5 flex flex-col flex-1 relative z-10">
                                     {/* Tile Header: Icon & Actions */}
                                     <div className="flex items-start justify-between mb-4">
@@ -476,8 +492,8 @@ const ContactEditor = () => {
                                             </div>
                                             {/* Discreet Switcher */}
                                             <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 z-20">
-                                                <Tabs 
-                                                    value={profile.icon_type || 'upload'} 
+                                                <Tabs
+                                                    value={profile.icon_type || 'upload'}
                                                     onValueChange={(v) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, icon_type: v } : p))}
                                                     className="w-[52px] shadow-2xl"
                                                 >
@@ -492,19 +508,19 @@ const ContactEditor = () => {
                                                 </Tabs>
                                             </div>
                                         </div>
-                                        
+
                                         <div className="flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                            <Button 
-                                                size="icon" 
-                                                variant="ghost" 
+                                            <Button
+                                                size="icon"
+                                                variant="ghost"
                                                 className="h-8 w-8 hover:bg-primary/20 hover:text-primary transition-colors"
                                                 onClick={() => updateFreelanceMutation.mutate(profile)}
                                             >
                                                 <Save className="h-4 w-4" />
                                             </Button>
-                                            <Button 
-                                                size="icon" 
-                                                variant="ghost" 
+                                            <Button
+                                                size="icon"
+                                                variant="ghost"
                                                 className="h-8 w-8 hover:bg-destructive/20 hover:text-destructive transition-colors"
                                                 onClick={() => deleteFreelanceMutation.mutate(profile.id)}
                                             >
@@ -516,11 +532,11 @@ const ContactEditor = () => {
                                     {/* Tile Body: Title & Info */}
                                     <div className="flex-1 space-y-3">
                                         <div>
-                                            <Input 
-                                                value={profile.platform} 
+                                            <Input
+                                                value={profile.platform}
                                                 className="h-auto font-bold text-lg bg-transparent border-none p-0 focus-visible:ring-0 placeholder:opacity-50"
                                                 placeholder="Platform Name"
-                                                onChange={(e) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, platform: e.target.value } : p))} 
+                                                onChange={(e) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, platform: e.target.value } : p))}
                                             />
                                             <div className="h-0.5 w-8 bg-primary/40 rounded-full mt-0.5 group-hover:w-full transition-all duration-500" />
                                         </div>
@@ -528,28 +544,28 @@ const ContactEditor = () => {
                                         <div className="space-y-2.5 pt-1">
                                             <div className="space-y-1">
                                                 <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Profile Link</Label>
-                                                <Input 
-                                                    value={profile.url} 
+                                                <Input
+                                                    value={profile.url}
                                                     className="bg-background/20 h-8 text-[11px] border-border/30 focus:border-primary/50 transition-colors"
                                                     placeholder="URL..."
-                                                    onChange={(e) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, url: e.target.value } : p))} 
+                                                    onChange={(e) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, url: e.target.value } : p))}
                                                 />
                                             </div>
-                                            
+
                                             {profile.icon_type === 'url' && (
                                                 <div className="space-y-1 animate-in fade-in duration-300">
                                                     <Label className="text-[10px] uppercase tracking-widest text-primary font-bold">Icon URL</Label>
-                                                    <Input 
-                                                        value={profile.icon_url || ''} 
-                                                        placeholder="Custom URL..." 
+                                                    <Input
+                                                        value={profile.icon_url || ''}
+                                                        placeholder="Custom URL..."
                                                         className="bg-background/20 h-8 text-[11px] border-primary/20 focus:border-primary transition-colors"
-                                                        onChange={(e) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, icon_url: e.target.value } : p))} 
+                                                        onChange={(e) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, icon_url: e.target.value } : p))}
                                                     />
                                                 </div>
                                             )}
                                         </div>
                                     </div>
-                                    
+
                                     {/* Visibility & Status */}
                                     <div className="mt-4 flex items-center justify-between border-t border-border/30 pt-4">
                                         <div className="flex items-center gap-2">
@@ -560,7 +576,7 @@ const ContactEditor = () => {
                                         </div>
                                         <div className="flex items-center gap-2">
                                             <Label htmlFor={`v-freelance-${profile.id}`} className="text-[9px] uppercase tracking-widest opacity-40 font-bold cursor-pointer">Visible</Label>
-                                            <Switch 
+                                            <Switch
                                                 id={`v-freelance-${profile.id}`}
                                                 checked={profile.is_visible !== false}
                                                 onCheckedChange={(checked) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, is_visible: checked } : p))}

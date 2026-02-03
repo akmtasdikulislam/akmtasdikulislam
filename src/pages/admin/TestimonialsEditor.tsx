@@ -73,13 +73,20 @@ const TestimonialsEditor = () => {
     if (isLoading) return <div className="flex justify-center p-8"><Loader2 className="animate-spin" /></div>;
 
     return (
-        <div className="space-y-6">
-            <div className="flex justify-between items-center">
-                <h2 className="text-3xl font-bold tracking-tight">Testimonials Editor</h2>
-                <Button onClick={addNew}><Plus className="mr-2 h-4 w-4" /> Add Testimonial</Button>
+        <div className="space-y-6 w-full pb-20">
+            <div className="max-w-6xl mx-auto w-full px-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h2 className="text-3xl font-bold tracking-tight text-center md:text-left">Testimonials Editor</h2>
+                    <p className="text-muted-foreground mt-1 text-center md:text-left">
+                        Manage what clients and partners say about your work
+                    </p>
+                </div>
+                <Button onClick={addNew} variant="outline" className="w-full md:w-auto">
+                    <Plus className="mr-2 h-4 w-4" /> Add Testimonial
+                </Button>
             </div>
 
-            <div className="grid gap-6">
+            <div className="max-w-6xl mx-auto w-full px-4 grid gap-6 mt-6">
                 {testimonials.map((item) => (
                     <Card key={item.id}>
                         <CardContent className="p-6 space-y-4">
@@ -124,8 +131,23 @@ const TestimonialsEditor = () => {
                                             />
                                         </div>
                                         <div className="flex gap-2 self-end">
-                                            <Button size="sm" variant="outline" onClick={() => updateMutation.mutate(item)}><Save className="mr-2 h-4 w-4" /> Save</Button>
-                                            <Button size="icon" variant="destructive" onClick={() => deleteMutation.mutate(item.id)}><Trash2 className="h-4 w-4" /></Button>
+                                            <Button
+                                                size="sm"
+                                                variant="ghost"
+                                                className="text-primary hover:bg-primary/10 transition-colors"
+                                                onClick={() => updateMutation.mutate(item)}
+                                            >
+                                                <Save className="mr-2 h-4 w-4" /> Save
+                                            </Button>
+                                            <Button
+                                                size="icon"
+                                                variant="ghost"
+                                                className="h-9 w-9 text-destructive hover:bg-destructive/10 transition-colors"
+                                                onClick={() => deleteMutation.mutate(item.id)}
+                                                title="Delete Testimonial"
+                                            >
+                                                <Trash2 className="h-4 w-4" />
+                                            </Button>
                                         </div>
                                     </div>
                                 </div>

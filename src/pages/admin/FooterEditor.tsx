@@ -106,112 +106,119 @@ const FooterEditor = () => {
     }
 
     return (
-        <div className="space-y-8 max-w-5xl pb-20">
-            <div>
+        <div className="space-y-6 w-full pb-20">
+            <div className="max-w-6xl mx-auto w-full px-4">
                 <h1 className="text-3xl font-bold">Footer Management</h1>
-                <p className="text-muted-foreground">Manage all footer elements including links and content.</p>
+                <p className="text-muted-foreground mt-1">Manage all footer elements including links and content.</p>
             </div>
 
-            {/* Basic Info */}
-            <Card>
-                <CardHeader>
-                    <CardTitle>Footer Information</CardTitle>
-                    <CardDescription>Main branding and copyright info</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="max-w-6xl mx-auto w-full px-4 space-y-8 mt-6">
+
+                {/* Basic Info */}
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Footer Information</CardTitle>
+                        <CardDescription>Main branding and copyright info</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <Label>Logo Text</Label>
+                                <Input
+                                    value={footerData.logo_text}
+                                    onChange={(e) => setFooterData({ ...footerData, logo_text: e.target.value })}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label>Contact Email</Label>
+                                <Input
+                                    value={footerData.contact_email}
+                                    onChange={(e) => setFooterData({ ...footerData, contact_email: e.target.value })}
+                                />
+                            </div>
+                        </div>
                         <div className="space-y-2">
-                            <Label>Logo Text</Label>
-                            <Input 
-                                value={footerData.logo_text} 
-                                onChange={(e) => setFooterData({...footerData, logo_text: e.target.value})}
+                            <Label>Description</Label>
+                            <Textarea
+                                value={footerData.description}
+                                onChange={(e) => setFooterData({ ...footerData, description: e.target.value })}
+                                rows={3}
                             />
                         </div>
                         <div className="space-y-2">
-                            <Label>Contact Email</Label>
-                            <Input 
-                                value={footerData.contact_email} 
-                                onChange={(e) => setFooterData({...footerData, contact_email: e.target.value})}
+                            <Label>Copyright Text</Label>
+                            <Input
+                                value={footerData.copyright_text}
+                                onChange={(e) => setFooterData({ ...footerData, copyright_text: e.target.value })}
                             />
                         </div>
-                    </div>
-                    <div className="space-y-2">
-                        <Label>Description</Label>
-                        <Textarea 
-                            value={footerData.description} 
-                            onChange={(e) => setFooterData({...footerData, description: e.target.value})}
-                            rows={3}
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <Label>Copyright Text</Label>
-                        <Input 
-                            value={footerData.copyright_text} 
-                            onChange={(e) => setFooterData({...footerData, copyright_text: e.target.value})}
-                        />
-                    </div>
-                    <Button onClick={() => updateFooterMutation.mutate(footerData)} disabled={updateFooterMutation.isPending}>
-                        {updateFooterMutation.isPending ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
-                        Save Basic Info
-                    </Button>
-                </CardContent>
-            </Card>
+                        <div className="flex justify-end pt-4 border-t">
+                            <Button onClick={() => updateFooterMutation.mutate(footerData)} disabled={updateFooterMutation.isPending} variant="outline">
+                                {updateFooterMutation.isPending ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
+                                Save Basic Info
+                            </Button>
+                        </div>
+                    </CardContent>
+                </Card>
 
-            {/* Connect Section */}
-            <Card>
-                <CardHeader>
-                    <CardTitle>Connect CTA Section</CardTitle>
-                    <CardDescription>Manage the "Let's Connect" section in the footer</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                        <Label>CTA Title</Label>
-                        <Input 
-                            value={footerData.connect_title} 
-                            onChange={(e) => setFooterData({...footerData, connect_title: e.target.value})}
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <Label>CTA Text</Label>
-                        <Textarea 
-                            value={footerData.connect_text} 
-                            onChange={(e) => setFooterData({...footerData, connect_text: e.target.value})}
-                            rows={3}
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <Label>Button Text</Label>
-                        <Input 
-                            value={footerData.connect_button_text} 
-                            onChange={(e) => setFooterData({...footerData, connect_button_text: e.target.value})}
-                        />
-                    </div>
-                    <Button onClick={() => updateFooterMutation.mutate(footerData)} disabled={updateFooterMutation.isPending}>
-                        <Save className="w-4 h-4 mr-2" />
-                        Save Connect Info
-                    </Button>
-                </CardContent>
-            </Card>
+                {/* Connect Section */}
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Connect CTA Section</CardTitle>
+                        <CardDescription>Manage the "Let's Connect" section in the footer</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                        <div className="space-y-2">
+                            <Label>CTA Title</Label>
+                            <Input
+                                value={footerData.connect_title}
+                                onChange={(e) => setFooterData({ ...footerData, connect_title: e.target.value })}
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <Label>CTA Text</Label>
+                            <Textarea
+                                value={footerData.connect_text}
+                                onChange={(e) => setFooterData({ ...footerData, connect_text: e.target.value })}
+                                rows={3}
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <Label>Button Text</Label>
+                            <Input
+                                value={footerData.connect_button_text}
+                                onChange={(e) => setFooterData({ ...footerData, connect_button_text: e.target.value })}
+                            />
+                        </div>
+                        <div className="flex justify-end pt-4 border-t">
+                            <Button onClick={() => updateFooterMutation.mutate(footerData)} disabled={updateFooterMutation.isPending} variant="outline">
+                                <Save className="w-4 h-4 mr-2" />
+                                Save Connect Info
+                            </Button>
+                        </div>
+                    </CardContent>
+                </Card>
 
-            {/* Quick Links */}
-            <LinkManager 
-                title="Quick Links" 
-                links={data?.quickLinks || []} 
-                onAdd={(name, href) => addQuickLinkMutation.mutate({ name, href, display_order: (data?.quickLinks?.length || 0) + 1 })}
-                onUpdate={(id, name, href) => updateQuickLinkMutation.mutate({ id, name, href })}
-                onDelete={(id) => deleteQuickLinkMutation.mutate(id)}
-                isPending={addQuickLinkMutation.isPending || updateQuickLinkMutation.isPending}
-            />
+                {/* Quick Links */}
+                <LinkManager
+                    title="Quick Links"
+                    links={data?.quickLinks || []}
+                    onAdd={(name, href) => addQuickLinkMutation.mutate({ name, href, display_order: (data?.quickLinks?.length || 0) + 1 })}
+                    onUpdate={(id, name, href) => updateQuickLinkMutation.mutate({ id, name, href })}
+                    onDelete={(id) => deleteQuickLinkMutation.mutate(id)}
+                    isPending={addQuickLinkMutation.isPending || updateQuickLinkMutation.isPending}
+                />
 
-            {/* Service Links */}
-            <LinkManager 
-                title="Service Links" 
-                links={data?.serviceLinks || []} 
-                onAdd={(name, href) => addServiceLinkMutation.mutate({ name, href, display_order: (data?.serviceLinks?.length || 0) + 1 })}
-                onUpdate={(id, name, href) => updateServiceLinkMutation.mutate({ id, name, href })}
-                onDelete={(id) => deleteServiceLinkMutation.mutate(id)}
-                isPending={addServiceLinkMutation.isPending || updateServiceLinkMutation.isPending}
-            />
+                {/* Service Links */}
+                <LinkManager
+                    title="Service Links"
+                    links={data?.serviceLinks || []}
+                    onAdd={(name, href) => addServiceLinkMutation.mutate({ name, href, display_order: (data?.serviceLinks?.length || 0) + 1 })}
+                    onUpdate={(id, name, href) => updateServiceLinkMutation.mutate({ id, name, href })}
+                    onDelete={(id) => deleteServiceLinkMutation.mutate(id)}
+                    isPending={addServiceLinkMutation.isPending || updateServiceLinkMutation.isPending}
+                />
+            </div>
         </div>
     );
 };
@@ -242,20 +249,20 @@ const LinkManager = ({ title, links, onAdd, onUpdate, onDelete, isPending }: Lin
                             <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-3">
                                 <div className="space-y-1">
                                     <Label className="text-[10px] uppercase font-bold text-muted-foreground">Label</Label>
-                                    <Input 
-                                        value={link.name} 
+                                    <Input
+                                        value={link.name}
                                         onChange={(e) => onUpdate(link.id, e.target.value, link.href)}
                                     />
                                 </div>
                                 <div className="space-y-1">
                                     <Label className="text-[10px] uppercase font-bold text-muted-foreground">Href (URL/ID)</Label>
-                                    <Input 
-                                        value={link.href} 
+                                    <Input
+                                        value={link.href}
                                         onChange={(e) => onUpdate(link.id, link.name, e.target.value)}
                                     />
                                 </div>
                             </div>
-                            <Button variant="ghost" size="icon" onClick={() => onDelete(link.id)} className="text-destructive hover:text-destructive hover:bg-destructive/10">
+                            <Button variant="ghost" size="icon" onClick={() => onDelete(link.id)} className="text-destructive hover:bg-destructive/10 transition-colors h-10 px-3">
                                 <Trash2 className="w-4 h-4" />
                             </Button>
                         </div>
@@ -268,14 +275,17 @@ const LinkManager = ({ title, links, onAdd, onUpdate, onDelete, isPending }: Lin
                         <Input placeholder="Link Label" value={newName} onChange={e => setNewName(e.target.value)} />
                         <Input placeholder="Href (e.g. #about or https://...)" value={newHref} onChange={e => setNewHref(e.target.value)} />
                     </div>
-                    <Button 
-                        disabled={!newName || !newHref || isPending} 
-                        onClick={() => { onAdd(newName, newHref); setNewName(''); setNewHref(''); }}
-                        className="w-full sm:w-auto"
-                    >
-                        {isPending ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Plus className="w-4 h-4 mr-2" />}
-                        Add Link
-                    </Button>
+                    <div className="flex justify-end">
+                        <Button
+                            disabled={!newName || !newHref || isPending}
+                            onClick={() => { onAdd(newName, newHref); setNewName(''); setNewHref(''); }}
+                            variant="outline"
+                            className="w-full sm:w-auto"
+                        >
+                            {isPending ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Plus className="w-4 h-4 mr-2" />}
+                            Add Link
+                        </Button>
+                    </div>
                 </div>
             </CardContent>
         </Card>
