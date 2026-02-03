@@ -312,104 +312,115 @@ const ContactEditor = () => {
                     </Card>
                 </TabsContent>
 
-                <TabsContent value="profiles" className="space-y-4">
-                    <Button onClick={addNewProfile}><Plus className="mr-2 h-4 w-4" /> Add Profile</Button>
-                    <div className="grid gap-4">
+                <TabsContent value="profiles" className="space-y-6">
+                    <div className="flex items-center justify-between">
+                        <h3 className="text-xl font-semibold opacity-80">Coding Profiles</h3>
+                        <Button onClick={addNewProfile} className="shadow-glow-sm">
+                            <Plus className="mr-2 h-4 w-4" /> Add Profile
+                        </Button>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                         {profiles.map((profile) => (
-                            <Card key={profile.id} className="overflow-hidden border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-300">
-                                <CardContent className="p-0">
-                                    {/* Premium Header */}
-                                    <div className="flex items-center gap-4 p-4 border-b border-border/50 bg-secondary/5">
-                                        {/* Integrated Icon Picker */}
-                                        <div className="relative group shrink-0">
-                                            <div className="w-14 h-14 border border-border/50 rounded-xl flex items-center justify-center bg-background shadow-inner overflow-hidden relative">
+                            <Card key={profile.id} className="group relative overflow-hidden border-border/50 bg-card/40 backdrop-blur-md hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 flex flex-col h-full">
+                                {/* Decorative Gradient Backdrop */}
+                                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                
+                                <CardContent className="p-5 flex flex-col flex-1 relative z-10">
+                                    {/* Tile Header: Icon & Actions */}
+                                    <div className="flex items-start justify-between mb-4">
+                                        <div className="relative">
+                                            <div className="w-16 h-16 border border-border/50 rounded-2xl flex items-center justify-center bg-background/80 shadow-2xl overflow-hidden relative group/icon">
                                                 {profile.icon_url ? (
-                                                    <img src={profile.icon_url} alt={profile.platform} className="w-10 h-10 object-contain" />
+                                                    <img src={profile.icon_url} alt={profile.platform} className="w-10 h-10 object-contain group-hover/icon:scale-110 transition-transform duration-300" />
                                                 ) : (
                                                     <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
                                                 )}
                                                 {(profile.icon_type === 'upload' || !profile.icon_type) && (
-                                                    <label className="absolute inset-0 flex items-center justify-center bg-primary/20 opacity-0 group-hover:opacity-100 cursor-pointer backdrop-blur-[2px] transition-all">
-                                                        <Upload className="h-5 w-5 text-primary" />
+                                                    <label className="absolute inset-0 flex items-center justify-center bg-primary/30 opacity-0 group-hover/icon:opacity-100 cursor-pointer backdrop-blur-[2px] transition-all">
+                                                        <Upload className="h-6 w-6 text-white drop-shadow-md" />
                                                         <input type="file" className="hidden" accept="image/*" onChange={(e) => handleIconUpload(e, profile.id, 'coding')} />
                                                     </label>
                                                 )}
                                             </div>
-                                            <div className="absolute -bottom-2 -left-2 z-10">
+                                            {/* Discreet Switcher */}
+                                            <div className="absolute -bottom-2 -right-2">
                                                 <Tabs 
                                                     value={profile.icon_type || 'upload'} 
                                                     onValueChange={(v) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, icon_type: v } : p))}
-                                                    className="w-20"
+                                                    className="w-16 shadow-2xl"
                                                 >
-                                                    <TabsList className="h-6 p-0.5 bg-background border border-border">
-                                                        <TabsTrigger value="upload" className="text-[9px] px-2 h-5">File</TabsTrigger>
-                                                        <TabsTrigger value="url" className="text-[9px] px-2 h-5">URL</TabsTrigger>
+                                                    <TabsList className="h-5 p-0.5 bg-background/90 border border-border/50 backdrop-blur-sm">
+                                                        <TabsTrigger value="upload" className="text-[8px] px-1.5 h-4">F</TabsTrigger>
+                                                        <TabsTrigger value="url" className="text-[8px] px-1.5 h-4">U</TabsTrigger>
                                                     </TabsList>
                                                 </Tabs>
                                             </div>
                                         </div>
-
-                                        {/* Platform & Actions */}
-                                        <div className="flex-1 min-w-0">
-                                            <div className="flex items-center justify-between gap-4">
-                                                <div className="flex-1">
-                                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground mb-1 block">Platform</Label>
-                                                    <Input 
-                                                        value={profile.platform} 
-                                                        className="h-9 font-semibold text-lg bg-transparent border-none p-0 focus-visible:ring-0"
-                                                        onChange={(e) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, platform: e.target.value } : p))} 
-                                                    />
-                                                </div>
-                                                <div className="flex gap-1">
-                                                    <Button 
-                                                        size="icon" 
-                                                        variant="ghost" 
-                                                        className="h-8 w-8 hover:text-primary hover:bg-primary/10"
-                                                        onClick={() => updateProfileMutation.mutate(profile)}
-                                                    >
-                                                        <Save className="h-4 w-4" />
-                                                    </Button>
-                                                    <Button 
-                                                        size="icon" 
-                                                        variant="ghost" 
-                                                        className="h-8 w-8 hover:text-destructive hover:bg-destructive/10"
-                                                        onClick={() => deleteProfileMutation.mutate(profile.id)}
-                                                    >
-                                                        <Trash2 className="h-4 w-4" />
-                                                    </Button>
-                                                </div>
-                                            </div>
+                                        
+                                        <div className="flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                            <Button 
+                                                size="icon" 
+                                                variant="ghost" 
+                                                className="h-8 w-8 hover:bg-primary/20 hover:text-primary transition-colors"
+                                                onClick={() => updateProfileMutation.mutate(profile)}
+                                            >
+                                                <Save className="h-4 w-4" />
+                                            </Button>
+                                            <Button 
+                                                size="icon" 
+                                                variant="ghost" 
+                                                className="h-8 w-8 hover:bg-destructive/20 hover:text-destructive transition-colors"
+                                                onClick={() => deleteProfileMutation.mutate(profile.id)}
+                                            >
+                                                <Trash2 className="h-4 w-4" />
+                                            </Button>
                                         </div>
                                     </div>
 
-                                    {/* Expanded Details Area */}
-                                    <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-4 bg-background/50">
-                                        <div className="space-y-1.5">
-                                            <Label className="text-xs">Profile URL</Label>
+                                    {/* Tile Body: Title & Info */}
+                                    <div className="flex-1 space-y-3">
+                                        <div>
                                             <Input 
-                                                value={profile.url} 
-                                                className="bg-background/50 h-9 text-sm"
-                                                placeholder="https://platform.com/username"
-                                                onChange={(e) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, url: e.target.value } : p))} 
+                                                value={profile.platform} 
+                                                className="h-auto font-bold text-lg bg-transparent border-none p-0 focus-visible:ring-0 placeholder:opacity-50"
+                                                placeholder="Platform Name"
+                                                onChange={(e) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, platform: e.target.value } : p))} 
                                             />
+                                            <div className="h-0.5 w-8 bg-primary/40 rounded-full mt-0.5 group-hover:w-full transition-all duration-500" />
                                         </div>
-                                        
-                                        {profile.icon_type === 'url' && (
-                                            <div className="space-y-1.5 animate-in slide-in-from-top-1 duration-200">
-                                                <Label className="text-xs italic text-primary">Direct Icon/Logo URL</Label>
+
+                                        <div className="space-y-2.5 pt-1">
+                                            <div className="space-y-1">
+                                                <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Profile Link</Label>
                                                 <Input 
-                                                    value={profile.icon_url || ''} 
-                                                    placeholder="https://cdn.example.com/logo.svg" 
-                                                    className="bg-background/50 border-primary/20 h-9 text-sm focus-visible:ring-primary/20"
-                                                    onChange={(e) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, icon_url: e.target.value } : p))} 
+                                                    value={profile.url} 
+                                                    className="bg-background/20 h-8 text-[11px] border-border/30 focus:border-primary/50 transition-colors"
+                                                    placeholder="URL..."
+                                                    onChange={(e) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, url: e.target.value } : p))} 
                                                 />
                                             </div>
-                                        )}
-                                        {(profile.icon_type === 'upload' || !profile.icon_type) && (
-                                            <div className="flex items-end text-[11px] text-muted-foreground italic pb-2">
-                                                Using uploaded image from storage
-                                            </div>
-                                        )}
+                                            
+                                            {profile.icon_type === 'url' && (
+                                                <div className="space-y-1 animate-in fade-in duration-300">
+                                                    <Label className="text-[10px] uppercase tracking-widest text-primary font-bold">Icon URL</Label>
+                                                    <Input 
+                                                        value={profile.icon_url || ''} 
+                                                        placeholder="Custom URL..." 
+                                                        className="bg-background/20 h-8 text-[11px] border-primary/20 focus:border-primary transition-colors"
+                                                        onChange={(e) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, icon_url: e.target.value } : p))} 
+                                                    />
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                    
+                                    {/* Tiny status indicator */}
+                                    <div className="mt-4 flex items-center gap-2">
+                                        <div className={`w-1.5 h-1.5 rounded-full ${profile.id.startsWith('temp-') ? 'bg-orange-500 animate-pulse' : 'bg-emerald-500'}`} />
+                                        <span className="text-[10px] uppercase tracking-tighter opacity-40 font-bold">
+                                            {profile.id.startsWith('temp-') ? 'Unsaved Change' : 'Sync Active'}
+                                        </span>
                                     </div>
                                 </CardContent>
                             </Card>
@@ -417,104 +428,115 @@ const ContactEditor = () => {
                     </div>
                 </TabsContent>
 
-                <TabsContent value="freelance" className="space-y-4">
-                    <Button onClick={addNewFreelance}><Plus className="mr-2 h-4 w-4" /> Add Freelance Profile</Button>
-                    <div className="grid gap-4">
+                <TabsContent value="freelance" className="space-y-6">
+                    <div className="flex items-center justify-between">
+                        <h3 className="text-xl font-semibold opacity-80">Freelance Profiles</h3>
+                        <Button onClick={addNewFreelance} className="shadow-glow-sm">
+                            <Plus className="mr-2 h-4 w-4" /> Add Freelance Profile
+                        </Button>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                         {freelanceProfiles.map((profile) => (
-                            <Card key={profile.id} className="overflow-hidden border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-300">
-                                <CardContent className="p-0">
-                                    {/* Premium Header */}
-                                    <div className="flex items-center gap-4 p-4 border-b border-border/50 bg-secondary/5">
-                                        {/* Integrated Icon Picker */}
-                                        <div className="relative group shrink-0">
-                                            <div className="w-14 h-14 border border-border/50 rounded-xl flex items-center justify-center bg-background shadow-inner overflow-hidden relative">
+                            <Card key={profile.id} className="group relative overflow-hidden border-border/50 bg-card/40 backdrop-blur-md hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 flex flex-col h-full">
+                                {/* Decorative Gradient Backdrop */}
+                                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                
+                                <CardContent className="p-5 flex flex-col flex-1 relative z-10">
+                                    {/* Tile Header: Icon & Actions */}
+                                    <div className="flex items-start justify-between mb-4">
+                                        <div className="relative">
+                                            <div className="w-16 h-16 border border-border/50 rounded-2xl flex items-center justify-center bg-background/80 shadow-2xl overflow-hidden relative group/icon">
                                                 {profile.icon_url ? (
-                                                    <img src={profile.icon_url} alt={profile.platform} className="w-10 h-10 object-contain" />
+                                                    <img src={profile.icon_url} alt={profile.platform} className="w-10 h-10 object-contain group-hover/icon:scale-110 transition-transform duration-300" />
                                                 ) : (
                                                     <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
                                                 )}
                                                 {(profile.icon_type === 'upload' || !profile.icon_type) && (
-                                                    <label className="absolute inset-0 flex items-center justify-center bg-primary/20 opacity-0 group-hover:opacity-100 cursor-pointer backdrop-blur-[2px] transition-all">
-                                                        <Upload className="h-5 w-5 text-primary" />
+                                                    <label className="absolute inset-0 flex items-center justify-center bg-primary/30 opacity-0 group-hover/icon:opacity-100 cursor-pointer backdrop-blur-[2px] transition-all">
+                                                        <Upload className="h-6 w-6 text-white drop-shadow-md" />
                                                         <input type="file" className="hidden" accept="image/*" onChange={(e) => handleIconUpload(e, profile.id, 'freelance')} />
                                                     </label>
                                                 )}
                                             </div>
-                                            <div className="absolute -bottom-2 -left-2 z-10">
+                                            {/* Discreet Switcher */}
+                                            <div className="absolute -bottom-2 -right-2">
                                                 <Tabs 
                                                     value={profile.icon_type || 'upload'} 
                                                     onValueChange={(v) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, icon_type: v } : p))}
-                                                    className="w-20"
+                                                    className="w-16 shadow-2xl"
                                                 >
-                                                    <TabsList className="h-6 p-0.5 bg-background border border-border">
-                                                        <TabsTrigger value="upload" className="text-[9px] px-2 h-5">File</TabsTrigger>
-                                                        <TabsTrigger value="url" className="text-[9px] px-2 h-5">URL</TabsTrigger>
+                                                    <TabsList className="h-5 p-0.5 bg-background/90 border border-border/50 backdrop-blur-sm">
+                                                        <TabsTrigger value="upload" className="text-[8px] px-1.5 h-4">F</TabsTrigger>
+                                                        <TabsTrigger value="url" className="text-[8px] px-1.5 h-4">U</TabsTrigger>
                                                     </TabsList>
                                                 </Tabs>
                                             </div>
                                         </div>
-
-                                        {/* Platform & Actions */}
-                                        <div className="flex-1 min-w-0">
-                                            <div className="flex items-center justify-between gap-4">
-                                                <div className="flex-1">
-                                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground mb-1 block">Platform</Label>
-                                                    <Input 
-                                                        value={profile.platform} 
-                                                        className="h-9 font-semibold text-lg bg-transparent border-none p-0 focus-visible:ring-0"
-                                                        onChange={(e) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, platform: e.target.value } : p))} 
-                                                    />
-                                                </div>
-                                                <div className="flex gap-1">
-                                                    <Button 
-                                                        size="icon" 
-                                                        variant="ghost" 
-                                                        className="h-8 w-8 hover:text-primary hover:bg-primary/10"
-                                                        onClick={() => updateFreelanceMutation.mutate(profile)}
-                                                    >
-                                                        <Save className="h-4 w-4" />
-                                                    </Button>
-                                                    <Button 
-                                                        size="icon" 
-                                                        variant="ghost" 
-                                                        className="h-8 w-8 hover:text-destructive hover:bg-destructive/10"
-                                                        onClick={() => deleteFreelanceMutation.mutate(profile.id)}
-                                                    >
-                                                        <Trash2 className="h-4 w-4" />
-                                                    </Button>
-                                                </div>
-                                            </div>
+                                        
+                                        <div className="flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                            <Button 
+                                                size="icon" 
+                                                variant="ghost" 
+                                                className="h-8 w-8 hover:bg-primary/20 hover:text-primary transition-colors"
+                                                onClick={() => updateFreelanceMutation.mutate(profile)}
+                                            >
+                                                <Save className="h-4 w-4" />
+                                            </Button>
+                                            <Button 
+                                                size="icon" 
+                                                variant="ghost" 
+                                                className="h-8 w-8 hover:bg-destructive/20 hover:text-destructive transition-colors"
+                                                onClick={() => deleteFreelanceMutation.mutate(profile.id)}
+                                            >
+                                                <Trash2 className="h-4 w-4" />
+                                            </Button>
                                         </div>
                                     </div>
 
-                                    {/* Expanded Details Area */}
-                                    <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-4 bg-background/50">
-                                        <div className="space-y-1.5">
-                                            <Label className="text-xs">Profile URL</Label>
+                                    {/* Tile Body: Title & Info */}
+                                    <div className="flex-1 space-y-3">
+                                        <div>
                                             <Input 
-                                                value={profile.url} 
-                                                className="bg-background/50 h-9 text-sm"
-                                                placeholder="https://platform.com/username"
-                                                onChange={(e) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, url: e.target.value } : p))} 
+                                                value={profile.platform} 
+                                                className="h-auto font-bold text-lg bg-transparent border-none p-0 focus-visible:ring-0 placeholder:opacity-50"
+                                                placeholder="Platform Name"
+                                                onChange={(e) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, platform: e.target.value } : p))} 
                                             />
+                                            <div className="h-0.5 w-8 bg-primary/40 rounded-full mt-0.5 group-hover:w-full transition-all duration-500" />
                                         </div>
-                                        
-                                        {profile.icon_type === 'url' && (
-                                            <div className="space-y-1.5 animate-in slide-in-from-top-1 duration-200">
-                                                <Label className="text-xs italic text-primary">Direct Icon/Logo URL</Label>
+
+                                        <div className="space-y-2.5 pt-1">
+                                            <div className="space-y-1">
+                                                <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Profile Link</Label>
                                                 <Input 
-                                                    value={profile.icon_url || ''} 
-                                                    placeholder="https://cdn.example.com/logo.svg" 
-                                                    className="bg-background/50 border-primary/20 h-9 text-sm focus-visible:ring-primary/20"
-                                                    onChange={(e) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, icon_url: e.target.value } : p))} 
+                                                    value={profile.url} 
+                                                    className="bg-background/20 h-8 text-[11px] border-border/30 focus:border-primary/50 transition-colors"
+                                                    placeholder="URL..."
+                                                    onChange={(e) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, url: e.target.value } : p))} 
                                                 />
                                             </div>
-                                        )}
-                                        {(profile.icon_type === 'upload' || !profile.icon_type) && (
-                                            <div className="flex items-end text-[11px] text-muted-foreground italic pb-2">
-                                                Using uploaded image from storage
-                                            </div>
-                                        )}
+                                            
+                                            {profile.icon_type === 'url' && (
+                                                <div className="space-y-1 animate-in fade-in duration-300">
+                                                    <Label className="text-[10px] uppercase tracking-widest text-primary font-bold">Icon URL</Label>
+                                                    <Input 
+                                                        value={profile.icon_url || ''} 
+                                                        placeholder="Custom URL..." 
+                                                        className="bg-background/20 h-8 text-[11px] border-primary/20 focus:border-primary transition-colors"
+                                                        onChange={(e) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, icon_url: e.target.value } : p))} 
+                                                    />
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                    
+                                    {/* Tiny status indicator */}
+                                    <div className="mt-4 flex items-center gap-2">
+                                        <div className={`w-1.5 h-1.5 rounded-full ${profile.id.startsWith('temp-') ? 'bg-orange-500 animate-pulse' : 'bg-emerald-500'}`} />
+                                        <span className="text-[10px] uppercase tracking-tighter opacity-40 font-bold">
+                                            {profile.id.startsWith('temp-') ? 'Unsaved Change' : 'Sync Active'}
+                                        </span>
                                     </div>
                                 </CardContent>
                             </Card>
