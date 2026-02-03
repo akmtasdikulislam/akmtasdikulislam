@@ -278,6 +278,16 @@ const AboutEditor = () => {
                                 </Card>
                             ))}
 
+                            <div className="bg-muted/50 p-3 rounded-lg text-sm">
+                                <p className="font-medium mb-1">Highlights Configuration:</p>
+                                <ul className="space-y-1 text-muted-foreground">
+                                    <li>• <strong>Title:</strong> The category name (e.g. "Location", "Education").</li>
+                                    <li>• <strong>Icon:</strong> A Lucide icon name (e.g. "MapPin", "GraduationCap").</li>
+                                    <li>• <strong>Description:</strong> Primary information point (e.g. "BSc in CSE").</li>
+                                    <li>• <strong>Detail:</strong> Supporting information (e.g. "CGPA: 3.8/4.0").</li>
+                                </ul>
+                            </div>
+
                             <div className="flex gap-3 mt-6">
                                 <Button
                                     onClick={() => setHighlights([...highlights, { title: '', description: '', detail: '', icon_name: '', display_order: highlights.length }])}
@@ -441,6 +451,15 @@ const AboutEditor = () => {
                                     </CardContent>
                                 </Card>
                             ))}
+
+                            <div className="bg-muted/50 p-3 rounded-lg text-sm">
+                                <p className="font-medium mb-1">Core Values Configuration:</p>
+                                <ul className="space-y-1 text-muted-foreground">
+                                    <li>• <strong>Value:</strong> A key professional principle (e.g. "Integrity").</li>
+                                    <li>• <strong>Icon:</strong> An icon that visualizes your core value.</li>
+                                    <li>• <strong>Description:</strong> A brief explanation of how you live by this value.</li>
+                                </ul>
+                            </div>
 
                             <div className="flex gap-3 mt-6">
                                 <Button
