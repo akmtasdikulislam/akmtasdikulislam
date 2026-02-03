@@ -60,6 +60,7 @@ export interface HomepageSocialLink {
   url: string;
   icon_name: string | null;
   icon_url: string | null;
+  icon_type?: string;
   display_order: number;
   is_visible: boolean;
   created_at: string;

@@ -3,13 +3,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { useHeroContent } from '@/hooks/useHomepageContent';
 import { supabase } from '@/integrations/supabase/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { GripVertical, Loader2, Plus, Save, Trash2, Upload } from 'lucide-react';
+import { GripVertical, Link, Loader2, Plus, Save, Trash2, Upload } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const HeroEditor = () => {
@@ -26,7 +27,7 @@ const HeroEditor = () => {
 
     const [roles, setRoles] = useState<Array<{ id?: string; role_text: string; display_order: number }>>([]);
     const [stats, setStats] = useState<Array<{ id?: string; stat_label: string; stat_value: number; stat_suffix: string; display_order: number }>>([]);
-    const [socialLinks, setSocialLinks] = useState<Array<{ id?: string; platform: string; url: string; icon_name: string; icon_url: string | null; display_order: number }>>([]);
+    const [socialLinks, setSocialLinks] = useState<Array<{ id?: string; platform: string; url: string; icon_name?: string; icon_url: string | null; icon_type?: string; is_visible?: boolean; display_order: number }>>([]);
     const [techs, setTechs] = useState<Array<{ id?: string; name: string; icon_url: string; position_class: string; animation_class: string; delay: number; invert: boolean; display_order: number }>>([]);
     const [badges, setBadges] = useState<Array<{ id?: string; badge_text: string; position_class: string; display_order: number }>>([]);
 
@@ -98,6 +99,35 @@ const HeroEditor = () => {
         }
     });
 
+    const handleIconUpload = async (e: React.ChangeEvent<HTMLInputElement>, id: string | undefined, index: number) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        try {
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${Math.random()}.${fileExt}`;
+            const filePath = `social-icons/${fileName}`;
+
+            const { error: uploadError } = await supabase.storage
+                .from('hero-assets')
+                .upload(filePath, file);
+
+            if (uploadError) throw uploadError;
+
+            const { data: { publicUrl } } = supabase.storage
+                .from('hero-assets')
+                .getPublicUrl(filePath);
+
+            const updated = [...socialLinks];
+            updated[index] = { ...updated[index], icon_url: publicUrl };
+            setSocialLinks(updated);
+            
+            toast({ title: 'Icon uploaded successfully' });
+        } catch (error: any) {
+            toast({ title: 'Error uploading icon', description: error.message, variant: 'destructive' });
+        }
+    };
+
     const updateRolesMutation = updateArrayMutation('homepage_hero_roles', 'Roles');
     const updateStatsMutation = updateArrayMutation('homepage_hero_stats', 'Stats');
     const updateSocialLinksMutation = updateArrayMutation('homepage_social_links', 'Social Links');
@@ -137,8 +167,8 @@ const HeroEditor = () => {
     ];
 
     return (
-        <div className="space-y-6 max-w-6xl pb-20">
-            <div>
+        <div className="space-y-6 w-full pb-20">
+            <div className="max-w-6xl mx-auto w-full px-4">
                 <h1 className="text-2xl sm:text-3xl font-bold">Hero Section Editor</h1>
                 <p className="text-muted-foreground mt-1">
                     Edit all content in the main hero/banner section
@@ -146,17 +176,19 @@ const HeroEditor = () => {
             </div>
 
             <Tabs defaultValue="basic" className="w-full">
-                <TabsList className="grid w-full grid-cols-6 h-auto p-1">
-                    <TabsTrigger value="basic">Basic Info</TabsTrigger>
-                    <TabsTrigger value="roles">Roles</TabsTrigger>
-                    <TabsTrigger value="stats">Stats</TabsTrigger>
-                    <TabsTrigger value="social">Social</TabsTrigger>
-                    <TabsTrigger value="techs">Tech Stack</TabsTrigger>
-                    <TabsTrigger value="badges">Badges</TabsTrigger>
-                </TabsList>
+                <div className="flex justify-center w-full px-4">
+                    <TabsList className="inline-flex h-auto p-1 bg-muted/40 backdrop-blur-sm border border-border/50 rounded-xl overflow-x-auto max-w-full">
+                        <TabsTrigger value="basic" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Basic Info</TabsTrigger>
+                        <TabsTrigger value="roles" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Roles</TabsTrigger>
+                        <TabsTrigger value="stats" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Stats</TabsTrigger>
+                        <TabsTrigger value="social" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Social</TabsTrigger>
+                        <TabsTrigger value="techs" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Tech Stack</TabsTrigger>
+                        <TabsTrigger value="badges" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Badges</TabsTrigger>
+                    </TabsList>
+                </div>
 
                 {/* BASIC INFO */}
-                <TabsContent value="basic" className="space-y-4 mt-6">
+                <TabsContent value="basic" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
                     <Card>
                         <CardHeader>
                             <CardTitle>Basic Information</CardTitle>
@@ -212,7 +244,7 @@ const HeroEditor = () => {
                 </TabsContent>
 
                 {/* ROLES */}
-                <TabsContent value="roles" className="space-y-4 mt-6">
+                <TabsContent value="roles" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
                     <Card>
                         <CardHeader>
                             <CardTitle>Typewriter Roles</CardTitle>
@@ -248,7 +280,7 @@ const HeroEditor = () => {
                 </TabsContent>
 
                 {/* STATS */}
-                <TabsContent value="stats" className="space-y-4 mt-6">
+                <TabsContent value="stats" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
                     <Card>
                         <CardHeader>
                             <CardTitle>Statistics</CardTitle>
@@ -282,71 +314,160 @@ const HeroEditor = () => {
                 </TabsContent>
 
                 {/* SOCIAL */}
-                <TabsContent value="social" className="space-y-4 mt-6">
+                <TabsContent value="social" className="space-y-4 mt-10 w-full px-4 md:px-8">
                     <Card>
                         <CardHeader>
                             <CardTitle>Social Links</CardTitle>
                             <CardDescription>Manage your social media profiles</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4">
-                            {socialLinks.map((link, index) => {
-                                const isCustom = !platformOptions.includes(link.platform) || link.platform === "Custom";
-                                return (
-                                    <div key={index} className="bg-muted/30 p-4 rounded-lg border border-border">
-                                        <div className="flex gap-4 items-start">
-                                            <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mt-3" />
-                                            <div className="flex-1 space-y-4">
-                                                <div className="grid gap-4 md:grid-cols-2">
-                                                    <div>
-                                                        <Label className="text-xs mb-1 block">Platform</Label>
-                                                        <div className="flex gap-2">
-                                                            <Select
-                                                                value={platformOptions.includes(link.platform) ? link.platform : "Custom"}
-                                                                onValueChange={(val) => {
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {socialLinks.map((link, index) => {
+                                    const isCustom = !platformOptions.includes(link.platform) || link.platform === "Custom";
+                                    return (
+                                        <Card key={index} className="group relative overflow-hidden border-border/50 bg-card/40 backdrop-blur-md hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 flex flex-col h-full">
+                                            {/* Decorative Gradient Backdrop */}
+                                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                            
+                                            <CardContent className="p-5 flex flex-col flex-1 relative z-10">
+                                                {/* Tile Header: Icon & Actions */}
+                                                <div className="flex items-start justify-between mb-4">
+                                                    <div className="relative">
+                                                        <div className="w-16 h-16 border border-border/50 rounded-2xl flex items-center justify-center bg-background/80 shadow-2xl overflow-hidden relative group/icon">
+                                                            {link.icon_url ? (
+                                                                <img src={link.icon_url} alt={link.platform} className="w-10 h-10 object-contain group-hover/icon:scale-110 transition-transform duration-300" />
+                                                            ) : (
+                                                                <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+                                                            )}
+                                                            {(link.icon_type === 'upload' || !link.icon_type) && (
+                                                                <label className="absolute inset-0 flex items-center justify-center bg-primary/30 opacity-0 group-hover/icon:opacity-100 cursor-pointer backdrop-blur-[2px] transition-all">
+                                                                    <Upload className="h-6 w-6 text-white drop-shadow-md" />
+                                                                    <input type="file" className="hidden" accept="image/*" onChange={(e) => handleIconUpload(e, link.id, index)} />
+                                                                </label>
+                                                            )}
+                                                        </div>
+                                                        {/* Discreet Switcher */}
+                                                        <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 z-20">
+                                                            <Tabs 
+                                                                value={link.icon_type || 'upload'} 
+                                                                onValueChange={(v) => {
                                                                     const u = [...socialLinks];
-                                                                    u[index].platform = val === "Custom" ? "" : val;
-                                                                    if (val !== "Custom" && val !== "Upwork" && val !== "Fiverr") {
-                                                                        u[index].icon_name = val;
-                                                                    }
+                                                                    u[index].icon_type = v;
                                                                     setSocialLinks(u);
                                                                 }}
+                                                                className="w-[52px] shadow-2xl"
                                                             >
-                                                                <SelectTrigger>
-                                                                    <SelectValue placeholder="Select Platform" />
-                                                                </SelectTrigger>
-                                                                <SelectContent>
-                                                                    {platformOptions.map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}
-                                                                </SelectContent>
-                                                            </Select>
+                                                                <TabsList className="grid grid-cols-2 h-[20px] p-[2px] bg-background border border-border/50 backdrop-blur-sm rounded-md gap-0">
+                                                                    <TabsTrigger value="upload" className="h-[16px] w-full flex items-center justify-center rounded-sm data-[state=active]:bg-primary/20 transition-all p-0">
+                                                                        <Upload className="h-2.5 w-2.5" />
+                                                                    </TabsTrigger>
+                                                                    <TabsTrigger value="url" className="h-[16px] w-full flex items-center justify-center rounded-sm data-[state=active]:bg-primary/20 transition-all p-0">
+                                                                        <Link className="h-2.5 w-2.5" />
+                                                                    </TabsTrigger>
+                                                                </TabsList>
+                                                            </Tabs>
                                                         </div>
                                                     </div>
+                                                    
+                                                    <Button 
+                                                        size="icon" 
+                                                        variant="ghost" 
+                                                        className="h-8 w-8 text-destructive hover:bg-destructive/20 hover:text-destructive transition-colors opacity-0 group-hover:opacity-100 duration-300"
+                                                        onClick={() => setSocialLinks(socialLinks.filter((_, i) => i !== index))}
+                                                    >
+                                                        <Trash2 className="h-4 w-4" />
+                                                    </Button>
+                                                </div>
+
+                                                {/* Tile Body: Title & Info */}
+                                                <div className="flex-1 space-y-3">
                                                     <div>
-                                                        <Label className="text-xs mb-1 block">URL</Label>
-                                                        <Input value={link.url} onChange={(e) => { const u = [...socialLinks]; u[index].url = e.target.value; setSocialLinks(u); }} placeholder="https://..." />
+                                                        <Select
+                                                            value={platformOptions.includes(link.platform) ? link.platform : "Custom"}
+                                                            onValueChange={(val) => {
+                                                                const u = [...socialLinks];
+                                                                u[index].platform = val === "Custom" ? "" : val;
+                                                                if (val !== "Custom" && val !== "Upwork" && val !== "Fiverr") {
+                                                                    u[index].icon_name = val;
+                                                                }
+                                                                setSocialLinks(u);
+                                                            }}
+                                                        >
+                                                            <SelectTrigger className="h-auto font-bold text-lg bg-transparent border-none p-0 focus:ring-0 shadow-none">
+                                                                <SelectValue placeholder="Platform" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                {platformOptions.map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}
+                                                            </SelectContent>
+                                                        </Select>
+                                                        <div className="h-0.5 w-8 bg-primary/40 rounded-full mt-0.5 group-hover:w-full transition-all duration-500" />
+                                                    </div>
+
+                                                    {(isCustom || link.platform === "") && (
+                                                        <div className="pt-1 animate-in slide-in-from-top-2 duration-300">
+                                                            <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Custom Name</Label>
+                                                            <Input 
+                                                                value={link.platform} 
+                                                                className="bg-background/20 h-8 text-[11px] border-border/30 focus:border-primary/50 transition-colors"
+                                                                placeholder="e.g. My Website"
+                                                                onChange={(e) => { const u = [...socialLinks]; u[index].platform = e.target.value; setSocialLinks(u); }} 
+                                                            />
+                                                        </div>
+                                                    )}
+
+                                                    <div className="space-y-2.5 pt-1">
+                                                        <div className="space-y-1">
+                                                            <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Social URL</Label>
+                                                            <Input 
+                                                                value={link.url} 
+                                                                className="bg-background/20 h-8 text-[11px] border-border/30 focus:border-primary/50 transition-colors"
+                                                                placeholder="https://..."
+                                                                onChange={(e) => { const u = [...socialLinks]; u[index].url = e.target.value; setSocialLinks(u); }} 
+                                                            />
+                                                        </div>
+                                                        
+                                                        {(link.icon_type === 'url' || (!link.icon_type && link.icon_url && isCustom)) && (
+                                                            <div className="space-y-1 animate-in fade-in duration-300">
+                                                                <Label className="text-[10px] uppercase tracking-widest text-primary font-bold">Icon URL (SVG)</Label>
+                                                                <Input 
+                                                                    value={link.icon_url || ''} 
+                                                                    placeholder="Custom Icon URL..." 
+                                                                    className="bg-background/20 h-8 text-[11px] border-primary/20 focus:border-primary transition-colors"
+                                                                    onChange={(e) => { const u = [...socialLinks]; u[index].icon_url = e.target.value; u[index].icon_type = 'url'; setSocialLinks(u); }} 
+                                                                />
+                                                            </div>
+                                                        )}
                                                     </div>
                                                 </div>
 
-                                                <div className="grid gap-4 md:grid-cols-2">
-                                                    {(isCustom || link.platform === "") && (
-                                                        <div>
-                                                            <Label className="text-xs mb-1 block">Platform Name</Label>
-                                                            <Input value={link.platform} onChange={(e) => { const u = [...socialLinks]; u[index].platform = e.target.value; setSocialLinks(u); }} placeholder="e.g. MySite" />
-                                                        </div>
-                                                    )}
-                                                    <div>
-                                                        <Label className="text-xs mb-1 block">Icon URL (SVG)</Label>
-                                                        <Input value={link.icon_url || ''} onChange={(e) => { const u = [...socialLinks]; u[index].icon_url = e.target.value; setSocialLinks(u); }} placeholder="https://... (Overrides standard icon)" />
+                                                {/* Visibility & Status */}
+                                                <div className="mt-4 flex items-center justify-between border-t border-border/30 pt-4">
+                                                    <div className="flex items-center gap-2">
+                                                        <div className={`w-1.5 h-1.5 rounded-full ${link.is_visible !== false ? 'bg-emerald-500' : 'bg-muted-foreground/40'}`} />
+                                                        <span className={`text-[10px] uppercase tracking-tighter font-bold transition-colors ${link.is_visible !== false ? 'text-foreground opacity-60' : 'text-muted-foreground opacity-40'}`}>
+                                                            {link.is_visible !== false ? 'Active' : 'Inactive'}
+                                                        </span>
+                                                    </div>
+                                                    <div className="flex items-center gap-2">
+                                                        <Label htmlFor={`visible-${link.id || index}`} className="text-[9px] uppercase tracking-widest opacity-40 font-bold cursor-pointer">Visible</Label>
+                                                        <Switch 
+                                                            id={`visible-${link.id || index}`}
+                                                            checked={link.is_visible !== false}
+                                                            onCheckedChange={(checked) => {
+                                                                const u = [...socialLinks];
+                                                                u[index].is_visible = checked;
+                                                                setSocialLinks(u);
+                                                            }}
+                                                            className="scale-75 data-[state=checked]:bg-primary/60"
+                                                        />
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <Button variant="ghost" size="icon" className="text-destructive hover:bg-destructive/10" onClick={() => setSocialLinks(socialLinks.filter((_, i) => i !== index))}>
-                                                <Trash2 className="w-4 h-4" />
-                                            </Button>
-                                        </div>
-                                    </div>
-                                );
-                            })}
-                            <Button onClick={() => setSocialLinks([...socialLinks, { platform: 'GitHub', url: '', icon_name: 'GitHub', icon_url: null, display_order: socialLinks.length }])} variant="outline" className="w-full mb-4">
+                                            </CardContent>
+                                        </Card>
+                                    );
+                                })}
+                            </div>
+                            <Button onClick={() => setSocialLinks([...socialLinks, { platform: 'GitHub', url: '', icon_name: 'GitHub', icon_url: null, is_visible: true, display_order: socialLinks.length }])} variant="outline" className="w-full mb-4">
                                 <Plus className="w-4 h-4 mr-2" /> Add Social Link
                             </Button>
                             <Button onClick={() => updateSocialLinksMutation.mutate(socialLinks)} className="w-full">
@@ -357,7 +478,7 @@ const HeroEditor = () => {
                 </TabsContent>
 
                 {/* TECH STACK */}
-                <TabsContent value="techs" className="space-y-4 mt-6">
+                <TabsContent value="techs" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
                     <Card>
                         <CardHeader>
                             <CardTitle>Tech Stack Icons</CardTitle>
@@ -458,7 +579,7 @@ const HeroEditor = () => {
                 </TabsContent>
 
                 {/* BADGES */}
-                <TabsContent value="badges" className="space-y-4 mt-6">
+                <TabsContent value="badges" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
                     <Card>
                         <CardHeader>
                             <CardTitle>Floating Badges</CardTitle>

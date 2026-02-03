@@ -35,7 +35,9 @@ const Hero = () => {
 
   const { hero, roles, techs, badges, stats, socialLinks } = data;
 
-  const mappedSocialLinks = socialLinks.map((link) => {
+  const displaySocialLinks = (socialLinks || []).filter(link => link.is_visible !== false);
+
+  const mappedSocialLinks = displaySocialLinks.map((link) => {
     let icon = null;
     if (link.icon_name) {
       // @ts-ignore
