@@ -69,8 +69,8 @@ const Contact = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const displayProfiles = profiles || [];
-  const displayFreelance = freelanceProfiles || [];
+  const displayProfiles = (profiles || []).filter(p => p.is_visible !== false);
+  const displayFreelance = (freelanceProfiles || []).filter(p => p.is_visible !== false);
 
   if (headingLoading) return null;
 

@@ -218,6 +218,7 @@ export interface HomepageCodingProfile {
   url: string;
   icon_url: string | null;
   display_order: number;
+  is_visible: boolean;
   created_at: string;
   updated_at?: string;
 }
@@ -243,6 +244,7 @@ export interface HomepageFreelanceProfile {
   url: string;
   icon_url: string | null;
   display_order: number;
+  is_visible: boolean;
   created_at: string;
   updated_at: string;
 }

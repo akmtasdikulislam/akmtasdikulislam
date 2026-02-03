@@ -9,7 +9,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useCodingProfilesContent, useContactContent, useFreelanceProfilesContent } from '@/hooks/useHomepageContent';
 import { supabase } from '@/integrations/supabase/client';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Loader2, Plus, Save, Trash2, Upload } from 'lucide-react';
+import { Link, Loader2, Plus, Save, Trash2, Upload } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const ContactEditor = () => {
@@ -344,15 +344,19 @@ const ContactEditor = () => {
                                                 )}
                                             </div>
                                             {/* Discreet Switcher */}
-                                            <div className="absolute -bottom-2 -right-2">
+                                            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 z-20">
                                                 <Tabs 
                                                     value={profile.icon_type || 'upload'} 
                                                     onValueChange={(v) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, icon_type: v } : p))}
-                                                    className="w-16 shadow-2xl"
+                                                    className="w-[52px] shadow-2xl"
                                                 >
-                                                    <TabsList className="h-5 p-0.5 bg-background/90 border border-border/50 backdrop-blur-sm">
-                                                        <TabsTrigger value="upload" className="text-[8px] px-1.5 h-4">F</TabsTrigger>
-                                                        <TabsTrigger value="url" className="text-[8px] px-1.5 h-4">U</TabsTrigger>
+                                                    <TabsList className="grid grid-cols-2 h-[20px] p-[2px] bg-background border border-border/50 backdrop-blur-sm rounded-md gap-0">
+                                                        <TabsTrigger value="upload" className="h-[16px] w-full flex items-center justify-center rounded-sm data-[state=active]:bg-primary/20 transition-all p-0">
+                                                            <Upload className="h-2.5 w-2.5" />
+                                                        </TabsTrigger>
+                                                        <TabsTrigger value="url" className="h-[16px] w-full flex items-center justify-center rounded-sm data-[state=active]:bg-primary/20 transition-all p-0">
+                                                            <Link className="h-2.5 w-2.5" />
+                                                        </TabsTrigger>
                                                     </TabsList>
                                                 </Tabs>
                                             </div>
@@ -415,12 +419,23 @@ const ContactEditor = () => {
                                         </div>
                                     </div>
                                     
-                                    {/* Tiny status indicator */}
-                                    <div className="mt-4 flex items-center gap-2">
-                                        <div className={`w-1.5 h-1.5 rounded-full ${profile.id.startsWith('temp-') ? 'bg-orange-500 animate-pulse' : 'bg-emerald-500'}`} />
-                                        <span className="text-[10px] uppercase tracking-tighter opacity-40 font-bold">
-                                            {profile.id.startsWith('temp-') ? 'Unsaved Change' : 'Sync Active'}
-                                        </span>
+                                    {/* Visibility & Status */}
+                                    <div className="mt-4 flex items-center justify-between border-t border-border/30 pt-4">
+                                        <div className="flex items-center gap-2">
+                                            <div className={`w-1.5 h-1.5 rounded-full ${profile.is_visible !== false ? 'bg-emerald-500' : 'bg-muted-foreground/40'}`} />
+                                            <span className={`text-[10px] uppercase tracking-tighter font-bold transition-colors ${profile.is_visible !== false ? 'text-foreground opacity-60' : 'text-muted-foreground opacity-40'}`}>
+                                                {profile.is_visible !== false ? 'Active' : 'Inactive'}
+                                            </span>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <Label htmlFor={`visible-${profile.id}`} className="text-[9px] uppercase tracking-widest opacity-40 font-bold cursor-pointer">Visible</Label>
+                                            <Switch 
+                                                id={`visible-${profile.id}`}
+                                                checked={profile.is_visible !== false}
+                                                onCheckedChange={(checked) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, is_visible: checked } : p))}
+                                                className="scale-75 data-[state=checked]:bg-primary/60"
+                                            />
+                                        </div>
                                     </div>
                                 </CardContent>
                             </Card>
@@ -460,15 +475,19 @@ const ContactEditor = () => {
                                                 )}
                                             </div>
                                             {/* Discreet Switcher */}
-                                            <div className="absolute -bottom-2 -right-2">
+                                            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 z-20">
                                                 <Tabs 
                                                     value={profile.icon_type || 'upload'} 
                                                     onValueChange={(v) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, icon_type: v } : p))}
-                                                    className="w-16 shadow-2xl"
+                                                    className="w-[52px] shadow-2xl"
                                                 >
-                                                    <TabsList className="h-5 p-0.5 bg-background/90 border border-border/50 backdrop-blur-sm">
-                                                        <TabsTrigger value="upload" className="text-[8px] px-1.5 h-4">F</TabsTrigger>
-                                                        <TabsTrigger value="url" className="text-[8px] px-1.5 h-4">U</TabsTrigger>
+                                                    <TabsList className="grid grid-cols-2 h-[20px] p-[2px] bg-background border border-border/50 backdrop-blur-sm rounded-md gap-0">
+                                                        <TabsTrigger value="upload" className="h-[16px] w-full flex items-center justify-center rounded-sm data-[state=active]:bg-primary/20 transition-all p-0">
+                                                            <Upload className="h-2.5 w-2.5" />
+                                                        </TabsTrigger>
+                                                        <TabsTrigger value="url" className="h-[16px] w-full flex items-center justify-center rounded-sm data-[state=active]:bg-primary/20 transition-all p-0">
+                                                            <Link className="h-2.5 w-2.5" />
+                                                        </TabsTrigger>
                                                     </TabsList>
                                                 </Tabs>
                                             </div>
@@ -531,12 +550,23 @@ const ContactEditor = () => {
                                         </div>
                                     </div>
                                     
-                                    {/* Tiny status indicator */}
-                                    <div className="mt-4 flex items-center gap-2">
-                                        <div className={`w-1.5 h-1.5 rounded-full ${profile.id.startsWith('temp-') ? 'bg-orange-500 animate-pulse' : 'bg-emerald-500'}`} />
-                                        <span className="text-[10px] uppercase tracking-tighter opacity-40 font-bold">
-                                            {profile.id.startsWith('temp-') ? 'Unsaved Change' : 'Sync Active'}
-                                        </span>
+                                    {/* Visibility & Status */}
+                                    <div className="mt-4 flex items-center justify-between border-t border-border/30 pt-4">
+                                        <div className="flex items-center gap-2">
+                                            <div className={`w-1.5 h-1.5 rounded-full ${profile.is_visible !== false ? 'bg-emerald-500' : 'bg-muted-foreground/40'}`} />
+                                            <span className={`text-[10px] uppercase tracking-tighter font-bold transition-colors ${profile.is_visible !== false ? 'text-foreground opacity-60' : 'text-muted-foreground opacity-40'}`}>
+                                                {profile.is_visible !== false ? 'Active' : 'Inactive'}
+                                            </span>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <Label htmlFor={`v-freelance-${profile.id}`} className="text-[9px] uppercase tracking-widest opacity-40 font-bold cursor-pointer">Visible</Label>
+                                            <Switch 
+                                                id={`v-freelance-${profile.id}`}
+                                                checked={profile.is_visible !== false}
+                                                onCheckedChange={(checked) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, is_visible: checked } : p))}
+                                                className="scale-75 data-[state=checked]:bg-primary/60"
+                                            />
+                                        </div>
                                     </div>
                                 </CardContent>
                             </Card>
