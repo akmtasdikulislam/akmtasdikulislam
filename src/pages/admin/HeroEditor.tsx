@@ -270,7 +270,13 @@ const HeroEditor = () => {
                                             }}
                                             className="flex-1"
                                         />
-                                        <Button variant="outline" size="icon" onClick={() => setRoles(roles.filter((_, i) => i !== index))}>
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            className="text-destructive hover:bg-destructive/10 transition-colors"
+                                            onClick={() => setRoles(roles.filter((_, i) => i !== index))}
+                                            title="Delete Role"
+                                        >
                                             <Trash2 className="w-4 h-4" />
                                         </Button>
                                     </div>
@@ -305,7 +311,13 @@ const HeroEditor = () => {
                                     <Input value={stat.stat_suffix} onChange={(e) => {
                                         const updated = [...stats]; updated[index].stat_suffix = e.target.value; setStats(updated);
                                     }} placeholder="Suffix" className="w-20" />
-                                    <Button variant="outline" size="icon" onClick={() => setStats(stats.filter((_, i) => i !== index))}>
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="text-destructive hover:bg-destructive/10 transition-colors"
+                                        onClick={() => setStats(stats.filter((_, i) => i !== index))}
+                                        title="Delete Stat"
+                                    >
                                         <Trash2 className="w-4 h-4" />
                                     </Button>
                                 </div>
