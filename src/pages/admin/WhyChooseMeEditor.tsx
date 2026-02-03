@@ -288,6 +288,15 @@ function WhyChooseMeEditor() {
                         ))}
                     </div>
 
+                    <div className="bg-muted/50 p-3 rounded-lg text-sm">
+                        <p className="font-medium mb-1">Reasons Configuration:</p>
+                        <ul className="space-y-1 text-muted-foreground">
+                            <li>• <strong>Icon Name:</strong> A Lucide icon name (e.g. "Zap", "Shield", "Target").</li>
+                            <li>• <strong>Title:</strong> A short heading for this specific reason.</li>
+                            <li>• <strong>Description:</strong> A brief explanation of the feature or benefit.</li>
+                        </ul>
+                    </div>
+
                     <div className="flex justify-end">
                         <Button onClick={handleSaveAll} disabled={saving} variant="outline">
                             {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
@@ -364,6 +373,15 @@ function WhyChooseMeEditor() {
                                 </div>
                             </motion.div>
                         ))}
+                    </div>
+
+                    <div className="bg-muted/50 p-3 rounded-lg text-sm">
+                        <p className="font-medium mb-1">Stats Configuration:</p>
+                        <ul className="space-y-1 text-muted-foreground">
+                            <li>• <strong>Value:</strong> The raw numeric data (e.g. "100").</li>
+                            <li>• <strong>Suffix:</strong> Character shown after the number (e.g. "+", "%").</li>
+                            <li>• <strong>Label:</strong> Description of the stat (e.g. "Happy Clients").</li>
+                        </ul>
                     </div>
 
                     <div className="flex justify-end">
