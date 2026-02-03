@@ -289,7 +289,7 @@ const ExpertiseEditor = () => {
                                                 </div>
                                             )}
 
-                                            <div className="grid grid-cols-2 gap-4 pt-2 border-t border-border/30 mt-2">
+                                            <div className="grid grid-cols-2 gap-4 pt-4 border-t border-border/40 mt-4">
                                                 <div className="flex items-center justify-between">
                                                     <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Marquee</Label>
                                                     <Switch
