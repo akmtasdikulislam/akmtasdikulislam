@@ -326,9 +326,9 @@ const ContactEditor = () => {
                                                 onValueChange={(v) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, icon_type: v } : p))}
                                                 className="w-full"
                                             >
-                                                <TabsList className="grid grid-cols-2 h-7">
-                                                    <TabsTrigger value="upload" className="text-[10px]">File</TabsTrigger>
-                                                    <TabsTrigger value="url" className="text-[10px]">URL</TabsTrigger>
+                                                <TabsList className="grid grid-cols-2 h-auto p-1">
+                                                    <TabsTrigger value="upload" className="text-[10px] py-1">File</TabsTrigger>
+                                                    <TabsTrigger value="url" className="text-[10px] py-1">URL</TabsTrigger>
                                                 </TabsList>
                                             </Tabs>
                                             
@@ -390,9 +390,9 @@ const ContactEditor = () => {
                                                 onValueChange={(v) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, icon_type: v } : p))}
                                                 className="w-full"
                                             >
-                                                <TabsList className="grid grid-cols-2 h-7">
-                                                    <TabsTrigger value="upload" className="text-[10px]">File</TabsTrigger>
-                                                    <TabsTrigger value="url" className="text-[10px]">URL</TabsTrigger>
+                                                <TabsList className="grid grid-cols-2 h-auto p-1">
+                                                    <TabsTrigger value="upload" className="text-[10px] py-1">File</TabsTrigger>
+                                                    <TabsTrigger value="url" className="text-[10px] py-1">URL</TabsTrigger>
                                                 </TabsList>
                                             </Tabs>
                                             
