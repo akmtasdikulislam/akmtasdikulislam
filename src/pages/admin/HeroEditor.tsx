@@ -379,7 +379,7 @@ const HeroEditor = () => {
                                                     <Button
                                                         size="icon"
                                                         variant="ghost"
-                                                        className="h-8 w-8 text-destructive hover:bg-destructive/20 hover:text-destructive transition-colors opacity-0 group-hover:opacity-100 duration-300"
+                                                        className="h-8 w-8 text-destructive hover:bg-destructive/20 hover:text-destructive transition-colors duration-300"
                                                         onClick={() => setSocialLinks(socialLinks.filter((_, i) => i !== index))}
                                                     >
                                                         <Trash2 className="h-4 w-4" />
@@ -555,7 +555,7 @@ const HeroEditor = () => {
                                                         <Button
                                                             size="icon"
                                                             variant="ghost"
-                                                            className="h-8 w-8 text-destructive hover:bg-destructive/20 hover:text-destructive transition-colors opacity-0 group-hover:opacity-100 duration-300"
+                                                            className="h-8 w-8 text-destructive hover:bg-destructive/20 hover:text-destructive transition-colors duration-300"
                                                             onClick={() => setTechs(techs.filter((_, i) => i !== index))}
                                                         >
                                                             <Trash2 className="h-4 w-4" />
