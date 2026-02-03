@@ -39,7 +39,8 @@ const Footer = () => {
     );
   }
 
-  const { footer, socialLinks, quickLinks, serviceLinks } = data;
+  const { footer, socialLinks: allSocialLinks, quickLinks, serviceLinks } = data;
+  const socialLinks = (allSocialLinks || []).filter(link => link.is_visible !== false);
 
   // Map social links to include icons
   const mappedSocialLinks = socialLinks.map((link) => {

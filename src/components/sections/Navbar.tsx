@@ -64,7 +64,8 @@ const Navbar = () => {
     );
   }
 
-  const { navbar, navLinks } = data;
+  const { navbar, navLinks: allNavLinks } = data;
+  const navLinks = (allNavLinks || []).filter(link => link.is_visible !== false);
 
   // @ts-ignore - dynamic icon lookup
   const LogoIcon = LucideIcons[navbar.logo_icon_name] || LucideIcons.Terminal;

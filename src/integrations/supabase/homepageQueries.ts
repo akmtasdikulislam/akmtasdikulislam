@@ -402,7 +402,7 @@ export const getAllHeroData = async () => {
     getHeroTechs(),
     getHeroBadges(),
     getHeroStats(),
-    getSocialLinks(),
+    getAllSocialLinks(),
   ]);
 
   return { hero, roles, techs, badges, stats, socialLinks };
@@ -411,7 +411,7 @@ export const getAllHeroData = async () => {
 export const getAllNavbarData = async () => {
   const [navbar, navLinks] = await Promise.all([
     getNavbarConfig(),
-    getNavLinks(),
+    getAllNavLinks(),
   ]);
 
   return { navbar, navLinks };
@@ -431,7 +431,7 @@ export const getAllAboutData = async () => {
 export const getAllFooterData = async () => {
   const [footer, socialLinks, quickLinks, serviceLinks] = await Promise.all([
     getFooterContent(),
-    getSocialLinks(),
+    getAllSocialLinks(),
     getFooterQuickLinks(),
     getFooterServiceLinks(),
   ]);
