@@ -569,11 +569,11 @@ const HeroEditor = () => {
                                                         <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Tech Name</Label>
                                                         <Input
                                                             value={tech.name}
-                                                            className="bg-transparent border-none p-0 h-auto font-bold text-lg focus-visible:ring-0 shadow-none placeholder:opacity-50"
+                                                            className="bg-transparent border-none p-0 h-auto font-bold text-lg focus-visible:ring-0 shadow-none placeholder:opacity-50 peer"
                                                             placeholder="e.g. React"
                                                             onChange={(e) => { const u = [...techs]; u[index].name = e.target.value; setTechs(u); }}
                                                         />
-                                                        <div className="h-0.5 w-8 bg-primary/40 rounded-full mt-0.5 group-hover:w-full transition-all duration-500" />
+                                                        <div className="h-0.5 w-8 bg-primary/40 rounded-full mt-0.5 group-hover:w-full peer-focus:w-full peer-focus:bg-primary transition-all duration-500" />
                                                     </div>
 
                                                     <div className="space-y-2.5 pt-1">
