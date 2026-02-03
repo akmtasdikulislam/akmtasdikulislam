@@ -272,8 +272,7 @@ const HeroEditor = () => {
                                         />
                                         <Button
                                             variant="ghost"
-                                            size="icon"
-                                            className="text-destructive hover:bg-destructive/10 transition-colors"
+                                            className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
                                             onClick={() => setRoles(roles.filter((_, i) => i !== index))}
                                             title="Delete Role"
                                         >
@@ -304,17 +303,16 @@ const HeroEditor = () => {
                                     <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab" />
                                     <Input value={stat.stat_label} onChange={(e) => {
                                         const updated = [...stats]; updated[index].stat_label = e.target.value; setStats(updated);
-                                    }} placeholder="Label" />
+                                    }} placeholder="Label" className="flex-1" />
                                     <Input type="number" value={stat.stat_value} onChange={(e) => {
                                         const updated = [...stats]; updated[index].stat_value = parseInt(e.target.value) || 0; setStats(updated);
-                                    }} placeholder="Value" />
+                                    }} placeholder="Value" className="w-24" />
                                     <Input value={stat.stat_suffix} onChange={(e) => {
                                         const updated = [...stats]; updated[index].stat_suffix = e.target.value; setStats(updated);
                                     }} placeholder="Suffix" className="w-20" />
                                     <Button
                                         variant="ghost"
-                                        size="icon"
-                                        className="text-destructive hover:bg-destructive/10 transition-colors"
+                                        className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
                                         onClick={() => setStats(stats.filter((_, i) => i !== index))}
                                         title="Delete Stat"
                                     >
