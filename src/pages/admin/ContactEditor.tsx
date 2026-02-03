@@ -316,59 +316,100 @@ const ContactEditor = () => {
                     <Button onClick={addNewProfile}><Plus className="mr-2 h-4 w-4" /> Add Profile</Button>
                     <div className="grid gap-4">
                         {profiles.map((profile) => (
-                            <Card key={profile.id}>
-                                <CardContent className="p-4 flex items-center gap-4">
-                                    <div className="w-24 border rounded p-2 bg-secondary/10">
-                                        <div className="flex flex-col gap-2">
-                                            <Label className="text-[10px] uppercase font-bold text-muted-foreground">Icon Type</Label>
-                                            <Tabs 
-                                                value={profile.icon_type || 'upload'} 
-                                                onValueChange={(v) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, icon_type: v } : p))}
-                                                className="w-full"
-                                            >
-                                                <TabsList className="grid grid-cols-2 h-auto p-1">
-                                                    <TabsTrigger value="upload" className="text-[10px] py-1">File</TabsTrigger>
-                                                    <TabsTrigger value="url" className="text-[10px] py-1">URL</TabsTrigger>
-                                                </TabsList>
-                                            </Tabs>
-                                            
-                                            <div className="relative group mx-auto">
-                                                <div className="w-12 h-12 border rounded flex items-center justify-center bg-secondary/20 overflow-hidden">
-                                                    {profile.icon_url ? <img src={profile.icon_url} className="w-8 h-8 object-contain" /> : <span className="text-[10px]">No Icon</span>}
-                                                </div>
+                            <Card key={profile.id} className="overflow-hidden border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-300">
+                                <CardContent className="p-0">
+                                    {/* Premium Header */}
+                                    <div className="flex items-center gap-4 p-4 border-b border-border/50 bg-secondary/5">
+                                        {/* Integrated Icon Picker */}
+                                        <div className="relative group shrink-0">
+                                            <div className="w-14 h-14 border border-border/50 rounded-xl flex items-center justify-center bg-background shadow-inner overflow-hidden relative">
+                                                {profile.icon_url ? (
+                                                    <img src={profile.icon_url} alt={profile.platform} className="w-10 h-10 object-contain" />
+                                                ) : (
+                                                    <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+                                                )}
                                                 {(profile.icon_type === 'upload' || !profile.icon_type) && (
-                                                    <label className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 cursor-pointer text-white text-xs rounded transition-opacity">
-                                                        <Upload className="h-4 w-4" />
+                                                    <label className="absolute inset-0 flex items-center justify-center bg-primary/20 opacity-0 group-hover:opacity-100 cursor-pointer backdrop-blur-[2px] transition-all">
+                                                        <Upload className="h-5 w-5 text-primary" />
                                                         <input type="file" className="hidden" accept="image/*" onChange={(e) => handleIconUpload(e, profile.id, 'coding')} />
                                                     </label>
                                                 )}
                                             </div>
+                                            <div className="absolute -bottom-2 -left-2 z-10">
+                                                <Tabs 
+                                                    value={profile.icon_type || 'upload'} 
+                                                    onValueChange={(v) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, icon_type: v } : p))}
+                                                    className="w-20"
+                                                >
+                                                    <TabsList className="h-6 p-0.5 bg-background border border-border">
+                                                        <TabsTrigger value="upload" className="text-[9px] px-2 h-5">File</TabsTrigger>
+                                                        <TabsTrigger value="url" className="text-[9px] px-2 h-5">URL</TabsTrigger>
+                                                    </TabsList>
+                                                </Tabs>
+                                            </div>
+                                        </div>
+
+                                        {/* Platform & Actions */}
+                                        <div className="flex-1 min-w-0">
+                                            <div className="flex items-center justify-between gap-4">
+                                                <div className="flex-1">
+                                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground mb-1 block">Platform</Label>
+                                                    <Input 
+                                                        value={profile.platform} 
+                                                        className="h-9 font-semibold text-lg bg-transparent border-none p-0 focus-visible:ring-0"
+                                                        onChange={(e) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, platform: e.target.value } : p))} 
+                                                    />
+                                                </div>
+                                                <div className="flex gap-1">
+                                                    <Button 
+                                                        size="icon" 
+                                                        variant="ghost" 
+                                                        className="h-8 w-8 hover:text-primary hover:bg-primary/10"
+                                                        onClick={() => updateProfileMutation.mutate(profile)}
+                                                    >
+                                                        <Save className="h-4 w-4" />
+                                                    </Button>
+                                                    <Button 
+                                                        size="icon" 
+                                                        variant="ghost" 
+                                                        className="h-8 w-8 hover:text-destructive hover:bg-destructive/10"
+                                                        onClick={() => deleteProfileMutation.mutate(profile.id)}
+                                                    >
+                                                        <Trash2 className="h-4 w-4" />
+                                                    </Button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="flex-1 grid grid-cols-1 md:grid-cols-4 gap-4">
-                                        <div className="space-y-1">
-                                            <Label>Platform Name</Label>
-                                            <Input value={profile.platform} onChange={(e) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, platform: e.target.value } : p))} />
+
+                                    {/* Expanded Details Area */}
+                                    <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-4 bg-background/50">
+                                        <div className="space-y-1.5">
+                                            <Label className="text-xs">Profile URL</Label>
+                                            <Input 
+                                                value={profile.url} 
+                                                className="bg-background/50 h-9 text-sm"
+                                                placeholder="https://platform.com/username"
+                                                onChange={(e) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, url: e.target.value } : p))} 
+                                            />
                                         </div>
-                                        <div className="space-y-1 md:col-span-1">
-                                            <Label>Profile URL</Label>
-                                            <Input value={profile.url} onChange={(e) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, url: e.target.value } : p))} />
-                                        </div>
+                                        
                                         {profile.icon_type === 'url' && (
-                                            <div className="space-y-1 md:col-span-2">
-                                                <Label>Icon/Logo URL</Label>
+                                            <div className="space-y-1.5 animate-in slide-in-from-top-1 duration-200">
+                                                <Label className="text-xs italic text-primary">Direct Icon/Logo URL</Label>
                                                 <Input 
                                                     value={profile.icon_url || ''} 
-                                                    placeholder="https://..." 
+                                                    placeholder="https://cdn.example.com/logo.svg" 
+                                                    className="bg-background/50 border-primary/20 h-9 text-sm focus-visible:ring-primary/20"
                                                     onChange={(e) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, icon_url: e.target.value } : p))} 
                                                 />
                                             </div>
                                         )}
-                                        {(profile.icon_type === 'upload' || !profile.icon_type) && <div className="md:col-span-2" />}
-                                    </div>
-                                    <div className="flex gap-2">
-                                        <Button size="icon" variant="ghost" onClick={() => updateProfileMutation.mutate(profile)}><Save className="h-4 w-4" /></Button>
-                                        <Button size="icon" variant="destructive" onClick={() => deleteProfileMutation.mutate(profile.id)}><Trash2 className="h-4 w-4" /></Button>
+                                        {(profile.icon_type === 'upload' || !profile.icon_type) && (
+                                            <div className="flex items-end text-[11px] text-muted-foreground italic pb-2">
+                                                Using uploaded image from storage
+                                            </div>
+                                        )}
                                     </div>
                                 </CardContent>
                             </Card>
@@ -380,59 +421,100 @@ const ContactEditor = () => {
                     <Button onClick={addNewFreelance}><Plus className="mr-2 h-4 w-4" /> Add Freelance Profile</Button>
                     <div className="grid gap-4">
                         {freelanceProfiles.map((profile) => (
-                            <Card key={profile.id}>
-                                <CardContent className="p-4 flex items-center gap-4">
-                                    <div className="w-24 border rounded p-2 bg-secondary/10">
-                                        <div className="flex flex-col gap-2">
-                                            <Label className="text-[10px] uppercase font-bold text-muted-foreground">Icon Type</Label>
-                                            <Tabs 
-                                                value={profile.icon_type || 'upload'} 
-                                                onValueChange={(v) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, icon_type: v } : p))}
-                                                className="w-full"
-                                            >
-                                                <TabsList className="grid grid-cols-2 h-auto p-1">
-                                                    <TabsTrigger value="upload" className="text-[10px] py-1">File</TabsTrigger>
-                                                    <TabsTrigger value="url" className="text-[10px] py-1">URL</TabsTrigger>
-                                                </TabsList>
-                                            </Tabs>
-                                            
-                                            <div className="relative group mx-auto">
-                                                <div className="w-12 h-12 border rounded flex items-center justify-center bg-secondary/20 overflow-hidden">
-                                                    {profile.icon_url ? <img src={profile.icon_url} className="w-8 h-8 object-contain" /> : <span className="text-[10px]">No Icon</span>}
-                                                </div>
+                            <Card key={profile.id} className="overflow-hidden border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-300">
+                                <CardContent className="p-0">
+                                    {/* Premium Header */}
+                                    <div className="flex items-center gap-4 p-4 border-b border-border/50 bg-secondary/5">
+                                        {/* Integrated Icon Picker */}
+                                        <div className="relative group shrink-0">
+                                            <div className="w-14 h-14 border border-border/50 rounded-xl flex items-center justify-center bg-background shadow-inner overflow-hidden relative">
+                                                {profile.icon_url ? (
+                                                    <img src={profile.icon_url} alt={profile.platform} className="w-10 h-10 object-contain" />
+                                                ) : (
+                                                    <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+                                                )}
                                                 {(profile.icon_type === 'upload' || !profile.icon_type) && (
-                                                    <label className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 cursor-pointer text-white text-xs rounded transition-opacity">
-                                                        <Upload className="h-4 w-4" />
+                                                    <label className="absolute inset-0 flex items-center justify-center bg-primary/20 opacity-0 group-hover:opacity-100 cursor-pointer backdrop-blur-[2px] transition-all">
+                                                        <Upload className="h-5 w-5 text-primary" />
                                                         <input type="file" className="hidden" accept="image/*" onChange={(e) => handleIconUpload(e, profile.id, 'freelance')} />
                                                     </label>
                                                 )}
                                             </div>
+                                            <div className="absolute -bottom-2 -left-2 z-10">
+                                                <Tabs 
+                                                    value={profile.icon_type || 'upload'} 
+                                                    onValueChange={(v) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, icon_type: v } : p))}
+                                                    className="w-20"
+                                                >
+                                                    <TabsList className="h-6 p-0.5 bg-background border border-border">
+                                                        <TabsTrigger value="upload" className="text-[9px] px-2 h-5">File</TabsTrigger>
+                                                        <TabsTrigger value="url" className="text-[9px] px-2 h-5">URL</TabsTrigger>
+                                                    </TabsList>
+                                                </Tabs>
+                                            </div>
+                                        </div>
+
+                                        {/* Platform & Actions */}
+                                        <div className="flex-1 min-w-0">
+                                            <div className="flex items-center justify-between gap-4">
+                                                <div className="flex-1">
+                                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground mb-1 block">Platform</Label>
+                                                    <Input 
+                                                        value={profile.platform} 
+                                                        className="h-9 font-semibold text-lg bg-transparent border-none p-0 focus-visible:ring-0"
+                                                        onChange={(e) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, platform: e.target.value } : p))} 
+                                                    />
+                                                </div>
+                                                <div className="flex gap-1">
+                                                    <Button 
+                                                        size="icon" 
+                                                        variant="ghost" 
+                                                        className="h-8 w-8 hover:text-primary hover:bg-primary/10"
+                                                        onClick={() => updateFreelanceMutation.mutate(profile)}
+                                                    >
+                                                        <Save className="h-4 w-4" />
+                                                    </Button>
+                                                    <Button 
+                                                        size="icon" 
+                                                        variant="ghost" 
+                                                        className="h-8 w-8 hover:text-destructive hover:bg-destructive/10"
+                                                        onClick={() => deleteFreelanceMutation.mutate(profile.id)}
+                                                    >
+                                                        <Trash2 className="h-4 w-4" />
+                                                    </Button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="flex-1 grid grid-cols-1 md:grid-cols-4 gap-4">
-                                        <div className="space-y-1">
-                                            <Label>Platform Name</Label>
-                                            <Input value={profile.platform} onChange={(e) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, platform: e.target.value } : p))} />
+
+                                    {/* Expanded Details Area */}
+                                    <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-4 bg-background/50">
+                                        <div className="space-y-1.5">
+                                            <Label className="text-xs">Profile URL</Label>
+                                            <Input 
+                                                value={profile.url} 
+                                                className="bg-background/50 h-9 text-sm"
+                                                placeholder="https://platform.com/username"
+                                                onChange={(e) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, url: e.target.value } : p))} 
+                                            />
                                         </div>
-                                        <div className="space-y-1 md:col-span-1">
-                                            <Label>Profile URL</Label>
-                                            <Input value={profile.url} onChange={(e) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, url: e.target.value } : p))} />
-                                        </div>
+                                        
                                         {profile.icon_type === 'url' && (
-                                            <div className="space-y-1 md:col-span-2">
-                                                <Label>Icon/Logo URL</Label>
+                                            <div className="space-y-1.5 animate-in slide-in-from-top-1 duration-200">
+                                                <Label className="text-xs italic text-primary">Direct Icon/Logo URL</Label>
                                                 <Input 
                                                     value={profile.icon_url || ''} 
-                                                    placeholder="https://..." 
+                                                    placeholder="https://cdn.example.com/logo.svg" 
+                                                    className="bg-background/50 border-primary/20 h-9 text-sm focus-visible:ring-primary/20"
                                                     onChange={(e) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, icon_url: e.target.value } : p))} 
                                                 />
                                             </div>
                                         )}
-                                        {(profile.icon_type === 'upload' || !profile.icon_type) && <div className="md:col-span-2" />}
-                                    </div>
-                                    <div className="flex gap-2">
-                                        <Button size="icon" variant="ghost" onClick={() => updateFreelanceMutation.mutate(profile)}><Save className="h-4 w-4" /></Button>
-                                        <Button size="icon" variant="destructive" onClick={() => deleteFreelanceMutation.mutate(profile.id)}><Trash2 className="h-4 w-4" /></Button>
+                                        {(profile.icon_type === 'upload' || !profile.icon_type) && (
+                                            <div className="flex items-end text-[11px] text-muted-foreground italic pb-2">
+                                                Using uploaded image from storage
+                                            </div>
+                                        )}
                                     </div>
                                 </CardContent>
                             </Card>
