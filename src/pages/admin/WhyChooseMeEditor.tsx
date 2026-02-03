@@ -27,9 +27,9 @@ function WhyChooseMeEditor() {
         queryFn: getAllWhyChooseData,
     });
 
-    const [content, setContent] = useState(data?.content || {});
-    const [reasons, setReasons] = useState(data?.reasons || []);
-    const [stats, setStats] = useState(data?.stats || []);
+    const [content, setContent] = useState<any>(data?.content || {});
+    const [reasons, setReasons] = useState<any[]>(data?.reasons || []);
+    const [stats, setStats] = useState<any[]>(data?.stats || []);
 
     // Update local state when data loads
     if (data && Object.keys(content).length === 0 && reasons.length === 0 && stats.length === 0) {
@@ -97,17 +97,17 @@ function WhyChooseMeEditor() {
         setSaving(true);
         try {
             await updateContentMutation.mutateAsync(content);
-            
+
             // Update all reasons
             for (const reason of reasons) {
                 await updateReasonMutation.mutateAsync(reason);
             }
-            
+
             // Update all stats
             for (const stat of stats) {
                 await updateStatMutation.mutateAsync(stat);
             }
-            
+
             toast.success('All changes saved successfully');
         } catch (error) {
             toast.error('Failed to save some changes');
@@ -145,216 +145,219 @@ function WhyChooseMeEditor() {
     }
 
     return (
-        <div className="space-y-8">
-            <div className="flex items-center justify-between">
+        <div className="space-y-6 w-full pb-20">
+            <div className="max-w-6xl mx-auto w-full px-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl sm:text-3xl font-bold">Why Choose Me Section</h1>
-                    <p className="text-muted-foreground mt-1">
+                    <h1 className="text-2xl sm:text-3xl font-bold text-center md:text-left">Why Choose Me Section</h1>
+                    <p className="text-muted-foreground mt-1 text-center md:text-left">
                         Manage section headings, reasons, and stats
                     </p>
                 </div>
-                <Button onClick={handleSaveAll} disabled={saving}>
-                    {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                <Button onClick={handleSaveAll} disabled={saving} className="w-full md:w-auto">
+                    {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
                     Save All Changes
                 </Button>
             </div>
 
-            {/* Section Headings */}
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="p-6 bg-card border border-border rounded-xl">
-                <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
-                    <Target className="w-5 h-5 text-primary" />
-                    Section Headings
-                </h2>
+            <div className="max-w-6xl mx-auto w-full px-4 space-y-8 mt-6">
 
-                <div className="grid gap-4">
-                    <div>
-                        <Label htmlFor="badge">Badge Text</Label>
-                        <Input
-                            id="badge"
-                            value={content.section_badge || ''}
-                            onChange={(e) => setContent({ ...content, section_badge: e.target.value })}
-                            placeholder="Why Me"
-                        />
-                    </div>
+                {/* Section Headings */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="p-6 bg-card border border-border rounded-xl">
+                    <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
+                        <Target className="w-5 h-5 text-primary" />
+                        Section Headings
+                    </h2>
 
-                    <div className="grid sm:grid-cols-2 gap-4">
+                    <div className="grid gap-4">
                         <div>
-                            <Label htmlFor="title">Section Title</Label>
+                            <Label htmlFor="badge">Badge Text</Label>
                             <Input
-                                id="title"
-                                value={content.section_title || ''}
-                                onChange={(e) => setContent({ ...content, section_title: e.target.value })}
-                                placeholder="Why Choose"
+                                id="badge"
+                                value={content.section_badge || ''}
+                                onChange={(e) => setContent({ ...content, section_badge: e.target.value })}
+                                placeholder="Why Me"
                             />
                         </div>
+
+                        <div className="grid sm:grid-cols-2 gap-4">
+                            <div>
+                                <Label htmlFor="title">Section Title</Label>
+                                <Input
+                                    id="title"
+                                    value={content.section_title || ''}
+                                    onChange={(e) => setContent({ ...content, section_title: e.target.value })}
+                                    placeholder="Why Choose"
+                                />
+                            </div>
+                            <div>
+                                <Label htmlFor="highlight">Highlighted Text</Label>
+                                <Input
+                                    id="highlight"
+                                    value={content.section_highlight || ''}
+                                    onChange={(e) => setContent({ ...content, section_highlight: e.target.value })}
+                                    placeholder="Me?"
+                                />
+                            </div>
+                        </div>
+
                         <div>
-                            <Label htmlFor="highlight">Highlighted Text</Label>
+                            <Label htmlFor="description">Description</Label>
                             <Input
-                                id="highlight"
-                                value={content.section_highlight || ''}
-                                onChange={(e) => setContent({ ...content, section_highlight: e.target.value })}
-                                placeholder="Me?"
+                                id="description"
+                                value={content.section_description || ''}
+                                onChange={(e) => setContent({ ...content, section_description: e.target.value })}
+                                placeholder="What sets me apart from the rest"
                             />
                         </div>
                     </div>
+                </motion.div>
 
-                    <div>
-                        <Label htmlFor="description">Description</Label>
-                        <Input
-                            id="description"
-                            value={content.section_description || ''}
-                            onChange={(e) => setContent({ ...content, section_description: e.target.value })}
-                            placeholder="What sets me apart from the rest"
-                        />
+                {/* Reasons */}
+                <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                        <h2 className="text-xl font-semibold">Reasons ({reasons.length})</h2>
+                        <Button onClick={addReason} size="sm">
+                            <Plus className="w-4 h-4" />
+                            Add Reason
+                        </Button>
                     </div>
-                </div>
-            </motion.div>
 
-            {/* Reasons */}
-            <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                    <h2 className="text-xl font-semibold">Reasons ({reasons.length})</h2>
-                    <Button onClick={addReason} size="sm">
-                        <Plus className="w-4 h-4" />
-                        Add Reason
-                    </Button>
-                </div>
-
-                <div className="grid gap-4">
-                    {reasons.map((reason: any, index: number) => (
-                        <motion.div
-                            key={reason.id}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            className="p-4 bg-card border border-border rounded-xl">
-                            <div className="flex items-start gap-3">
-                                <GripVertical className="w-5 h-5 text-muted-foreground mt-2 cursor-move" />
-                                <div className="flex-1 grid gap-3">
-                                    <div className="grid sm:grid-cols-2 gap-3">
-                                        <div>
-                                            <Label>Icon Name (Lucide)</Label>
-                                            <Input
-                                                value={reason.icon_name}
-                                                onChange={(e) => {
-                                                    const updated = [...reasons];
-                                                    updated[index].icon_name = e.target.value;
-                                                    setReasons(updated);
-                                                }}
-                                                placeholder="Zap"
-                                            />
+                    <div className="grid gap-4">
+                        {reasons.map((reason: any, index: number) => (
+                            <motion.div
+                                key={reason.id}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                className="p-4 bg-card border border-border rounded-xl">
+                                <div className="flex items-start gap-3">
+                                    <GripVertical className="w-5 h-5 text-muted-foreground mt-2 cursor-move" />
+                                    <div className="flex-1 grid gap-3">
+                                        <div className="grid sm:grid-cols-2 gap-3">
+                                            <div>
+                                                <Label>Icon Name (Lucide)</Label>
+                                                <Input
+                                                    value={reason.icon_name}
+                                                    onChange={(e) => {
+                                                        const updated = [...reasons];
+                                                        updated[index].icon_name = e.target.value;
+                                                        setReasons(updated);
+                                                    }}
+                                                    placeholder="Zap"
+                                                />
+                                            </div>
+                                            <div>
+                                                <Label>Title</Label>
+                                                <Input
+                                                    value={reason.title}
+                                                    onChange={(e) => {
+                                                        const updated = [...reasons];
+                                                        updated[index].title = e.target.value;
+                                                        setReasons(updated);
+                                                    }}
+                                                    placeholder="Fast & Efficient"
+                                                />
+                                            </div>
                                         </div>
                                         <div>
-                                            <Label>Title</Label>
-                                            <Input
-                                                value={reason.title}
+                                            <Label>Description</Label>
+                                            <Textarea
+                                                value={reason.description}
                                                 onChange={(e) => {
                                                     const updated = [...reasons];
-                                                    updated[index].title = e.target.value;
+                                                    updated[index].description = e.target.value;
                                                     setReasons(updated);
                                                 }}
-                                                placeholder="Fast & Efficient"
+                                                rows={2}
+                                                placeholder="Description"
                                             />
                                         </div>
                                     </div>
+                                    <Button
+                                        variant="ghost"
+                                        className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
+                                        onClick={() => deleteReasonMutation.mutate(reason.id)}
+                                        title="Delete Reason"
+                                    >
+                                        <Trash2 className="w-4 h-4" />
+                                    </Button>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Stats */}
+                <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                        <h2 className="text-xl font-semibold flex items-center gap-2">
+                            <TrendingUp className="w-5 h-5 text-primary" />
+                            Stats ({stats.length})
+                        </h2>
+                        <Button onClick={addStat} size="sm">
+                            <Plus className="w-4 h-4" />
+                            Add Stat
+                        </Button>
+                    </div>
+
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        {stats.map((stat: any, index: number) => (
+                            <motion.div
+                                key={stat.id}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                className="p-4 bg-card border border-border rounded-xl">
+                                <div className="space-y-3">
                                     <div>
-                                        <Label>Description</Label>
-                                        <Textarea
-                                            value={reason.description}
+                                        <Label>Value</Label>
+                                        <Input
+                                            type="number"
+                                            value={stat.stat_value}
                                             onChange={(e) => {
-                                                const updated = [...reasons];
-                                                updated[index].description = e.target.value;
-                                                setReasons(updated);
+                                                const updated = [...stats];
+                                                updated[index].stat_value = parseInt(e.target.value);
+                                                setStats(updated);
                                             }}
-                                            rows={2}
-                                            placeholder="Description"
                                         />
                                     </div>
+                                    <div>
+                                        <Label>Suffix</Label>
+                                        <Input
+                                            value={stat.stat_suffix}
+                                            onChange={(e) => {
+                                                const updated = [...stats];
+                                                updated[index].stat_suffix = e.target.value;
+                                                setStats(updated);
+                                            }}
+                                            placeholder="+ or %"
+                                        />
+                                    </div>
+                                    <div>
+                                        <Label>Label</Label>
+                                        <Input
+                                            value={stat.stat_label}
+                                            onChange={(e) => {
+                                                const updated = [...stats];
+                                                updated[index].stat_label = e.target.value;
+                                                setStats(updated);
+                                            }}
+                                            placeholder="Projects Delivered"
+                                        />
+                                    </div>
+                                    <Button
+                                        variant="ghost"
+                                        className="w-full h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
+                                        onClick={() => deleteStatMutation.mutate(stat.id)}
+                                    >
+                                        <Trash2 className="w-4 h-4 mr-2" />
+                                        Delete Stat
+                                    </Button>
                                 </div>
-                                <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    onClick={() => deleteReasonMutation.mutate(reason.id)}
-                                >
-                                    <Trash2 className="w-4 h-4 text-destructive" />
-                                </Button>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
-            </div>
-
-            {/* Stats */}
-            <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                    <h2 className="text-xl font-semibold flex items-center gap-2">
-                        <TrendingUp className="w-5 h-5 text-primary" />
-                        Stats ({stats.length})
-                    </h2>
-                    <Button onClick={addStat} size="sm">
-                        <Plus className="w-4 h-4" />
-                        Add Stat
-                    </Button>
-                </div>
-
-                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {stats.map((stat: any, index: number) => (
-                        <motion.div
-                            key={stat.id}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            className="p-4 bg-card border border-border rounded-xl">
-                            <div className="space-y-3">
-                                <div>
-                                    <Label>Value</Label>
-                                    <Input
-                                        type="number"
-                                        value={stat.stat_value}
-                                        onChange={(e) => {
-                                            const updated = [...stats];
-                                            updated[index].stat_value = parseInt(e.target.value);
-                                            setStats(updated);
-                                        }}
-                                    />
-                                </div>
-                                <div>
-                                    <Label>Suffix</Label>
-                                    <Input
-                                        value={stat.stat_suffix}
-                                        onChange={(e) => {
-                                            const updated = [...stats];
-                                            updated[index].stat_suffix = e.target.value;
-                                            setStats(updated);
-                                        }}
-                                        placeholder="+ or %"
-                                    />
-                                </div>
-                                <div>
-                                    <Label>Label</Label>
-                                    <Input
-                                        value={stat.stat_label}
-                                        onChange={(e) => {
-                                            const updated = [...stats];
-                                            updated[index].stat_label = e.target.value;
-                                            setStats(updated);
-                                        }}
-                                        placeholder="Projects Delivered"
-                                    />
-                                </div>
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() => deleteStatMutation.mutate(stat.id)}
-                                    className="w-full"
-                                >
-                                    <Trash2 className="w-4 h-4 mr-2" />
-                                    Delete
-                                </Button>
-                            </div>
-                        </motion.div>
-                    ))}
+                            </motion.div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>

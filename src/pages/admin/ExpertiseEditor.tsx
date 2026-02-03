@@ -132,21 +132,32 @@ const ExpertiseEditor = () => {
     if (isLoading) return <div className="flex justify-center p-8"><Loader2 className="animate-spin" /></div>;
 
     return (
-        <div className="space-y-6">
-            <div className="flex justify-between items-center">
+        <div className="space-y-6 w-full pb-20">
+            <div className="max-w-6xl mx-auto w-full px-4">
                 <h2 className="text-3xl font-bold tracking-tight">Expertise Editor</h2>
+                <p className="text-muted-foreground mt-1">
+                    Manage your technical skills and expertise cards
+                </p>
             </div>
 
-            <SectionHeadingEditor sectionKey="expertise" />
+            <div className="max-w-6xl mx-auto w-full px-4">
+                <SectionHeadingEditor sectionKey="expertise" />
+            </div>
 
-            <Tabs defaultValue="techs">
-                <TabsList>
-                    <TabsTrigger value="techs">Technologies</TabsTrigger>
-                    <TabsTrigger value="cards">Expertise Cards</TabsTrigger>
-                </TabsList>
+            <Tabs defaultValue="techs" className="w-full">
+                <div className="flex justify-center w-full px-4">
+                    <TabsList className="inline-flex h-auto p-1 bg-muted/40 backdrop-blur-sm border border-border/50 rounded-xl overflow-x-auto max-w-full">
+                        <TabsTrigger value="techs" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Technologies</TabsTrigger>
+                        <TabsTrigger value="cards" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Expertise Cards</TabsTrigger>
+                    </TabsList>
+                </div>
 
-                <TabsContent value="techs" className="space-y-4">
-                    <Button onClick={addNewTech}><Plus className="mr-2 h-4 w-4" /> Add Tech</Button>
+                <TabsContent value="techs" className="space-y-6 mt-10 max-w-6xl mx-auto w-full px-4">
+                    <div className="flex justify-end mb-4">
+                        <Button onClick={addNewTech} variant="outline" className="w-full md:w-auto">
+                            <Plus className="mr-2 h-4 w-4" /> Add Tech Icon
+                        </Button>
+                    </div>
                     <div className="grid gap-4">
                         {techs.map((tech) => (
                             <Card key={tech.id}>
@@ -186,8 +197,24 @@ const ExpertiseEditor = () => {
                                         </div>
                                     </div>
                                     <div className="flex gap-2">
-                                        <Button size="icon" variant="ghost" onClick={() => updateTechMutation.mutate(tech)}><Save className="h-4 w-4" /></Button>
-                                        <Button size="icon" variant="destructive" onClick={() => deleteTechMutation.mutate(tech.id)}><Trash2 className="h-4 w-4" /></Button>
+                                        <Button
+                                            size="icon"
+                                            variant="ghost"
+                                            className="h-9 w-9 text-primary hover:bg-primary/10"
+                                            onClick={() => updateTechMutation.mutate(tech)}
+                                            title="Save Tech"
+                                        >
+                                            <Save className="h-4 w-4" />
+                                        </Button>
+                                        <Button
+                                            size="icon"
+                                            variant="ghost"
+                                            className="h-9 w-9 text-destructive hover:bg-destructive/10"
+                                            onClick={() => deleteTechMutation.mutate(tech.id)}
+                                            title="Delete Tech"
+                                        >
+                                            <Trash2 className="h-4 w-4" />
+                                        </Button>
                                     </div>
                                 </CardContent>
                             </Card>
@@ -195,8 +222,12 @@ const ExpertiseEditor = () => {
                     </div>
                 </TabsContent>
 
-                <TabsContent value="cards" className="space-y-4">
-                    <Button onClick={addNewCard}><Plus className="mr-2 h-4 w-4" /> Add Card</Button>
+                <TabsContent value="cards" className="space-y-6 mt-10 max-w-6xl mx-auto w-full px-4">
+                    <div className="flex justify-end mb-4">
+                        <Button onClick={addNewCard} variant="outline" className="w-full md:w-auto">
+                            <Plus className="mr-2 h-4 w-4" /> Add Expertise Card
+                        </Button>
+                    </div>
                     <div className="grid gap-4">
                         {cards.map((card) => (
                             <Card key={card.id}>
@@ -219,8 +250,24 @@ const ExpertiseEditor = () => {
                                         </div>
                                     </div>
                                     <div className="flex gap-2">
-                                        <Button size="icon" variant="ghost" onClick={() => updateCardMutation.mutate(card)}><Save className="h-4 w-4" /></Button>
-                                        <Button size="icon" variant="destructive" onClick={() => deleteCardMutation.mutate(card.id)}><Trash2 className="h-4 w-4" /></Button>
+                                        <Button
+                                            size="icon"
+                                            variant="ghost"
+                                            className="h-9 w-9 text-primary hover:bg-primary/10"
+                                            onClick={() => updateCardMutation.mutate(card)}
+                                            title="Save Card"
+                                        >
+                                            <Save className="h-4 w-4" />
+                                        </Button>
+                                        <Button
+                                            size="icon"
+                                            variant="ghost"
+                                            className="h-9 w-9 text-destructive hover:bg-destructive/10"
+                                            onClick={() => deleteCardMutation.mutate(card.id)}
+                                            title="Delete Card"
+                                        >
+                                            <Trash2 className="h-4 w-4" />
+                                        </Button>
                                     </div>
                                 </CardContent>
                             </Card>

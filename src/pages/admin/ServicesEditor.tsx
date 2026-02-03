@@ -66,15 +66,24 @@ const ServicesEditor = () => {
     if (isLoading) return <div className="flex justify-center p-8"><Loader2 className="animate-spin" /></div>;
 
     return (
-        <div className="space-y-6">
-            <div className="flex justify-between items-center">
-                <h2 className="text-3xl font-bold tracking-tight">Services Editor</h2>
-                <Button onClick={addNewService}><Plus className="mr-2 h-4 w-4" /> Add Service</Button>
+        <div className="space-y-6 w-full pb-20">
+            <div className="max-w-6xl mx-auto w-full px-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h2 className="text-3xl font-bold tracking-tight text-center md:text-left">Services Editor</h2>
+                    <p className="text-muted-foreground mt-1 text-center md:text-left">
+                        Manage the services you offer to clients
+                    </p>
+                </div>
+                <Button onClick={addNewService} variant="outline" className="w-full md:w-auto">
+                    <Plus className="mr-2 h-4 w-4" /> Add Service
+                </Button>
             </div>
 
-            <SectionHeadingEditor sectionKey="services" />
+            <div className="max-w-6xl mx-auto w-full px-4">
+                <SectionHeadingEditor sectionKey="services" />
+            </div>
 
-            <div className="grid gap-6">
+            <div className="max-w-6xl mx-auto w-full px-4 grid gap-6 mt-6">
                 {services.map((service, index) => (
                     <Card key={service.id}>
                         <CardContent className="p-6 space-y-4">
@@ -87,10 +96,21 @@ const ServicesEditor = () => {
                                     />
                                 </div>
                                 <div className="flex gap-2">
-                                    <Button size="sm" variant="outline" onClick={() => updateServiceMutation.mutate(service)}>
+                                    <Button
+                                        size="sm"
+                                        variant="ghost"
+                                        className="text-primary hover:bg-primary/10 transition-colors"
+                                        onClick={() => updateServiceMutation.mutate(service)}
+                                    >
                                         <Save className="mr-2 h-4 w-4" /> Save
                                     </Button>
-                                    <Button size="icon" variant="destructive" onClick={() => deleteServiceMutation.mutate(service.id)}>
+                                    <Button
+                                        size="icon"
+                                        variant="ghost"
+                                        className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
+                                        onClick={() => deleteServiceMutation.mutate(service.id)}
+                                        title="Delete Service"
+                                    >
                                         <Trash2 className="h-4 w-4" />
                                     </Button>
                                 </div>
