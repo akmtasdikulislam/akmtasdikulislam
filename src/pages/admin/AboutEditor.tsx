@@ -188,6 +188,14 @@ const AboutEditor = () => {
                                 </div>
                             </div>
 
+                            <div className="bg-muted/50 p-3 rounded-lg text-sm">
+                                <p className="font-medium mb-1">Content Configuration:</p>
+                                <ul className="space-y-1 text-muted-foreground">
+                                    <li>• <strong>About Content:</strong> Your self-introduction and professional journey.</li>
+                                    <li>• <strong>Formatting:</strong> Use the rich text editor to add structure and emphasis.</li>
+                                </ul>
+                            </div>
+
                             <Button onClick={() => updateAboutMutation.mutate(aboutData)} disabled={updateAboutMutation.isPending}>
                                 {updateAboutMutation.isPending ? (
                                     <>
@@ -339,6 +347,14 @@ const AboutEditor = () => {
                                         </Button>
                                     </div>
                                 ))}
+                            </div>
+
+                            <div className="bg-muted/50 p-3 rounded-lg text-sm">
+                                <p className="font-medium mb-1">Interests Configuration:</p>
+                                <ul className="space-y-1 text-muted-foreground">
+                                    <li>• <strong>Label:</strong> A short name for your interest or hobby.</li>
+                                    <li>• <strong>Icon:</strong> A Lucide icon name representing your interest.</li>
+                                </ul>
                             </div>
 
                             <div className="flex gap-3 mt-6">
