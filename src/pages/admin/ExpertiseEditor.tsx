@@ -322,6 +322,16 @@ const ExpertiseEditor = () => {
                         ))}
                     </div>
 
+                    <div className="bg-muted/50 p-3 rounded-lg text-sm mb-6">
+                        <p className="font-medium mb-1">Tech Stack Configuration:</p>
+                        <ul className="space-y-1 text-muted-foreground">
+                            <li>• <strong>Tech Name:</strong> The name of the tool or language (e.g., "React").</li>
+                            <li>• <strong>Category:</strong> Groups the tech in specific areas (Frontend, Backend, etc.).</li>
+                            <li>• <strong>Marquee:</strong> Toggle to show this icon in the animated floating marquee.</li>
+                            <li>• <strong>Grid:</strong> Toggle to show this icon in the Bento-style tech grid.</li>
+                        </ul>
+                    </div>
+
                     <div className="flex gap-3 mt-8">
                         <Button onClick={addNewTech} variant="outline" className="flex-1">
                             <Plus className="mr-2 h-4 w-4" /> Add Tech Icon
@@ -447,6 +457,15 @@ const ExpertiseEditor = () => {
                                 </CardContent>
                             </Card>
                         ))}
+                    </div>
+
+                    <div className="bg-muted/50 p-3 rounded-lg text-sm mb-6">
+                        <p className="font-medium mb-1">Expertise Card Configuration:</p>
+                        <ul className="space-y-1 text-muted-foreground">
+                            <li>• <strong>Card Title:</strong> The main heading for the expertise area (e.g., "Web Development").</li>
+                            <li>• <strong>Icon:</strong> An image or SVG that visualizes this skill.</li>
+                            <li>• <strong>Description:</strong> A brief high-level summary of your expertise in this field.</li>
+                        </ul>
                     </div>
 
                     <div className="flex gap-3 mt-8">
