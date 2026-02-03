@@ -133,14 +133,14 @@ const FooterEditor = () => {
                         <CardContent className="space-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-2">
-                                    <Label>Logo Text</Label>
+                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Logo Text</Label>
                                     <Input
                                         value={footerData.logo_text}
                                         onChange={(e) => setFooterData({ ...footerData, logo_text: e.target.value })}
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <Label>Contact Email</Label>
+                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Contact Email</Label>
                                     <Input
                                         value={footerData.contact_email}
                                         onChange={(e) => setFooterData({ ...footerData, contact_email: e.target.value })}
@@ -148,7 +148,7 @@ const FooterEditor = () => {
                                 </div>
                             </div>
                             <div className="space-y-2">
-                                <Label>Description</Label>
+                                <Label className="text-[10px] uppercase font-bold text-muted-foreground">Description</Label>
                                 <Textarea
                                     value={footerData.description}
                                     onChange={(e) => setFooterData({ ...footerData, description: e.target.value })}
@@ -156,7 +156,7 @@ const FooterEditor = () => {
                                 />
                             </div>
                             <div className="space-y-2">
-                                <Label>Copyright Text</Label>
+                                <Label className="text-[10px] uppercase font-bold text-muted-foreground">Copyright Text</Label>
                                 <Input
                                     value={footerData.copyright_text}
                                     onChange={(e) => setFooterData({ ...footerData, copyright_text: e.target.value })}
@@ -191,14 +191,14 @@ const FooterEditor = () => {
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div className="space-y-2">
-                                <Label>CTA Title</Label>
+                                <Label className="text-[10px] uppercase font-bold text-muted-foreground">CTA Title</Label>
                                 <Input
                                     value={footerData.connect_title}
                                     onChange={(e) => setFooterData({ ...footerData, connect_title: e.target.value })}
                                 />
                             </div>
                             <div className="space-y-2">
-                                <Label>CTA Text</Label>
+                                <Label className="text-[10px] uppercase font-bold text-muted-foreground">CTA Text</Label>
                                 <Textarea
                                     value={footerData.connect_text}
                                     onChange={(e) => setFooterData({ ...footerData, connect_text: e.target.value })}
@@ -206,7 +206,7 @@ const FooterEditor = () => {
                                 />
                             </div>
                             <div className="space-y-2">
-                                <Label>Button Text</Label>
+                                <Label className="text-[10px] uppercase font-bold text-muted-foreground">Button Text</Label>
                                 <Input
                                     value={footerData.connect_button_text}
                                     onChange={(e) => setFooterData({ ...footerData, connect_button_text: e.target.value })}
@@ -324,8 +324,14 @@ const LinkManager = ({ title, links, onAdd, onUpdate, onDelete, isPending }: Lin
                 <div className="bg-muted/50 p-4 rounded-lg space-y-3">
                     <p className="text-sm font-semibold flex items-center gap-2"><Plus className="w-4 h-4" /> Add New {title.slice(0, -1)}</p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <Input placeholder="Link Label" value={newName} onChange={e => setNewName(e.target.value)} />
-                        <Input placeholder="Href (e.g. #about or https://...)" value={newHref} onChange={e => setNewHref(e.target.value)} />
+                        <div className="space-y-1">
+                            <Label className="text-[10px] uppercase font-bold text-muted-foreground">Link Label</Label>
+                            <Input placeholder="Label" value={newName} onChange={e => setNewName(e.target.value)} />
+                        </div>
+                        <div className="space-y-1">
+                            <Label className="text-[10px] uppercase font-bold text-muted-foreground">Href (e.g. #about or https://...)</Label>
+                            <Input placeholder="Href" value={newHref} onChange={e => setNewHref(e.target.value)} />
+                        </div>
                     </div>
                     <div className="flex justify-end">
                         <Button
