@@ -145,8 +145,8 @@ const AboutEditor = () => {
     }
 
     return (
-        <div className="space-y-6 max-w-6xl pb-20">
-            <div>
+        <div className="space-y-6 w-full pb-20">
+            <div className="max-w-6xl mx-auto w-full px-4">
                 <h1 className="text-2xl sm:text-3xl font-bold">About Section Editor</h1>
                 <p className="text-muted-foreground mt-1">
                     Edit all content in the About Me section
@@ -154,14 +154,16 @@ const AboutEditor = () => {
             </div>
 
             <Tabs defaultValue="content" className="w-full">
-                <TabsList className="grid w-full grid-cols-4">
-                    <TabsTrigger value="content">Content</TabsTrigger>
-                    <TabsTrigger value="highlights">Highlights</TabsTrigger>
-                    <TabsTrigger value="interests">Interests</TabsTrigger>
-                    <TabsTrigger value="values">Core Values</TabsTrigger>
-                </TabsList>
+                <div className="flex justify-center w-full px-4">
+                    <TabsList className="inline-flex h-auto p-1 bg-muted/40 backdrop-blur-sm border border-border/50 rounded-xl overflow-x-auto max-w-full">
+                        <TabsTrigger value="content" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Content</TabsTrigger>
+                        <TabsTrigger value="highlights" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Highlights</TabsTrigger>
+                        <TabsTrigger value="interests" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Interests</TabsTrigger>
+                        <TabsTrigger value="values" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Core Values</TabsTrigger>
+                    </TabsList>
+                </div>
 
-                <TabsContent value="content" className="space-y-4 mt-6">
+                <TabsContent value="content" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
                     <Card>
                         <CardHeader>
                             <CardTitle>Section Header</CardTitle>
@@ -246,7 +248,7 @@ const AboutEditor = () => {
                     </Card>
                 </TabsContent>
 
-                <TabsContent value="highlights" className="space-y-4 mt-6">
+                <TabsContent value="highlights" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
                     <Card>
                         <CardHeader>
                             <CardTitle>Highlights</CardTitle>
@@ -339,7 +341,7 @@ const AboutEditor = () => {
                     </Card>
                 </TabsContent>
 
-                <TabsContent value="interests" className="space-y-4 mt-6">
+                <TabsContent value="interests" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
                     <Card>
                         <CardHeader>
                             <CardTitle>Interests</CardTitle>
@@ -410,7 +412,7 @@ const AboutEditor = () => {
                     </Card>
                 </TabsContent>
 
-                <TabsContent value="values" className="space-y-4 mt-6">
+                <TabsContent value="values" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
                     <Card>
                         <CardHeader>
                             <CardTitle>Core Values</CardTitle>
