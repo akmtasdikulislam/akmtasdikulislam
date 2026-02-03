@@ -273,21 +273,21 @@ const ContactEditor = () => {
                         <CardContent className="space-y-4">
                             <div className="grid md:grid-cols-2 gap-4">
                                 <div className="space-y-1">
-                                    <Label>Email</Label>
+                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Email</Label>
                                     <Input value={contact.email || ''} onChange={(e) => setContact({ ...contact, email: e.target.value })} />
                                 </div>
                                 <div className="space-y-1">
-                                    <Label>Location</Label>
+                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Location</Label>
                                     <Input value={contact.location || ''} onChange={(e) => setContact({ ...contact, location: e.target.value })} />
                                 </div>
                                 <div className="space-y-1">
-                                    <Label>Location Maps Link</Label>
+                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Location Maps Link</Label>
                                     <Input value={contact.location_url || ''} onChange={(e) => setContact({ ...contact, location_url: e.target.value })} />
                                 </div>
                             </div>
                             <div className="grid md:grid-cols-2 gap-4">
                                 <div className="space-y-1">
-                                    <Label>Upwork Profile URL</Label>
+                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Upwork Profile URL</Label>
                                     <Input
                                         value={contact.upwork_url || ''}
                                         onChange={(e) => setContact({ ...contact, upwork_url: e.target.value })}
@@ -295,7 +295,7 @@ const ContactEditor = () => {
                                     />
                                 </div>
                                 <div className="space-y-1">
-                                    <Label>LinkedIn Profile URL</Label>
+                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">LinkedIn Profile URL</Label>
                                     <Input
                                         value={contact.linkedin_url || ''}
                                         onChange={(e) => setContact({ ...contact, linkedin_url: e.target.value })}
@@ -305,7 +305,7 @@ const ContactEditor = () => {
                             </div>
                             <div className="grid md:grid-cols-2 gap-4">
                                 <div className="space-y-1">
-                                    <Label>Upwork Button Text</Label>
+                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Upwork Button Text</Label>
                                     <Input
                                         value={contact.upwork_label || ''}
                                         onChange={(e) => setContact({ ...contact, upwork_label: e.target.value })}
@@ -313,7 +313,7 @@ const ContactEditor = () => {
                                     />
                                 </div>
                                 <div className="space-y-1">
-                                    <Label>LinkedIn Button Text</Label>
+                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">LinkedIn Button Text</Label>
                                     <Input
                                         value={contact.linkedin_label || ''}
                                         onChange={(e) => setContact({ ...contact, linkedin_label: e.target.value })}
@@ -322,11 +322,17 @@ const ContactEditor = () => {
                                 </div>
                             </div>
                             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-4 border-t">
-                                <div className="flex items-center gap-4">
-                                    <Switch checked={contact.available_for_work} onCheckedChange={(c) => setContact({ ...contact, available_for_work: c })} />
-                                    <Label>Available For Work</Label>
+                                <div className="flex flex-col gap-1">
+                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Availability Status</Label>
+                                    <div className="flex items-center gap-4">
+                                        <Switch checked={contact.available_for_work} onCheckedChange={(c) => setContact({ ...contact, available_for_work: c })} />
+                                        <span className="text-sm font-medium">Available For Work</span>
+                                    </div>
                                 </div>
-                                <Input className="flex-1 max-w-xs" value={contact.available_text || ''} onChange={(e) => setContact({ ...contact, available_text: e.target.value })} placeholder="Status Text" />
+                                <div className="flex-1 space-y-1">
+                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Status Text</Label>
+                                    <Input className="max-w-xs" value={contact.available_text || ''} onChange={(e) => setContact({ ...contact, available_text: e.target.value })} placeholder="Status Text" />
+                                </div>
                             </div>
                             <div className="flex justify-end pt-4 border-t">
                                 <Button onClick={() => updateContactMutation.mutate(contact)} variant="outline">
@@ -418,7 +424,8 @@ const ContactEditor = () => {
 
                                     {/* Tile Body: Title & Info */}
                                     <div className="flex-1 space-y-3">
-                                        <div>
+                                        <div className="space-y-1">
+                                            <Label className="text-[10px] uppercase font-bold text-muted-foreground">Platform Name</Label>
                                             <Input
                                                 value={profile.platform}
                                                 className="h-auto font-bold text-lg bg-transparent border-none p-0 focus-visible:ring-0 placeholder:opacity-50"
@@ -430,7 +437,7 @@ const ContactEditor = () => {
 
                                         <div className="space-y-2.5 pt-1">
                                             <div className="space-y-1">
-                                                <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Profile Link</Label>
+                                                <Label className="text-[10px] uppercase font-bold text-muted-foreground">Profile Link</Label>
                                                 <Input
                                                     value={profile.url}
                                                     className="bg-background/20 h-8 text-[11px] border-border/30 focus:border-primary/50 transition-colors"
@@ -441,7 +448,7 @@ const ContactEditor = () => {
 
                                             {profile.icon_type === 'url' && (
                                                 <div className="space-y-1 animate-in fade-in duration-300">
-                                                    <Label className="text-[10px] uppercase tracking-widest text-primary font-bold">Icon URL</Label>
+                                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Icon URL</Label>
                                                     <Input
                                                         value={profile.icon_url || ''}
                                                         placeholder="Custom URL..."
@@ -462,7 +469,7 @@ const ContactEditor = () => {
                                             </span>
                                         </div>
                                         <div className="flex items-center gap-2">
-                                            <Label htmlFor={`visible-${profile.id}`} className="text-[9px] uppercase tracking-widest opacity-40 font-bold cursor-pointer">Visible</Label>
+                                            <Label htmlFor={`visible-${profile.id}`} className="text-[10px] uppercase font-bold text-muted-foreground cursor-pointer">Visible</Label>
                                             <Switch
                                                 id={`visible-${profile.id}`}
                                                 checked={profile.is_visible !== false}
@@ -559,7 +566,8 @@ const ContactEditor = () => {
 
                                     {/* Tile Body: Title & Info */}
                                     <div className="flex-1 space-y-3">
-                                        <div>
+                                        <div className="space-y-1">
+                                            <Label className="text-[10px] uppercase font-bold text-muted-foreground">Platform Name</Label>
                                             <Input
                                                 value={profile.platform}
                                                 className="h-auto font-bold text-lg bg-transparent border-none p-0 focus-visible:ring-0 placeholder:opacity-50"
@@ -571,7 +579,7 @@ const ContactEditor = () => {
 
                                         <div className="space-y-2.5 pt-1">
                                             <div className="space-y-1">
-                                                <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Profile Link</Label>
+                                                <Label className="text-[10px] uppercase font-bold text-muted-foreground">Profile Link</Label>
                                                 <Input
                                                     value={profile.url}
                                                     className="bg-background/20 h-8 text-[11px] border-border/30 focus:border-primary/50 transition-colors"
@@ -582,7 +590,7 @@ const ContactEditor = () => {
 
                                             {profile.icon_type === 'url' && (
                                                 <div className="space-y-1 animate-in fade-in duration-300">
-                                                    <Label className="text-[10px] uppercase tracking-widest text-primary font-bold">Icon URL</Label>
+                                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Icon URL</Label>
                                                     <Input
                                                         value={profile.icon_url || ''}
                                                         placeholder="Custom URL..."
@@ -603,7 +611,7 @@ const ContactEditor = () => {
                                             </span>
                                         </div>
                                         <div className="flex items-center gap-2">
-                                            <Label htmlFor={`v-freelance-${profile.id}`} className="text-[9px] uppercase tracking-widest opacity-40 font-bold cursor-pointer">Visible</Label>
+                                            <Label htmlFor={`v-freelance-${profile.id}`} className="text-[10px] uppercase font-bold text-muted-foreground cursor-pointer">Visible</Label>
                                             <Switch
                                                 id={`v-freelance-${profile.id}`}
                                                 checked={profile.is_visible !== false}
