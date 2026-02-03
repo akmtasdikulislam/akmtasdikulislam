@@ -256,6 +256,15 @@ const ContactEditor = () => {
                             )}
                         </CardContent>
                     </Card>
+
+                    <div className="bg-muted/50 p-3 rounded-lg text-sm mt-6">
+                        <p className="font-medium mb-1">Messages Management:</p>
+                        <ul className="space-y-1 text-muted-foreground">
+                            <li>• <strong>Inbound Messages:</strong> View and manage inquiries sent via your website's contact form.</li>
+                            <li>• <strong>Status Control:</strong> Use "Mark Read/Unread" to track your responses and keep the inbox organized.</li>
+                            <li>• <strong>Deletion:</strong> Permanently remove messages that are no longer needed.</li>
+                        </ul>
+                    </div>
                 </TabsContent>
 
                 <TabsContent value="info" className="mt-10 max-w-6xl mx-auto w-full px-4">
@@ -326,6 +335,15 @@ const ContactEditor = () => {
                             </div>
                         </CardContent>
                     </Card>
+
+                    <div className="bg-muted/50 p-3 rounded-lg text-sm mt-6">
+                        <p className="font-medium mb-1">Contact Info Configuration:</p>
+                        <ul className="space-y-1 text-muted-foreground">
+                            <li>• <strong>General Info:</strong> Manage your primary contact email and office/home location with a maps link.</li>
+                            <li>• <strong>Platform Links:</strong> Set your professional profile URLs and customize the button text for calls-to-action.</li>
+                            <li>• <strong>Availability Status:</strong> Toggle your "Available for Work" badge and set the accompanying display text.</li>
+                        </ul>
+                    </div>
                 </TabsContent>
 
                 <TabsContent value="profiles" className="space-y-6 mt-10 max-w-6xl mx-auto w-full px-4">
