@@ -281,12 +281,14 @@ const HeroEditor = () => {
                                     </div>
                                 ))}
                             </div>
-                            <Button onClick={() => setRoles([...roles, { role_text: '', display_order: roles.length }])} variant="outline" className="w-full">
-                                <Plus className="w-4 h-4 mr-2" /> Add Role
-                            </Button>
-                            <Button onClick={() => updateRolesMutation.mutate(roles)} disabled={updateRolesMutation.isPending} className="w-full">
-                                <Save className="w-4 h-4 mr-2" /> Save Roles
-                            </Button>
+                            <div className="flex gap-3 mt-6">
+                                <Button onClick={() => setRoles([...roles, { role_text: '', display_order: roles.length }])} variant="outline" className="flex-1">
+                                    <Plus className="w-4 h-4 mr-2" /> Add Role
+                                </Button>
+                                <Button onClick={() => updateRolesMutation.mutate(roles)} disabled={updateRolesMutation.isPending} className="flex-1">
+                                    <Save className="w-4 h-4 mr-2" /> Save Roles
+                                </Button>
+                            </div>
                         </CardContent>
                     </Card>
                 </TabsContent>
@@ -320,12 +322,14 @@ const HeroEditor = () => {
                                     </Button>
                                 </div>
                             ))}
-                            <Button onClick={() => setStats([...stats, { stat_label: '', stat_value: 0, stat_suffix: '+', display_order: stats.length }])} variant="outline" className="w-full mb-4">
-                                <Plus className="w-4 h-4 mr-2" /> Add Stat
-                            </Button>
-                            <Button onClick={() => updateStatsMutation.mutate(stats)} className="w-full">
-                                <Save className="w-4 h-4 mr-2" /> Save Stats
-                            </Button>
+                            <div className="flex gap-3 mt-6">
+                                <Button onClick={() => setStats([...stats, { stat_label: '', stat_value: 0, stat_suffix: '+', display_order: stats.length }])} variant="outline" className="flex-1">
+                                    <Plus className="w-4 h-4 mr-2" /> Add Stat
+                                </Button>
+                                <Button onClick={() => updateStatsMutation.mutate(stats)} className="flex-1">
+                                    <Save className="w-4 h-4 mr-2" /> Save Stats
+                                </Button>
+                            </div>
                         </CardContent>
                     </Card>
                 </TabsContent>
