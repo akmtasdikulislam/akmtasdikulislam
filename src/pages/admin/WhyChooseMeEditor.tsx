@@ -10,7 +10,6 @@ import {
     createWhyChooseStat,
     deleteWhyChooseReason,
     deleteWhyChooseStat,
-    updateWhyChooseContent,
     updateWhyChooseReason,
     updateWhyChooseStat
 } from '@/integrations/supabase/whyChooseMeQueries';
@@ -25,8 +24,6 @@ function WhyChooseMeEditor() {
     const [saving, setSaving] = useState(false);
 
     const { data, isLoading } = useWhyChooseMeContent();
-
-    const { data, isLoading } = useWhyChooseMeContent();
     const [reasons, setReasons] = useState<any[]>([]);
     const [stats, setStats] = useState<any[]>([]);
 
@@ -36,8 +33,6 @@ function WhyChooseMeEditor() {
             setStats(data.stats || []);
         }
     }, [data]);
-
-
 
     const updateReasonMutation = useMutation({
         mutationFn: updateWhyChooseReason,
@@ -88,7 +83,6 @@ function WhyChooseMeEditor() {
     const handleSaveAll = async () => {
         setSaving(true);
         try {
-
             // Update all reasons
             for (const reason of reasons) {
                 await updateReasonMutation.mutateAsync(reason);
@@ -156,13 +150,13 @@ function WhyChooseMeEditor() {
                 />
             </div>
 
+            <Tabs defaultValue="reasons" className="w-full">
+                <div className="flex justify-center w-full px-4">
                     <TabsList className="inline-flex h-auto p-1 bg-muted/40 backdrop-blur-sm border border-border/50 rounded-xl overflow-x-auto max-w-full">
                         <TabsTrigger value="reasons" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Reasons</TabsTrigger>
                         <TabsTrigger value="stats" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Stats</TabsTrigger>
                     </TabsList>
                 </div>
-
-
 
                 <TabsContent value="reasons" className="space-y-6 mt-10 max-w-6xl mx-auto w-full px-4">
                     {/* Reasons */}
@@ -340,8 +334,8 @@ function WhyChooseMeEditor() {
                         </Button>
                     </div>
                 </TabsContent>
-            </Tabs >
-        </div >
+            </Tabs>
+        </div>
     );
 }
 
