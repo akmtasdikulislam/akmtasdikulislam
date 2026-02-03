@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
@@ -289,8 +290,8 @@ const ExpertiseEditor = () => {
                                                 </div>
                                             )}
 
-                                            <div className="grid grid-cols-2 gap-4 pt-4 border-t border-border/40 mt-4">
-                                                <div className="flex items-center justify-between">
+                                            <div className="flex items-center gap-4 pt-4 border-t border-border/40 mt-4 h-10">
+                                                <div className="flex-1 flex items-center justify-between">
                                                     <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Marquee</Label>
                                                     <Switch
                                                         checked={tech.is_marquee}
@@ -301,7 +302,8 @@ const ExpertiseEditor = () => {
                                                         className="scale-75 data-[state=checked]:bg-primary/60"
                                                     />
                                                 </div>
-                                                <div className="flex items-center justify-between">
+                                                <Separator orientation="vertical" className="h-4 bg-border/50" />
+                                                <div className="flex-1 flex items-center justify-between">
                                                     <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Grid</Label>
                                                     <Switch
                                                         checked={tech.in_expertise_grid}
