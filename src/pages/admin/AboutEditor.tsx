@@ -177,7 +177,7 @@ const AboutEditor = () => {
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div>
-                                <Label htmlFor="main_content">About Content</Label>
+                                <Label className="text-[10px] uppercase font-bold text-muted-foreground" htmlFor="main_content">About Content</Label>
                                 <p className="text-xs text-muted-foreground mb-4">Write your story using the rich text editor below.</p>
                                 <div className="border border-border rounded-xl p-2 bg-background/50">
                                     <TipTapEditor
@@ -227,43 +227,55 @@ const AboutEditor = () => {
                                             <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mt-3" />
                                             <div className="flex-1 space-y-3">
                                                 <div className="grid gap-2 md:grid-cols-2">
+                                                    <div className="space-y-1">
+                                                        <Label className="text-[10px] uppercase font-bold text-muted-foreground">Title</Label>
+                                                        <Input
+                                                            value={item.title}
+                                                            onChange={(e) => {
+                                                                const updated = [...highlights];
+                                                                updated[index].title = e.target.value;
+                                                                setHighlights(updated);
+                                                            }}
+                                                            placeholder="Title (e.g., Education)"
+                                                        />
+                                                    </div>
+                                                    <div className="space-y-1">
+                                                        <Label className="text-[10px] uppercase font-bold text-muted-foreground">Icon Name</Label>
+                                                        <Input
+                                                            value={item.icon_name}
+                                                            onChange={(e) => {
+                                                                const updated = [...highlights];
+                                                                updated[index].icon_name = e.target.value;
+                                                                setHighlights(updated);
+                                                            }}
+                                                            placeholder="Icon (e.g., GraduationCap)"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="space-y-1">
+                                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Description</Label>
                                                     <Input
-                                                        value={item.title}
+                                                        value={item.description}
                                                         onChange={(e) => {
                                                             const updated = [...highlights];
-                                                            updated[index].title = e.target.value;
+                                                            updated[index].description = e.target.value;
                                                             setHighlights(updated);
                                                         }}
-                                                        placeholder="Title (e.g., Education)"
-                                                    />
-                                                    <Input
-                                                        value={item.icon_name}
-                                                        onChange={(e) => {
-                                                            const updated = [...highlights];
-                                                            updated[index].icon_name = e.target.value;
-                                                            setHighlights(updated);
-                                                        }}
-                                                        placeholder="Icon (e.g., GraduationCap)"
+                                                        placeholder="Description"
                                                     />
                                                 </div>
-                                                <Input
-                                                    value={item.description}
-                                                    onChange={(e) => {
-                                                        const updated = [...highlights];
-                                                        updated[index].description = e.target.value;
-                                                        setHighlights(updated);
-                                                    }}
-                                                    placeholder="Description"
-                                                />
-                                                <Input
-                                                    value={item.detail}
-                                                    onChange={(e) => {
-                                                        const updated = [...highlights];
-                                                        updated[index].detail = e.target.value;
-                                                        setHighlights(updated);
-                                                    }}
-                                                    placeholder="Detail"
-                                                />
+                                                <div className="space-y-1">
+                                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Detail</Label>
+                                                    <Input
+                                                        value={item.detail}
+                                                        onChange={(e) => {
+                                                            const updated = [...highlights];
+                                                            updated[index].detail = e.target.value;
+                                                            setHighlights(updated);
+                                                        }}
+                                                        placeholder="Detail"
+                                                    />
+                                                </div>
                                             </div>
                                             <Button
                                                 variant="ghost"
@@ -325,28 +337,36 @@ const AboutEditor = () => {
                         <CardContent className="space-y-4">
                             <div className="space-y-3">
                                 {interests.map((item, index) => (
-                                    <div key={index} className="flex gap-2 items-center">
-                                        <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab" />
-                                        <Input
-                                            value={item.label}
-                                            onChange={(e) => {
-                                                const updated = [...interests];
-                                                updated[index].label = e.target.value;
-                                                setInterests(updated);
-                                            }}
-                                            placeholder="Interest label"
-                                            className="flex-1"
-                                        />
-                                        <Input
-                                            value={item.icon_name}
-                                            onChange={(e) => {
-                                                const updated = [...interests];
-                                                updated[index].icon_name = e.target.value;
-                                                setInterests(updated);
-                                            }}
-                                            placeholder="Icon name"
-                                            className="flex-1"
-                                        />
+                                    <div key={index} className="flex gap-2 items-end mb-4 bg-muted/20 p-3 rounded-lg border border-border/50">
+                                        <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mb-3" />
+                                        <div className="flex-1 grid grid-cols-2 gap-2">
+                                            <div className="space-y-1">
+                                                <Label className="text-[10px] uppercase font-bold text-muted-foreground">Interest Label</Label>
+                                                <Input
+                                                    value={item.label}
+                                                    onChange={(e) => {
+                                                        const updated = [...interests];
+                                                        updated[index].label = e.target.value;
+                                                        setInterests(updated);
+                                                    }}
+                                                    placeholder="Interest label"
+                                                    className="w-full"
+                                                />
+                                            </div>
+                                            <div className="space-y-1">
+                                                <Label className="text-[10px] uppercase font-bold text-muted-foreground">Icon Name</Label>
+                                                <Input
+                                                    value={item.icon_name}
+                                                    onChange={(e) => {
+                                                        const updated = [...interests];
+                                                        updated[index].icon_name = e.target.value;
+                                                        setInterests(updated);
+                                                    }}
+                                                    placeholder="Icon name"
+                                                    className="w-full"
+                                                />
+                                            </div>
+                                        </div>
                                         <Button
                                             variant="ghost"
                                             className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
@@ -409,35 +429,44 @@ const AboutEditor = () => {
                                             <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mt-3" />
                                             <div className="flex-1 space-y-3">
                                                 <div className="grid gap-2 md:grid-cols-2">
-                                                    <Input
-                                                        value={item.value_text}
+                                                    <div className="space-y-1">
+                                                        <Label className="text-[10px] uppercase font-bold text-muted-foreground">Value Title</Label>
+                                                        <Input
+                                                            value={item.value_text}
+                                                            onChange={(e) => {
+                                                                const updated = [...values];
+                                                                updated[index].value_text = e.target.value;
+                                                                setValues(updated);
+                                                            }}
+                                                            placeholder="Value (e.g., Innovation)"
+                                                        />
+                                                    </div>
+                                                    <div className="space-y-1">
+                                                        <Label className="text-[10px] uppercase font-bold text-muted-foreground">Icon Name</Label>
+                                                        <Input
+                                                            value={item.icon_name}
+                                                            onChange={(e) => {
+                                                                const updated = [...values];
+                                                                updated[index].icon_name = e.target.value;
+                                                                setValues(updated);
+                                                            }}
+                                                            placeholder="Icon (e.g., Lightbulb)"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="space-y-1">
+                                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Description</Label>
+                                                    <Textarea
+                                                        value={item.description}
                                                         onChange={(e) => {
                                                             const updated = [...values];
-                                                            updated[index].value_text = e.target.value;
+                                                            updated[index].description = e.target.value;
                                                             setValues(updated);
                                                         }}
-                                                        placeholder="Value (e.g., Innovation)"
-                                                    />
-                                                    <Input
-                                                        value={item.icon_name}
-                                                        onChange={(e) => {
-                                                            const updated = [...values];
-                                                            updated[index].icon_name = e.target.value;
-                                                            setValues(updated);
-                                                        }}
-                                                        placeholder="Icon (e.g., Lightbulb)"
+                                                        placeholder="Description"
+                                                        rows={2}
                                                     />
                                                 </div>
-                                                <Textarea
-                                                    value={item.description}
-                                                    onChange={(e) => {
-                                                        const updated = [...values];
-                                                        updated[index].description = e.target.value;
-                                                        setValues(updated);
-                                                    }}
-                                                    placeholder="Description"
-                                                    rows={2}
-                                                />
                                             </div>
                                             <Button
                                                 variant="ghost"

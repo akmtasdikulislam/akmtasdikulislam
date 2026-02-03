@@ -242,7 +242,7 @@ const ExpertiseEditor = () => {
                                     {/* Tile Body: Info */}
                                     <div className="flex-1 space-y-3">
                                         <div className="space-y-1">
-                                            <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Tech Name</Label>
+                                            <Label className="text-[10px] uppercase font-bold text-muted-foreground">Tech Name</Label>
                                             <Input
                                                 value={tech.name}
                                                 className="bg-background/20 border-border/30 px-3 h-8 font-bold text-[11px] focus:border-primary/50 transition-all shadow-none placeholder:opacity-50 peer"
@@ -257,7 +257,7 @@ const ExpertiseEditor = () => {
 
                                         <div className="space-y-2.5 pt-1">
                                             <div className="space-y-1">
-                                                <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Category</Label>
+                                                <Label className="text-[10px] uppercase font-bold text-muted-foreground">Category</Label>
                                                 <Select value={tech.category} onValueChange={(v) => {
                                                     const updated = techs.map(t => t.id === tech.id ? { ...t, category: v } : t);
                                                     setTechs(updated);
@@ -277,7 +277,7 @@ const ExpertiseEditor = () => {
 
                                             {tech.icon_type === 'url' && (
                                                 <div className="space-y-1 animate-in fade-in duration-300">
-                                                    <Label className="text-[10px] uppercase tracking-widest text-primary font-bold">Icon URL (SVG/Img)</Label>
+                                                    <Label className="text-[10px] uppercase font-bold text-primary">Icon URL (SVG/Img)</Label>
                                                     <Input
                                                         value={tech.icon_url || ''}
                                                         placeholder="Custom Icon URL..."
@@ -292,7 +292,7 @@ const ExpertiseEditor = () => {
 
                                             <div className="flex items-center gap-4 pt-4 border-t border-border/40 mt-4 h-10">
                                                 <div className="flex-1 flex items-center justify-between">
-                                                    <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Marquee</Label>
+                                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Marquee</Label>
                                                     <Switch
                                                         checked={tech.is_marquee}
                                                         onCheckedChange={(c) => {
@@ -304,7 +304,7 @@ const ExpertiseEditor = () => {
                                                 </div>
                                                 <Separator orientation="vertical" className="h-4 bg-border/50" />
                                                 <div className="flex-1 flex items-center justify-between">
-                                                    <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Grid</Label>
+                                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Grid</Label>
                                                     <Switch
                                                         checked={tech.in_expertise_grid}
                                                         onCheckedChange={(c) => {
@@ -411,7 +411,7 @@ const ExpertiseEditor = () => {
                                     {/* Tile Body: Info */}
                                     <div className="flex-1 space-y-3">
                                         <div className="space-y-1">
-                                            <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Card Title</Label>
+                                            <Label className="text-[10px] uppercase font-bold text-muted-foreground">Card Title</Label>
                                             <Input
                                                 value={card.title}
                                                 className="bg-background/20 border-border/30 px-3 h-8 font-bold text-[11px] focus:border-primary/50 transition-all shadow-none placeholder:opacity-50 peer"
@@ -426,7 +426,7 @@ const ExpertiseEditor = () => {
 
                                         <div className="space-y-2.5 pt-1">
                                             <div className="space-y-1">
-                                                <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Description</Label>
+                                                <Label className="text-[10px] uppercase font-bold text-muted-foreground">Description</Label>
                                                 <Input
                                                     value={card.description || ''}
                                                     className="bg-background/20 h-8 text-[11px] border-border/30 focus:border-primary/50 transition-colors"
@@ -440,7 +440,7 @@ const ExpertiseEditor = () => {
 
                                             {card.icon_type === 'url' && (
                                                 <div className="space-y-1 animate-in fade-in duration-300">
-                                                    <Label className="text-[10px] uppercase tracking-widest text-primary font-bold">Icon URL (SVG/Img)</Label>
+                                                    <Label className="text-[10px] uppercase font-bold text-primary">Icon URL (SVG/Img)</Label>
                                                     <Input
                                                         value={card.icon_url || ''}
                                                         placeholder="Custom Icon URL..."

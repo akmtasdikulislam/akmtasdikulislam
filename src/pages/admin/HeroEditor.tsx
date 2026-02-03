@@ -204,7 +204,7 @@ const HeroEditor = () => {
                         <CardContent className="space-y-4">
                             <div className="grid gap-4 md:grid-cols-2">
                                 <div>
-                                    <Label htmlFor="name">Your Name *</Label>
+                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground" htmlFor="name">Your Name *</Label>
                                     <Input
                                         id="name"
                                         value={heroData.name}
@@ -212,7 +212,7 @@ const HeroEditor = () => {
                                     />
                                 </div>
                                 <div>
-                                    <Label htmlFor="greeting">Greeting Badge *</Label>
+                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground" htmlFor="greeting">Greeting Badge *</Label>
                                     <Input
                                         id="greeting"
                                         value={heroData.greeting_badge}
@@ -221,7 +221,7 @@ const HeroEditor = () => {
                                 </div>
                             </div>
                             <div>
-                                <Label htmlFor="description">Description *</Label>
+                                <Label className="text-[10px] uppercase font-bold text-muted-foreground" htmlFor="description">Description *</Label>
                                 <Textarea
                                     id="description"
                                     value={heroData.description}
@@ -230,7 +230,7 @@ const HeroEditor = () => {
                                 />
                             </div>
                             <div>
-                                <Label htmlFor="photo">Profile Photo URL</Label>
+                                <Label className="text-[10px] uppercase font-bold text-muted-foreground" htmlFor="photo">Profile Photo URL</Label>
                                 <div className="flex gap-2">
                                     <Input
                                         id="photo"
@@ -272,15 +272,18 @@ const HeroEditor = () => {
                                 {roles.map((role, index) => (
                                     <div key={index} className="flex gap-2 items-center">
                                         <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab" />
-                                        <Input
-                                            value={role.role_text}
-                                            onChange={(e) => {
-                                                const updated = [...roles];
-                                                updated[index].role_text = e.target.value;
-                                                setRoles(updated);
-                                            }}
-                                            className="flex-1"
-                                        />
+                                        <div className="flex-1 space-y-1">
+                                            <Label className="text-[10px] uppercase font-bold text-muted-foreground">Role Text</Label>
+                                            <Input
+                                                value={role.role_text}
+                                                onChange={(e) => {
+                                                    const updated = [...roles];
+                                                    updated[index].role_text = e.target.value;
+                                                    setRoles(updated);
+                                                }}
+                                                className="w-full"
+                                            />
+                                        </div>
                                         <Button
                                             variant="ghost"
                                             className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
@@ -321,17 +324,28 @@ const HeroEditor = () => {
                         </CardHeader>
                         <CardContent className="space-y-4">
                             {stats.map((stat, index) => (
-                                <div key={index} className="flex gap-2 items-center mb-2">
-                                    <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab" />
-                                    <Input value={stat.stat_label} onChange={(e) => {
-                                        const updated = [...stats]; updated[index].stat_label = e.target.value; setStats(updated);
-                                    }} placeholder="Label" className="flex-1" />
-                                    <Input type="number" value={stat.stat_value} onChange={(e) => {
-                                        const updated = [...stats]; updated[index].stat_value = parseInt(e.target.value) || 0; setStats(updated);
-                                    }} placeholder="Value" className="w-24" />
-                                    <Input value={stat.stat_suffix} onChange={(e) => {
-                                        const updated = [...stats]; updated[index].stat_suffix = e.target.value; setStats(updated);
-                                    }} placeholder="Suffix" className="w-20" />
+                                <div key={index} className="flex gap-2 items-end mb-4 bg-muted/20 p-3 rounded-lg border border-border/50">
+                                    <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mb-3" />
+                                    <div className="flex-1 grid grid-cols-3 gap-2">
+                                        <div className="space-y-1">
+                                            <Label className="text-[10px] uppercase font-bold text-muted-foreground">Label</Label>
+                                            <Input value={stat.stat_label} onChange={(e) => {
+                                                const updated = [...stats]; updated[index].stat_label = e.target.value; setStats(updated);
+                                            }} placeholder="Label" className="w-full" />
+                                        </div>
+                                        <div className="space-y-1">
+                                            <Label className="text-[10px] uppercase font-bold text-muted-foreground">Value</Label>
+                                            <Input type="number" value={stat.stat_value} onChange={(e) => {
+                                                const updated = [...stats]; updated[index].stat_value = parseInt(e.target.value) || 0; setStats(updated);
+                                            }} placeholder="Value" className="w-full" />
+                                        </div>
+                                        <div className="space-y-1">
+                                            <Label className="text-[10px] uppercase font-bold text-muted-foreground">Suffix</Label>
+                                            <Input value={stat.stat_suffix} onChange={(e) => {
+                                                const updated = [...stats]; updated[index].stat_suffix = e.target.value; setStats(updated);
+                                            }} placeholder="Suffix" className="w-full" />
+                                        </div>
+                                    </div>
                                     <Button
                                         variant="ghost"
                                         className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
@@ -784,13 +798,13 @@ const HeroEditor = () => {
                                         <div className="flex gap-4 items-start">
                                             <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mt-3" />
                                             <div className="flex-1 space-y-4">
-                                                <div className="space-y-2">
-                                                    <Label>Badge Text</Label>
+                                                <div className="space-y-1">
+                                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Badge Text</Label>
                                                     <Input value={badge.badge_text} onChange={(e) => { const u = [...badges]; u[index].badge_text = e.target.value; setBadges(u); }} placeholder="Badge Text" />
                                                 </div>
 
-                                                <div className="space-y-2">
-                                                    <Label>Position Preset</Label>
+                                                <div className="space-y-1">
+                                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Position Preset</Label>
                                                     <Select
                                                         value={isCustom ? "custom" : badge.position_class}
                                                         onValueChange={(val) => {
