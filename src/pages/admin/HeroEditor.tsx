@@ -10,7 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useHeroContent } from '@/hooks/useHomepageContent';
 import { supabase } from '@/integrations/supabase/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { GripVertical, Link, Loader2, Plus, Save, Trash2, Upload } from 'lucide-react';
+import { Contrast, GripVertical, Link, Loader2, Plus, Save, Trash2, Upload } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const HeroEditor = () => {
@@ -128,7 +128,7 @@ const HeroEditor = () => {
                 updated[index] = { ...updated[index], icon_url: publicUrl };
                 setTechs(updated);
             }
-            
+
             toast({ title: 'Icon uploaded successfully' });
         } catch (error: any) {
             toast({ title: 'Error uploading icon', description: error.message, variant: 'destructive' });
@@ -335,7 +335,7 @@ const HeroEditor = () => {
                                         <Card key={index} className="group relative overflow-hidden border-border/50 bg-card/40 backdrop-blur-md hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 flex flex-col h-full">
                                             {/* Decorative Gradient Backdrop */}
                                             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                                            
+
                                             <CardContent className="p-5 flex flex-col flex-1 relative z-10">
                                                 {/* Tile Header: Icon & Actions */}
                                                 <div className="flex items-start justify-between mb-4">
@@ -355,8 +355,8 @@ const HeroEditor = () => {
                                                         </div>
                                                         {/* Discreet Switcher */}
                                                         <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 z-20">
-                                                            <Tabs 
-                                                                value={link.icon_type || 'upload'} 
+                                                            <Tabs
+                                                                value={link.icon_type || 'upload'}
                                                                 onValueChange={(v) => {
                                                                     const u = [...socialLinks];
                                                                     u[index].icon_type = v;
@@ -375,10 +375,10 @@ const HeroEditor = () => {
                                                             </Tabs>
                                                         </div>
                                                     </div>
-                                                    
-                                                    <Button 
-                                                        size="icon" 
-                                                        variant="ghost" 
+
+                                                    <Button
+                                                        size="icon"
+                                                        variant="ghost"
                                                         className="h-8 w-8 text-destructive hover:bg-destructive/20 hover:text-destructive transition-colors opacity-0 group-hover:opacity-100 duration-300"
                                                         onClick={() => setSocialLinks(socialLinks.filter((_, i) => i !== index))}
                                                     >
@@ -413,11 +413,11 @@ const HeroEditor = () => {
                                                     {(isCustom || link.platform === "") && (
                                                         <div className="pt-1 animate-in slide-in-from-top-2 duration-300">
                                                             <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Custom Name</Label>
-                                                            <Input 
-                                                                value={link.platform} 
+                                                            <Input
+                                                                value={link.platform}
                                                                 className="bg-background/20 h-8 text-[11px] border-border/30 focus:border-primary/50 transition-colors"
                                                                 placeholder="e.g. My Website"
-                                                                onChange={(e) => { const u = [...socialLinks]; u[index].platform = e.target.value; setSocialLinks(u); }} 
+                                                                onChange={(e) => { const u = [...socialLinks]; u[index].platform = e.target.value; setSocialLinks(u); }}
                                                             />
                                                         </div>
                                                     )}
@@ -425,22 +425,22 @@ const HeroEditor = () => {
                                                     <div className="space-y-2.5 pt-1">
                                                         <div className="space-y-1">
                                                             <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Social URL</Label>
-                                                            <Input 
-                                                                value={link.url} 
+                                                            <Input
+                                                                value={link.url}
                                                                 className="bg-background/20 h-8 text-[11px] border-border/30 focus:border-primary/50 transition-colors"
                                                                 placeholder="https://..."
-                                                                onChange={(e) => { const u = [...socialLinks]; u[index].url = e.target.value; setSocialLinks(u); }} 
+                                                                onChange={(e) => { const u = [...socialLinks]; u[index].url = e.target.value; setSocialLinks(u); }}
                                                             />
                                                         </div>
-                                                        
+
                                                         {(link.icon_type === 'url' || (!link.icon_type && link.icon_url && isCustom)) && (
                                                             <div className="space-y-1 animate-in fade-in duration-300">
                                                                 <Label className="text-[10px] uppercase tracking-widest text-primary font-bold">Icon URL (SVG)</Label>
-                                                                <Input 
-                                                                    value={link.icon_url || ''} 
-                                                                    placeholder="Custom Icon URL..." 
+                                                                <Input
+                                                                    value={link.icon_url || ''}
+                                                                    placeholder="Custom Icon URL..."
                                                                     className="bg-background/20 h-8 text-[11px] border-primary/20 focus:border-primary transition-colors"
-                                                                    onChange={(e) => { const u = [...socialLinks]; u[index].icon_url = e.target.value; u[index].icon_type = 'url'; setSocialLinks(u); }} 
+                                                                    onChange={(e) => { const u = [...socialLinks]; u[index].icon_url = e.target.value; u[index].icon_type = 'url'; setSocialLinks(u); }}
                                                                 />
                                                             </div>
                                                         )}
@@ -457,7 +457,7 @@ const HeroEditor = () => {
                                                     </div>
                                                     <div className="flex items-center gap-2">
                                                         <Label htmlFor={`visible-${link.id || index}`} className="text-[9px] uppercase tracking-widest opacity-40 font-bold cursor-pointer">Visible</Label>
-                                                        <Switch 
+                                                        <Switch
                                                             id={`visible-${link.id || index}`}
                                                             checked={link.is_visible !== false}
                                                             onCheckedChange={(checked) => {
@@ -501,7 +501,7 @@ const HeroEditor = () => {
                                         <Card key={index} className="group relative overflow-hidden border-border/50 bg-card/40 backdrop-blur-md hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 flex flex-col h-full">
                                             {/* Decorative Gradient Backdrop */}
                                             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                                            
+
                                             <CardContent className="p-5 flex flex-col flex-1 relative z-10">
                                                 {/* Tile Header: Icon & Actions */}
                                                 <div className="flex items-start justify-between mb-4">
@@ -521,8 +521,8 @@ const HeroEditor = () => {
                                                         </div>
                                                         {/* Discreet Switcher */}
                                                         <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 z-20">
-                                                            <Tabs 
-                                                                value={tech.icon_type || 'upload'} 
+                                                            <Tabs
+                                                                value={tech.icon_type || 'upload'}
                                                                 onValueChange={(v) => {
                                                                     const u = [...techs];
                                                                     u[index].icon_type = v;
@@ -541,20 +541,20 @@ const HeroEditor = () => {
                                                             </Tabs>
                                                         </div>
                                                     </div>
-                                                    
+
                                                     <div className="flex items-center gap-1">
-                                                        <Button 
-                                                            size="icon" 
-                                                            variant="ghost" 
+                                                        <Button
+                                                            size="icon"
+                                                            variant="ghost"
                                                             className={`h-8 w-8 transition-colors ${tech.invert ? 'text-primary' : 'text-muted-foreground'} hover:bg-primary/10`}
                                                             onClick={() => { const u = [...techs]; u[index].invert = !u[index].invert; setTechs(u); }}
                                                             title="Invert Icon"
                                                         >
-                                                            <Save className={`h-4 w-4 ${tech.invert ? 'fill-primary/20' : ''}`} />
+                                                            <Contrast className={`h-4 w-4 ${tech.invert ? 'fill-primary/20' : ''}`} />
                                                         </Button>
-                                                        <Button 
-                                                            size="icon" 
-                                                            variant="ghost" 
+                                                        <Button
+                                                            size="icon"
+                                                            variant="ghost"
                                                             className="h-8 w-8 text-destructive hover:bg-destructive/20 hover:text-destructive transition-colors opacity-0 group-hover:opacity-100 duration-300"
                                                             onClick={() => setTechs(techs.filter((_, i) => i !== index))}
                                                         >
@@ -567,11 +567,11 @@ const HeroEditor = () => {
                                                 <div className="flex-1 space-y-3">
                                                     <div className="space-y-1">
                                                         <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Tech Name</Label>
-                                                        <Input 
-                                                            value={tech.name} 
+                                                        <Input
+                                                            value={tech.name}
                                                             className="bg-transparent border-none p-0 h-auto font-bold text-lg focus-visible:ring-0 shadow-none placeholder:opacity-50"
                                                             placeholder="e.g. React"
-                                                            onChange={(e) => { const u = [...techs]; u[index].name = e.target.value; setTechs(u); }} 
+                                                            onChange={(e) => { const u = [...techs]; u[index].name = e.target.value; setTechs(u); }}
                                                         />
                                                         <div className="h-0.5 w-8 bg-primary/40 rounded-full mt-0.5 group-hover:w-full transition-all duration-500" />
                                                     </div>
@@ -604,11 +604,11 @@ const HeroEditor = () => {
                                                         {isCustom && (
                                                             <div className="space-y-1 animate-in slide-in-from-top-2 duration-300">
                                                                 <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Custom Positioning</Label>
-                                                                <Input 
-                                                                    value={tech.position_class} 
+                                                                <Input
+                                                                    value={tech.position_class}
                                                                     className="bg-background/20 h-8 text-[11px] border-border/30 focus:border-primary/50 transition-colors"
                                                                     placeholder="absolute ..."
-                                                                    onChange={(e) => { const u = [...techs]; u[index].position_class = e.target.value; setTechs(u); }} 
+                                                                    onChange={(e) => { const u = [...techs]; u[index].position_class = e.target.value; setTechs(u); }}
                                                                 />
                                                             </div>
                                                         )}
@@ -616,21 +616,21 @@ const HeroEditor = () => {
                                                         <div className="grid grid-cols-2 gap-2">
                                                             <div className="space-y-1">
                                                                 <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Animation</Label>
-                                                                <Input 
-                                                                    value={tech.animation_class} 
+                                                                <Input
+                                                                    value={tech.animation_class}
                                                                     className="bg-background/20 h-8 text-[11px] border-border/30 focus:border-primary/50 transition-colors"
                                                                     placeholder="animate-float-1"
-                                                                    onChange={(e) => { const u = [...techs]; u[index].animation_class = e.target.value; setTechs(u); }} 
+                                                                    onChange={(e) => { const u = [...techs]; u[index].animation_class = e.target.value; setTechs(u); }}
                                                                 />
                                                             </div>
                                                             <div className="space-y-1">
                                                                 <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Delay (s)</Label>
-                                                                <Input 
+                                                                <Input
                                                                     type="number"
                                                                     step="0.1"
-                                                                    value={tech.delay} 
+                                                                    value={tech.delay}
                                                                     className="bg-background/20 h-8 text-[11px] border-border/30 focus:border-primary/50 transition-colors"
-                                                                    onChange={(e) => { const u = [...techs]; u[index].delay = parseFloat(e.target.value); setTechs(u); }} 
+                                                                    onChange={(e) => { const u = [...techs]; u[index].delay = parseFloat(e.target.value); setTechs(u); }}
                                                                 />
                                                             </div>
                                                         </div>
@@ -638,11 +638,11 @@ const HeroEditor = () => {
                                                         {tech.icon_type === 'url' && (
                                                             <div className="space-y-1 animate-in fade-in duration-300">
                                                                 <Label className="text-[10px] uppercase tracking-widest text-primary font-bold">Icon URL (SVG/Img)</Label>
-                                                                <Input 
-                                                                    value={tech.icon_url || ''} 
-                                                                    placeholder="Custom Icon URL..." 
+                                                                <Input
+                                                                    value={tech.icon_url || ''}
+                                                                    placeholder="Custom Icon URL..."
                                                                     className="bg-background/20 h-8 text-[11px] border-primary/20 focus:border-primary transition-colors"
-                                                                    onChange={(e) => { const u = [...techs]; u[index].icon_url = e.target.value; setTechs(u); }} 
+                                                                    onChange={(e) => { const u = [...techs]; u[index].icon_url = e.target.value; setTechs(u); }}
                                                                 />
                                                             </div>
                                                         )}
@@ -658,7 +658,7 @@ const HeroEditor = () => {
                                                         </div>
                                                         <div className="flex items-center gap-2">
                                                             <Label htmlFor={`visible-tech-${tech.id || index}`} className="text-[9px] uppercase tracking-widest opacity-40 font-bold cursor-pointer">Visible</Label>
-                                                            <Switch 
+                                                            <Switch
                                                                 id={`visible-tech-${tech.id || index}`}
                                                                 checked={tech.is_visible !== false}
                                                                 onCheckedChange={(checked) => {
@@ -676,18 +676,18 @@ const HeroEditor = () => {
                                     );
                                 })}
                             </div>
-                            <Button 
-                                onClick={() => setTechs([...techs, { 
-                                    name: '', 
-                                    icon_url: '', 
-                                    position_class: 'left-1/2 -translate-x-1/2 -top-20 md:-top-24', 
-                                    animation_class: 'animate-float-1', 
-                                    delay: 0, 
+                            <Button
+                                onClick={() => setTechs([...techs, {
+                                    name: '',
+                                    icon_url: '',
+                                    position_class: 'left-1/2 -translate-x-1/2 -top-20 md:-top-24',
+                                    animation_class: 'animate-float-1',
+                                    delay: 0,
                                     invert: false,
                                     is_visible: true,
-                                    display_order: techs.length 
-                                }])} 
-                                variant="outline" 
+                                    display_order: techs.length
+                                }])}
+                                variant="outline"
                                 className="w-full mb-4"
                             >
                                 <Plus className="w-4 h-4 mr-2" /> Add Tech Icon
