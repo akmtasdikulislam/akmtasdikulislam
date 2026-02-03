@@ -158,6 +158,16 @@ const ServicesEditor = () => {
                         </Card>
                     ))}
                 </div>
+
+                <div className="bg-muted/50 p-3 rounded-lg text-sm mt-8">
+                    <p className="font-medium mb-1">Services Configuration:</p>
+                    <ul className="space-y-1 text-muted-foreground">
+                        <li>• <strong>Service Title:</strong> The name of the service (e.g., "Web Design").</li>
+                        <li>• <strong>Description:</strong> A high-level overview of what this service entails.</li>
+                        <li>• <strong>Features:</strong> A list of key selling points (one per line).</li>
+                        <li>• <strong>Icon Name:</strong> A Lucide icon name (e.g., "Code", "Smartphone", "Globe").</li>
+                    </ul>
+                </div>
             </div>
         </div>
     );
