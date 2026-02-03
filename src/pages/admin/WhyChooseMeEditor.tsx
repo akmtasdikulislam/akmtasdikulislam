@@ -26,27 +26,18 @@ function WhyChooseMeEditor() {
 
     const { data, isLoading } = useWhyChooseMeContent();
 
-    const [content, setContent] = useState<any>({});
+    const { data, isLoading } = useWhyChooseMeContent();
     const [reasons, setReasons] = useState<any[]>([]);
     const [stats, setStats] = useState<any[]>([]);
 
     useEffect(() => {
         if (data) {
-            const { section_badge, section_title, section_highlight, section_description, ...rest } = data.content as any;
-            setContent(rest || {});
             setReasons(data.reasons || []);
             setStats(data.stats || []);
         }
     }, [data]);
 
-    const updateContentMutation = useMutation({
-        mutationFn: updateWhyChooseContent,
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['homepage', 'why-choose-me'] });
-            toast.success('Content updated successfully');
-        },
-        onError: () => toast.error('Failed to update content'),
-    });
+
 
     const updateReasonMutation = useMutation({
         mutationFn: updateWhyChooseReason,
@@ -97,7 +88,6 @@ function WhyChooseMeEditor() {
     const handleSaveAll = async () => {
         setSaving(true);
         try {
-            await updateContentMutation.mutateAsync(content);
 
             // Update all reasons
             for (const reason of reasons) {
@@ -166,54 +156,13 @@ function WhyChooseMeEditor() {
                 />
             </div>
 
-            <Tabs defaultValue="content" className="w-full">
-                <div className="flex justify-center w-full px-4">
                     <TabsList className="inline-flex h-auto p-1 bg-muted/40 backdrop-blur-sm border border-border/50 rounded-xl overflow-x-auto max-w-full">
-                        <TabsTrigger value="content" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Content</TabsTrigger>
                         <TabsTrigger value="reasons" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Reasons</TabsTrigger>
                         <TabsTrigger value="stats" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Stats</TabsTrigger>
                     </TabsList>
                 </div>
 
-                <TabsContent value="content" className="space-y-6 mt-10 max-w-6xl mx-auto w-full px-4">
-                    {/* Main Content Info */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="p-6 bg-card border border-border rounded-xl">
-                        <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
-                            <Plus className="w-5 h-5 text-primary" />
-                            Inner Content
-                        </h2>
-                        <div className="grid gap-4">
-                            <div>
-                                <Label>Main Title</Label>
-                                <Input
-                                    value={content.main_title || ''}
-                                    onChange={(e) => setContent({ ...content, main_title: e.target.value })}
-                                />
-                            </div>
-                            <div>
-                                <Label>Main Description</Label>
-                                <Textarea
-                                    value={content.main_description || ''}
-                                    onChange={(e) => setContent({ ...content, main_description: e.target.value })}
-                                    rows={4}
-                                />
-                            </div>
-                        </div>
-                        <div className="bg-muted/50 p-3 rounded-lg text-sm mb-6">
-                            <p className="font-medium mb-1">Inner Content Configuration:</p>
-                            <ul className="space-y-1 text-muted-foreground">
-                                <li>• <strong>Main Title:</strong> The primary headline for this section.</li>
-                                <li>• <strong>Main Description:</strong> A detailed paragraph explaining your value proposition.</li>
-                            </ul>
-                        </div>
-                        <Button onClick={() => updateContentMutation.mutate(content)} className="w-full sm:w-auto">
-                            <Save className="mr-2 h-4 w-4" /> Save Inner Content
-                        </Button>
-                    </motion.div>
-                </TabsContent>
+
 
                 <TabsContent value="reasons" className="space-y-6 mt-10 max-w-6xl mx-auto w-full px-4">
                     {/* Reasons */}
@@ -391,8 +340,8 @@ function WhyChooseMeEditor() {
                         </Button>
                     </div>
                 </TabsContent>
-            </Tabs>
-        </div>
+            </Tabs >
+        </div >
     );
 }
 
