@@ -202,7 +202,14 @@ function WhyChooseMeEditor() {
                                 />
                             </div>
                         </div>
-                        <Button onClick={() => updateContentMutation.mutate(content)} className="mt-6">
+                        <div className="bg-muted/50 p-3 rounded-lg text-sm mb-6">
+                            <p className="font-medium mb-1">Inner Content Configuration:</p>
+                            <ul className="space-y-1 text-muted-foreground">
+                                <li>• <strong>Main Title:</strong> The primary headline for this section.</li>
+                                <li>• <strong>Main Description:</strong> A detailed paragraph explaining your value proposition.</li>
+                            </ul>
+                        </div>
+                        <Button onClick={() => updateContentMutation.mutate(content)} className="w-full sm:w-auto">
                             <Save className="mr-2 h-4 w-4" /> Save Inner Content
                         </Button>
                     </motion.div>
