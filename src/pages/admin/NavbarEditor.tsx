@@ -95,8 +95,8 @@ const NavbarEditor = () => {
     }
 
     return (
-        <div className="space-y-6 max-w-6xl pb-20">
-            <div>
+        <div className="space-y-6 w-full pb-20">
+            <div className="max-w-6xl mx-auto w-full px-4">
                 <h1 className="text-2xl sm:text-3xl font-bold">Navbar Configuration</h1>
                 <p className="text-muted-foreground mt-1">
                     Edit navigation bar logo, links, and CTA button
@@ -104,12 +104,14 @@ const NavbarEditor = () => {
             </div>
 
             <Tabs defaultValue="branding" className="w-full">
-                <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="branding">Logo & CTA</TabsTrigger>
-                    <TabsTrigger value="links">Navigation Links</TabsTrigger>
-                </TabsList>
+                <div className="flex justify-center w-full px-4">
+                    <TabsList className="inline-flex h-auto p-1 bg-muted/40 backdrop-blur-sm border border-border/50 rounded-xl overflow-x-auto max-w-full">
+                        <TabsTrigger value="branding" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Logo & CTA</TabsTrigger>
+                        <TabsTrigger value="links" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Navigation Links</TabsTrigger>
+                    </TabsList>
+                </div>
 
-                <TabsContent value="branding" className="space-y-4 mt-6">
+                <TabsContent value="branding" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
                     <Card>
                         <CardHeader>
                             <CardTitle>Branding & CTA</CardTitle>
@@ -186,7 +188,7 @@ const NavbarEditor = () => {
                     </Card>
                 </TabsContent>
 
-                <TabsContent value="links" className="space-y-4 mt-6">
+                <TabsContent value="links" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
                     <Card>
                         <CardHeader>
                             <CardTitle>Navigation Links</CardTitle>
