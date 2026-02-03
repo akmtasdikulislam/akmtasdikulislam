@@ -36,6 +36,7 @@ const Hero = () => {
   const { hero, roles, techs, badges, stats, socialLinks } = data;
 
   const displaySocialLinks = (socialLinks || []).filter(link => link.is_visible !== false);
+  const displayTechs = (techs || []).filter(tech => tech.is_visible !== false);
 
   const mappedSocialLinks = displaySocialLinks.map((link) => {
     let icon = null;
@@ -155,7 +156,7 @@ const Hero = () => {
                 className="relative"
               >
                 {/* Floating Tech Logos */}
-                {techs.map((tech) => (
+                {displayTechs.map((tech) => (
                   <motion.div
                     key={tech.id}
                     initial={{ opacity: 0, scale: 0 }}

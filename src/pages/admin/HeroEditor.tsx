@@ -28,7 +28,7 @@ const HeroEditor = () => {
     const [roles, setRoles] = useState<Array<{ id?: string; role_text: string; display_order: number }>>([]);
     const [stats, setStats] = useState<Array<{ id?: string; stat_label: string; stat_value: number; stat_suffix: string; display_order: number }>>([]);
     const [socialLinks, setSocialLinks] = useState<Array<{ id?: string; platform: string; url: string; icon_name?: string; icon_url: string | null; icon_type?: string; is_visible?: boolean; display_order: number }>>([]);
-    const [techs, setTechs] = useState<Array<{ id?: string; name: string; icon_url: string; position_class: string; animation_class: string; delay: number; invert: boolean; display_order: number }>>([]);
+    const [techs, setTechs] = useState<Array<{ id?: string; name: string; icon_url: string; position_class: string; animation_class: string; delay: number; invert: boolean; icon_type?: string; is_visible?: boolean; display_order: number }>>([]);
     const [badges, setBadges] = useState<Array<{ id?: string; badge_text: string; position_class: string; display_order: number }>>([]);
 
     useEffect(() => {
@@ -99,14 +99,15 @@ const HeroEditor = () => {
         }
     });
 
-    const handleIconUpload = async (e: React.ChangeEvent<HTMLInputElement>, id: string | undefined, index: number) => {
+    const handleIconUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: 'social' | 'tech', index: number) => {
         const file = e.target.files?.[0];
         if (!file) return;
 
         try {
             const fileExt = file.name.split('.').pop();
             const fileName = `${Math.random()}.${fileExt}`;
-            const filePath = `social-icons/${fileName}`;
+            const folder = type === 'social' ? 'social-icons' : 'tech-icons';
+            const filePath = `${folder}/${fileName}`;
 
             const { error: uploadError } = await supabase.storage
                 .from('hero-assets')
@@ -118,9 +119,15 @@ const HeroEditor = () => {
                 .from('hero-assets')
                 .getPublicUrl(filePath);
 
-            const updated = [...socialLinks];
-            updated[index] = { ...updated[index], icon_url: publicUrl };
-            setSocialLinks(updated);
+            if (type === 'social') {
+                const updated = [...socialLinks];
+                updated[index] = { ...updated[index], icon_url: publicUrl };
+                setSocialLinks(updated);
+            } else {
+                const updated = [...techs];
+                updated[index] = { ...updated[index], icon_url: publicUrl };
+                setTechs(updated);
+            }
             
             toast({ title: 'Icon uploaded successfully' });
         } catch (error: any) {
@@ -342,7 +349,7 @@ const HeroEditor = () => {
                                                             {(link.icon_type === 'upload' || !link.icon_type) && (
                                                                 <label className="absolute inset-0 flex items-center justify-center bg-primary/30 opacity-0 group-hover/icon:opacity-100 cursor-pointer backdrop-blur-[2px] transition-all">
                                                                     <Upload className="h-6 w-6 text-white drop-shadow-md" />
-                                                                    <input type="file" className="hidden" accept="image/*" onChange={(e) => handleIconUpload(e, link.id, index)} />
+                                                                    <input type="file" className="hidden" accept="image/*" onChange={(e) => handleIconUpload(e, 'social', index)} />
                                                                 </label>
                                                             )}
                                                         </div>
@@ -484,91 +491,205 @@ const HeroEditor = () => {
                             <CardTitle>Tech Stack Icons</CardTitle>
                             <CardDescription>Floating icons position control. Use presets for standard orbit positions.</CardDescription>
                         </CardHeader>
-                        <CardContent className="space-y-6">
-                            {techs.map((tech, index) => {
-                                const matchedPreset = TECH_POSITION_PRESETS.find(p => p.value === tech.position_class);
-                                const isCustom = !matchedPreset;
+                        <CardContent className="space-y-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {techs.map((tech, index) => {
+                                    const matchedPreset = TECH_POSITION_PRESETS.find(p => p.value === tech.position_class);
+                                    const isCustom = !matchedPreset;
 
-                                return (
-                                    <div key={index} className="bg-muted/30 p-4 rounded-lg border border-border">
-                                        <div className="flex gap-4 items-start">
-                                            <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mt-3" />
-                                            <div className="flex-1 space-y-4">
-                                                <div className="grid gap-4 md:grid-cols-2">
-                                                    <div className="space-y-2">
-                                                        <Label>Tech Name</Label>
-                                                        <Input value={tech.name} onChange={(e) => { const u = [...techs]; u[index].name = e.target.value; setTechs(u); }} placeholder="Name" />
+                                    return (
+                                        <Card key={index} className="group relative overflow-hidden border-border/50 bg-card/40 backdrop-blur-md hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 flex flex-col h-full">
+                                            {/* Decorative Gradient Backdrop */}
+                                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                            
+                                            <CardContent className="p-5 flex flex-col flex-1 relative z-10">
+                                                {/* Tile Header: Icon & Actions */}
+                                                <div className="flex items-start justify-between mb-4">
+                                                    <div className="relative">
+                                                        <div className="w-16 h-16 border border-border/50 rounded-2xl flex items-center justify-center bg-background/80 shadow-2xl overflow-hidden relative group/icon">
+                                                            {tech.icon_url ? (
+                                                                <img src={tech.icon_url} alt={tech.name} className={`w-10 h-10 object-contain group-hover/icon:scale-110 transition-transform duration-300 ${tech.invert ? 'invert' : ''}`} />
+                                                            ) : (
+                                                                <div className="w-10 h-10 rounded-lg bg-muted animate-pulse" />
+                                                            )}
+                                                            {(tech.icon_type === 'upload' || !tech.icon_type) && (
+                                                                <label className="absolute inset-0 flex items-center justify-center bg-primary/30 opacity-0 group-hover/icon:opacity-100 cursor-pointer backdrop-blur-[2px] transition-all">
+                                                                    <Upload className="h-6 w-6 text-white drop-shadow-md" />
+                                                                    <input type="file" className="hidden" accept="image/*" onChange={(e) => handleIconUpload(e, 'tech', index)} />
+                                                                </label>
+                                                            )}
+                                                        </div>
+                                                        {/* Discreet Switcher */}
+                                                        <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 z-20">
+                                                            <Tabs 
+                                                                value={tech.icon_type || 'upload'} 
+                                                                onValueChange={(v) => {
+                                                                    const u = [...techs];
+                                                                    u[index].icon_type = v;
+                                                                    setTechs(u);
+                                                                }}
+                                                                className="w-[52px] shadow-2xl"
+                                                            >
+                                                                <TabsList className="grid grid-cols-2 h-[20px] p-[2px] bg-background border border-border/50 backdrop-blur-sm rounded-md gap-0">
+                                                                    <TabsTrigger value="upload" className="h-[16px] w-full flex items-center justify-center rounded-sm data-[state=active]:bg-primary/20 transition-all p-0">
+                                                                        <Upload className="h-2.5 w-2.5" />
+                                                                    </TabsTrigger>
+                                                                    <TabsTrigger value="url" className="h-[16px] w-full flex items-center justify-center rounded-sm data-[state=active]:bg-primary/20 transition-all p-0">
+                                                                        <Link className="h-2.5 w-2.5" />
+                                                                    </TabsTrigger>
+                                                                </TabsList>
+                                                            </Tabs>
+                                                        </div>
                                                     </div>
-                                                    <div className="space-y-2">
-                                                        <Label>Icon URL</Label>
-                                                        <Input value={tech.icon_url} onChange={(e) => { const u = [...techs]; u[index].icon_url = e.target.value; setTechs(u); }} placeholder="Icon URL" />
-                                                    </div>
-                                                </div>
-
-                                                <div className="grid gap-4 md:grid-cols-2">
-                                                    <div className="space-y-2">
-                                                        <Label>Position Preset</Label>
-                                                        <Select
-                                                            value={isCustom ? "custom" : tech.position_class}
-                                                            onValueChange={(val) => {
-                                                                const u = [...techs];
-                                                                if (val !== "custom") {
-                                                                    u[index].position_class = val;
-                                                                }
-                                                                setTechs(u);
-                                                            }}
+                                                    
+                                                    <div className="flex items-center gap-1">
+                                                        <Button 
+                                                            size="icon" 
+                                                            variant="ghost" 
+                                                            className={`h-8 w-8 transition-colors ${tech.invert ? 'text-primary' : 'text-muted-foreground'} hover:bg-primary/10`}
+                                                            onClick={() => { const u = [...techs]; u[index].invert = !u[index].invert; setTechs(u); }}
+                                                            title="Invert Icon"
                                                         >
-                                                            <SelectTrigger>
-                                                                <SelectValue placeholder="Select Position" />
-                                                            </SelectTrigger>
-                                                            <SelectContent>
-                                                                {TECH_POSITION_PRESETS.map((preset) => (
-                                                                    <SelectItem key={preset.label} value={preset.value}>{preset.label}</SelectItem>
-                                                                ))}
-                                                                <SelectItem value="custom">Custom (Advanced)</SelectItem>
-                                                            </SelectContent>
-                                                        </Select>
-                                                    </div>
-                                                    <div className="space-y-2">
-                                                        <Label>Animation Class</Label>
-                                                        <Input
-                                                            value={tech.animation_class}
-                                                            onChange={(e) => { const u = [...techs]; u[index].animation_class = e.target.value; setTechs(u); }}
-                                                            placeholder="animate-float-1"
-                                                        />
+                                                            <Save className={`h-4 w-4 ${tech.invert ? 'fill-primary/20' : ''}`} />
+                                                        </Button>
+                                                        <Button 
+                                                            size="icon" 
+                                                            variant="ghost" 
+                                                            className="h-8 w-8 text-destructive hover:bg-destructive/20 hover:text-destructive transition-colors opacity-0 group-hover:opacity-100 duration-300"
+                                                            onClick={() => setTechs(techs.filter((_, i) => i !== index))}
+                                                        >
+                                                            <Trash2 className="h-4 w-4" />
+                                                        </Button>
                                                     </div>
                                                 </div>
 
-                                                {isCustom && (
-                                                    <div className="border-l-2 border-primary/20 pl-4 py-2">
-                                                        <Label className="text-xs mb-1 block">Custom Tailwind Classes</Label>
-                                                        <Input
-                                                            value={tech.position_class}
-                                                            onChange={(e) => { const u = [...techs]; u[index].position_class = e.target.value; setTechs(u); }}
-                                                            placeholder="absolute ..."
+                                                {/* Tile Body: Info */}
+                                                <div className="flex-1 space-y-3">
+                                                    <div className="space-y-1">
+                                                        <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Tech Name</Label>
+                                                        <Input 
+                                                            value={tech.name} 
+                                                            className="bg-transparent border-none p-0 h-auto font-bold text-lg focus-visible:ring-0 shadow-none placeholder:opacity-50"
+                                                            placeholder="e.g. React"
+                                                            onChange={(e) => { const u = [...techs]; u[index].name = e.target.value; setTechs(u); }} 
                                                         />
+                                                        <div className="h-0.5 w-8 bg-primary/40 rounded-full mt-0.5 group-hover:w-full transition-all duration-500" />
                                                     </div>
-                                                )}
 
-                                                <div className="flex gap-4">
-                                                    <div className="w-32 space-y-2">
-                                                        <Label>Delay (s)</Label>
-                                                        <Input type="number" step="0.1" value={tech.delay} onChange={(e) => { const u = [...techs]; u[index].delay = parseFloat(e.target.value); setTechs(u); }} />
+                                                    <div className="space-y-2.5 pt-1">
+                                                        <div className="space-y-1">
+                                                            <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Position Preset</Label>
+                                                            <Select
+                                                                value={isCustom ? "custom" : tech.position_class}
+                                                                onValueChange={(val) => {
+                                                                    const u = [...techs];
+                                                                    if (val !== "custom") {
+                                                                        u[index].position_class = val;
+                                                                    }
+                                                                    setTechs(u);
+                                                                }}
+                                                            >
+                                                                <SelectTrigger className="bg-background/20 h-8 text-[11px] border-border/30 focus:border-primary/50 transition-colors">
+                                                                    <SelectValue placeholder="Position" />
+                                                                </SelectTrigger>
+                                                                <SelectContent>
+                                                                    {TECH_POSITION_PRESETS.map((p) => (
+                                                                        <SelectItem key={p.label} value={p.value} className="text-xs">{p.label}</SelectItem>
+                                                                    ))}
+                                                                    <SelectItem value="custom" className="text-xs">Custom (Advanced)</SelectItem>
+                                                                </SelectContent>
+                                                            </Select>
+                                                        </div>
+
+                                                        {isCustom && (
+                                                            <div className="space-y-1 animate-in slide-in-from-top-2 duration-300">
+                                                                <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Custom Positioning</Label>
+                                                                <Input 
+                                                                    value={tech.position_class} 
+                                                                    className="bg-background/20 h-8 text-[11px] border-border/30 focus:border-primary/50 transition-colors"
+                                                                    placeholder="absolute ..."
+                                                                    onChange={(e) => { const u = [...techs]; u[index].position_class = e.target.value; setTechs(u); }} 
+                                                                />
+                                                            </div>
+                                                        )}
+
+                                                        <div className="grid grid-cols-2 gap-2">
+                                                            <div className="space-y-1">
+                                                                <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Animation</Label>
+                                                                <Input 
+                                                                    value={tech.animation_class} 
+                                                                    className="bg-background/20 h-8 text-[11px] border-border/30 focus:border-primary/50 transition-colors"
+                                                                    placeholder="animate-float-1"
+                                                                    onChange={(e) => { const u = [...techs]; u[index].animation_class = e.target.value; setTechs(u); }} 
+                                                                />
+                                                            </div>
+                                                            <div className="space-y-1">
+                                                                <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Delay (s)</Label>
+                                                                <Input 
+                                                                    type="number"
+                                                                    step="0.1"
+                                                                    value={tech.delay} 
+                                                                    className="bg-background/20 h-8 text-[11px] border-border/30 focus:border-primary/50 transition-colors"
+                                                                    onChange={(e) => { const u = [...techs]; u[index].delay = parseFloat(e.target.value); setTechs(u); }} 
+                                                                />
+                                                            </div>
+                                                        </div>
+
+                                                        {tech.icon_type === 'url' && (
+                                                            <div className="space-y-1 animate-in fade-in duration-300">
+                                                                <Label className="text-[10px] uppercase tracking-widest text-primary font-bold">Icon URL (SVG/Img)</Label>
+                                                                <Input 
+                                                                    value={tech.icon_url || ''} 
+                                                                    placeholder="Custom Icon URL..." 
+                                                                    className="bg-background/20 h-8 text-[11px] border-primary/20 focus:border-primary transition-colors"
+                                                                    onChange={(e) => { const u = [...techs]; u[index].icon_url = e.target.value; setTechs(u); }} 
+                                                                />
+                                                            </div>
+                                                        )}
                                                     </div>
-                                                    <div className="flex items-center space-x-2 pt-8">
-                                                        <input type="checkbox" id={`invert-${index}`} checked={tech.invert} onChange={(e) => { const u = [...techs]; u[index].invert = e.target.checked; setTechs(u); }} className="h-4 w-4" />
-                                                        <Label htmlFor={`invert-${index}`}>Invert Dark Mode</Label>
+
+                                                    {/* Visibility & Status */}
+                                                    <div className="mt-4 flex items-center justify-between border-t border-border/30 pt-4">
+                                                        <div className="flex items-center gap-2">
+                                                            <div className={`w-1.5 h-1.5 rounded-full ${tech.is_visible !== false ? 'bg-emerald-500' : 'bg-muted-foreground/40'}`} />
+                                                            <span className={`text-[10px] uppercase tracking-tighter font-bold transition-colors ${tech.is_visible !== false ? 'text-foreground opacity-60' : 'text-muted-foreground opacity-40'}`}>
+                                                                {tech.is_visible !== false ? 'Active' : 'Inactive'}
+                                                            </span>
+                                                        </div>
+                                                        <div className="flex items-center gap-2">
+                                                            <Label htmlFor={`visible-tech-${tech.id || index}`} className="text-[9px] uppercase tracking-widest opacity-40 font-bold cursor-pointer">Visible</Label>
+                                                            <Switch 
+                                                                id={`visible-tech-${tech.id || index}`}
+                                                                checked={tech.is_visible !== false}
+                                                                onCheckedChange={(checked) => {
+                                                                    const u = [...techs];
+                                                                    u[index].is_visible = checked;
+                                                                    setTechs(u);
+                                                                }}
+                                                                className="scale-75 data-[state=checked]:bg-primary/60"
+                                                            />
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <Button variant="ghost" size="icon" className="text-destructive hover:bg-destructive/10" onClick={() => setTechs(techs.filter((_, i) => i !== index))}>
-                                                <Trash2 className="w-4 h-4" />
-                                            </Button>
-                                        </div>
-                                    </div>
-                                );
-                            })}
-                            <Button onClick={() => setTechs([...techs, { name: '', icon_url: '', position_class: 'absolute', animation_class: 'animate-float-1', delay: 0, invert: false, display_order: techs.length }])} variant="outline" className="w-full mb-4">
+                                            </CardContent>
+                                        </Card>
+                                    );
+                                })}
+                            </div>
+                            <Button 
+                                onClick={() => setTechs([...techs, { 
+                                    name: '', 
+                                    icon_url: '', 
+                                    position_class: 'left-1/2 -translate-x-1/2 -top-20 md:-top-24', 
+                                    animation_class: 'animate-float-1', 
+                                    delay: 0, 
+                                    invert: false,
+                                    is_visible: true,
+                                    display_order: techs.length 
+                                }])} 
+                                variant="outline" 
+                                className="w-full mb-4"
+                            >
                                 <Plus className="w-4 h-4 mr-2" /> Add Tech Icon
                             </Button>
                             <Button onClick={() => updateTechsMutation.mutate(techs)} className="w-full">

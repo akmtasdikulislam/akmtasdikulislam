@@ -28,6 +28,8 @@ export interface HomepageHeroTech {
   animation_class: string;
   delay: number;
   invert: boolean;
+  icon_type?: string;
+  is_visible?: boolean;
   display_order: number;
   created_at: string;
   updated_at: string;
