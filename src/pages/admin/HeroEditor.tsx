@@ -518,6 +518,16 @@ const HeroEditor = () => {
                                     );
                                 })}
                             </div>
+
+                            <div className="bg-muted/50 p-3 rounded-lg text-sm">
+                                <p className="font-medium mb-1">Social Links Configuration:</p>
+                                <ul className="space-y-1 text-muted-foreground">
+                                    <li>• <strong>Platform:</strong> Name of the social media platform.</li>
+                                    <li>• <strong>Social URL:</strong> Direct link to your profile.</li>
+                                    <li>• <strong>Icon:</strong> Upload a custom SVG icon or provide an image URL.</li>
+                                </ul>
+                            </div>
+
                             <div className="flex gap-3 mt-6">
                                 <Button onClick={() => setSocialLinks([...socialLinks, { platform: 'GitHub', url: '', icon_name: 'GitHub', icon_url: null, is_visible: true, display_order: socialLinks.length }])} variant="outline" className="flex-1">
                                     <Plus className="w-4 h-4 mr-2" /> Add Social Link
@@ -722,6 +732,17 @@ const HeroEditor = () => {
                                     );
                                 })}
                             </div>
+
+                            <div className="bg-muted/50 p-3 rounded-lg text-sm">
+                                <p className="font-medium mb-1">Tech Stack Configuration:</p>
+                                <ul className="space-y-1 text-muted-foreground">
+                                    <li>• <strong>Tech Name:</strong> Name of the tool or language (e.g. "React").</li>
+                                    <li>• <strong>Position:</strong> Choice of pre-set orbital positions around your photo.</li>
+                                    <li>• <strong>Animation:</strong> Floating effect style for the icon.</li>
+                                    <li>• <strong>Invert:</strong> Flip icon colors for better visibility on themed backgrounds.</li>
+                                </ul>
+                            </div>
+
                             <div className="flex gap-3 mt-6">
                                 <Button
                                     onClick={() => setTechs([...techs, {
