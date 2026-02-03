@@ -1,13 +1,14 @@
 import SectionHeading from "@/components/ui/SectionHeading";
-import { useAboutContent } from "@/hooks/useHomepageContent";
+import { useAboutContent, useSectionHeading } from "@/hooks/useHomepageContent";
 import { motion } from "framer-motion";
 import * as LucideIcons from "lucide-react";
 import React from 'react';
 
 const About = () => {
-  const { data, isLoading, isError } = useAboutContent();
+  const { data, isLoading: aboutLoading, isError } = useAboutContent();
+  const { data: heading, isLoading: headingLoading } = useSectionHeading('about');
 
-  if (isLoading) {
+  if (aboutLoading || headingLoading) {
     return (
       <section id="about" className="py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-dashed-grid opacity-20" />
@@ -41,10 +42,10 @@ const About = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         <SectionHeading
-          badge={about.section_badge}
-          title={about.section_title}
-          highlight={about.section_highlight}
-          description={about.section_description}
+          badge={heading?.section_badge || about.section_badge}
+          title={heading?.section_title || about.section_title}
+          highlight={heading?.section_highlight || about.section_highlight}
+          description={heading?.section_description || about.section_description}
         />
 
         <div className="grid lg:grid-cols-2 gap-12 items-start">
@@ -201,11 +202,11 @@ const renderTipTapNode = (node: any, index: number): React.ReactNode => {
           if (mark.type === 'italic') textNode = <em key={mark.type}>{textNode}</em>;
           if (mark.type === 'underline') textNode = <u key={mark.type}>{textNode}</u>;
           if (mark.type === 'link') textNode = (
-            <a 
-              key={mark.type} 
-              href={mark.attrs.href} 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <a
+              key={mark.type}
+              href={mark.attrs.href}
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-primary hover:underline transition-all"
             >
               {textNode}

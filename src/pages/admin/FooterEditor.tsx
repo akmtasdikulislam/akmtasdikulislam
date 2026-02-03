@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { useFooterContent } from '@/hooks/useHomepageContent';
@@ -112,113 +113,129 @@ const FooterEditor = () => {
                 <p className="text-muted-foreground mt-1">Manage all footer elements including links and content.</p>
             </div>
 
-            <div className="max-w-6xl mx-auto w-full px-4 space-y-8 mt-6">
+            <Tabs defaultValue="info" className="w-full">
+                <div className="flex justify-center w-full px-4">
+                    <TabsList className="inline-flex h-auto p-1 bg-muted/40 backdrop-blur-sm border border-border/50 rounded-xl overflow-x-auto max-w-full">
+                        <TabsTrigger value="info" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Basic Info</TabsTrigger>
+                        <TabsTrigger value="connect" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Connect CTA</TabsTrigger>
+                        <TabsTrigger value="quick" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Quick Links</TabsTrigger>
+                        <TabsTrigger value="services" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Service Links</TabsTrigger>
+                    </TabsList>
+                </div>
 
-                {/* Basic Info */}
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Footer Information</CardTitle>
-                        <CardDescription>Main branding and copyright info</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <TabsContent value="info" className="mt-10 max-w-6xl mx-auto w-full px-4">
+                    {/* Basic Info */}
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Footer Information</CardTitle>
+                            <CardDescription>Main branding and copyright info</CardDescription>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                    <Label>Logo Text</Label>
+                                    <Input
+                                        value={footerData.logo_text}
+                                        onChange={(e) => setFooterData({ ...footerData, logo_text: e.target.value })}
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label>Contact Email</Label>
+                                    <Input
+                                        value={footerData.contact_email}
+                                        onChange={(e) => setFooterData({ ...footerData, contact_email: e.target.value })}
+                                    />
+                                </div>
+                            </div>
                             <div className="space-y-2">
-                                <Label>Logo Text</Label>
-                                <Input
-                                    value={footerData.logo_text}
-                                    onChange={(e) => setFooterData({ ...footerData, logo_text: e.target.value })}
+                                <Label>Description</Label>
+                                <Textarea
+                                    value={footerData.description}
+                                    onChange={(e) => setFooterData({ ...footerData, description: e.target.value })}
+                                    rows={3}
                                 />
                             </div>
                             <div className="space-y-2">
-                                <Label>Contact Email</Label>
+                                <Label>Copyright Text</Label>
                                 <Input
-                                    value={footerData.contact_email}
-                                    onChange={(e) => setFooterData({ ...footerData, contact_email: e.target.value })}
+                                    value={footerData.copyright_text}
+                                    onChange={(e) => setFooterData({ ...footerData, copyright_text: e.target.value })}
                                 />
                             </div>
-                        </div>
-                        <div className="space-y-2">
-                            <Label>Description</Label>
-                            <Textarea
-                                value={footerData.description}
-                                onChange={(e) => setFooterData({ ...footerData, description: e.target.value })}
-                                rows={3}
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <Label>Copyright Text</Label>
-                            <Input
-                                value={footerData.copyright_text}
-                                onChange={(e) => setFooterData({ ...footerData, copyright_text: e.target.value })}
-                            />
-                        </div>
-                        <div className="flex justify-end pt-4 border-t">
-                            <Button onClick={() => updateFooterMutation.mutate(footerData)} disabled={updateFooterMutation.isPending} variant="outline">
-                                {updateFooterMutation.isPending ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
-                                Save Basic Info
-                            </Button>
-                        </div>
-                    </CardContent>
-                </Card>
+                            <div className="flex justify-end pt-4 border-t">
+                                <Button onClick={() => updateFooterMutation.mutate(footerData)} disabled={updateFooterMutation.isPending} variant="outline">
+                                    {updateFooterMutation.isPending ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
+                                    Save Basic Info
+                                </Button>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </TabsContent>
 
-                {/* Connect Section */}
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Connect CTA Section</CardTitle>
-                        <CardDescription>Manage the "Let's Connect" section in the footer</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                        <div className="space-y-2">
-                            <Label>CTA Title</Label>
-                            <Input
-                                value={footerData.connect_title}
-                                onChange={(e) => setFooterData({ ...footerData, connect_title: e.target.value })}
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <Label>CTA Text</Label>
-                            <Textarea
-                                value={footerData.connect_text}
-                                onChange={(e) => setFooterData({ ...footerData, connect_text: e.target.value })}
-                                rows={3}
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <Label>Button Text</Label>
-                            <Input
-                                value={footerData.connect_button_text}
-                                onChange={(e) => setFooterData({ ...footerData, connect_button_text: e.target.value })}
-                            />
-                        </div>
-                        <div className="flex justify-end pt-4 border-t">
-                            <Button onClick={() => updateFooterMutation.mutate(footerData)} disabled={updateFooterMutation.isPending} variant="outline">
-                                <Save className="w-4 h-4 mr-2" />
-                                Save Connect Info
-                            </Button>
-                        </div>
-                    </CardContent>
-                </Card>
+                <TabsContent value="connect" className="mt-10 max-w-6xl mx-auto w-full px-4">
+                    {/* Connect Section */}
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Connect CTA Section</CardTitle>
+                            <CardDescription>Manage the "Let's Connect" section in the footer</CardDescription>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                            <div className="space-y-2">
+                                <Label>CTA Title</Label>
+                                <Input
+                                    value={footerData.connect_title}
+                                    onChange={(e) => setFooterData({ ...footerData, connect_title: e.target.value })}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label>CTA Text</Label>
+                                <Textarea
+                                    value={footerData.connect_text}
+                                    onChange={(e) => setFooterData({ ...footerData, connect_text: e.target.value })}
+                                    rows={3}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label>Button Text</Label>
+                                <Input
+                                    value={footerData.connect_button_text}
+                                    onChange={(e) => setFooterData({ ...footerData, connect_button_text: e.target.value })}
+                                />
+                            </div>
+                            <div className="flex justify-end pt-4 border-t">
+                                <Button onClick={() => updateFooterMutation.mutate(footerData)} disabled={updateFooterMutation.isPending} variant="outline">
+                                    <Save className="w-4 h-4 mr-2" />
+                                    Save Connect Info
+                                </Button>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </TabsContent>
 
-                {/* Quick Links */}
-                <LinkManager
-                    title="Quick Links"
-                    links={data?.quickLinks || []}
-                    onAdd={(name, href) => addQuickLinkMutation.mutate({ name, href, display_order: (data?.quickLinks?.length || 0) + 1 })}
-                    onUpdate={(id, name, href) => updateQuickLinkMutation.mutate({ id, name, href })}
-                    onDelete={(id) => deleteQuickLinkMutation.mutate(id)}
-                    isPending={addQuickLinkMutation.isPending || updateQuickLinkMutation.isPending}
-                />
+                <TabsContent value="quick" className="mt-10 max-w-6xl mx-auto w-full px-4">
+                    {/* Quick Links */}
+                    <LinkManager
+                        title="Quick Links"
+                        links={data?.quickLinks || []}
+                        onAdd={(name, href) => addQuickLinkMutation.mutate({ name, href, display_order: (data?.quickLinks?.length || 0) + 1 })}
+                        onUpdate={(id, name, href) => updateQuickLinkMutation.mutate({ id, name, href })}
+                        onDelete={(id) => deleteQuickLinkMutation.mutate(id)}
+                        isPending={addQuickLinkMutation.isPending || updateQuickLinkMutation.isPending}
+                    />
+                </TabsContent>
 
-                {/* Service Links */}
-                <LinkManager
-                    title="Service Links"
-                    links={data?.serviceLinks || []}
-                    onAdd={(name, href) => addServiceLinkMutation.mutate({ name, href, display_order: (data?.serviceLinks?.length || 0) + 1 })}
-                    onUpdate={(id, name, href) => updateServiceLinkMutation.mutate({ id, name, href })}
-                    onDelete={(id) => deleteServiceLinkMutation.mutate(id)}
-                    isPending={addServiceLinkMutation.isPending || updateServiceLinkMutation.isPending}
-                />
-            </div>
+                <TabsContent value="services" className="mt-10 max-w-6xl mx-auto w-full px-4">
+                    {/* Service Links */}
+                    <LinkManager
+                        title="Service Links"
+                        links={data?.serviceLinks || []}
+                        onAdd={(name, href) => addServiceLinkMutation.mutate({ name, href, display_order: (data?.serviceLinks?.length || 0) + 1 })}
+                        onUpdate={(id, name, href) => updateServiceLinkMutation.mutate({ id, name, href })}
+                        onDelete={(id) => deleteServiceLinkMutation.mutate(id)}
+                        isPending={addServiceLinkMutation.isPending || updateServiceLinkMutation.isPending}
+                    />
+                </TabsContent>
+            </Tabs>
         </div>
     );
 };

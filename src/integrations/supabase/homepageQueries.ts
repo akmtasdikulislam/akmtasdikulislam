@@ -18,6 +18,7 @@ import type {
     HomepageHeroTech,
     HomepageNavbar,
     HomepageNavLink,
+    HomepageSectionContent,
     HomepageService,
     HomepageSocialLink,
     HomepageTestimonial
@@ -527,6 +528,35 @@ export const deleteExpertiseCard = async (id: string) => {
     if (error) throw error;
 };
 
+// --- New Expertise Content ---
+export const getExpertiseContent = async () => {
+    const { data, error } = await supabase
+        .from('homepage_expertise_content' as any)
+        .select('*')
+        .maybeSingle(); // Better to use maybeSingle
+    if (error) throw error;
+    return data as any as HomepageSectionContent;
+};
+
+export const updateExpertiseContent = async (content: Partial<HomepageSectionContent>) => {
+    const { data, error } = await supabase
+        .from('homepage_expertise_content' as any)
+        .upsert(content)
+        .select()
+        .single();
+    if (error) throw error;
+    return data;
+};
+
+export const getAllExpertiseData = async () => {
+    const [content, techs, cards] = await Promise.all([
+        getExpertiseContent(),
+        getExpertiseTechs(),
+        getExpertiseCards()
+    ]);
+    return { content: content as any as HomepageSectionContent, techs, cards };
+};
+
 // ============================================================================
 // SERVICES QUERIES
 // ============================================================================
@@ -571,6 +601,34 @@ export const deleteService = async (id: string) => {
       .eq('id', id);
     
     if (error) throw error;
+};
+
+// --- New Services Content ---
+export const getServicesContent = async () => {
+    const { data, error } = await supabase
+        .from('homepage_services_content' as any)
+        .select('*')
+        .maybeSingle();
+    if (error) throw error;
+    return data as any as HomepageSectionContent;
+};
+
+export const updateServicesContent = async (content: Partial<HomepageSectionContent>) => {
+    const { data, error } = await supabase
+        .from('homepage_services_content' as any)
+        .upsert(content)
+        .select()
+        .single();
+    if (error) throw error;
+    return data;
+};
+
+export const getAllServicesData = async () => {
+    const [content, items] = await Promise.all([
+        getServicesContent(),
+        getServices()
+    ]);
+    return { content: content as any as HomepageSectionContent, items };
 };
 
 // ============================================================================
@@ -622,6 +680,34 @@ export const deleteTestimonial = async (id: string) => {
       .eq('id', id);
     
     if (error) throw error;
+};
+
+// --- New Testimonials Content ---
+export const getTestimonialsContentMetadata = async () => {
+    const { data, error } = await supabase
+        .from('homepage_testimonials_content' as any)
+        .select('*')
+        .maybeSingle();
+    if (error) throw error;
+    return data as any as HomepageSectionContent;
+};
+
+export const updateTestimonialsContentMetadata = async (content: Partial<HomepageSectionContent>) => {
+    const { data, error } = await supabase
+        .from('homepage_testimonials_content' as any)
+        .upsert(content)
+        .select()
+        .single();
+    if (error) throw error;
+    return data;
+};
+
+export const getAllTestimonialsData = async () => {
+    const [content, items] = await Promise.all([
+        getTestimonialsContentMetadata(),
+        getTestimonials()
+    ]);
+    return { content: content as any as HomepageSectionContent, items };
 };
 
 // ============================================================================

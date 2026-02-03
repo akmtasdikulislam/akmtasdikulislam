@@ -22,7 +22,7 @@ const ServicesEditor = () => {
 
     useEffect(() => {
         if (initialServices) {
-            setServices(initialServices);
+            setServices((initialServices as any).items || []);
         }
     }, [initialServices]);
 
@@ -67,85 +67,97 @@ const ServicesEditor = () => {
 
     return (
         <div className="space-y-6 w-full pb-20">
-            <div className="max-w-6xl mx-auto w-full px-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                    <h2 className="text-3xl font-bold tracking-tight text-center md:text-left">Services Editor</h2>
-                    <p className="text-muted-foreground mt-1 text-center md:text-left">
-                        Manage the services you offer to clients
-                    </p>
-                </div>
-                <Button onClick={addNewService} variant="outline" className="w-full md:w-auto">
-                    <Plus className="mr-2 h-4 w-4" /> Add Service
-                </Button>
+            <div className="max-w-6xl mx-auto w-full px-4">
+                <h2 className="text-3xl font-bold tracking-tight">Services Editor</h2>
+                <p className="text-muted-foreground mt-1">
+                    Manage the services you offer to clients
+                </p>
             </div>
 
             <div className="max-w-6xl mx-auto w-full px-4">
-                <SectionHeadingEditor sectionKey="services" />
+                <SectionHeadingEditor
+                    sectionKey="services"
+                    defaultValues={{
+                        section_badge: (initialServices as any)?.content?.section_badge,
+                        section_title: (initialServices as any)?.content?.section_title,
+                        section_highlight: (initialServices as any)?.content?.section_highlight,
+                        section_description: (initialServices as any)?.content?.section_description
+                    }}
+                />
             </div>
 
-            <div className="max-w-6xl mx-auto w-full px-4 grid gap-6 mt-6">
-                {services.map((service, index) => (
-                    <Card key={service.id}>
-                        <CardContent className="p-6 space-y-4">
-                            <div className="flex justify-between items-start">
+            <div className="space-y-6 mt-10 max-w-6xl mx-auto w-full px-4">
+                <div className="flex items-center justify-between">
+                    <h3 className="text-xl font-semibold">Services ({services.length})</h3>
+                    <Button onClick={addNewService} variant="outline" size="sm">
+                        <Plus className="mr-2 h-4 w-4" /> Add Service
+                    </Button>
+                </div>
+
+                <div className="grid gap-6">
+                    {services.map((service, index) => (
+                        <Card key={service.id}>
+                            <CardContent className="p-6 space-y-4">
+                                <div className="flex justify-between items-start">
+                                    <div className="space-y-1 w-1/3">
+                                        <Label>Service Title</Label>
+                                        <Input
+                                            value={service.title}
+                                            onChange={(e) => setServices(services.map(s => s.id === service.id ? { ...s, title: e.target.value } : s))}
+                                        />
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <Button
+                                            size="sm"
+                                            variant="ghost"
+                                            className="text-primary hover:bg-primary/10 transition-colors"
+                                            onClick={() => updateServiceMutation.mutate(service)}
+                                        >
+                                            <Save className="mr-2 h-4 w-4" /> Save
+                                        </Button>
+                                        <Button
+                                            size="icon"
+                                            variant="ghost"
+                                            className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
+                                            onClick={() => deleteServiceMutation.mutate(service.id)}
+                                            title="Delete Service"
+                                        >
+                                            <Trash2 className="h-4 w-4" />
+                                        </Button>
+                                    </div>
+                                </div>
+
+                                <div className="grid md:grid-cols-2 gap-4">
+                                    <div className="space-y-1">
+                                        <Label>Description</Label>
+                                        <Textarea
+                                            value={service.description || ''}
+                                            onChange={(e) => setServices(services.map(s => s.id === service.id ? { ...s, description: e.target.value } : s))}
+                                        />
+                                    </div>
+                                    <div className="space-y-1">
+                                        <Label>Features (One per line)</Label>
+                                        <Textarea
+                                            value={Array.isArray(service.features) ? service.features.join('\n') : ''}
+                                            onChange={(e) => setServices(services.map(s => s.id === service.id ? { ...s, features: e.target.value.split('\n') } : s))}
+                                            placeholder="Mobile First&#10;SEO Optimized&#10;Fast Loading"
+                                            className="h-32 font-mono text-sm"
+                                        />
+                                    </div>
+                                </div>
+
                                 <div className="space-y-1 w-1/3">
-                                    <Label>Service Title</Label>
+                                    <Label>Icon Name (Lucide)</Label>
                                     <Input
-                                        value={service.title}
-                                        onChange={(e) => setServices(services.map(s => s.id === service.id ? { ...s, title: e.target.value } : s))}
+                                        value={service.icon_name || ''}
+                                        onChange={(e) => setServices(services.map(s => s.id === service.id ? { ...s, icon_name: e.target.value } : s))}
+                                        placeholder="e.g. Code, Smartphone, Globe"
                                     />
                                 </div>
-                                <div className="flex gap-2">
-                                    <Button
-                                        size="sm"
-                                        variant="ghost"
-                                        className="text-primary hover:bg-primary/10 transition-colors"
-                                        onClick={() => updateServiceMutation.mutate(service)}
-                                    >
-                                        <Save className="mr-2 h-4 w-4" /> Save
-                                    </Button>
-                                    <Button
-                                        size="icon"
-                                        variant="ghost"
-                                        className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
-                                        onClick={() => deleteServiceMutation.mutate(service.id)}
-                                        title="Delete Service"
-                                    >
-                                        <Trash2 className="h-4 w-4" />
-                                    </Button>
-                                </div>
-                            </div>
-
-                            <div className="grid md:grid-cols-2 gap-4">
-                                <div className="space-y-1">
-                                    <Label>Description</Label>
-                                    <Textarea
-                                        value={service.description || ''}
-                                        onChange={(e) => setServices(services.map(s => s.id === service.id ? { ...s, description: e.target.value } : s))}
-                                    />
-                                </div>
-                                <div className="space-y-1">
-                                    <Label>Features (One per line)</Label>
-                                    <Textarea
-                                        value={Array.isArray(service.features) ? service.features.join('\n') : ''}
-                                        onChange={(e) => setServices(services.map(s => s.id === service.id ? { ...s, features: e.target.value.split('\n') } : s))}
-                                        placeholder="Mobile First&#10;SEO Optimized&#10;Fast Loading"
-                                        className="h-32 font-mono text-sm"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="space-y-1 w-1/3">
-                                <Label>Icon Name (Lucide)</Label>
-                                <Input
-                                    value={service.icon_name || ''}
-                                    onChange={(e) => setServices(services.map(s => s.id === service.id ? { ...s, icon_name: e.target.value } : s))}
-                                    placeholder="e.g. Code, Smartphone, Globe"
-                                />
-                            </div>
-                        </CardContent>
-                    </Card>
-                ))}
+                            </CardContent>
+                        </Card>
+                    ))}
+                </div>
             </div>
         </div>
     );

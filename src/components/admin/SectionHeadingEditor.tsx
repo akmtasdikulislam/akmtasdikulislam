@@ -15,6 +15,12 @@ interface SectionHeadingEditorProps {
     showTitle?: boolean;
     showHighlight?: boolean;
     showDescription?: boolean;
+    defaultValues?: {
+        section_badge?: string;
+        section_title?: string;
+        section_highlight?: string;
+        section_description?: string;
+    };
 }
 
 export default function SectionHeadingEditor({
@@ -22,7 +28,8 @@ export default function SectionHeadingEditor({
     showBadge = true,
     showTitle = true,
     showHighlight = true,
-    showDescription = true
+    showDescription = true,
+    defaultValues
 }: SectionHeadingEditorProps) {
     const queryClient = useQueryClient();
     const { data: headingData, isLoading } = useSectionHeading(sectionKey);
@@ -34,17 +41,32 @@ export default function SectionHeadingEditor({
         section_description: ''
     });
 
+    // We don't want to block with a spinner if row is missing, 
+    // but we should still wait for the initial fetch to complete
+    const [hasAttemptedFetch, setHasAttemptedFetch] = useState(false);
+
     useEffect(() => {
-        if (headingData) {
-            setHeading({
-                section_key: sectionKey,
-                section_badge: headingData.section_badge || '',
-                section_title: headingData.section_title || '',
-                section_highlight: headingData.section_highlight || '',
-                section_description: headingData.section_description || ''
-            });
+        if (!isLoading) {
+            setHasAttemptedFetch(true);
+            if (headingData) {
+                setHeading({
+                    section_key: sectionKey,
+                    section_badge: headingData.section_badge || '',
+                    section_title: headingData.section_title || '',
+                    section_highlight: headingData.section_highlight || '',
+                    section_description: headingData.section_description || ''
+                });
+            } else if (defaultValues) {
+                setHeading({
+                    section_key: sectionKey,
+                    section_badge: defaultValues.section_badge || '',
+                    section_title: defaultValues.section_title || '',
+                    section_highlight: defaultValues.section_highlight || '',
+                    section_description: defaultValues.section_description || ''
+                });
+            }
         }
-    }, [headingData, sectionKey]);
+    }, [headingData, sectionKey, isLoading, defaultValues]);
 
     const updateHeadingMutation = useMutation({
         mutationFn: updateSectionHeading,
@@ -59,7 +81,7 @@ export default function SectionHeadingEditor({
         updateHeadingMutation.mutate(heading);
     };
 
-    if (isLoading) {
+    if (isLoading && !hasAttemptedFetch) {
         return (
             <div className="p-6 border border-border rounded-xl bg-card/50">
                 <div className="flex items-center justify-center p-4">

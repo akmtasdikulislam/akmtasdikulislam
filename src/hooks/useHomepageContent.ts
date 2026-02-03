@@ -1,16 +1,15 @@
 import {
     getAllAboutData,
+    getAllExpertiseData,
     getAllFooterData,
     getAllHeroData,
     getAllNavbarData,
+    getAllServicesData,
+    getAllTestimonialsData,
     getCodingProfiles,
     getContactInfo,
-    getExpertiseCards,
-    getExpertiseTechs,
     getFreelanceProfiles,
-    getGeneralSettings,
-    getServices,
-    getTestimonials
+    getGeneralSettings
 } from '@/integrations/supabase/homepageQueries';
 import { getSectionHeading } from '@/integrations/supabase/sectionHeadingQueries';
 import { getAllWhyChooseData } from '@/integrations/supabase/whyChooseMeQueries';
@@ -104,13 +103,7 @@ export const useAllHomepageContent = () => {
 export const useExpertiseContent = () => {
   return useQuery({
     queryKey: ['homepage', 'expertise'],
-    queryFn: async () => {
-        const [techs, cards] = await Promise.all([
-            getExpertiseTechs(),
-            getExpertiseCards()
-        ]);
-        return { techs, cards };
-    },
+    queryFn: getAllExpertiseData,
     staleTime: 1000 * 60 * 5,
   });
 };
@@ -119,7 +112,7 @@ export const useExpertiseContent = () => {
 export const useServicesContent = () => {
     return useQuery({
         queryKey: ['homepage', 'services'],
-        queryFn: getServices,
+        queryFn: getAllServicesData,
         staleTime: 1000 * 60 * 5,
     });
 };
@@ -128,7 +121,7 @@ export const useServicesContent = () => {
 export const useTestimonialsContent = () => {
     return useQuery({
         queryKey: ['homepage', 'testimonials'],
-        queryFn: getTestimonials,
+        queryFn: getAllTestimonialsData,
         staleTime: 1000 * 60 * 5,
     });
 };

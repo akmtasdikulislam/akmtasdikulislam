@@ -1,3 +1,4 @@
+import SectionHeadingEditor from '@/components/admin/SectionHeadingEditor';
 import TipTapEditor from '@/components/editor/TipTapEditor';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -20,10 +21,6 @@ const AboutEditor = () => {
     const queryClient = useQueryClient();
 
     const [aboutData, setAboutData] = useState({
-        section_badge: '',
-        section_title: '',
-        section_highlight: '',
-        section_description: '',
         main_content: '',
     });
 
@@ -52,10 +49,6 @@ const AboutEditor = () => {
             };
 
             setAboutData({
-                section_badge: data.about.section_badge || '',
-                section_title: data.about.section_title || '',
-                section_highlight: data.about.section_highlight || '',
-                section_description: data.about.section_description || '',
                 main_content: ensureJson((data.about as any).main_content || ''),
             });
             setHighlights(data.highlights);
@@ -153,6 +146,18 @@ const AboutEditor = () => {
                 </p>
             </div>
 
+            <div className="max-w-6xl mx-auto w-full px-4">
+                <SectionHeadingEditor
+                    sectionKey="about"
+                    defaultValues={{
+                        section_badge: (data?.about as any)?.section_badge,
+                        section_title: (data?.about as any)?.section_title,
+                        section_highlight: (data?.about as any)?.section_highlight,
+                        section_description: (data?.about as any)?.section_description
+                    }}
+                />
+            </div>
+
             <Tabs defaultValue="content" className="w-full">
                 <div className="flex justify-center w-full px-4">
                     <TabsList className="inline-flex h-auto p-1 bg-muted/40 backdrop-blur-sm border border-border/50 rounded-xl overflow-x-auto max-w-full">
@@ -164,54 +169,6 @@ const AboutEditor = () => {
                 </div>
 
                 <TabsContent value="content" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Section Header</CardTitle>
-                            <CardDescription>Badge, title, and description for the About section</CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            <div className="grid gap-4 md:grid-cols-2">
-                                <div>
-                                    <Label htmlFor="badge">Section Badge</Label>
-                                    <Input
-                                        id="badge"
-                                        value={aboutData.section_badge}
-                                        onChange={(e) => setAboutData({ ...aboutData, section_badge: e.target.value })}
-                                        placeholder="Get to know me"
-                                    />
-                                </div>
-                                <div>
-                                    <Label htmlFor="highlight">Highlight Word</Label>
-                                    <Input
-                                        id="highlight"
-                                        value={aboutData.section_highlight}
-                                        onChange={(e) => setAboutData({ ...aboutData, section_highlight: e.target.value })}
-                                        placeholder="About"
-                                    />
-                                </div>
-                            </div>
-
-                            <div>
-                                <Label htmlFor="title">Section Title</Label>
-                                <Input
-                                    id="title"
-                                    value={aboutData.section_title}
-                                    onChange={(e) => setAboutData({ ...aboutData, section_title: e.target.value })}
-                                    placeholder="About Me"
-                                />
-                            </div>
-
-                            <div>
-                                <Label htmlFor="desc">Section Description</Label>
-                                <Textarea
-                                    id="desc"
-                                    value={aboutData.section_description}
-                                    onChange={(e) => setAboutData({ ...aboutData, section_description: e.target.value })}
-                                    rows={2}
-                                />
-                            </div>
-                        </CardContent>
-                    </Card>
 
                     <Card>
                         <CardHeader>

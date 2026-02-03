@@ -1,14 +1,15 @@
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import SectionHeading from "@/components/ui/SectionHeading";
-import { useWhyChooseMeContent } from "@/hooks/useHomepageContent";
+import { useSectionHeading, useWhyChooseMeContent } from "@/hooks/useHomepageContent";
 import { motion } from "framer-motion";
 import * as LucideIcons from "lucide-react";
 
 // Using function declaration to avoid arrow function encoding issues
 function WhyChooseMe() {
-  const { data, isLoading, isError } = useWhyChooseMeContent();
+  const { data, isLoading: contentLoading, isError } = useWhyChooseMeContent();
+  const { data: heading, isLoading: headingLoading } = useSectionHeading('why-choose-me');
 
-  if (isLoading) {
+  if (contentLoading || headingLoading) {
     return (
       <section id="why-me" className="py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-20" />
@@ -33,7 +34,7 @@ function WhyChooseMe() {
     );
   }
 
-  const { content, reasons, stats } = data;
+  const { content, reasons, stats } = data as any;
 
   return (
     <section id="why-me" className="py-24 relative overflow-hidden">
@@ -43,10 +44,10 @@ function WhyChooseMe() {
 
       <div className="container mx-auto px-4 relative z-10">
         <SectionHeading
-          badge={content.section_badge}
-          title={content.section_title}
-          highlight={content.section_highlight}
-          description={content.section_description}
+          badge={heading?.section_badge || content.section_badge}
+          title={heading?.section_title || content.section_title}
+          highlight={heading?.section_highlight || content.section_highlight}
+          description={heading?.section_description || content.section_description}
         />
 
         {/* Reasons grid */}
@@ -54,7 +55,7 @@ function WhyChooseMe() {
           {reasons.map((reason: any, index: number) => {
             // @ts-ignore - dynamic icon lookup
             const IconComponent = LucideIcons[reason.icon_name] || LucideIcons.Target;
-            
+
             return (
               <motion.div
                 key={reason.id}

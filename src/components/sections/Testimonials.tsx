@@ -1,9 +1,9 @@
 import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from '@/components/ui/carousel';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { useSectionHeading, useTestimonialsContent } from '@/hooks/useHomepageContent';
@@ -11,8 +11,10 @@ import Autoplay from 'embla-carousel-autoplay';
 import { Quote, Star, User } from 'lucide-react';
 
 const Testimonials = () => {
-  const { data: testimonials = [], isLoading: loading } = useTestimonialsContent();
+  const { data, isLoading: loading } = useTestimonialsContent();
   const { data: heading, isLoading: headingLoading } = useSectionHeading('testimonials');
+
+  const testimonials = (data as any)?.items || [];
 
   if (loading || headingLoading || !testimonials || testimonials.length === 0) {
     return null;
@@ -29,10 +31,10 @@ const Testimonials = () => {
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
       <div className="container mx-auto px-4 relative z-10">
         <SectionHeading
-          badge={heading?.section_badge || "Testimonials"}
-          title={heading?.section_title || "Client"}
-          highlight={heading?.section_highlight || "Stories"}
-          description={heading?.section_description || "What others say about working with me"}
+          badge={heading?.section_badge || (data as any)?.content?.section_badge}
+          title={heading?.section_title || (data as any)?.content?.section_title}
+          highlight={heading?.section_highlight || (data as any)?.content?.section_highlight}
+          description={heading?.section_description || (data as any)?.content?.section_description}
         />
 
         <div className="mt-12 max-w-5xl mx-auto">

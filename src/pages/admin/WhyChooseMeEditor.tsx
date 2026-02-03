@@ -1,47 +1,48 @@
+import SectionHeadingEditor from '@/components/admin/SectionHeadingEditor';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
+import { useWhyChooseMeContent } from '@/hooks/useHomepageContent';
 import {
     createWhyChooseReason,
     createWhyChooseStat,
     deleteWhyChooseReason,
     deleteWhyChooseStat,
-    getAllWhyChooseData,
     updateWhyChooseContent,
     updateWhyChooseReason,
     updateWhyChooseStat
 } from '@/integrations/supabase/whyChooseMeQueries';
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { motion } from 'framer-motion';
-import { GripVertical, Loader2, Plus, Save, Target, Trash2, TrendingUp } from 'lucide-react';
-import { useState } from 'react';
+import { GripVertical, Loader2, Plus, Save, Trash2, TrendingUp } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 function WhyChooseMeEditor() {
     const queryClient = useQueryClient();
     const [saving, setSaving] = useState(false);
 
-    const { data, isLoading } = useQuery({
-        queryKey: ['homepage', 'why_choose_me'],
-        queryFn: getAllWhyChooseData,
-    });
+    const { data, isLoading } = useWhyChooseMeContent();
 
-    const [content, setContent] = useState<any>(data?.content || {});
-    const [reasons, setReasons] = useState<any[]>(data?.reasons || []);
-    const [stats, setStats] = useState<any[]>(data?.stats || []);
+    const [content, setContent] = useState<any>({});
+    const [reasons, setReasons] = useState<any[]>([]);
+    const [stats, setStats] = useState<any[]>([]);
 
-    // Update local state when data loads
-    if (data && Object.keys(content).length === 0 && reasons.length === 0 && stats.length === 0) {
-        setContent(data.content);
-        setReasons(data.reasons);
-        setStats(data.stats);
-    }
+    useEffect(() => {
+        if (data) {
+            const { section_badge, section_title, section_highlight, section_description, ...rest } = data.content as any;
+            setContent(rest || {});
+            setReasons(data.reasons || []);
+            setStats(data.stats || []);
+        }
+    }, [data]);
 
     const updateContentMutation = useMutation({
         mutationFn: updateWhyChooseContent,
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['homepage', 'why_choose_me'] });
+            queryClient.invalidateQueries({ queryKey: ['homepage', 'why-choose-me'] });
             toast.success('Content updated successfully');
         },
         onError: () => toast.error('Failed to update content'),
@@ -50,14 +51,14 @@ function WhyChooseMeEditor() {
     const updateReasonMutation = useMutation({
         mutationFn: updateWhyChooseReason,
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['homepage', 'why_choose_me'] });
+            queryClient.invalidateQueries({ queryKey: ['homepage', 'why-choose-me'] });
         },
     });
 
     const createReasonMutation = useMutation({
         mutationFn: createWhyChooseReason,
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['homepage', 'why_choose_me'] });
+            queryClient.invalidateQueries({ queryKey: ['homepage', 'why-choose-me'] });
             toast.success('Reason added');
         },
     });
@@ -65,7 +66,7 @@ function WhyChooseMeEditor() {
     const deleteReasonMutation = useMutation({
         mutationFn: deleteWhyChooseReason,
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['homepage', 'why_choose_me'] });
+            queryClient.invalidateQueries({ queryKey: ['homepage', 'why-choose-me'] });
             toast.success('Reason deleted');
         },
     });
@@ -73,14 +74,14 @@ function WhyChooseMeEditor() {
     const updateStatMutation = useMutation({
         mutationFn: updateWhyChooseStat,
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['homepage', 'why_choose_me'] });
+            queryClient.invalidateQueries({ queryKey: ['homepage', 'why-choose-me'] });
         },
     });
 
     const createStatMutation = useMutation({
         mutationFn: createWhyChooseStat,
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['homepage', 'why_choose_me'] });
+            queryClient.invalidateQueries({ queryKey: ['homepage', 'why-choose-me'] });
             toast.success('Stat added');
         },
     });
@@ -88,7 +89,7 @@ function WhyChooseMeEditor() {
     const deleteStatMutation = useMutation({
         mutationFn: deleteWhyChooseStat,
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['homepage', 'why_choose_me'] });
+            queryClient.invalidateQueries({ queryKey: ['homepage', 'why-choose-me'] });
             toast.success('Stat deleted');
         },
     });
@@ -146,81 +147,73 @@ function WhyChooseMeEditor() {
 
     return (
         <div className="space-y-6 w-full pb-20">
-            <div className="max-w-6xl mx-auto w-full px-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                    <h1 className="text-2xl sm:text-3xl font-bold text-center md:text-left">Why Choose Me Section</h1>
-                    <p className="text-muted-foreground mt-1 text-center md:text-left">
-                        Manage section headings, reasons, and stats
-                    </p>
-                </div>
-                <Button onClick={handleSaveAll} disabled={saving} className="w-full md:w-auto">
-                    {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
-                    Save All Changes
-                </Button>
+            <div className="max-w-6xl mx-auto w-full px-4">
+                <h1 className="text-2xl sm:text-3xl font-bold">Why Choose Me Section</h1>
+                <p className="text-muted-foreground mt-1">
+                    Manage section headings, reasons, and stats
+                </p>
             </div>
 
-            <div className="max-w-6xl mx-auto w-full px-4 space-y-8 mt-6">
+            <div className="max-w-6xl mx-auto w-full px-4">
+                <SectionHeadingEditor
+                    sectionKey="why-choose-me"
+                    defaultValues={{
+                        section_badge: (data?.content as any)?.section_badge,
+                        section_title: (data?.content as any)?.section_title,
+                        section_highlight: (data?.content as any)?.section_highlight,
+                        section_description: (data?.content as any)?.section_description
+                    }}
+                />
+            </div>
 
-                {/* Section Headings */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="p-6 bg-card border border-border rounded-xl">
-                    <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
-                        <Target className="w-5 h-5 text-primary" />
-                        Section Headings
-                    </h2>
+            <Tabs defaultValue="content" className="w-full">
+                <div className="flex justify-center w-full px-4">
+                    <TabsList className="inline-flex h-auto p-1 bg-muted/40 backdrop-blur-sm border border-border/50 rounded-xl overflow-x-auto max-w-full">
+                        <TabsTrigger value="content" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Content</TabsTrigger>
+                        <TabsTrigger value="reasons" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Reasons</TabsTrigger>
+                        <TabsTrigger value="stats" className="px-6 py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Stats</TabsTrigger>
+                    </TabsList>
+                </div>
 
-                    <div className="grid gap-4">
-                        <div>
-                            <Label htmlFor="badge">Badge Text</Label>
-                            <Input
-                                id="badge"
-                                value={content.section_badge || ''}
-                                onChange={(e) => setContent({ ...content, section_badge: e.target.value })}
-                                placeholder="Why Me"
-                            />
-                        </div>
-
-                        <div className="grid sm:grid-cols-2 gap-4">
+                <TabsContent value="content" className="space-y-6 mt-10 max-w-6xl mx-auto w-full px-4">
+                    {/* Main Content Info */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="p-6 bg-card border border-border rounded-xl">
+                        <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
+                            <Plus className="w-5 h-5 text-primary" />
+                            Inner Content
+                        </h2>
+                        <div className="grid gap-4">
                             <div>
-                                <Label htmlFor="title">Section Title</Label>
+                                <Label>Main Title</Label>
                                 <Input
-                                    id="title"
-                                    value={content.section_title || ''}
-                                    onChange={(e) => setContent({ ...content, section_title: e.target.value })}
-                                    placeholder="Why Choose"
+                                    value={content.main_title || ''}
+                                    onChange={(e) => setContent({ ...content, main_title: e.target.value })}
                                 />
                             </div>
                             <div>
-                                <Label htmlFor="highlight">Highlighted Text</Label>
-                                <Input
-                                    id="highlight"
-                                    value={content.section_highlight || ''}
-                                    onChange={(e) => setContent({ ...content, section_highlight: e.target.value })}
-                                    placeholder="Me?"
+                                <Label>Main Description</Label>
+                                <Textarea
+                                    value={content.main_description || ''}
+                                    onChange={(e) => setContent({ ...content, main_description: e.target.value })}
+                                    rows={4}
                                 />
                             </div>
                         </div>
+                        <Button onClick={() => updateContentMutation.mutate(content)} className="mt-6">
+                            <Save className="mr-2 h-4 w-4" /> Save Inner Content
+                        </Button>
+                    </motion.div>
+                </TabsContent>
 
-                        <div>
-                            <Label htmlFor="description">Description</Label>
-                            <Input
-                                id="description"
-                                value={content.section_description || ''}
-                                onChange={(e) => setContent({ ...content, section_description: e.target.value })}
-                                placeholder="What sets me apart from the rest"
-                            />
-                        </div>
-                    </div>
-                </motion.div>
-
-                {/* Reasons */}
-                <div className="space-y-4">
+                <TabsContent value="reasons" className="space-y-6 mt-10 max-w-6xl mx-auto w-full px-4">
+                    {/* Reasons */}
                     <div className="flex items-center justify-between">
                         <h2 className="text-xl font-semibold">Reasons ({reasons.length})</h2>
-                        <Button onClick={addReason} size="sm">
-                            <Plus className="w-4 h-4" />
+                        <Button onClick={addReason} size="sm" variant="outline">
+                            <Plus className="w-4 h-4 mr-2" />
                             Add Reason
                         </Button>
                     </div>
@@ -287,17 +280,24 @@ function WhyChooseMeEditor() {
                             </motion.div>
                         ))}
                     </div>
-                </div>
 
-                {/* Stats */}
-                <div className="space-y-4">
+                    <div className="flex justify-end">
+                        <Button onClick={handleSaveAll} disabled={saving} variant="outline">
+                            {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
+                            Save Reasons
+                        </Button>
+                    </div>
+                </TabsContent>
+
+                <TabsContent value="stats" className="space-y-6 mt-10 max-w-6xl mx-auto w-full px-4">
+                    {/* Stats */}
                     <div className="flex items-center justify-between">
                         <h2 className="text-xl font-semibold flex items-center gap-2">
                             <TrendingUp className="w-5 h-5 text-primary" />
                             Stats ({stats.length})
                         </h2>
-                        <Button onClick={addStat} size="sm">
-                            <Plus className="w-4 h-4" />
+                        <Button onClick={addStat} size="sm" variant="outline">
+                            <Plus className="w-4 h-4 mr-2" />
                             Add Stat
                         </Button>
                     </div>
@@ -358,8 +358,15 @@ function WhyChooseMeEditor() {
                             </motion.div>
                         ))}
                     </div>
-                </div>
-            </div>
+
+                    <div className="flex justify-end">
+                        <Button onClick={handleSaveAll} disabled={saving} variant="outline">
+                            {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
+                            Save Stats
+                        </Button>
+                    </div>
+                </TabsContent>
+            </Tabs>
         </div>
     );
 }

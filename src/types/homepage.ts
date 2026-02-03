@@ -179,6 +179,16 @@ export interface HomepageExpertiseTech {
   updated_at?: string;
 }
 
+export interface HomepageSectionContent {
+  id: string;
+  section_badge: string;
+  section_title: string;
+  section_highlight: string;
+  section_description: string;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface HomepageExpertiseCard {
   id: string;
   title: string;

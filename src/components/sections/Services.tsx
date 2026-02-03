@@ -11,12 +11,12 @@ const getIcon = (name: string) => {
 };
 
 const Services = () => {
-  const { data: services, isLoading: contentLoading } = useServicesContent();
+  const { data, isLoading: contentLoading } = useServicesContent();
   const { data: heading, isLoading: headingLoading } = useSectionHeading('services');
 
   if (contentLoading || headingLoading) return null;
 
-  const displayServices = services || [];
+  const displayServices = (data as any)?.items || [];
 
   return (
     <section id="services" className="py-24 relative overflow-hidden bg-secondary/10">
@@ -26,10 +26,10 @@ const Services = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         <SectionHeading
-          badge={heading?.section_badge || "Services"}
-          title={heading?.section_title || "How Can I"}
-          highlight={heading?.section_highlight || "Help You?"}
-          description={heading?.section_description || "Comprehensive solutions tailored to your needs"}
+          badge={heading?.section_badge || (data as any)?.content?.section_badge}
+          title={heading?.section_title || (data as any)?.content?.section_title}
+          highlight={heading?.section_highlight || (data as any)?.content?.section_highlight}
+          description={heading?.section_description || (data as any)?.content?.section_description}
         />
 
         {/* Services grid */}

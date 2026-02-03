@@ -51,10 +51,10 @@ const Expertise = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         <SectionHeading
-          badge={heading?.section_badge || "My Skills"}
-          title={heading?.section_title || "Tech"}
-          highlight={heading?.section_highlight || "Expertise"}
-          description={heading?.section_description || "Technologies and tools I work with to bring ideas to life"}
+          badge={heading?.section_badge || (data as any)?.content?.section_badge}
+          title={heading?.section_title || (data as any)?.content?.section_title}
+          highlight={heading?.section_highlight || (data as any)?.content?.section_highlight}
+          description={heading?.section_description || (data as any)?.content?.section_description}
         />
 
         {/* Tech Marquee - Dual Rows */}

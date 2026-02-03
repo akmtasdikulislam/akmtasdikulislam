@@ -13,7 +13,7 @@ export async function getSectionHeading(sectionKey: string) {
     .from("homepage_section_headings")
     .select("*")
     .eq("section_key", sectionKey)
-    .single();
+    .maybeSingle();
   if (error) throw error;
   return data;
 }
@@ -21,13 +21,13 @@ export async function getSectionHeading(sectionKey: string) {
 export async function updateSectionHeading(heading: any) {
   const { data, error } = await supabase
     .from("homepage_section_headings")
-    .update({
+    .upsert({
+      section_key: heading.section_key,
       section_badge: heading.section_badge,
       section_title: heading.section_title,
       section_highlight: heading.section_highlight,
       section_description: heading.section_description
-    })
-    .eq("section_key", heading.section_key)
+    }, { onConflict: 'section_key' })
     .select()
     .single();
   if (error) throw error;
