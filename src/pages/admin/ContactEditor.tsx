@@ -113,6 +113,7 @@ const ContactEditor = () => {
             platform: 'New Platform',
             url: '',
             icon_url: '',
+            icon_type: 'upload',
             display_order: profiles.length + 1
         }]);
     };
@@ -123,6 +124,7 @@ const ContactEditor = () => {
             platform: 'New Platform',
             url: '',
             icon_url: '',
+            icon_type: 'upload',
             display_order: freelanceProfiles.length + 1
         }]);
     };
@@ -136,9 +138,9 @@ const ContactEditor = () => {
         const { data: { publicUrl } } = supabase.storage.from('portfolio').getPublicUrl(filePath);
 
         if (type === 'coding') {
-            setProfiles(profiles.map(p => p.id === id ? { ...p, icon_url: publicUrl } : p));
+            setProfiles(profiles.map(p => p.id === id ? { ...p, icon_url: publicUrl, icon_type: 'upload' } : p));
         } else {
-            setFreelanceProfiles(freelanceProfiles.map(p => p.id === id ? { ...p, icon_url: publicUrl } : p));
+            setFreelanceProfiles(freelanceProfiles.map(p => p.id === id ? { ...p, icon_url: publicUrl, icon_type: 'upload' } : p));
         }
     };
 
@@ -316,22 +318,53 @@ const ContactEditor = () => {
                         {profiles.map((profile) => (
                             <Card key={profile.id}>
                                 <CardContent className="p-4 flex items-center gap-4">
-                                    <div className="w-12 h-12 border rounded flex items-center justify-center bg-secondary/20 relative group">
-                                        {profile.icon_url ? <img src={profile.icon_url} className="w-8 h-8 object-contain" /> : <span className="text-xs">No Icon</span>}
-                                        <label className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 cursor-pointer text-white text-xs rounded">
-                                            <Upload className="h-4 w-4" />
-                                            <input type="file" className="hidden" accept="image/*" onChange={(e) => handleIconUpload(e, profile.id, 'coding')} />
-                                        </label>
+                                    <div className="w-24 border rounded p-2 bg-secondary/10">
+                                        <div className="flex flex-col gap-2">
+                                            <Label className="text-[10px] uppercase font-bold text-muted-foreground">Icon Type</Label>
+                                            <Tabs 
+                                                value={profile.icon_type || 'upload'} 
+                                                onValueChange={(v) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, icon_type: v } : p))}
+                                                className="w-full"
+                                            >
+                                                <TabsList className="grid grid-cols-2 h-7">
+                                                    <TabsTrigger value="upload" className="text-[10px]">File</TabsTrigger>
+                                                    <TabsTrigger value="url" className="text-[10px]">URL</TabsTrigger>
+                                                </TabsList>
+                                            </Tabs>
+                                            
+                                            <div className="relative group mx-auto">
+                                                <div className="w-12 h-12 border rounded flex items-center justify-center bg-secondary/20 overflow-hidden">
+                                                    {profile.icon_url ? <img src={profile.icon_url} className="w-8 h-8 object-contain" /> : <span className="text-[10px]">No Icon</span>}
+                                                </div>
+                                                {(profile.icon_type === 'upload' || !profile.icon_type) && (
+                                                    <label className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 cursor-pointer text-white text-xs rounded transition-opacity">
+                                                        <Upload className="h-4 w-4" />
+                                                        <input type="file" className="hidden" accept="image/*" onChange={(e) => handleIconUpload(e, profile.id, 'coding')} />
+                                                    </label>
+                                                )}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div className="flex-1 grid grid-cols-1 md:grid-cols-4 gap-4">
                                         <div className="space-y-1">
                                             <Label>Platform Name</Label>
                                             <Input value={profile.platform} onChange={(e) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, platform: e.target.value } : p))} />
                                         </div>
-                                        <div className="space-y-1 md:col-span-2">
+                                        <div className="space-y-1 md:col-span-1">
                                             <Label>Profile URL</Label>
                                             <Input value={profile.url} onChange={(e) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, url: e.target.value } : p))} />
                                         </div>
+                                        {profile.icon_type === 'url' && (
+                                            <div className="space-y-1 md:col-span-2">
+                                                <Label>Icon/Logo URL</Label>
+                                                <Input 
+                                                    value={profile.icon_url || ''} 
+                                                    placeholder="https://..." 
+                                                    onChange={(e) => setProfiles(profiles.map(p => p.id === profile.id ? { ...p, icon_url: e.target.value } : p))} 
+                                                />
+                                            </div>
+                                        )}
+                                        {(profile.icon_type === 'upload' || !profile.icon_type) && <div className="md:col-span-2" />}
                                     </div>
                                     <div className="flex gap-2">
                                         <Button size="icon" variant="ghost" onClick={() => updateProfileMutation.mutate(profile)}><Save className="h-4 w-4" /></Button>
@@ -349,22 +382,53 @@ const ContactEditor = () => {
                         {freelanceProfiles.map((profile) => (
                             <Card key={profile.id}>
                                 <CardContent className="p-4 flex items-center gap-4">
-                                    <div className="w-12 h-12 border rounded flex items-center justify-center bg-secondary/20 relative group">
-                                        {profile.icon_url ? <img src={profile.icon_url} className="w-8 h-8 object-contain" /> : <span className="text-xs">No Icon</span>}
-                                        <label className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 cursor-pointer text-white text-xs rounded">
-                                            <Upload className="h-4 w-4" />
-                                            <input type="file" className="hidden" accept="image/*" onChange={(e) => handleIconUpload(e, profile.id, 'freelance')} />
-                                        </label>
+                                    <div className="w-24 border rounded p-2 bg-secondary/10">
+                                        <div className="flex flex-col gap-2">
+                                            <Label className="text-[10px] uppercase font-bold text-muted-foreground">Icon Type</Label>
+                                            <Tabs 
+                                                value={profile.icon_type || 'upload'} 
+                                                onValueChange={(v) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, icon_type: v } : p))}
+                                                className="w-full"
+                                            >
+                                                <TabsList className="grid grid-cols-2 h-7">
+                                                    <TabsTrigger value="upload" className="text-[10px]">File</TabsTrigger>
+                                                    <TabsTrigger value="url" className="text-[10px]">URL</TabsTrigger>
+                                                </TabsList>
+                                            </Tabs>
+                                            
+                                            <div className="relative group mx-auto">
+                                                <div className="w-12 h-12 border rounded flex items-center justify-center bg-secondary/20 overflow-hidden">
+                                                    {profile.icon_url ? <img src={profile.icon_url} className="w-8 h-8 object-contain" /> : <span className="text-[10px]">No Icon</span>}
+                                                </div>
+                                                {(profile.icon_type === 'upload' || !profile.icon_type) && (
+                                                    <label className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 cursor-pointer text-white text-xs rounded transition-opacity">
+                                                        <Upload className="h-4 w-4" />
+                                                        <input type="file" className="hidden" accept="image/*" onChange={(e) => handleIconUpload(e, profile.id, 'freelance')} />
+                                                    </label>
+                                                )}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div className="flex-1 grid grid-cols-1 md:grid-cols-4 gap-4">
                                         <div className="space-y-1">
                                             <Label>Platform Name</Label>
                                             <Input value={profile.platform} onChange={(e) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, platform: e.target.value } : p))} />
                                         </div>
-                                        <div className="space-y-1 md:col-span-2">
+                                        <div className="space-y-1 md:col-span-1">
                                             <Label>Profile URL</Label>
                                             <Input value={profile.url} onChange={(e) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, url: e.target.value } : p))} />
                                         </div>
+                                        {profile.icon_type === 'url' && (
+                                            <div className="space-y-1 md:col-span-2">
+                                                <Label>Icon/Logo URL</Label>
+                                                <Input 
+                                                    value={profile.icon_url || ''} 
+                                                    placeholder="https://..." 
+                                                    onChange={(e) => setFreelanceProfiles(freelanceProfiles.map(p => p.id === profile.id ? { ...p, icon_url: e.target.value } : p))} 
+                                                />
+                                            </div>
+                                        )}
+                                        {(profile.icon_type === 'upload' || !profile.icon_type) && <div className="md:col-span-2" />}
                                     </div>
                                     <div className="flex gap-2">
                                         <Button size="icon" variant="ghost" onClick={() => updateFreelanceMutation.mutate(profile)}><Save className="h-4 w-4" /></Button>
