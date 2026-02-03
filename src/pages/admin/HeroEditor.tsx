@@ -488,12 +488,14 @@ const HeroEditor = () => {
                                     );
                                 })}
                             </div>
-                            <Button onClick={() => setSocialLinks([...socialLinks, { platform: 'GitHub', url: '', icon_name: 'GitHub', icon_url: null, is_visible: true, display_order: socialLinks.length }])} variant="outline" className="w-full mb-4">
-                                <Plus className="w-4 h-4 mr-2" /> Add Social Link
-                            </Button>
-                            <Button onClick={() => updateSocialLinksMutation.mutate(socialLinks)} className="w-full">
-                                <Save className="w-4 h-4 mr-2" /> Save Social Links
-                            </Button>
+                            <div className="flex gap-3 mt-6">
+                                <Button onClick={() => setSocialLinks([...socialLinks, { platform: 'GitHub', url: '', icon_name: 'GitHub', icon_url: null, is_visible: true, display_order: socialLinks.length }])} variant="outline" className="flex-1">
+                                    <Plus className="w-4 h-4 mr-2" /> Add Social Link
+                                </Button>
+                                <Button onClick={() => updateSocialLinksMutation.mutate(socialLinks)} className="flex-1">
+                                    <Save className="w-4 h-4 mr-2" /> Save Social Links
+                                </Button>
+                            </div>
                         </CardContent>
                     </Card>
                 </TabsContent>
@@ -690,25 +692,27 @@ const HeroEditor = () => {
                                     );
                                 })}
                             </div>
-                            <Button
-                                onClick={() => setTechs([...techs, {
-                                    name: '',
-                                    icon_url: '',
-                                    position_class: 'left-1/2 -translate-x-1/2 -top-20 md:-top-24',
-                                    animation_class: 'animate-float-1',
-                                    delay: 0,
-                                    invert: false,
-                                    is_visible: true,
-                                    display_order: techs.length
-                                }])}
-                                variant="outline"
-                                className="w-full mb-4"
-                            >
-                                <Plus className="w-4 h-4 mr-2" /> Add Tech Icon
-                            </Button>
-                            <Button onClick={() => updateTechsMutation.mutate(techs)} className="w-full">
-                                <Save className="w-4 h-4 mr-2" /> Save Tech Stack
-                            </Button>
+                            <div className="flex gap-3 mt-6">
+                                <Button
+                                    onClick={() => setTechs([...techs, {
+                                        name: '',
+                                        icon_url: '',
+                                        position_class: 'left-1/2 -translate-x-1/2 -top-20 md:-top-24',
+                                        animation_class: 'animate-float-1',
+                                        delay: 0,
+                                        invert: false,
+                                        is_visible: true,
+                                        display_order: techs.length
+                                    }])}
+                                    variant="outline"
+                                    className="flex-1"
+                                >
+                                    <Plus className="w-4 h-4 mr-2" /> Add Tech Icon
+                                </Button>
+                                <Button onClick={() => updateTechsMutation.mutate(techs)} className="flex-1">
+                                    <Save className="w-4 h-4 mr-2" /> Save Tech Stack
+                                </Button>
+                            </div>
                         </CardContent>
                     </Card>
                 </TabsContent>
@@ -776,12 +780,14 @@ const HeroEditor = () => {
                                     </div>
                                 );
                             })}
-                            <Button onClick={() => setBadges([...badges, { badge_text: '', position_class: 'absolute', display_order: badges.length }])} variant="outline" className="w-full mb-4">
-                                <Plus className="w-4 h-4 mr-2" /> Add Badge
-                            </Button>
-                            <Button onClick={() => updateBadgesMutation.mutate(badges)} className="w-full">
-                                <Save className="w-4 h-4 mr-2" /> Save Badges
-                            </Button>
+                            <div className="flex gap-3 mt-6">
+                                <Button onClick={() => setBadges([...badges, { badge_text: '', position_class: 'absolute', display_order: badges.length }])} variant="outline" className="flex-1">
+                                    <Plus className="w-4 h-4 mr-2" /> Add Badge
+                                </Button>
+                                <Button onClick={() => updateBadgesMutation.mutate(badges)} className="flex-1">
+                                    <Save className="w-4 h-4 mr-2" /> Save Badges
+                                </Button>
+                            </div>
                         </CardContent>
                     </Card>
                 </TabsContent>
