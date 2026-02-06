@@ -210,33 +210,42 @@ const NavbarEditor = () => {
                                     <div key={index} className="flex gap-2 items-start">
                                         <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mt-3" />
                                         <div className="flex-1 grid gap-2 md:grid-cols-3">
-                                            <Input
-                                                value={link.label}
-                                                onChange={(e) => {
-                                                    const updated = [...navLinks];
-                                                    updated[index].label = e.target.value;
-                                                    setNavLinks(updated);
-                                                }}
-                                                placeholder="Label (e.g., Home)"
-                                            />
-                                            <Input
-                                                value={link.href}
-                                                onChange={(e) => {
-                                                    const updated = [...navLinks];
-                                                    updated[index].href = e.target.value;
-                                                    setNavLinks(updated);
-                                                }}
-                                                placeholder="Anchor (e.g., #home)"
-                                            />
-                                            <Input
-                                                value={link.path}
-                                                onChange={(e) => {
-                                                    const updated = [...navLinks];
-                                                    updated[index].path = e.target.value;
-                                                    setNavLinks(updated);
-                                                }}
-                                                placeholder="Path (e.g., /)"
-                                            />
+                                            <div className="space-y-1">
+                                                <Label>Label</Label>
+                                                <Input
+                                                    value={link.label}
+                                                    onChange={(e) => {
+                                                        const updated = [...navLinks];
+                                                        updated[index].label = e.target.value;
+                                                        setNavLinks(updated);
+                                                    }}
+                                                    placeholder="e.g., Home"
+                                                />
+                                            </div>
+                                            <div className="space-y-1">
+                                                <Label>Anchor</Label>
+                                                <Input
+                                                    value={link.href}
+                                                    onChange={(e) => {
+                                                        const updated = [...navLinks];
+                                                        updated[index].href = e.target.value;
+                                                        setNavLinks(updated);
+                                                    }}
+                                                    placeholder="e.g., #home"
+                                                />
+                                            </div>
+                                            <div className="space-y-1">
+                                                <Label>Path</Label>
+                                                <Input
+                                                    value={link.path}
+                                                    onChange={(e) => {
+                                                        const updated = [...navLinks];
+                                                        updated[index].path = e.target.value;
+                                                        setNavLinks(updated);
+                                                    }}
+                                                    placeholder="e.g., /"
+                                                />
+                                            </div>
                                         </div>
                                         <Button
                                             variant="outline"
