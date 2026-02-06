@@ -175,8 +175,8 @@ function WhyChooseMeEditor() {
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 className="p-4 bg-card border border-border rounded-xl">
-                                <div className="flex items-start gap-3">
-                                    <GripVertical className="w-5 h-5 text-muted-foreground mt-2 cursor-move" />
+                                <div className="flex items-end gap-3">
+                                    <GripVertical className="w-5 h-5 text-muted-foreground mb-3 cursor-move" />
                                     <div className="flex-1 grid gap-3">
                                         <div className="grid sm:grid-cols-2 gap-3">
                                             <div>

@@ -239,8 +239,8 @@ const ContactEditor = () => {
                                                         {msg.is_read ? 'Mark Unread' : 'Mark Read'}
                                                     </Button>
                                                     <Button
-                                                        size="icon"
-                                                        variant="destructive"
+                                                        variant="ghost"
+                                                        className="h-9 w-9 text-destructive hover:bg-destructive/10 transition-colors"
                                                         onClick={() => deleteMessageMutation.mutate(msg.id)}
                                                     >
                                                         <Trash2 className="h-4 w-4" />
@@ -414,7 +414,7 @@ const ContactEditor = () => {
                                             <Button
                                                 size="icon"
                                                 variant="ghost"
-                                                className="h-8 w-8 hover:bg-destructive/20 hover:text-destructive transition-colors"
+                                                className="h-8 w-8 text-destructive hover:bg-destructive/10 transition-colors"
                                                 onClick={() => deleteProfileMutation.mutate(profile.id)}
                                             >
                                                 <Trash2 className="h-4 w-4" />
@@ -556,7 +556,7 @@ const ContactEditor = () => {
                                             <Button
                                                 size="icon"
                                                 variant="ghost"
-                                                className="h-8 w-8 hover:bg-destructive/20 hover:text-destructive transition-colors"
+                                                className="h-8 w-8 text-destructive hover:bg-destructive/10 transition-colors"
                                                 onClick={() => deleteFreelanceMutation.mutate(profile.id)}
                                             >
                                                 <Trash2 className="h-4 w-4" />

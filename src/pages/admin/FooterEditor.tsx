@@ -314,7 +314,7 @@ const LinkManager = ({ title, links, onAdd, onUpdate, onDelete, isPending }: Lin
                                     />
                                 </div>
                             </div>
-                            <Button variant="ghost" size="icon" onClick={() => onDelete(link.id)} className="text-destructive hover:bg-destructive/10 transition-colors h-10 px-3">
+                            <Button variant="ghost" onClick={() => onDelete(link.id)} className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors">
                                 <Trash2 className="w-4 h-4" />
                             </Button>
                         </div>

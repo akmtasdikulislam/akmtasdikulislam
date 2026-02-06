@@ -207,8 +207,8 @@ const NavbarEditor = () => {
                         <CardContent className="space-y-4">
                             <div className="space-y-3">
                                 {navLinks.map((link, index) => (
-                                    <div key={index} className="flex gap-2 items-start">
-                                        <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mt-3" />
+                                    <div key={index} className="flex gap-2 items-end">
+                                        <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mb-3" />
                                         <div className="flex-1 grid gap-2 md:grid-cols-3">
                                             <div className="space-y-1">
                                                 <Label>Label</Label>
@@ -248,8 +248,8 @@ const NavbarEditor = () => {
                                             </div>
                                         </div>
                                         <Button
-                                            variant="outline"
-                                            size="icon"
+                                            variant="ghost"
+                                            className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
                                             onClick={() => setNavLinks(navLinks.filter((_, i) => i !== index))}
                                             disabled={navLinks.length === 1}
                                         >

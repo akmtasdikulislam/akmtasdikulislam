@@ -98,7 +98,7 @@ const ServicesEditor = () => {
                     {services.map((service, index) => (
                         <Card key={service.id}>
                             <CardContent className="p-6 space-y-4">
-                                <div className="flex justify-between items-start">
+                                <div className="flex justify-between items-end">
                                     <div className="space-y-1 w-1/3">
                                         <Label>Service Title</Label>
                                         <Input
@@ -116,7 +116,6 @@ const ServicesEditor = () => {
                                             <Save className="mr-2 h-4 w-4" /> Save
                                         </Button>
                                         <Button
-                                            size="icon"
                                             variant="ghost"
                                             className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
                                             onClick={() => deleteServiceMutation.mutate(service.id)}

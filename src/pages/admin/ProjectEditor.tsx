@@ -731,8 +731,8 @@ const ProjectEditor = () => {
                     placeholder="Feature description (e.g. Real-time notifications)"
                     className="flex-1 bg-transparent border-none shadow-none focus-visible:ring-0 px-0"
                   />
-                  <Button type="button" variant="ghost" size="icon" onClick={() => removeFeature(index)}>
-                    <Trash2 className="w-4 h-4 text-muted-foreground hover:text-destructive" />
+                  <Button type="button" variant="ghost" onClick={() => removeFeature(index)} className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors">
+                    <Trash2 className="w-4 h-4" />
                   </Button>
                 </div>
               ))}
@@ -756,7 +756,7 @@ const ProjectEditor = () => {
             <div className="space-y-4">
               {formData.challenges.map((item, index) => (
                 <div key={index} className="p-4 bg-secondary/30 rounded-xl border border-border/50 space-y-3">
-                  <div className="flex justify-between items-start gap-4">
+                  <div className="flex justify-between items-end gap-4">
                     <div className="w-full space-y-3">
                       <div className="space-y-1">
                         <Label className="text-xs text-destructive uppercase font-bold">Challenge</Label>
@@ -778,8 +778,8 @@ const ProjectEditor = () => {
                         />
                       </div>
                     </div>
-                    <Button type="button" variant="ghost" size="icon" onClick={() => removeChallenge(index)} className="mt-6">
-                      <Trash2 className="w-4 h-4 text-muted-foreground hover:text-destructive" />
+                    <Button type="button" variant="ghost" onClick={() => removeChallenge(index)} className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors">
+                      <Trash2 className="w-4 h-4" />
                     </Button>
                   </div>
                 </div>

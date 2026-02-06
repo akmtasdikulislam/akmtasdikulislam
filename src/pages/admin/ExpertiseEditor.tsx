@@ -230,7 +230,7 @@ const ExpertiseEditor = () => {
                                             <Button
                                                 size="icon"
                                                 variant="ghost"
-                                                className="h-8 w-8 text-destructive hover:bg-destructive/20 hover:text-destructive transition-colors duration-300"
+                                                className="h-8 w-8 text-destructive hover:bg-destructive/10 transition-colors duration-300"
                                                 onClick={() => deleteTechMutation.mutate(tech.id)}
                                                 title="Delete Tech"
                                             >
@@ -399,7 +399,7 @@ const ExpertiseEditor = () => {
                                             <Button
                                                 size="icon"
                                                 variant="ghost"
-                                                className="h-8 w-8 text-destructive hover:bg-destructive/20 hover:text-destructive transition-colors duration-300"
+                                                className="h-8 w-8 text-destructive hover:bg-destructive/10 transition-colors duration-300"
                                                 onClick={() => deleteCardMutation.mutate(card.id)}
                                                 title="Delete Card"
                                             >

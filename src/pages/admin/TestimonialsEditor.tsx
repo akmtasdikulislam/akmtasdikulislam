@@ -119,7 +119,7 @@ const TestimonialsEditor = () => {
                                     </div>
 
                                     <div className="flex-1 space-y-4 w-full">
-                                        <div className="flex justify-between items-start gap-4">
+                                        <div className="flex justify-between items-end gap-4">
                                             <div className="grid md:grid-cols-2 gap-4 flex-1">
                                                 <div className="space-y-1">
                                                     <Label>Name</Label>
@@ -140,9 +140,8 @@ const TestimonialsEditor = () => {
                                                     <Save className="mr-2 h-4 w-4" /> Save
                                                 </Button>
                                                 <Button
-                                                    size="icon"
                                                     variant="ghost"
-                                                    className="h-9 w-9 text-destructive hover:bg-destructive/10 transition-colors"
+                                                    className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
                                                     onClick={() => deleteMutation.mutate(item.id)}
                                                     title="Delete Testimonial"
                                                 >

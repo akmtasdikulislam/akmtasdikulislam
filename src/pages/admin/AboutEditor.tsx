@@ -223,8 +223,8 @@ const AboutEditor = () => {
                             {highlights.map((item, index) => (
                                 <Card key={index}>
                                     <CardContent className="pt-6">
-                                        <div className="flex gap-2 items-start">
-                                            <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mt-3" />
+                                        <div className="flex gap-2 items-end">
+                                            <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mb-3" />
                                             <div className="flex-1 space-y-3">
                                                 <div className="grid gap-2 md:grid-cols-2">
                                                     <div className="space-y-1">
@@ -425,8 +425,8 @@ const AboutEditor = () => {
                             {values.map((item, index) => (
                                 <Card key={index}>
                                     <CardContent className="pt-6">
-                                        <div className="flex gap-2 items-start">
-                                            <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mt-3" />
+                                        <div className="flex gap-2 items-end">
+                                            <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mb-3" />
                                             <div className="flex-1 space-y-3">
                                                 <div className="grid gap-2 md:grid-cols-2">
                                                     <div className="space-y-1">
