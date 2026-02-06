@@ -177,7 +177,7 @@ const AboutEditor = () => {
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div>
-                                <Label className="text-[10px] uppercase font-bold text-muted-foreground" htmlFor="main_content">About Content</Label>
+                                <Label htmlFor="main_content">About Content</Label>
                                 <p className="text-xs text-muted-foreground mb-4">Write your story using the rich text editor below.</p>
                                 <div className="border border-border rounded-xl p-2 bg-background/50">
                                     <TipTapEditor
@@ -228,7 +228,7 @@ const AboutEditor = () => {
                                             <div className="flex-1 space-y-3">
                                                 <div className="grid gap-2 md:grid-cols-2">
                                                     <div className="space-y-1">
-                                                        <Label className="text-[10px] uppercase font-bold text-muted-foreground">Title</Label>
+                                                        <Label>Title</Label>
                                                         <Input
                                                             value={item.title}
                                                             onChange={(e) => {
@@ -240,7 +240,7 @@ const AboutEditor = () => {
                                                         />
                                                     </div>
                                                     <div className="space-y-1">
-                                                        <Label className="text-[10px] uppercase font-bold text-muted-foreground">Icon Name</Label>
+                                                        <Label>Icon Name</Label>
                                                         <Input
                                                             value={item.icon_name}
                                                             onChange={(e) => {
@@ -253,7 +253,7 @@ const AboutEditor = () => {
                                                     </div>
                                                 </div>
                                                 <div className="space-y-1">
-                                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Description</Label>
+                                                    <Label>Description</Label>
                                                     <Input
                                                         value={item.description}
                                                         onChange={(e) => {
@@ -265,7 +265,7 @@ const AboutEditor = () => {
                                                     />
                                                 </div>
                                                 <div className="space-y-1">
-                                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Detail</Label>
+                                                    <Label>Detail</Label>
                                                     <Input
                                                         value={item.detail}
                                                         onChange={(e) => {
@@ -341,7 +341,7 @@ const AboutEditor = () => {
                                         <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mb-3" />
                                         <div className="flex-1 grid grid-cols-2 gap-2">
                                             <div className="space-y-1">
-                                                <Label className="text-[10px] uppercase font-bold text-muted-foreground">Interest Label</Label>
+                                                <Label>Interest Label</Label>
                                                 <Input
                                                     value={item.label}
                                                     onChange={(e) => {
@@ -354,7 +354,7 @@ const AboutEditor = () => {
                                                 />
                                             </div>
                                             <div className="space-y-1">
-                                                <Label className="text-[10px] uppercase font-bold text-muted-foreground">Icon Name</Label>
+                                                <Label>Icon Name</Label>
                                                 <Input
                                                     value={item.icon_name}
                                                     onChange={(e) => {
@@ -430,7 +430,7 @@ const AboutEditor = () => {
                                             <div className="flex-1 space-y-3">
                                                 <div className="grid gap-2 md:grid-cols-2">
                                                     <div className="space-y-1">
-                                                        <Label className="text-[10px] uppercase font-bold text-muted-foreground">Value Title</Label>
+                                                        <Label>Value Title</Label>
                                                         <Input
                                                             value={item.value_text}
                                                             onChange={(e) => {
@@ -442,7 +442,7 @@ const AboutEditor = () => {
                                                         />
                                                     </div>
                                                     <div className="space-y-1">
-                                                        <Label className="text-[10px] uppercase font-bold text-muted-foreground">Icon Name</Label>
+                                                        <Label>Icon Name</Label>
                                                         <Input
                                                             value={item.icon_name}
                                                             onChange={(e) => {
@@ -455,7 +455,7 @@ const AboutEditor = () => {
                                                     </div>
                                                 </div>
                                                 <div className="space-y-1">
-                                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Description</Label>
+                                                    <Label>Description</Label>
                                                     <Textarea
                                                         value={item.description}
                                                         onChange={(e) => {

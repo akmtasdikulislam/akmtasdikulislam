@@ -273,21 +273,21 @@ const ContactEditor = () => {
                         <CardContent className="space-y-4">
                             <div className="grid md:grid-cols-2 gap-4">
                                 <div className="space-y-1">
-                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Email</Label>
+                                    <Label>Email</Label>
                                     <Input value={contact.email || ''} onChange={(e) => setContact({ ...contact, email: e.target.value })} />
                                 </div>
                                 <div className="space-y-1">
-                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Location</Label>
+                                    <Label>Location</Label>
                                     <Input value={contact.location || ''} onChange={(e) => setContact({ ...contact, location: e.target.value })} />
                                 </div>
                                 <div className="space-y-1">
-                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Location Maps Link</Label>
+                                    <Label>Location Maps Link</Label>
                                     <Input value={contact.location_url || ''} onChange={(e) => setContact({ ...contact, location_url: e.target.value })} />
                                 </div>
                             </div>
                             <div className="grid md:grid-cols-2 gap-4">
                                 <div className="space-y-1">
-                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Upwork Profile URL</Label>
+                                    <Label>Upwork Profile URL</Label>
                                     <Input
                                         value={contact.upwork_url || ''}
                                         onChange={(e) => setContact({ ...contact, upwork_url: e.target.value })}
@@ -295,7 +295,7 @@ const ContactEditor = () => {
                                     />
                                 </div>
                                 <div className="space-y-1">
-                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">LinkedIn Profile URL</Label>
+                                    <Label>LinkedIn Profile URL</Label>
                                     <Input
                                         value={contact.linkedin_url || ''}
                                         onChange={(e) => setContact({ ...contact, linkedin_url: e.target.value })}
@@ -305,7 +305,7 @@ const ContactEditor = () => {
                             </div>
                             <div className="grid md:grid-cols-2 gap-4">
                                 <div className="space-y-1">
-                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Upwork Button Text</Label>
+                                    <Label>Upwork Button Text</Label>
                                     <Input
                                         value={contact.upwork_label || ''}
                                         onChange={(e) => setContact({ ...contact, upwork_label: e.target.value })}
@@ -313,7 +313,7 @@ const ContactEditor = () => {
                                     />
                                 </div>
                                 <div className="space-y-1">
-                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">LinkedIn Button Text</Label>
+                                    <Label>LinkedIn Button Text</Label>
                                     <Input
                                         value={contact.linkedin_label || ''}
                                         onChange={(e) => setContact({ ...contact, linkedin_label: e.target.value })}
@@ -323,14 +323,14 @@ const ContactEditor = () => {
                             </div>
                             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-4 border-t">
                                 <div className="flex flex-col gap-1">
-                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Availability Status</Label>
+                                    <Label>Availability Status</Label>
                                     <div className="flex items-center gap-4">
                                         <Switch checked={contact.available_for_work} onCheckedChange={(c) => setContact({ ...contact, available_for_work: c })} />
                                         <span className="text-sm font-medium">Available For Work</span>
                                     </div>
                                 </div>
                                 <div className="flex-1 space-y-1">
-                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Status Text</Label>
+                                    <Label>Status Text</Label>
                                     <Input className="max-w-xs" value={contact.available_text || ''} onChange={(e) => setContact({ ...contact, available_text: e.target.value })} placeholder="Status Text" />
                                 </div>
                             </div>

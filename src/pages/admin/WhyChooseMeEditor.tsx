@@ -180,7 +180,7 @@ function WhyChooseMeEditor() {
                                     <div className="flex-1 grid gap-3">
                                         <div className="grid sm:grid-cols-2 gap-3">
                                             <div>
-                                                <Label className="text-[10px] uppercase font-bold text-muted-foreground">Icon Name (Lucide)</Label>
+                                                <Label>Icon Name (Lucide)</Label>
                                                 <Input
                                                     value={reason.icon_name}
                                                     onChange={(e) => {
@@ -192,7 +192,7 @@ function WhyChooseMeEditor() {
                                                 />
                                             </div>
                                             <div>
-                                                <Label className="text-[10px] uppercase font-bold text-muted-foreground">Title</Label>
+                                                <Label>Title</Label>
                                                 <Input
                                                     value={reason.title}
                                                     onChange={(e) => {
@@ -205,7 +205,7 @@ function WhyChooseMeEditor() {
                                             </div>
                                         </div>
                                         <div>
-                                            <Label className="text-[10px] uppercase font-bold text-muted-foreground">Description</Label>
+                                            <Label>Description</Label>
                                             <Textarea
                                                 value={reason.description}
                                                 onChange={(e) => {
@@ -270,7 +270,7 @@ function WhyChooseMeEditor() {
                                 className="p-4 bg-card border border-border rounded-xl">
                                 <div className="space-y-3">
                                     <div>
-                                        <Label className="text-[10px] uppercase font-bold text-muted-foreground">Value</Label>
+                                        <Label>Value</Label>
                                         <Input
                                             type="number"
                                             value={stat.stat_value}
@@ -282,7 +282,7 @@ function WhyChooseMeEditor() {
                                         />
                                     </div>
                                     <div>
-                                        <Label className="text-[10px] uppercase font-bold text-muted-foreground">Suffix</Label>
+                                        <Label>Suffix</Label>
                                         <Input
                                             value={stat.stat_suffix}
                                             onChange={(e) => {
@@ -294,7 +294,7 @@ function WhyChooseMeEditor() {
                                         />
                                     </div>
                                     <div>
-                                        <Label className="text-[10px] uppercase font-bold text-muted-foreground">Label</Label>
+                                        <Label>Label</Label>
                                         <Input
                                             value={stat.stat_label}
                                             onChange={(e) => {

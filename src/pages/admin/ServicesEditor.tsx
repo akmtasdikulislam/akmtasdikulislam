@@ -100,7 +100,7 @@ const ServicesEditor = () => {
                             <CardContent className="p-6 space-y-4">
                                 <div className="flex justify-between items-start">
                                     <div className="space-y-1 w-1/3">
-                                        <Label className="text-[10px] uppercase font-bold text-muted-foreground">Service Title</Label>
+                                        <Label>Service Title</Label>
                                         <Input
                                             value={service.title}
                                             onChange={(e) => setServices(services.map(s => s.id === service.id ? { ...s, title: e.target.value } : s))}
@@ -129,14 +129,14 @@ const ServicesEditor = () => {
 
                                 <div className="grid md:grid-cols-2 gap-4">
                                     <div className="space-y-1">
-                                        <Label className="text-[10px] uppercase font-bold text-muted-foreground">Description</Label>
+                                        <Label>Description</Label>
                                         <Textarea
                                             value={service.description || ''}
                                             onChange={(e) => setServices(services.map(s => s.id === service.id ? { ...s, description: e.target.value } : s))}
                                         />
                                     </div>
                                     <div className="space-y-1">
-                                        <Label className="text-[10px] uppercase font-bold text-muted-foreground">Features (One per line)</Label>
+                                        <Label>Features (One per line)</Label>
                                         <Textarea
                                             value={Array.isArray(service.features) ? service.features.join('\n') : ''}
                                             onChange={(e) => setServices(services.map(s => s.id === service.id ? { ...s, features: e.target.value.split('\n') } : s))}
@@ -147,7 +147,7 @@ const ServicesEditor = () => {
                                 </div>
 
                                 <div className="space-y-1 w-1/3">
-                                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Icon Name (Lucide)</Label>
+                                    <Label>Icon Name (Lucide)</Label>
                                     <Input
                                         value={service.icon_name || ''}
                                         onChange={(e) => setServices(services.map(s => s.id === service.id ? { ...s, icon_name: e.target.value } : s))}
