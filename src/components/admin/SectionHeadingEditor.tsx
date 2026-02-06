@@ -107,7 +107,7 @@ export default function SectionHeadingEditor({
             <div className="grid gap-4">
                 {showBadge && (
                     <div>
-                        <Label className="text-[10px] uppercase font-bold text-muted-foreground" htmlFor={`badge-${sectionKey}`}>Badge Text</Label>
+                        <Label htmlFor={`badge-${sectionKey}`}>Badge Text</Label>
                         <Input
                             id={`badge-${sectionKey}`}
                             value={heading.section_badge}
@@ -120,7 +120,7 @@ export default function SectionHeadingEditor({
                 <div className="grid sm:grid-cols-2 gap-4">
                     {showTitle && (
                         <div>
-                            <Label className="text-[10px] uppercase font-bold text-muted-foreground" htmlFor={`title-${sectionKey}`}>Section Title</Label>
+                            <Label htmlFor={`title-${sectionKey}`}>Section Title</Label>
                             <Input
                                 id={`title-${sectionKey}`}
                                 value={heading.section_title}
@@ -131,7 +131,7 @@ export default function SectionHeadingEditor({
                     )}
                     {showHighlight && (
                         <div>
-                            <Label className="text-[10px] uppercase font-bold text-muted-foreground" htmlFor={`highlight-${sectionKey}`}>Highlighted Text</Label>
+                            <Label htmlFor={`highlight-${sectionKey}`}>Highlighted Text</Label>
                             <Input
                                 id={`highlight-${sectionKey}`}
                                 value={heading.section_highlight}
@@ -144,7 +144,7 @@ export default function SectionHeadingEditor({
 
                 {showDescription && (
                     <div>
-                        <Label className="text-[10px] uppercase font-bold text-muted-foreground" htmlFor={`description-${sectionKey}`}>Description</Label>
+                        <Label htmlFor={`description-${sectionKey}`}>Description</Label>
                         <Input
                             id={`description-${sectionKey}`}
                             value={heading.section_description}

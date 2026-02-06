@@ -3,26 +3,25 @@ import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
-    Award,
-    Briefcase,
-    ChevronDown,
-    ChevronRight,
-    Code,
-    FileText,
-    FolderKanban,
-    Home,
-    LayoutDashboard,
-    LogOut,
-    Menu,
-    MessageSquare, // For Services or Contact
-    Phone,
-    Quote,
-    Settings,
-    Target,
-    Terminal,
-    User,
-    X,
-    Zap
+  Award,
+  Briefcase,
+  ChevronDown,
+  ChevronRight,
+  Code,
+  FileText,
+  FolderKanban,
+  Home,
+  LayoutDashboard,
+  LogOut,
+  Menu,
+  MessageSquare, // For Services or Contact
+  Phone,
+  Quote,
+  Settings,
+  Target,
+  Terminal,
+  X,
+  Zap
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
@@ -69,7 +68,7 @@ const navSections: NavSection[] = [
   {
     title: 'Professional',
     items: [
-      { icon: User, label: 'Author Profile', path: '/admin/author' },
+
       { icon: Award, label: 'Certifications', path: '/admin/certifications' },
       { icon: Briefcase, label: 'Work History', path: '/admin/work-history' },
     ],

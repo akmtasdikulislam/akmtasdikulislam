@@ -1,6 +1,7 @@
 import BlogEditorSidebar from '@/components/admin/BlogEditorSidebar';
 import TipTapEditor from '@/components/editor/TipTapEditor';
 import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
@@ -264,7 +265,11 @@ const BlogEditor = () => {
           <div className="max-w-4xl mx-auto py-6 sm:py-8 px-4 sm:px-6">
             {/* Title input styled as heading */}
             <div className="mb-6">
+              <div className="mb-2">
+                <Label htmlFor="post-title" className="sr-only">Post Title</Label>
+              </div>
               <input
+                id="post-title"
                 type="text"
                 value={formData.title}
                 onChange={handleTitleChange}
@@ -275,7 +280,11 @@ const BlogEditor = () => {
 
             {/* Excerpt input */}
             <div className="mb-8 pb-6 border-b border-border">
+              <div className="mb-2">
+                <Label htmlFor="post-excerpt" className="sr-only">Excerpt</Label>
+              </div>
               <textarea
+                id="post-excerpt"
                 value={formData.excerpt}
                 onChange={(e) => setFormData(prev => ({ ...prev, excerpt: e.target.value }))}
                 placeholder="Write a brief summary that appears in previews and SEO..."

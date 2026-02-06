@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import AdminLayout from "./components/admin/AdminLayout";
 import LoadingScreen from "./components/ui/LoadingScreen";
-import AuthorProfile from "./pages/admin/AuthorProfile";
 import BlogEditor from "./pages/admin/BlogEditor";
 import BlogsList from "./pages/admin/BlogsList";
 import CertificationsList from "./pages/admin/CertificationsList";
@@ -87,7 +86,6 @@ const AppContent = () => {
           <Route path="blogs" element={<BlogsList />} />
           <Route path="blogs/:id" element={<BlogEditor />} />
 
-          <Route path="author" element={<AuthorProfile />} />
           <Route path="certifications" element={<CertificationsList />} />
           <Route path="work-history" element={<WorkHistoryList />} />
           <Route path="testimonials" element={<TestimonialsList />} />

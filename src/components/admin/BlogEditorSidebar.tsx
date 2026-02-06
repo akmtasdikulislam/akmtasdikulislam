@@ -2,11 +2,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { supabase } from '@/integrations/supabase/client';
@@ -89,7 +89,7 @@ const BlogEditorSidebar = ({ formData, setFormData, categories }: BlogEditorSide
       <div className="p-4 sm:p-6 space-y-6">
         {/* Cover Image */}
         <div className="space-y-3">
-          <Label className="text-sm font-medium">Cover Image</Label>
+          <Label>Cover Image</Label>
           <div className="relative aspect-video rounded-lg overflow-hidden bg-secondary border border-border">
             {formData.cover_image ? (
               <>
@@ -135,7 +135,7 @@ const BlogEditorSidebar = ({ formData, setFormData, categories }: BlogEditorSide
 
         {/* Slug */}
         <div className="space-y-2">
-          <Label htmlFor="slug" className="text-sm font-medium">URL Slug</Label>
+          <Label htmlFor="slug">URL Slug</Label>
           <Input
             id="slug"
             value={formData.slug}
@@ -148,7 +148,7 @@ const BlogEditorSidebar = ({ formData, setFormData, categories }: BlogEditorSide
 
         {/* Category */}
         <div className="space-y-2">
-          <Label className="text-sm font-medium">Category</Label>
+          <Label>Category</Label>
           <Select
             value={formData.category}
             onValueChange={(value) => setFormData(prev => ({ ...prev, category: value }))}
@@ -166,7 +166,7 @@ const BlogEditorSidebar = ({ formData, setFormData, categories }: BlogEditorSide
 
         {/* Tags */}
         <div className="space-y-2">
-          <Label className="text-sm font-medium">Tags</Label>
+          <Label>Tags</Label>
           <div className="flex gap-2">
             <Input
               value={newTag}
@@ -213,7 +213,7 @@ const BlogEditorSidebar = ({ formData, setFormData, categories }: BlogEditorSide
 
         {/* Stats */}
         <div className="space-y-2">
-          <Label className="text-sm font-medium">Post Stats</Label>
+          <Label>Post Stats</Label>
           <div className="grid grid-cols-2 gap-2 text-sm">
             <div className="p-3 rounded-lg bg-secondary/50">
               <p className="text-muted-foreground text-xs">Read Time</p>
