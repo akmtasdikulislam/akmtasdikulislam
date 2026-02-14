@@ -26,6 +26,8 @@ function WhyChooseMeEditor() {
     const { data, isLoading } = useWhyChooseMeContent();
     const [reasons, setReasons] = useState<any[]>([]);
     const [stats, setStats] = useState<any[]>([]);
+    const [focusedReason, setFocusedReason] = useState<string | null>(null);
+    const [focusedStat, setFocusedStat] = useState<string | null>(null);
 
     useEffect(() => {
         if (data) {
@@ -108,7 +110,23 @@ function WhyChooseMeEditor() {
             description: 'Description here',
             display_order: reasons.length + 1,
         };
-        createReasonMutation.mutate(newReason);
+        createReasonMutation.mutate(newReason, {
+            onSuccess: (data) => {
+                // Determine ID from data (single insert return) or fallback to last item
+                const newId = data ? data.id : null;
+
+                queryClient.invalidateQueries({ queryKey: ['homepage', 'why-choose-me'] }).then(() => {
+                    // After refetch, set focus and scroll
+                    if (newId) {
+                        setFocusedReason(newId);
+                        setTimeout(() => {
+                            const el = document.getElementById(`reason-${newId}`);
+                            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 100);
+                    }
+                });
+            }
+        });
     };
 
     const addStat = () => {
@@ -118,7 +136,21 @@ function WhyChooseMeEditor() {
             stat_label: 'New Stat',
             display_order: stats.length + 1,
         };
-        createStatMutation.mutate(newStat);
+        createStatMutation.mutate(newStat, {
+            onSuccess: (data) => {
+                const newId = data ? data.id : null;
+
+                queryClient.invalidateQueries({ queryKey: ['homepage', 'why-choose-me'] }).then(() => {
+                    if (newId) {
+                        setFocusedStat(newId);
+                        setTimeout(() => {
+                            const el = document.getElementById(`stat-${newId}`);
+                            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 100);
+                    }
+                });
+            }
+        });
     };
 
     if (isLoading) {
@@ -162,23 +194,48 @@ function WhyChooseMeEditor() {
                     {/* Reasons */}
                     <div className="flex items-center justify-between">
                         <h2 className="text-xl font-semibold">Reasons ({reasons.length})</h2>
-                        <Button onClick={addReason} size="sm" variant="outline">
-                            <Plus className="w-4 h-4 mr-2" />
-                            Add Reason
-                        </Button>
+                        <div className="flex gap-2">
+                            <Button onClick={addReason} size="sm" variant="outline">
+                                <Plus className="w-4 h-4 mr-2" />
+                                Add Reason
+                            </Button>
+                            <Button onClick={handleSaveAll} disabled={saving} size="sm">
+                                {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
+                                Save Reasons
+                            </Button>
+                        </div>
                     </div>
 
                     <div className="grid gap-4">
                         {reasons.map((reason: any, index: number) => (
                             <motion.div
                                 key={reason.id}
+                                id={`reason-${reason.id}`}
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                className="p-4 bg-card border border-border rounded-xl">
-                                <div className="flex items-end gap-3">
+                                onClick={() => setFocusedReason(reason.id)}
+                                className={`p-4 bg-card border rounded-xl relative transition-all duration-300 ${focusedReason === reason.id
+                                    ? 'border-primary ring-2 ring-primary/10 bg-primary/5 shadow-lg shadow-primary/5'
+                                    : 'border-border hover:border-primary/40'
+                                    }`}
+                            >
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="absolute top-2 right-2 z-20 h-8 w-8 text-destructive hover:bg-destructive/20 hover:text-destructive transition-colors duration-300"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        deleteReasonMutation.mutate(reason.id);
+                                    }}
+                                    title="Delete Reason"
+                                >
+                                    <Trash2 className="w-4 h-4" />
+                                </Button>
+
+                                <div className="flex items-end gap-3 mt-4 sm:mt-0">
                                     <GripVertical className="w-5 h-5 text-muted-foreground mb-3 cursor-move" />
                                     <div className="flex-1 grid gap-3">
-                                        <div className="grid sm:grid-cols-2 gap-3">
+                                        <div className="grid sm:grid-cols-2 gap-3 mr-8">
                                             <div>
                                                 <Label>Icon Name (Lucide)</Label>
                                                 <Input
@@ -218,14 +275,6 @@ function WhyChooseMeEditor() {
                                             />
                                         </div>
                                     </div>
-                                    <Button
-                                        variant="ghost"
-                                        className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
-                                        onClick={() => deleteReasonMutation.mutate(reason.id)}
-                                        title="Delete Reason"
-                                    >
-                                        <Trash2 className="w-4 h-4" />
-                                    </Button>
                                 </div>
                             </motion.div>
                         ))}
@@ -240,12 +289,7 @@ function WhyChooseMeEditor() {
                         </ul>
                     </div>
 
-                    <div className="flex justify-end">
-                        <Button onClick={handleSaveAll} disabled={saving} variant="outline">
-                            {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
-                            Save Reasons
-                        </Button>
-                    </div>
+
                 </TabsContent>
 
                 <TabsContent value="stats" className="space-y-6 mt-10 max-w-6xl mx-auto w-full px-4">
@@ -255,20 +299,45 @@ function WhyChooseMeEditor() {
                             <TrendingUp className="w-5 h-5 text-primary" />
                             Stats ({stats.length})
                         </h2>
-                        <Button onClick={addStat} size="sm" variant="outline">
-                            <Plus className="w-4 h-4 mr-2" />
-                            Add Stat
-                        </Button>
+                        <div className="flex gap-2">
+                            <Button onClick={addStat} size="sm" variant="outline">
+                                <Plus className="w-4 h-4 mr-2" />
+                                Add Stat
+                            </Button>
+                            <Button onClick={handleSaveAll} disabled={saving} size="sm">
+                                {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
+                                Save Stats
+                            </Button>
+                        </div>
                     </div>
 
                     <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         {stats.map((stat: any, index: number) => (
                             <motion.div
                                 key={stat.id}
+                                id={`stat-${stat.id}`}
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                className="p-4 bg-card border border-border rounded-xl">
-                                <div className="space-y-3">
+                                onClick={() => setFocusedStat(stat.id)}
+                                className={`p-4 bg-card border rounded-xl relative transition-all duration-300 ${focusedStat === stat.id
+                                    ? 'border-primary ring-2 ring-primary/10 bg-primary/5 shadow-lg shadow-primary/5'
+                                    : 'border-border hover:border-primary/40'
+                                    }`}
+                            >
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="absolute top-2 right-2 z-20 h-8 w-8 text-destructive hover:bg-destructive/20 hover:text-destructive transition-colors duration-300"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        deleteStatMutation.mutate(stat.id);
+                                    }}
+                                    title="Delete Stat"
+                                >
+                                    <Trash2 className="w-4 h-4" />
+                                </Button>
+
+                                <div className="space-y-3 pt-6">
                                     <div>
                                         <Label>Value</Label>
                                         <Input
@@ -305,14 +374,6 @@ function WhyChooseMeEditor() {
                                             placeholder="Projects Delivered"
                                         />
                                     </div>
-                                    <Button
-                                        variant="ghost"
-                                        className="w-full h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
-                                        onClick={() => deleteStatMutation.mutate(stat.id)}
-                                    >
-                                        <Trash2 className="w-4 h-4 mr-2" />
-                                        Delete Stat
-                                    </Button>
                                 </div>
                             </motion.div>
                         ))}
@@ -327,12 +388,7 @@ function WhyChooseMeEditor() {
                         </ul>
                     </div>
 
-                    <div className="flex justify-end">
-                        <Button onClick={handleSaveAll} disabled={saving} variant="outline">
-                            {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
-                            Save Stats
-                        </Button>
-                    </div>
+
                 </TabsContent>
             </Tabs>
         </div>
