@@ -21,6 +21,8 @@ const ExpertiseEditor = () => {
 
     const [techs, setTechs] = useState<any[]>([]);
     const [cards, setCards] = useState<any[]>([]);
+    const [focusedCard, setFocusedCard] = useState<string | null>(null);
+    const [focusedTech, setFocusedTech] = useState<string | null>(null);
 
     useEffect(() => {
         if (data) {
@@ -109,8 +111,9 @@ const ExpertiseEditor = () => {
     };
 
     const addNewTech = () => {
+        const newId = `temp-${Date.now()}`;
         setTechs([...techs, {
-            id: `temp-${Date.now()}`,
+            id: newId,
             name: 'New Tech',
             category: 'Frontend',
             icon_url: '',
@@ -118,16 +121,27 @@ const ExpertiseEditor = () => {
             in_expertise_grid: true,
             display_order: techs.length + 1
         }]);
+        setFocusedTech(newId);
+        setTimeout(() => {
+            const el = document.getElementById(`tech-${newId}`);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
     };
 
     const addNewCard = () => {
+        const newId = `temp-${Date.now()}`;
         setCards([...cards, {
-            id: `temp-${Date.now()}`,
+            id: newId,
             title: 'New Card',
             description: '',
             icon_url: '',
             display_order: cards.length + 1
         }]);
+        setFocusedCard(newId);
+        setTimeout(() => {
+            const el = document.getElementById(`card-${newId}`);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
     };
 
     if (isLoading) return <div className="flex justify-center p-8"><Loader2 className="animate-spin" /></div>;
@@ -162,9 +176,24 @@ const ExpertiseEditor = () => {
                 </div>
 
                 <TabsContent value="techs" className="space-y-6 mt-10 max-w-6xl mx-auto w-full px-4">
+                    <div className="flex items-center justify-between">
+                        <h2 className="text-xl font-semibold">Tech Stack ({techs.length})</h2>
+                        <Button onClick={addNewTech} size="sm" variant="outline">
+                            <Plus className="w-4 h-4 mr-2" />
+                            Add Tech Icon
+                        </Button>
+                    </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {techs.map((tech, index) => (
-                            <Card key={tech.id} className="group relative overflow-hidden border-border/50 bg-card/40 backdrop-blur-md hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 flex flex-col h-full">
+                            <Card
+                                key={tech.id}
+                                id={`tech-${tech.id}`}
+                                onClick={() => setFocusedTech(tech.id)}
+                                className={`group relative overflow-hidden backdrop-blur-md transition-all duration-500 flex flex-col h-full cursor-pointer ${focusedTech === tech.id
+                                    ? 'border-primary ring-2 ring-primary/10 bg-primary/5 shadow-lg shadow-primary/5'
+                                    : 'border-border/50 bg-card/40 hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10'
+                                    }`}
+                            >
                                 {/* Decorative Gradient Backdrop */}
                                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -332,17 +361,28 @@ const ExpertiseEditor = () => {
                         </ul>
                     </div>
 
-                    <div className="flex gap-3 mt-8">
-                        <Button onClick={addNewTech} variant="outline" className="flex-1">
-                            <Plus className="mr-2 h-4 w-4" /> Add Tech Icon
-                        </Button>
-                    </div>
+
                 </TabsContent>
 
                 <TabsContent value="cards" className="space-y-6 mt-10 max-w-6xl mx-auto w-full px-4">
+                    <div className="flex items-center justify-between">
+                        <h2 className="text-xl font-semibold">Expertise Cards ({cards.length})</h2>
+                        <Button onClick={addNewCard} size="sm" variant="outline">
+                            <Plus className="w-4 h-4 mr-2" />
+                            Add Expertise Card
+                        </Button>
+                    </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {cards.map((card, index) => (
-                            <Card key={card.id} className="group relative overflow-hidden border-border/50 bg-card/40 backdrop-blur-md hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 flex flex-col h-full">
+                            <Card
+                                key={card.id}
+                                id={`card-${card.id}`}
+                                onClick={() => setFocusedCard(card.id)}
+                                className={`group relative overflow-hidden backdrop-blur-md transition-all duration-500 flex flex-col h-full cursor-pointer ${focusedCard === card.id
+                                    ? 'border-primary ring-2 ring-primary/10 bg-primary/5 shadow-lg shadow-primary/5'
+                                    : 'border-border/50 bg-card/40 hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10'
+                                    }`}
+                            >
                                 {/* Decorative Gradient Backdrop */}
                                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -396,17 +436,22 @@ const ExpertiseEditor = () => {
                                             >
                                                 <Save className="h-4 w-4" />
                                             </Button>
-                                            <Button
-                                                size="icon"
-                                                variant="ghost"
-                                                className="h-8 w-8 text-destructive hover:bg-destructive/10 transition-colors duration-300"
-                                                onClick={() => deleteCardMutation.mutate(card.id)}
-                                                title="Delete Card"
-                                            >
-                                                <Trash2 className="h-4 w-4" />
-                                            </Button>
                                         </div>
                                     </div>
+
+                                    <Button
+                                        size="icon"
+                                        variant="ghost"
+                                        className="absolute top-2 right-2 z-20 h-8 w-8 text-destructive hover:bg-destructive/20 hover:text-destructive transition-colors duration-300"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            deleteCardMutation.mutate(card.id);
+                                        }}
+                                        title="Delete Card"
+                                    >
+                                        <Trash2 className="h-4 w-4" />
+                                    </Button>
+
 
                                     {/* Tile Body: Info */}
                                     <div className="flex-1 space-y-3">
@@ -468,14 +513,9 @@ const ExpertiseEditor = () => {
                         </ul>
                     </div>
 
-                    <div className="flex gap-3 mt-8">
-                        <Button onClick={addNewCard} variant="outline" className="flex-1">
-                            <Plus className="mr-2 h-4 w-4" /> Add Expertise Card
-                        </Button>
-                    </div>
                 </TabsContent>
             </Tabs>
-        </div>
+        </div >
     );
 };
 
