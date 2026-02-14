@@ -31,6 +31,12 @@ const HeroEditor = () => {
     const [techs, setTechs] = useState<Array<{ id?: string; name: string; icon_url: string; position_class: string; animation_class: string; delay: number; invert: boolean; icon_type?: string; is_visible?: boolean; display_order: number }>>([]);
     const [badges, setBadges] = useState<Array<{ id?: string; badge_text: string; position_class: string; display_order: number }>>([]);
 
+    const [focusedRole, setFocusedRole] = useState<number | null>(null);
+    const [focusedStat, setFocusedStat] = useState<number | null>(null);
+    const [focusedSocial, setFocusedSocial] = useState<number | null>(null);
+    const [focusedTech, setFocusedTech] = useState<number | null>(null);
+    const [focusedBadge, setFocusedBadge] = useState<number | null>(null);
+
     useEffect(() => {
         if (data) {
             setHeroData({
@@ -197,9 +203,24 @@ const HeroEditor = () => {
                 {/* BASIC INFO */}
                 <TabsContent value="basic" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
                     <Card>
-                        <CardHeader>
-                            <CardTitle>Basic Information</CardTitle>
-                            <CardDescription>Your name, greeting, and intro text</CardDescription>
+                        <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                            <div className="space-y-1.5">
+                                <CardTitle>Basic Information</CardTitle>
+                                <CardDescription>Your name, greeting, and intro text</CardDescription>
+                            </div>
+                            <Button onClick={() => updateHeroMutation.mutate(heroData)} disabled={updateHeroMutation.isPending} className="w-full sm:w-auto">
+                                {updateHeroMutation.isPending ? (
+                                    <>
+                                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                        Saving...
+                                    </>
+                                ) : (
+                                    <>
+                                        <Save className="w-4 h-4 mr-2" />
+                                        Save Basic Info
+                                    </>
+                                )}
+                            </Button>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div className="grid gap-4 md:grid-cols-2">
@@ -253,10 +274,7 @@ const HeroEditor = () => {
                                 </ul>
                             </div>
 
-                            <Button onClick={() => updateHeroMutation.mutate(heroData)} disabled={updateHeroMutation.isPending}>
-                                <Save className="w-4 h-4 mr-2" />
-                                Save Basic Info
-                            </Button>
+
                         </CardContent>
                     </Card>
                 </TabsContent>
@@ -264,15 +282,46 @@ const HeroEditor = () => {
                 {/* ROLES */}
                 <TabsContent value="roles" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
                     <Card>
-                        <CardHeader>
+                        <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                             <CardTitle>Typewriter Roles</CardTitle>
+                            <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                                <Button onClick={() => {
+                                    setRoles([...roles, { role_text: '', display_order: roles.length }]);
+                                    setFocusedRole(roles.length);
+                                    setTimeout(() => document.getElementById(`role-${roles.length}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+                                }} variant="outline" className="w-full sm:w-auto">
+                                    <Plus className="w-4 h-4 mr-2" />
+                                    Add Role
+                                </Button>
+                                <Button onClick={() => updateRolesMutation.mutate(roles)} disabled={updateRolesMutation.isPending} className="w-full sm:w-auto">
+                                    {updateRolesMutation.isPending ? (
+                                        <>
+                                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                            Saving...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Save className="w-4 h-4 mr-2" />
+                                            Save Roles
+                                        </>
+                                    )}
+                                </Button>
+                            </div>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div className="space-y-3">
                                 {roles.map((role, index) => (
-                                    <div key={index} className="flex gap-2 items-center">
-                                        <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab" />
-                                        <div className="flex-1 space-y-1">
+                                    <div
+                                        key={index}
+                                        id={`role-${index}`}
+                                        onClick={() => setFocusedRole(index)}
+                                        className={`relative flex gap-4 items-start p-4 rounded-lg border transition-all duration-300 ${focusedRole === index
+                                            ? 'border-primary ring-2 ring-primary/10 bg-primary/5'
+                                            : 'border-border bg-muted/30'
+                                            }`}
+                                    >
+                                        <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mt-3" />
+                                        <div className="flex-1 space-y-1 pr-8">
                                             <Label>Role Text</Label>
                                             <Input
                                                 value={role.role_text}
@@ -282,13 +331,17 @@ const HeroEditor = () => {
                                                     setRoles(updated);
                                                 }}
                                                 className="w-full"
+                                                placeholder="e.g. Full Stack Developer"
                                             />
                                         </div>
                                         <Button
                                             variant="ghost"
-                                            className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
-                                            onClick={() => setRoles(roles.filter((_, i) => i !== index))}
-                                            title="Delete Role"
+                                            size="icon"
+                                            className="absolute top-2 right-2 text-destructive hover:bg-destructive/10"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setRoles(roles.filter((_, i) => i !== index));
+                                            }}
                                         >
                                             <Trash2 className="w-4 h-4" />
                                         </Button>
@@ -304,14 +357,7 @@ const HeroEditor = () => {
                                 </ul>
                             </div>
 
-                            <div className="flex gap-3 mt-6">
-                                <Button onClick={() => setRoles([...roles, { role_text: '', display_order: roles.length }])} variant="outline" className="flex-1">
-                                    <Plus className="w-4 h-4 mr-2" /> Add Role
-                                </Button>
-                                <Button onClick={() => updateRolesMutation.mutate(roles)} disabled={updateRolesMutation.isPending} className="flex-1">
-                                    <Save className="w-4 h-4 mr-2" /> Save Roles
-                                </Button>
-                            </div>
+
                         </CardContent>
                     </Card>
                 </TabsContent>
@@ -319,14 +365,45 @@ const HeroEditor = () => {
                 {/* STATS */}
                 <TabsContent value="stats" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
                     <Card>
-                        <CardHeader>
+                        <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                             <CardTitle>Statistics</CardTitle>
+                            <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                                <Button onClick={() => {
+                                    setStats([...stats, { stat_label: '', stat_value: 0, stat_suffix: '+', display_order: stats.length }]);
+                                    setFocusedStat(stats.length);
+                                    setTimeout(() => document.getElementById(`stat-${stats.length}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+                                }} variant="outline" className="w-full sm:w-auto">
+                                    <Plus className="w-4 h-4 mr-2" />
+                                    Add Stat
+                                </Button>
+                                <Button onClick={() => updateStatsMutation.mutate(stats)} disabled={updateStatsMutation.isPending} className="w-full sm:w-auto">
+                                    {updateStatsMutation.isPending ? (
+                                        <>
+                                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                            Saving...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Save className="w-4 h-4 mr-2" />
+                                            Save Stats
+                                        </>
+                                    )}
+                                </Button>
+                            </div>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             {stats.map((stat, index) => (
-                                <div key={index} className="flex gap-2 items-end mb-4 bg-muted/20 p-3 rounded-lg border border-border/50">
-                                    <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mb-3" />
-                                    <div className="flex-1 grid grid-cols-3 gap-2">
+                                <div
+                                    key={index}
+                                    id={`stat-${index}`}
+                                    onClick={() => setFocusedStat(index)}
+                                    className={`relative flex gap-2 items-start mb-4 p-4 rounded-lg border transition-all duration-300 ${focusedStat === index
+                                        ? 'bg-primary/5 border-primary ring-2 ring-primary/10'
+                                        : 'bg-muted/20 border-border/50'
+                                        }`}
+                                >
+                                    <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mt-3" />
+                                    <div className="flex-1 grid grid-cols-3 gap-2 pr-8">
                                         <div className="space-y-1">
                                             <Label>Label</Label>
                                             <Input value={stat.stat_label} onChange={(e) => {
@@ -348,9 +425,12 @@ const HeroEditor = () => {
                                     </div>
                                     <Button
                                         variant="ghost"
-                                        className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
-                                        onClick={() => setStats(stats.filter((_, i) => i !== index))}
-                                        title="Delete Stat"
+                                        size="icon"
+                                        className="absolute top-2 right-2 text-destructive hover:bg-destructive/10"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setStats(stats.filter((_, i) => i !== index));
+                                        }}
                                     >
                                         <Trash2 className="w-4 h-4" />
                                     </Button>
@@ -366,14 +446,7 @@ const HeroEditor = () => {
                                 </ul>
                             </div>
 
-                            <div className="flex gap-3 mt-6">
-                                <Button onClick={() => setStats([...stats, { stat_label: '', stat_value: 0, stat_suffix: '+', display_order: stats.length }])} variant="outline" className="flex-1">
-                                    <Plus className="w-4 h-4 mr-2" /> Add Stat
-                                </Button>
-                                <Button onClick={() => updateStatsMutation.mutate(stats)} className="flex-1">
-                                    <Save className="w-4 h-4 mr-2" /> Save Stats
-                                </Button>
-                            </div>
+
                         </CardContent>
                     </Card>
                 </TabsContent>
@@ -381,16 +454,49 @@ const HeroEditor = () => {
                 {/* SOCIAL */}
                 <TabsContent value="social" className="space-y-4 mt-10 w-full px-4 md:px-8">
                     <Card>
-                        <CardHeader>
-                            <CardTitle>Social Links</CardTitle>
-                            <CardDescription>Manage your social media profiles</CardDescription>
+                        <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                            <div className="space-y-1.5">
+                                <CardTitle>Social Links</CardTitle>
+                                <CardDescription>Manage your social media profiles</CardDescription>
+                            </div>
+                            <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                                <Button onClick={() => {
+                                    setSocialLinks([...socialLinks, { platform: 'GitHub', url: '', icon_name: 'GitHub', icon_url: null, is_visible: true, display_order: socialLinks.length }]);
+                                    setFocusedSocial(socialLinks.length);
+                                    setTimeout(() => document.getElementById(`social-${socialLinks.length}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+                                }} variant="outline" className="w-full sm:w-auto">
+                                    <Plus className="w-4 h-4 mr-2" />
+                                    Add Social Link
+                                </Button>
+                                <Button onClick={() => updateSocialLinksMutation.mutate(socialLinks)} disabled={updateSocialLinksMutation.isPending} className="w-full sm:w-auto">
+                                    {updateSocialLinksMutation.isPending ? (
+                                        <>
+                                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                            Saving...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Save className="w-4 h-4 mr-2" />
+                                            Save Social Links
+                                        </>
+                                    )}
+                                </Button>
+                            </div>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {socialLinks.map((link, index) => {
                                     const isCustom = !platformOptions.includes(link.platform) || link.platform === "Custom";
                                     return (
-                                        <Card key={index} className="group relative overflow-hidden border-border/50 bg-card/40 backdrop-blur-md hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 flex flex-col h-full">
+                                        <Card
+                                            key={index}
+                                            id={`social-${index}`}
+                                            onClick={() => setFocusedSocial(index)}
+                                            className={`group relative overflow-hidden backdrop-blur-md transition-all duration-500 flex flex-col h-full cursor-pointer ${focusedSocial === index
+                                                ? 'border-primary ring-2 ring-primary/10 bg-primary/5 shadow-lg shadow-primary/5'
+                                                : 'border-border/50 bg-card/40 hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10'
+                                                } `}
+                                        >
                                             {/* Decorative Gradient Backdrop */}
                                             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -434,14 +540,19 @@ const HeroEditor = () => {
                                                         </div>
                                                     </div>
 
-                                                    <Button
-                                                        size="icon"
-                                                        variant="ghost"
-                                                        className="h-8 w-8 text-destructive hover:bg-destructive/20 hover:text-destructive transition-colors duration-300"
-                                                        onClick={() => setSocialLinks(socialLinks.filter((_, i) => i !== index))}
-                                                    >
-                                                        <Trash2 className="h-4 w-4" />
-                                                    </Button>
+                                                    <div className="flex items-center gap-1">
+                                                        <Button
+                                                            size="icon"
+                                                            variant="ghost"
+                                                            className="h-8 w-8 text-destructive hover:bg-destructive/10 transition-colors duration-300"
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                setSocialLinks(socialLinks.filter((_, i) => i !== index));
+                                                            }}
+                                                        >
+                                                            <Trash2 className="h-4 w-4" />
+                                                        </Button>
+                                                    </div>
                                                 </div>
 
                                                 {/* Tile Body: Title & Info */}
@@ -542,14 +653,7 @@ const HeroEditor = () => {
                                 </ul>
                             </div>
 
-                            <div className="flex gap-3 mt-6">
-                                <Button onClick={() => setSocialLinks([...socialLinks, { platform: 'GitHub', url: '', icon_name: 'GitHub', icon_url: null, is_visible: true, display_order: socialLinks.length }])} variant="outline" className="flex-1">
-                                    <Plus className="w-4 h-4 mr-2" /> Add Social Link
-                                </Button>
-                                <Button onClick={() => updateSocialLinksMutation.mutate(socialLinks)} className="flex-1">
-                                    <Save className="w-4 h-4 mr-2" /> Save Social Links
-                                </Button>
-                            </div>
+
                         </CardContent>
                     </Card>
                 </TabsContent>
@@ -557,9 +661,47 @@ const HeroEditor = () => {
                 {/* TECH STACK */}
                 <TabsContent value="techs" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
                     <Card>
-                        <CardHeader>
-                            <CardTitle>Tech Stack Icons</CardTitle>
-                            <CardDescription>Floating icons position control. Use presets for standard orbit positions.</CardDescription>
+                        <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                            <div className="space-y-1.5">
+                                <CardTitle>Tech Stack Icons</CardTitle>
+                                <CardDescription>Floating icons position control. Use presets for standard orbit positions.</CardDescription>
+                            </div>
+                            <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                                <Button
+                                    onClick={() => {
+                                        setTechs([...techs, {
+                                            name: '',
+                                            icon_url: '',
+                                            position_class: 'left-1/2 -translate-x-1/2 -top-20 md:-top-24',
+                                            animation_class: 'animate-float-1',
+                                            delay: 0,
+                                            invert: false,
+                                            is_visible: true,
+                                            display_order: techs.length
+                                        }]);
+                                        setFocusedTech(techs.length);
+                                        setTimeout(() => document.getElementById(`tech-${techs.length}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+                                    }}
+                                    variant="outline"
+                                    className="w-full sm:w-auto"
+                                >
+                                    <Plus className="w-4 h-4 mr-2" />
+                                    Add Tech Icon
+                                </Button>
+                                <Button onClick={() => updateTechsMutation.mutate(techs)} disabled={updateTechsMutation.isPending} className="w-full sm:w-auto">
+                                    {updateTechsMutation.isPending ? (
+                                        <>
+                                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                            Saving...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Save className="w-4 h-4 mr-2" />
+                                            Save Tech Stack
+                                        </>
+                                    )}
+                                </Button>
+                            </div>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -568,7 +710,15 @@ const HeroEditor = () => {
                                     const isCustom = !matchedPreset;
 
                                     return (
-                                        <Card key={index} className="group relative overflow-hidden border-border/50 bg-card/40 backdrop-blur-md hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 flex flex-col h-full">
+                                        <Card
+                                            key={index}
+                                            id={`tech-${index}`}
+                                            onClick={() => setFocusedTech(index)}
+                                            className={`group relative overflow-hidden backdrop-blur-md transition-all duration-500 flex flex-col h-full cursor-pointer ${focusedTech === index
+                                                ? 'border-primary ring-2 ring-primary/10 bg-primary/5 shadow-lg shadow-primary/5'
+                                                : 'border-border/50 bg-card/40 hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10'
+                                                }`}
+                                        >
                                             {/* Decorative Gradient Backdrop */}
                                             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -625,8 +775,11 @@ const HeroEditor = () => {
                                                         <Button
                                                             size="icon"
                                                             variant="ghost"
-                                                            className="h-8 w-8 text-destructive hover:bg-destructive/20 hover:text-destructive transition-colors duration-300"
-                                                            onClick={() => setTechs(techs.filter((_, i) => i !== index))}
+                                                            className="h-8 w-8 text-destructive hover:bg-destructive/10 transition-colors duration-300"
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                setTechs(techs.filter((_, i) => i !== index));
+                                                            }}
                                                         >
                                                             <Trash2 className="h-4 w-4" />
                                                         </Button>
@@ -757,27 +910,7 @@ const HeroEditor = () => {
                                 </ul>
                             </div>
 
-                            <div className="flex gap-3 mt-6">
-                                <Button
-                                    onClick={() => setTechs([...techs, {
-                                        name: '',
-                                        icon_url: '',
-                                        position_class: 'left-1/2 -translate-x-1/2 -top-20 md:-top-24',
-                                        animation_class: 'animate-float-1',
-                                        delay: 0,
-                                        invert: false,
-                                        is_visible: true,
-                                        display_order: techs.length
-                                    }])}
-                                    variant="outline"
-                                    className="flex-1"
-                                >
-                                    <Plus className="w-4 h-4 mr-2" /> Add Tech Icon
-                                </Button>
-                                <Button onClick={() => updateTechsMutation.mutate(techs)} className="flex-1">
-                                    <Save className="w-4 h-4 mr-2" /> Save Tech Stack
-                                </Button>
-                            </div>
+
                         </CardContent>
                     </Card>
                 </TabsContent>
@@ -785,19 +918,52 @@ const HeroEditor = () => {
                 {/* BADGES */}
                 <TabsContent value="badges" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
                     <Card>
-                        <CardHeader>
-                            <CardTitle>Floating Badges</CardTitle>
-                            <CardDescription>Position control for text badges (Use Presets)</CardDescription>
+                        <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                            <div className="space-y-1.5">
+                                <CardTitle>Floating Badges</CardTitle>
+                                <CardDescription>Position control for text badges (Use Presets)</CardDescription>
+                            </div>
+                            <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                                <Button onClick={() => {
+                                    setBadges([...badges, { badge_text: '', position_class: 'absolute', display_order: badges.length }]);
+                                    setFocusedBadge(badges.length);
+                                    setTimeout(() => document.getElementById(`badge-${badges.length}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+                                }} variant="outline" className="w-full sm:w-auto">
+                                    <Plus className="w-4 h-4 mr-2" />
+                                    Add Badge
+                                </Button>
+                                <Button onClick={() => updateBadgesMutation.mutate(badges)} disabled={updateBadgesMutation.isPending} className="w-full sm:w-auto">
+                                    {updateBadgesMutation.isPending ? (
+                                        <>
+                                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                            Saving...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Save className="w-4 h-4 mr-2" />
+                                            Save Badges
+                                        </>
+                                    )}
+                                </Button>
+                            </div>
                         </CardHeader>
                         <CardContent className="space-y-6">
                             {badges.map((badge, index) => {
                                 const matchedPreset = BADGE_POSITION_PRESETS.find(p => p.value === badge.position_class);
                                 const isCustom = !matchedPreset;
                                 return (
-                                    <div key={index} className="bg-muted/30 p-4 rounded-lg border border-border">
+                                    <div
+                                        key={index}
+                                        id={`badge-${index}`}
+                                        onClick={() => setFocusedBadge(index)}
+                                        className={`relative bg-muted/30 p-4 rounded-lg border transition-all duration-300 cursor-pointer ${focusedBadge === index
+                                            ? 'border-primary ring-2 ring-primary/10 bg-primary/5'
+                                            : 'border-border'
+                                            }`}
+                                    >
                                         <div className="flex gap-4 items-start">
                                             <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mt-3" />
-                                            <div className="flex-1 space-y-4">
+                                            <div className="flex-1 space-y-4 pr-8">
                                                 <div className="space-y-1">
                                                     <Label>Badge Text</Label>
                                                     <Input value={badge.badge_text} onChange={(e) => { const u = [...badges]; u[index].badge_text = e.target.value; setBadges(u); }} placeholder="Badge Text" />
@@ -838,7 +1004,15 @@ const HeroEditor = () => {
                                                     </div>
                                                 )}
                                             </div>
-                                            <Button variant="ghost" size="icon" className="text-destructive hover:bg-destructive/10" onClick={() => setBadges(badges.filter((_, i) => i !== index))}>
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
+                                                className="absolute top-2 right-2 text-destructive hover:bg-destructive/10"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setBadges(badges.filter((_, i) => i !== index));
+                                                }}
+                                            >
                                                 <Trash2 className="w-4 h-4" />
                                             </Button>
                                         </div>
@@ -854,14 +1028,7 @@ const HeroEditor = () => {
                                 </ul>
                             </div>
 
-                            <div className="flex gap-3 mt-6">
-                                <Button onClick={() => setBadges([...badges, { badge_text: '', position_class: 'absolute', display_order: badges.length }])} variant="outline" className="flex-1">
-                                    <Plus className="w-4 h-4 mr-2" /> Add Badge
-                                </Button>
-                                <Button onClick={() => updateBadgesMutation.mutate(badges)} className="flex-1">
-                                    <Save className="w-4 h-4 mr-2" /> Save Badges
-                                </Button>
-                            </div>
+
                         </CardContent>
                     </Card>
                 </TabsContent>
