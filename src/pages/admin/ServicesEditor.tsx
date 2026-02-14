@@ -8,7 +8,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useServicesContent } from '@/hooks/useHomepageContent';
 import { supabase } from '@/integrations/supabase/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Loader2, Plus, Save, Trash2 } from 'lucide-react';
+import { GripVertical, Loader2, Plus, Save, Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 // If IconSelect doesn't exist, I'll allow simple text input for icon name or list commonly used ones.
 // I'll stick to Input for now or "Lucide Icon Name" placeholder.
@@ -19,6 +19,7 @@ const ServicesEditor = () => {
     const queryClient = useQueryClient();
 
     const [services, setServices] = useState<any[]>([]);
+    const [focusedService, setFocusedService] = useState<string | null>(null);
 
     useEffect(() => {
         if (initialServices) {
@@ -53,14 +54,20 @@ const ServicesEditor = () => {
     });
 
     const addNewService = () => {
+        const newId = `temp-${Date.now()}`;
         setServices([...services, {
-            id: `temp-${Date.now()}`,
+            id: newId,
             title: 'New Service',
             description: '',
             icon_name: 'Code',
             features: [],
             display_order: services.length + 1
         }]);
+        setFocusedService(newId);
+        setTimeout(() => {
+            const el = document.getElementById(`service-${newId}`);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
     };
 
     if (isLoading) return <div className="flex justify-center p-8"><Loader2 className="animate-spin" /></div>;
@@ -96,33 +103,39 @@ const ServicesEditor = () => {
 
                 <div className="grid gap-6">
                     {services.map((service, index) => (
-                        <Card key={service.id}>
+                        <Card
+                            key={service.id}
+                            id={`service-${service.id}`}
+                            onClick={() => setFocusedService(service.id)}
+                            className={`relative transition-all duration-300 ${focusedService === service.id
+                                ? 'border-primary ring-2 ring-primary/10 bg-primary/5 shadow-lg shadow-primary/5'
+                                : 'hover:border-primary/40'
+                                }`}
+                        >
+                            <Button
+                                size="icon"
+                                variant="ghost"
+                                className="absolute top-2 right-2 z-20 h-8 w-8 text-destructive hover:bg-destructive/20 hover:text-destructive transition-colors duration-300"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    deleteServiceMutation.mutate(service.id);
+                                }}
+                                title="Delete Service"
+                            >
+                                <Trash2 className="h-4 w-4" />
+                            </Button>
+
                             <CardContent className="p-6 space-y-4">
                                 <div className="flex justify-between items-end">
-                                    <div className="space-y-1 w-1/3">
-                                        <Label>Service Title</Label>
-                                        <Input
-                                            value={service.title}
-                                            onChange={(e) => setServices(services.map(s => s.id === service.id ? { ...s, title: e.target.value } : s))}
-                                        />
-                                    </div>
-                                    <div className="flex gap-2">
-                                        <Button
-                                            size="sm"
-                                            variant="ghost"
-                                            className="text-primary hover:bg-primary/10 transition-colors"
-                                            onClick={() => updateServiceMutation.mutate(service)}
-                                        >
-                                            <Save className="mr-2 h-4 w-4" /> Save
-                                        </Button>
-                                        <Button
-                                            variant="ghost"
-                                            className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
-                                            onClick={() => deleteServiceMutation.mutate(service.id)}
-                                            title="Delete Service"
-                                        >
-                                            <Trash2 className="h-4 w-4" />
-                                        </Button>
+                                    <div className="flex items-center gap-4 w-full mr-8">
+                                        <GripVertical className="w-5 h-5 text-muted-foreground cursor-move flex-shrink-0" />
+                                        <div className="space-y-1 flex-1">
+                                            <Label>Service Title</Label>
+                                            <Input
+                                                value={service.title}
+                                                onChange={(e) => setServices(services.map(s => s.id === service.id ? { ...s, title: e.target.value } : s))}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
 
@@ -152,6 +165,15 @@ const ServicesEditor = () => {
                                         onChange={(e) => setServices(services.map(s => s.id === service.id ? { ...s, icon_name: e.target.value } : s))}
                                         placeholder="e.g. Code, Smartphone, Globe"
                                     />
+                                    <Button
+                                        size="sm"
+                                        variant="outline"
+                                        onClick={() => updateServiceMutation.mutate(service)}
+                                        className="ml-auto block mt-2"
+                                    >
+                                        <Save className="h-4 w-4 mr-2" />
+                                        Save Changes
+                                    </Button>
                                 </div>
                             </CardContent>
                         </Card>
