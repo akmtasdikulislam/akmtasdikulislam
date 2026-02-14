@@ -28,6 +28,10 @@ const AboutEditor = () => {
     const [interests, setInterests] = useState<Array<{ id?: string; label: string; icon_name: string; display_order: number }>>([]);
     const [values, setValues] = useState<Array<{ id?: string; value_text: string; description: string; icon_name: string; display_order: number }>>([]);
 
+    const [focusedHighlight, setFocusedHighlight] = useState<number | null>(null);
+    const [focusedInterest, setFocusedInterest] = useState<number | null>(null);
+    const [focusedValue, setFocusedValue] = useState<number | null>(null);
+
     useEffect(() => {
         if (data) {
             const ensureJson = (content: string) => {
@@ -171,9 +175,24 @@ const AboutEditor = () => {
                 <TabsContent value="content" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
 
                     <Card>
-                        <CardHeader>
-                            <CardTitle>Main Content</CardTitle>
-                            <CardDescription>The primary text describing you and your background</CardDescription>
+                        <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                            <div className="space-y-1.5">
+                                <CardTitle>Main Content</CardTitle>
+                                <CardDescription>The primary text describing you and your background</CardDescription>
+                            </div>
+                            <Button onClick={() => updateAboutMutation.mutate(aboutData)} disabled={updateAboutMutation.isPending} className="w-full sm:w-auto">
+                                {updateAboutMutation.isPending ? (
+                                    <>
+                                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                        Saving...
+                                    </>
+                                ) : (
+                                    <>
+                                        <Save className="w-4 h-4 mr-2" />
+                                        Save Content
+                                    </>
+                                )}
+                            </Button>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div>
@@ -196,36 +215,62 @@ const AboutEditor = () => {
                                 </ul>
                             </div>
 
-                            <Button onClick={() => updateAboutMutation.mutate(aboutData)} disabled={updateAboutMutation.isPending}>
-                                {updateAboutMutation.isPending ? (
-                                    <>
-                                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                                        Saving...
-                                    </>
-                                ) : (
-                                    <>
-                                        <Save className="w-4 h-4 mr-2" />
-                                        Save Content
-                                    </>
-                                )}
-                            </Button>
+
                         </CardContent>
                     </Card>
                 </TabsContent>
 
                 <TabsContent value="highlights" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
                     <Card>
-                        <CardHeader>
-                            <CardTitle>Highlights</CardTitle>
-                            <CardDescription>Key information cards (Education, Location, etc.)</CardDescription>
+                        <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                            <div className="space-y-1.5">
+                                <CardTitle>Highlights</CardTitle>
+                                <CardDescription>Key information cards (Education, Location, etc.)</CardDescription>
+                            </div>
+                            <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                                <Button
+                                    onClick={() => {
+                                        setHighlights([...highlights, { title: '', description: '', detail: '', icon_name: '', display_order: highlights.length }]);
+                                        setFocusedHighlight(highlights.length);
+                                        setTimeout(() => document.getElementById(`highlight-${highlights.length}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+                                    }}
+                                    variant="outline"
+                                    className="w-full sm:w-auto"
+                                >
+                                    <Plus className="w-4 h-4 mr-2" />
+                                    Add Highlight
+                                </Button>
+
+                                <Button onClick={() => updateHighlightsMutation.mutate(highlights)} disabled={updateHighlightsMutation.isPending} className="w-full sm:w-auto">
+                                    {updateHighlightsMutation.isPending ? (
+                                        <>
+                                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                            Saving...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Save className="w-4 h-4 mr-2" />
+                                            Save Highlights
+                                        </>
+                                    )}
+                                </Button>
+                            </div>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             {highlights.map((item, index) => (
-                                <Card key={index}>
+                                <Card
+                                    key={index}
+                                    id={`highlight-${index}`}
+                                    onClick={() => setFocusedHighlight(index)}
+                                    className={`relative transition-all duration-300 border cursor-pointer ${focusedHighlight === index
+                                        ? 'border-primary ring-2 ring-primary/10 bg-primary/5'
+                                        : 'bg-card'
+                                        }`}
+                                >
                                     <CardContent className="pt-6">
                                         <div className="flex gap-2 items-end">
                                             <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mb-3" />
-                                            <div className="flex-1 space-y-3">
+                                            <div className="flex-1 space-y-3 pr-8">
                                                 <div className="grid gap-2 md:grid-cols-2">
                                                     <div className="space-y-1">
                                                         <Label>Title</Label>
@@ -279,9 +324,12 @@ const AboutEditor = () => {
                                             </div>
                                             <Button
                                                 variant="ghost"
-                                                className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
-                                                onClick={() => setHighlights(highlights.filter((_, i) => i !== index))}
-                                                title="Delete Highlight"
+                                                size="icon"
+                                                className="absolute top-2 right-2 text-destructive hover:bg-destructive/10"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setHighlights(highlights.filter((_, i) => i !== index));
+                                                }}
                                             >
                                                 <Trash2 className="w-4 h-4" />
                                             </Button>
@@ -300,18 +348,34 @@ const AboutEditor = () => {
                                 </ul>
                             </div>
 
-                            <div className="flex gap-3 mt-6">
+
+                        </CardContent>
+                    </Card>
+                </TabsContent>
+
+                <TabsContent value="interests" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
+                    <Card>
+                        <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                            <div className="space-y-1.5">
+                                <CardTitle>Interests</CardTitle>
+                                <CardDescription>Tags showing your interests and hobbies</CardDescription>
+                            </div>
+                            <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
                                 <Button
-                                    onClick={() => setHighlights([...highlights, { title: '', description: '', detail: '', icon_name: '', display_order: highlights.length }])}
+                                    onClick={() => {
+                                        setInterests([...interests, { label: '', icon_name: '', display_order: interests.length }]);
+                                        setFocusedInterest(interests.length);
+                                        setTimeout(() => document.getElementById(`interest-${interests.length}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+                                    }}
                                     variant="outline"
-                                    className="flex-1"
+                                    className="w-full sm:w-auto"
                                 >
                                     <Plus className="w-4 h-4 mr-2" />
-                                    Add Highlight
+                                    Add Interest
                                 </Button>
 
-                                <Button onClick={() => updateHighlightsMutation.mutate(highlights)} disabled={updateHighlightsMutation.isPending} className="flex-1">
-                                    {updateHighlightsMutation.isPending ? (
+                                <Button onClick={() => updateInterestsMutation.mutate(interests)} disabled={updateInterestsMutation.isPending} className="w-full sm:w-auto">
+                                    {updateInterestsMutation.isPending ? (
                                         <>
                                             <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                                             Saving...
@@ -319,27 +383,26 @@ const AboutEditor = () => {
                                     ) : (
                                         <>
                                             <Save className="w-4 h-4 mr-2" />
-                                            Save Highlights
+                                            Save Interests
                                         </>
                                     )}
                                 </Button>
                             </div>
-                        </CardContent>
-                    </Card>
-                </TabsContent>
-
-                <TabsContent value="interests" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Interests</CardTitle>
-                            <CardDescription>Tags showing your interests and hobbies</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div className="space-y-3">
                                 {interests.map((item, index) => (
-                                    <div key={index} className="flex gap-2 items-end mb-4 bg-muted/20 p-3 rounded-lg border border-border/50">
-                                        <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mb-3" />
-                                        <div className="flex-1 grid grid-cols-2 gap-2">
+                                    <div
+                                        key={index}
+                                        id={`interest-${index}`}
+                                        onClick={() => setFocusedInterest(index)}
+                                        className={`relative flex gap-2 items-start mb-4 p-4 rounded-lg border transition-all duration-300 cursor-pointer ${focusedInterest === index
+                                            ? 'bg-primary/5 border-primary ring-2 ring-primary/10'
+                                            : 'bg-muted/20 border-border/50'
+                                            }`}
+                                    >
+                                        <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mt-3" />
+                                        <div className="flex-1 grid grid-cols-2 gap-2 pr-8">
                                             <div className="space-y-1">
                                                 <Label>Interest Label</Label>
                                                 <Input
@@ -369,9 +432,12 @@ const AboutEditor = () => {
                                         </div>
                                         <Button
                                             variant="ghost"
-                                            className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
-                                            onClick={() => setInterests(interests.filter((_, i) => i !== index))}
-                                            title="Delete Interest"
+                                            size="icon"
+                                            className="absolute top-2 right-2 text-destructive hover:bg-destructive/10"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setInterests(interests.filter((_, i) => i !== index));
+                                            }}
                                         >
                                             <Trash2 className="w-4 h-4" />
                                         </Button>
@@ -387,18 +453,34 @@ const AboutEditor = () => {
                                 </ul>
                             </div>
 
-                            <div className="flex gap-3 mt-6">
+
+                        </CardContent>
+                    </Card>
+                </TabsContent>
+
+                <TabsContent value="values" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
+                    <Card>
+                        <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                            <div className="space-y-1.5">
+                                <CardTitle>Core Values</CardTitle>
+                                <CardDescription>Your core professional values</CardDescription>
+                            </div>
+                            <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
                                 <Button
-                                    onClick={() => setInterests([...interests, { label: '', icon_name: '', display_order: interests.length }])}
+                                    onClick={() => {
+                                        setValues([...values, { value_text: '', description: '', icon_name: '', display_order: values.length }]);
+                                        setFocusedValue(values.length);
+                                        setTimeout(() => document.getElementById(`value-${values.length}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+                                    }}
                                     variant="outline"
-                                    className="flex-1"
+                                    className="w-full sm:w-auto"
                                 >
                                     <Plus className="w-4 h-4 mr-2" />
-                                    Add Interest
+                                    Add Value
                                 </Button>
 
-                                <Button onClick={() => updateInterestsMutation.mutate(interests)} disabled={updateInterestsMutation.isPending} className="flex-1">
-                                    {updateInterestsMutation.isPending ? (
+                                <Button onClick={() => updateValuesMutation.mutate(values)} disabled={updateValuesMutation.isPending} className="w-full sm:w-auto">
+                                    {updateValuesMutation.isPending ? (
                                         <>
                                             <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                                             Saving...
@@ -406,28 +488,27 @@ const AboutEditor = () => {
                                     ) : (
                                         <>
                                             <Save className="w-4 h-4 mr-2" />
-                                            Save Interests
+                                            Save Values
                                         </>
                                     )}
                                 </Button>
                             </div>
-                        </CardContent>
-                    </Card>
-                </TabsContent>
-
-                <TabsContent value="values" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Core Values</CardTitle>
-                            <CardDescription>Your core professional values</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             {values.map((item, index) => (
-                                <Card key={index}>
+                                <Card
+                                    key={index}
+                                    id={`value-${index}`}
+                                    onClick={() => setFocusedValue(index)}
+                                    className={`relative transition-all duration-300 border cursor-pointer ${focusedValue === index
+                                        ? 'border-primary ring-2 ring-primary/10 bg-primary/5'
+                                        : 'bg-card'
+                                        }`}
+                                >
                                     <CardContent className="pt-6">
                                         <div className="flex gap-2 items-end">
                                             <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mb-3" />
-                                            <div className="flex-1 space-y-3">
+                                            <div className="flex-1 space-y-3 pr-8">
                                                 <div className="grid gap-2 md:grid-cols-2">
                                                     <div className="space-y-1">
                                                         <Label>Value Title</Label>
@@ -470,9 +551,12 @@ const AboutEditor = () => {
                                             </div>
                                             <Button
                                                 variant="ghost"
-                                                className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
-                                                onClick={() => setValues(values.filter((_, i) => i !== index))}
-                                                title="Delete Value"
+                                                size="icon"
+                                                className="absolute top-2 right-2 text-destructive hover:bg-destructive/10"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setValues(values.filter((_, i) => i !== index));
+                                                }}
                                             >
                                                 <Trash2 className="w-4 h-4" />
                                             </Button>
@@ -490,30 +574,7 @@ const AboutEditor = () => {
                                 </ul>
                             </div>
 
-                            <div className="flex gap-3 mt-6">
-                                <Button
-                                    onClick={() => setValues([...values, { value_text: '', description: '', icon_name: '', display_order: values.length }])}
-                                    variant="outline"
-                                    className="flex-1"
-                                >
-                                    <Plus className="w-4 h-4 mr-2" />
-                                    Add Value
-                                </Button>
 
-                                <Button onClick={() => updateValuesMutation.mutate(values)} disabled={updateValuesMutation.isPending} className="flex-1">
-                                    {updateValuesMutation.isPending ? (
-                                        <>
-                                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                                            Saving...
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Save className="w-4 h-4 mr-2" />
-                                            Save Values
-                                        </>
-                                    )}
-                                </Button>
-                            </div>
                         </CardContent>
                     </Card>
                 </TabsContent>
