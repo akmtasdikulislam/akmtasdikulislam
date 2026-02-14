@@ -113,9 +113,24 @@ const NavbarEditor = () => {
 
                 <TabsContent value="branding" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
                     <Card>
-                        <CardHeader>
-                            <CardTitle>Branding & CTA</CardTitle>
-                            <CardDescription>Logo configuration and call-to-action button</CardDescription>
+                        <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                            <div className="space-y-1.5">
+                                <CardTitle>Branding & CTA</CardTitle>
+                                <CardDescription>Logo configuration and call-to-action button</CardDescription>
+                            </div>
+                            <Button onClick={() => updateNavbarMutation.mutate(navbarData)} disabled={updateNavbarMutation.isPending}>
+                                {updateNavbarMutation.isPending ? (
+                                    <>
+                                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                        Saving...
+                                    </>
+                                ) : (
+                                    <>
+                                        <Save className="w-4 h-4 mr-2" />
+                                        Save Branding
+                                    </>
+                                )}
+                            </Button>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div className="grid gap-4 md:grid-cols-2">
@@ -180,29 +195,44 @@ const NavbarEditor = () => {
                                     <li>• <strong>CTA Link:</strong> Destination for the button (e.g., "#contact" or "/hire")</li>
                                 </ul>
                             </div>
-
-                            <Button onClick={() => updateNavbarMutation.mutate(navbarData)} disabled={updateNavbarMutation.isPending}>
-                                {updateNavbarMutation.isPending ? (
-                                    <>
-                                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                                        Saving...
-                                    </>
-                                ) : (
-                                    <>
-                                        <Save className="w-4 h-4 mr-2" />
-                                        Save Branding
-                                    </>
-                                )}
-                            </Button>
                         </CardContent>
                     </Card>
                 </TabsContent>
 
                 <TabsContent value="links" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
                     <Card>
-                        <CardHeader>
-                            <CardTitle>Navigation Links</CardTitle>
-                            <CardDescription>Menu items in the navigation bar</CardDescription>
+                        <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                            <div className="space-y-1.5">
+                                <CardTitle>Navigation Links</CardTitle>
+                                <CardDescription>Menu items in the navigation bar</CardDescription>
+                            </div>
+                            <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                                <Button
+                                    onClick={() => setNavLinks([...navLinks, { label: '', href: '', path: '/', display_order: navLinks.length }])}
+                                    variant="outline"
+                                    className="w-full sm:w-auto"
+                                >
+                                    <Plus className="w-4 h-4 mr-2" />
+                                    Add Link
+                                </Button>
+                                <Button
+                                    onClick={() => updateNavLinksMutation.mutate(navLinks)}
+                                    disabled={updateNavLinksMutation.isPending}
+                                    className="w-full sm:w-auto"
+                                >
+                                    {updateNavLinksMutation.isPending ? (
+                                        <>
+                                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                            Saving...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Save className="w-4 h-4 mr-2" />
+                                            Save Links
+                                        </>
+                                    )}
+                                </Button>
+                            </div>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div className="space-y-3">
@@ -267,29 +297,6 @@ const NavbarEditor = () => {
                                     <li>• <strong>Path:</strong> Link from other pages (e.g., "/")</li>
                                 </ul>
                             </div>
-
-                            <Button
-                                onClick={() => setNavLinks([...navLinks, { label: '', href: '', path: '/', display_order: navLinks.length }])}
-                                variant="outline"
-                                className="w-full"
-                            >
-                                <Plus className="w-4 h-4 mr-2" />
-                                Add Navigation Link
-                            </Button>
-
-                            <Button onClick={() => updateNavLinksMutation.mutate(navLinks)} disabled={updateNavLinksMutation.isPending} className="w-full">
-                                {updateNavLinksMutation.isPending ? (
-                                    <>
-                                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                                        Saving...
-                                    </>
-                                ) : (
-                                    <>
-                                        <Save className="w-4 h-4 mr-2" />
-                                        Save Navigation Links
-                                    </>
-                                )}
-                            </Button>
                         </CardContent>
                     </Card>
                 </TabsContent>
