@@ -235,14 +235,16 @@ const NavbarEditor = () => {
                                 <CardDescription>Menu items in the navigation bar</CardDescription>
                             </div>
                             <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-                                <Button
-                                    onClick={handleOpenDialog}
-                                    variant="outline"
-                                    className="w-full sm:w-auto"
-                                >
-                                    <Plus className="w-4 h-4 mr-2" />
-                                    Add Link
-                                </Button>
+                                {!isEditingLinks && (
+                                    <Button
+                                        onClick={handleOpenDialog}
+                                        variant="outline"
+                                        className="w-full sm:w-auto"
+                                    >
+                                        <Plus className="w-4 h-4 mr-2" />
+                                        Add Link
+                                    </Button>
+                                )}
                                 {isEditingLinks ? (
                                     <>
                                         <Button
