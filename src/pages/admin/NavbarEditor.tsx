@@ -1,5 +1,11 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+} from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -7,7 +13,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useNavbarContent } from '@/hooks/useHomepageContent';
 import { supabase } from '@/integrations/supabase/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { GripVertical, Loader2, Plus, Save, Trash2 } from 'lucide-react';
+import { GripVertical, Loader2, Pencil, Plus, Save, Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const NavbarEditor = () => {
@@ -23,6 +29,28 @@ const NavbarEditor = () => {
     });
 
     const [navLinks, setNavLinks] = useState<Array<{ id?: string; label: string; href: string; path: string; display_order: number }>>([]);
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const [linkFormData, setLinkFormData] = useState({ label: '', href: '', path: '/' });
+    const [isEditingLinks, setIsEditingLinks] = useState(false);
+
+    const handleOpenDialog = () => {
+        setLinkFormData({ label: '', href: '', path: '/' });
+        setDialogOpen(true);
+    };
+
+    const handleSaveLink = () => {
+        if (!linkFormData.label) {
+            toast({
+                title: 'Error',
+                description: 'Please provide a label for the link.',
+                variant: 'destructive',
+            });
+            return;
+        }
+
+        setNavLinks([...navLinks, { ...linkFormData, display_order: navLinks.length }]);
+        setDialogOpen(false);
+    };
 
     useEffect(() => {
         if (data) {
@@ -207,28 +235,44 @@ const NavbarEditor = () => {
                                 <CardDescription>Menu items in the navigation bar</CardDescription>
                             </div>
                             <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                                {isEditingLinks && (
+                                    <Button
+                                        onClick={handleOpenDialog}
+                                        variant="outline"
+                                        className="w-full sm:w-auto"
+                                    >
+                                        <Plus className="w-4 h-4 mr-2" />
+                                        Add Link
+                                    </Button>
+                                )}
                                 <Button
-                                    onClick={() => setNavLinks([...navLinks, { label: '', href: '', path: '/', display_order: navLinks.length }])}
-                                    variant="outline"
-                                    className="w-full sm:w-auto"
-                                >
-                                    <Plus className="w-4 h-4 mr-2" />
-                                    Add Link
-                                </Button>
-                                <Button
-                                    onClick={() => updateNavLinksMutation.mutate(navLinks)}
+                                    onClick={() => {
+                                        if (isEditingLinks) {
+                                            updateNavLinksMutation.mutate(navLinks, {
+                                                onSuccess: () => setIsEditingLinks(false),
+                                            });
+                                        } else {
+                                            setIsEditingLinks(true);
+                                        }
+                                    }}
                                     disabled={updateNavLinksMutation.isPending}
                                     className="w-full sm:w-auto"
+                                    variant={isEditingLinks ? 'default' : 'outline'}
                                 >
                                     {updateNavLinksMutation.isPending ? (
                                         <>
                                             <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                                             Saving...
                                         </>
-                                    ) : (
+                                    ) : isEditingLinks ? (
                                         <>
                                             <Save className="w-4 h-4 mr-2" />
                                             Save Links
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Pencil className="w-4 h-4 mr-2" />
+                                            Edit Links
                                         </>
                                     )}
                                 </Button>
@@ -250,6 +294,7 @@ const NavbarEditor = () => {
                                                         setNavLinks(updated);
                                                     }}
                                                     placeholder="e.g., Home"
+                                                    disabled={!isEditingLinks}
                                                 />
                                             </div>
                                             <div className="space-y-1">
@@ -262,6 +307,7 @@ const NavbarEditor = () => {
                                                         setNavLinks(updated);
                                                     }}
                                                     placeholder="e.g., #home"
+                                                    disabled={!isEditingLinks}
                                                 />
                                             </div>
                                             <div className="space-y-1">
@@ -274,17 +320,20 @@ const NavbarEditor = () => {
                                                         setNavLinks(updated);
                                                     }}
                                                     placeholder="e.g., /"
+                                                    disabled={!isEditingLinks}
                                                 />
                                             </div>
                                         </div>
-                                        <Button
-                                            variant="ghost"
-                                            className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
-                                            onClick={() => setNavLinks(navLinks.filter((_, i) => i !== index))}
-                                            disabled={navLinks.length === 1}
-                                        >
-                                            <Trash2 className="w-4 h-4" />
-                                        </Button>
+                                        {isEditingLinks && (
+                                            <Button
+                                                variant="ghost"
+                                                className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
+                                                onClick={() => setNavLinks(navLinks.filter((_, i) => i !== index))}
+                                                disabled={navLinks.length === 1}
+                                            >
+                                                <Trash2 className="w-4 h-4" />
+                                            </Button>
+                                        )}
                                     </div>
                                 ))}
                             </div>
@@ -301,6 +350,51 @@ const NavbarEditor = () => {
                     </Card>
                 </TabsContent>
             </Tabs>
+
+            {/* Add Link Dialog */}
+            <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+                <DialogContent className="max-w-md">
+                    <DialogHeader>
+                        <DialogTitle>Add New Link</DialogTitle>
+                    </DialogHeader>
+
+                    <div className="space-y-4 mt-4">
+                        <div className="space-y-2">
+                            <Label>Label</Label>
+                            <Input
+                                value={linkFormData.label}
+                                onChange={(e) => setLinkFormData({ ...linkFormData, label: e.target.value })}
+                                placeholder="e.g., Home"
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <Label>Anchor</Label>
+                            <Input
+                                value={linkFormData.href}
+                                onChange={(e) => setLinkFormData({ ...linkFormData, href: e.target.value })}
+                                placeholder="e.g., #home"
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <Label>Path</Label>
+                            <Input
+                                value={linkFormData.path}
+                                onChange={(e) => setLinkFormData({ ...linkFormData, path: e.target.value })}
+                                placeholder="e.g., /"
+                            />
+                        </div>
+
+                        <div className="flex gap-3 pt-4">
+                            <Button variant="outline" onClick={() => setDialogOpen(false)} className="flex-1">
+                                Discard
+                            </Button>
+                            <Button onClick={handleSaveLink} className="flex-1">
+                                Save
+                            </Button>
+                        </div>
+                    </div>
+                </DialogContent>
+            </Dialog>
         </div>
     );
 };
