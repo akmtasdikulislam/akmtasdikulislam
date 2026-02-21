@@ -235,47 +235,58 @@ const NavbarEditor = () => {
                                 <CardDescription>Menu items in the navigation bar</CardDescription>
                             </div>
                             <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-                                {isEditingLinks && (
+                                <Button
+                                    onClick={handleOpenDialog}
+                                    variant="outline"
+                                    className="w-full sm:w-auto"
+                                >
+                                    <Plus className="w-4 h-4 mr-2" />
+                                    Add Link
+                                </Button>
+                                {isEditingLinks ? (
+                                    <>
+                                        <Button
+                                            onClick={() => {
+                                                setNavLinks(data?.navLinks ?? []);
+                                                setIsEditingLinks(false);
+                                            }}
+                                            variant="outline"
+                                            className="w-full sm:w-auto"
+                                        >
+                                            Cancel Edit
+                                        </Button>
+                                        <Button
+                                            onClick={() =>
+                                                updateNavLinksMutation.mutate(navLinks, {
+                                                    onSuccess: () => setIsEditingLinks(false),
+                                                })
+                                            }
+                                            disabled={updateNavLinksMutation.isPending}
+                                            className="w-full sm:w-auto"
+                                        >
+                                            {updateNavLinksMutation.isPending ? (
+                                                <>
+                                                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                                    Saving...
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Save className="w-4 h-4 mr-2" />
+                                                    Save Links
+                                                </>
+                                            )}
+                                        </Button>
+                                    </>
+                                ) : (
                                     <Button
-                                        onClick={handleOpenDialog}
+                                        onClick={() => setIsEditingLinks(true)}
                                         variant="outline"
                                         className="w-full sm:w-auto"
                                     >
-                                        <Plus className="w-4 h-4 mr-2" />
-                                        Add Link
+                                        <Pencil className="w-4 h-4 mr-2" />
+                                        Edit Links
                                     </Button>
                                 )}
-                                <Button
-                                    onClick={() => {
-                                        if (isEditingLinks) {
-                                            updateNavLinksMutation.mutate(navLinks, {
-                                                onSuccess: () => setIsEditingLinks(false),
-                                            });
-                                        } else {
-                                            setIsEditingLinks(true);
-                                        }
-                                    }}
-                                    disabled={updateNavLinksMutation.isPending}
-                                    className="w-full sm:w-auto"
-                                    variant={isEditingLinks ? 'default' : 'outline'}
-                                >
-                                    {updateNavLinksMutation.isPending ? (
-                                        <>
-                                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                                            Saving...
-                                        </>
-                                    ) : isEditingLinks ? (
-                                        <>
-                                            <Save className="w-4 h-4 mr-2" />
-                                            Save Links
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Pencil className="w-4 h-4 mr-2" />
-                                            Edit Links
-                                        </>
-                                    )}
-                                </Button>
                             </div>
                         </CardHeader>
                         <CardContent className="space-y-4">
