@@ -1,7 +1,30 @@
 {
-  "name": "Akm Tasdikul Islam's Portfolio Website",
+  "name": "akm-tasdikul-islam-portfolio",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.1",
+  "description": "Personal portfolio website of Akm Tasdikul Islam — Full-Stack Web Developer (MERN Stack), n8n Automation Expert, and CSE undergraduate at Bangladesh University of Professionals.",
+  "author": {
+    "name": "Akm Tasdikul Islam",
+    "email": "akmtasdikulislam@gmail.com",
+    "url": "https://github.com/akmtasdikulislam"
+  },
+  "homepage": "https://akmtasdikulislam.github.io/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/akmtasdikulislam/akmtasdikulislam"
+  },
+  "keywords": [
+    "portfolio",
+    "full-stack",
+    "mern-stack",
+    "react",
+    "nextjs",
+    "nodejs",
+    "n8n",
+    "web-developer",
+    "bangladesh"
+  ],
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "start": "vite --host --open",
