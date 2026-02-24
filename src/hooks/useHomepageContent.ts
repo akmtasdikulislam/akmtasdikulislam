@@ -13,6 +13,7 @@ import {
 } from '@/integrations/supabase/homepageQueries';
 import { getSectionHeading } from '@/integrations/supabase/sectionHeadingQueries';
 import { getAllWhyChooseData } from '@/integrations/supabase/whyChooseMeQueries';
+import { getAllSectionVisibilities } from '@/integrations/supabase/sectionVisibilityQueries';
 import { useQuery } from '@tanstack/react-query';
 
 // ... (existing code)
@@ -155,3 +156,11 @@ export const useFreelanceProfilesContent = () => {
 
 // Hook for Why Choose Me section
 
+// Hook for all section visibilities
+export const useAllSectionVisibilities = () => {
+    return useQuery({
+        queryKey: ['section_visibility', 'all'],
+        queryFn: getAllSectionVisibilities,
+        staleTime: 1000 * 60 * 5,
+    });
+};

@@ -14,23 +14,28 @@ import Certifications from "@/components/sections/Certifications";
 import EmploymentTimeline from "@/components/sections/EmploymentTimeline";
 import Testimonials from "@/components/sections/Testimonials";
 
+import { useAllSectionVisibilities } from "@/hooks/useHomepageContent";
+
 const Index = () => {
+  const { data: visibilities } = useAllSectionVisibilities();
+  const isVisible = (key: string) => visibilities ? visibilities[key] !== false : true;
+
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
       <GlowingParticle />
-      <Navbar />
-      <Hero />
-      <About />
-      <Expertise />
-      <EmploymentTimeline />
-      <Certifications />
-      <WhyChooseMe />
-      <Services />
-      <Projects />
-      <Blog />
-      <Testimonials />
-      <Contact />
-      <Footer />
+      {isVisible('navbar') && <Navbar />}
+      {isVisible('hero') && <Hero />}
+      {isVisible('about') && <About />}
+      {isVisible('expertise') && <Expertise />}
+      {isVisible('work_history') && <EmploymentTimeline />}
+      {isVisible('certifications') && <Certifications />}
+      {isVisible('why_choose_me') && <WhyChooseMe />}
+      {isVisible('services') && <Services />}
+      {isVisible('projects') && <Projects />}
+      {isVisible('blogs') && <Blog />}
+      {isVisible('testimonials') && <Testimonials />}
+      {isVisible('contact') && <Contact />}
+      {isVisible('footer') && <Footer />}
     </div>
   );
 };

@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2026-02-24] - Frontend Visibility Toggle Fix
+
+### Fixed
+- Fixed CMS Admin Panel toggle not reflecting in the frontend parts. Added a global hook `useAllSectionVisibilities` in `useHomepageContent.ts` and conditionally rendered all sections in `Index.tsx` to fix the visibility issue.
+
 ## [2026-02-06] - Codebase Cleanup
 
 ### Changed
