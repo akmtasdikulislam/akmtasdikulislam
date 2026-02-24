@@ -1,4 +1,5 @@
 import SectionHeadingEditor from '@/components/admin/SectionHeadingEditor';
+import SectionVisibilityToggle from '@/components/admin/SectionVisibilityToggle';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -182,10 +183,15 @@ const ContactEditor = () => {
     return (
         <div className="space-y-6 w-full pb-20">
             <div className="max-w-6xl mx-auto w-full px-4">
-                <h2 className="text-3xl font-bold tracking-tight">Contact & Profiles</h2>
-                <p className="text-muted-foreground mt-1">
-                    Manage your contact information, social links, and messages
-                </p>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                        <h2 className="text-3xl font-bold tracking-tight">Contact &amp; Profiles</h2>
+                        <p className="text-muted-foreground mt-1">
+                            Manage your contact information, social links, and messages
+                        </p>
+                    </div>
+                    <SectionVisibilityToggle sectionKey="contact" label="Contact section" />
+                </div>
             </div>
 
             <div className="max-w-6xl mx-auto w-full px-4">

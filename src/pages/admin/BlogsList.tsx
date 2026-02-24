@@ -1,18 +1,18 @@
 import ProfileDropdown from '@/components/admin/ProfileDropdown';
 import SectionHeadingEditor from '@/components/admin/SectionHeadingEditor';
+import SectionVisibilityToggle from '@/components/admin/SectionVisibilityToggle';
 import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Switch } from '@/components/ui/switch';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
@@ -41,21 +41,6 @@ const BlogsList = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
-  const { data: sectionVisible = true } = useQuery({
-    queryKey: ['section_visibility', 'blogs'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('section_visibility' as any)
-        .select('is_visible')
-        .eq('section_key', 'blogs')
-        .single();
-
-      if (error && error.code !== 'PGRST116') throw error;
-      return data ? (data as any).is_visible : true;
-    },
-    staleTime: 0,
-  });
-
   const { data: posts = [], isLoading: loading } = useQuery({
     queryKey: ['blogs_admin'],
     queryFn: async () => {
@@ -68,22 +53,6 @@ const BlogsList = () => {
       return data as BlogPost[];
     },
   });
-
-  const toggleSectionVisibility = async (checked: boolean) => {
-    try {
-      const { error } = await supabase
-        .from('section_visibility' as any)
-        .upsert({ section_key: 'blogs', is_visible: checked }, { onConflict: 'section_key' });
-
-      if (error) throw error;
-
-      toast.success(`Blog section ${checked ? 'visible' : 'hidden'}`);
-      queryClient.invalidateQueries({ queryKey: ['section_visibility', 'blogs'] });
-    } catch (error) {
-      console.error('Error updating section visibility:', error);
-      toast.error('Failed to update section visibility');
-    }
-  };
 
   const handleDelete = async () => {
     if (!deleteId) return;
@@ -149,15 +118,7 @@ const BlogsList = () => {
           <p className="text-muted-foreground mt-1">Manage your blog content</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          <div className="flex items-center gap-2 bg-secondary/50 p-2 rounded-lg border border-border">
-            <Switch
-              checked={sectionVisible}
-              onCheckedChange={toggleSectionVisibility}
-            />
-            <span className="text-sm font-medium">
-              {sectionVisible ? 'Section Visible' : 'Section Hidden'}
-            </span>
-          </div>
+          <SectionVisibilityToggle sectionKey="blogs" label="Blog section" />
           <ProfileDropdown />
           <Button asChild className="min-h-[44px]">
             <Link to="/admin/blogs/new" className="flex items-center gap-2">

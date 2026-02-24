@@ -1,17 +1,17 @@
 import SectionHeadingEditor from '@/components/admin/SectionHeadingEditor';
+import SectionVisibilityToggle from '@/components/admin/SectionVisibilityToggle';
 import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Switch } from '@/components/ui/switch';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
@@ -38,21 +38,6 @@ const ProjectsList = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
-  const { data: sectionVisible = true } = useQuery({
-    queryKey: ['section_visibility', 'projects'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('section_visibility' as any)
-        .select('is_visible')
-        .eq('section_key', 'projects')
-        .single();
-
-      if (error && error.code !== 'PGRST116') throw error;
-      return data ? (data as any).is_visible : true;
-    },
-    staleTime: 0, // Ensure fresh data
-  });
-
   const { data: projects = [], isLoading: loading } = useQuery({
     queryKey: ['projects_admin'],
     queryFn: async () => {
@@ -65,22 +50,6 @@ const ProjectsList = () => {
       return data as Project[];
     },
   });
-
-  const toggleSectionVisibility = async (checked: boolean) => {
-    try {
-      const { error } = await supabase
-        .from('section_visibility' as any)
-        .upsert({ section_key: 'projects', is_visible: checked }, { onConflict: 'section_key' });
-
-      if (error) throw error;
-
-      toast.success(`Projects section ${checked ? 'visible' : 'hidden'}`);
-      queryClient.invalidateQueries({ queryKey: ['section_visibility', 'projects'] });
-    } catch (error) {
-      console.error('Error updating section visibility:', error);
-      toast.error('Failed to update section visibility');
-    }
-  };
 
   const handleDelete = async () => {
     if (!deleteId) return;
@@ -145,15 +114,7 @@ const ProjectsList = () => {
           <p className="text-muted-foreground mt-1">Manage your portfolio projects</p>
         </div>
         <div className="flex flex-wrap items-center gap-2 sm:gap-4">
-          <div className="flex items-center gap-2 bg-secondary/50 p-2 rounded-lg border border-border">
-            <Switch
-              checked={sectionVisible}
-              onCheckedChange={toggleSectionVisibility}
-            />
-            <span className="text-sm font-medium">
-              {sectionVisible ? 'Section Visible' : 'Section Hidden'}
-            </span>
-          </div>
+          <SectionVisibilityToggle sectionKey="projects" label="Projects section" />
           <Button asChild className="min-h-[44px]">
             <Link to="/admin/projects/new" className="flex items-center gap-2">
               <Plus className="w-4 h-4" />

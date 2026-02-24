@@ -1,3 +1,4 @@
+import SectionVisibilityToggle from '@/components/admin/SectionVisibilityToggle';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -182,10 +183,15 @@ const HeroEditor = () => {
     return (
         <div className="space-y-6 w-full pb-20">
             <div className="max-w-6xl mx-auto w-full px-4">
-                <h1 className="text-2xl sm:text-3xl font-bold">Hero Section Editor</h1>
-                <p className="text-muted-foreground mt-1">
-                    Edit all content in the main hero/banner section
-                </p>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                        <h1 className="text-2xl sm:text-3xl font-bold">Hero Section Editor</h1>
+                        <p className="text-muted-foreground mt-1">
+                            Edit all content in the main hero/banner section
+                        </p>
+                    </div>
+                    <SectionVisibilityToggle sectionKey="hero" label="Hero section" />
+                </div>
             </div>
 
             <Tabs defaultValue="basic" className="w-full">

@@ -1,3 +1,4 @@
+import SectionVisibilityToggle from '@/components/admin/SectionVisibilityToggle';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -125,10 +126,15 @@ const NavbarEditor = () => {
     return (
         <div className="space-y-6 w-full pb-20">
             <div className="max-w-6xl mx-auto w-full px-4">
-                <h1 className="text-2xl sm:text-3xl font-bold">Navbar Configuration</h1>
-                <p className="text-muted-foreground mt-1">
-                    Edit navigation bar logo, links, and CTA button
-                </p>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                        <h1 className="text-2xl sm:text-3xl font-bold">Navbar Configuration</h1>
+                        <p className="text-muted-foreground mt-1">
+                            Edit navigation bar logo, links, and CTA button
+                        </p>
+                    </div>
+                    <SectionVisibilityToggle sectionKey="navbar" label="Navbar" />
+                </div>
             </div>
 
             <Tabs defaultValue="branding" className="w-full">

@@ -1,4 +1,5 @@
 import SectionHeadingEditor from '@/components/admin/SectionHeadingEditor';
+import SectionVisibilityToggle from '@/components/admin/SectionVisibilityToggle';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -75,10 +76,15 @@ const ServicesEditor = () => {
     return (
         <div className="space-y-6 w-full pb-20">
             <div className="max-w-6xl mx-auto w-full px-4">
-                <h2 className="text-3xl font-bold tracking-tight">Services Editor</h2>
-                <p className="text-muted-foreground mt-1">
-                    Manage the services you offer to clients
-                </p>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                        <h2 className="text-3xl font-bold tracking-tight">Services Editor</h2>
+                        <p className="text-muted-foreground mt-1">
+                            Manage the services you offer to clients
+                        </p>
+                    </div>
+                    <SectionVisibilityToggle sectionKey="services" label="Services section" />
+                </div>
             </div>
 
             <div className="max-w-6xl mx-auto w-full px-4">

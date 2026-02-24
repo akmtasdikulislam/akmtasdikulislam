@@ -1,3 +1,4 @@
+import SectionVisibilityToggle from '@/components/admin/SectionVisibilityToggle';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -109,8 +110,13 @@ const FooterEditor = () => {
     return (
         <div className="space-y-6 w-full pb-20">
             <div className="max-w-6xl mx-auto w-full px-4">
-                <h1 className="text-3xl font-bold">Footer Management</h1>
-                <p className="text-muted-foreground mt-1">Manage all footer elements including links and content.</p>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                        <h1 className="text-3xl font-bold">Footer Management</h1>
+                        <p className="text-muted-foreground mt-1">Manage all footer elements including links and content.</p>
+                    </div>
+                    <SectionVisibilityToggle sectionKey="footer" label="Footer section" />
+                </div>
             </div>
 
             <Tabs defaultValue="info" className="w-full">

@@ -1,4 +1,5 @@
 import SectionHeadingEditor from '@/components/admin/SectionHeadingEditor';
+import SectionVisibilityToggle from '@/components/admin/SectionVisibilityToggle';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -164,10 +165,15 @@ function WhyChooseMeEditor() {
     return (
         <div className="space-y-6 w-full pb-20">
             <div className="max-w-6xl mx-auto w-full px-4">
-                <h1 className="text-2xl sm:text-3xl font-bold">Why Choose Me Section</h1>
-                <p className="text-muted-foreground mt-1">
-                    Manage section headings, reasons, and stats
-                </p>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                        <h1 className="text-2xl sm:text-3xl font-bold">Why Choose Me Section</h1>
+                        <p className="text-muted-foreground mt-1">
+                            Manage section headings, reasons, and stats
+                        </p>
+                    </div>
+                    <SectionVisibilityToggle sectionKey="why_choose_me" label="Why Choose Me section" />
+                </div>
             </div>
 
             <div className="max-w-6xl mx-auto w-full px-4">
