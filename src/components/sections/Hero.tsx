@@ -76,7 +76,7 @@ const Hero = () => {
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="order-2 lg:order-1 flex flex-col items-center lg:items-start text-center lg:text-left w-full"
+            className="order-2 lg:order-1"
           >
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -97,9 +97,9 @@ const Hero = () => {
               <TypeWriter words={roles.map(r => r.role_text)} typingSpeed={80} deletingSpeed={40} />
             </div>
 
-            <p className="text-muted-foreground mb-8 max-w-lg leading-relaxed mx-auto lg:mx-0">{hero.description}</p>
+            <p className="text-muted-foreground mb-8 max-w-full lg:max-w-lg leading-relaxed">{hero.description}</p>
 
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-10 justify-center w-full lg:justify-start">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-10">
               <Button size="lg" variant="glow" asChild className="w-full sm:w-auto min-h-[48px]">
                 <a href="#contact"><Terminal className="w-4 h-4" /> Let's Talk</a>
               </Button>
@@ -108,7 +108,7 @@ const Hero = () => {
               </Button>
             </div>
 
-            <div className="flex items-center gap-3 sm:gap-4 justify-center w-full lg:justify-start">
+            <div className="flex items-center gap-3 sm:gap-4">
               {mappedSocialLinks.map((social) => (
                 <motion.a
                   key={social.id}

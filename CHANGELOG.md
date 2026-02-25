@@ -4,11 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-## [2026-02-25] - Hero Section Responsive Layout Fix
+## [2026-02-25] - Hero Section Responsive Layout Adjustments
 
 ### Fixed
 - Fixed floating tech items and badges on the Hero section to be visible across all screen sizes (mobile, tablet, desktop).
-- Centered the text and action buttons in the Hero section for better alignment and spacing on smaller screens.
+- Modified the description paragraph to utilize the full available width on smaller screens, removing previous centering constraints.
 
 ## [2026-02-24] - Frontend Visibility Toggle Fix
 
