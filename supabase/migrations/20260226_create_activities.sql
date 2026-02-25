@@ -27,11 +27,11 @@ ALTER TABLE public.activities ENABLE ROW LEVEL SECURITY;
 -- RLS Policies
 CREATE POLICY "Public can view activities" ON public.activities FOR SELECT USING (true);
 
-CREATE POLICY "Admins can insert activities" ON public.activities FOR INSERT TO authenticated WITH CHECK (has_role(auth.uid(), 'admin'));
+CREATE POLICY "Admins can insert activities" ON public.activities FOR INSERT TO authenticated WITH CHECK (public.has_role(auth.uid(), 'admin'::app_role));
 
-CREATE POLICY "Admins can update activities" ON public.activities FOR UPDATE USING (has_role(auth.uid(), 'admin'));
+CREATE POLICY "Admins can update activities" ON public.activities FOR UPDATE USING (public.has_role(auth.uid(), 'admin'::app_role));
 
-CREATE POLICY "Admins can delete activities" ON public.activities FOR DELETE USING (has_role(auth.uid(), 'admin'));
+CREATE POLICY "Admins can delete activities" ON public.activities FOR DELETE USING (public.has_role(auth.uid(), 'admin'::app_role));
 
 -- Trigger for updated_at
 CREATE OR REPLACE FUNCTION update_updated_at_column()
