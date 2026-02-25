@@ -22,13 +22,13 @@ interface Activity {
 }
 
 const activityTypeColors: Record<string, string> = {
-  conference: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
-  workshop: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-  hackathon: 'bg-green-500/20 text-green-400 border-green-500/30',
-  meetup: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
-  event: 'bg-pink-500/20 text-pink-400 border-pink-500/30',
-  travel: 'bg-teal-500/20 text-teal-400 border-teal-500/30',
-  default: 'bg-primary/20 text-primary border-primary/30',
+  conference: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
+  workshop: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
+  hackathon: 'bg-green-500/10 text-green-400 border-green-500/20',
+  meetup: 'bg-orange-500/10 text-orange-400 border-orange-500/20',
+  event: 'bg-pink-500/10 text-pink-400 border-pink-500/20',
+  travel: 'bg-teal-500/10 text-teal-400 border-teal-500/20',
+  default: 'bg-primary/10 text-primary border-primary/20',
 };
 
 const getActivityTypeColor = (type: string) => {
@@ -133,33 +133,33 @@ const Activities = () => {
                     </div>
 
                     <div className={`bg-card border border-border rounded-2xl p-6 hover:border-primary/50 transition-all group w-full ${index % 2 === 0 ? 'text-left' : 'md:text-left'}`}>
-                      {/* Activity Type & Featured */}
-                      <div className="flex items-start gap-2 flex-wrap">
-                        <div className={`px-2.5 py-1 rounded-full text-xs font-medium border flex-shrink-0 ${getActivityTypeColor(activity.activity_type)}`}>
-                          {getActivityTypeLabel(activity.activity_type)}
-                        </div>
-                        {activity.is_featured && (
-                          <div className="flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-500/20 text-amber-400 border border-amber-500/30 flex-shrink-0">
-                            <Star className="w-3 h-3" />
-                            <span>Featured</span>
+                      {/* Header with Type Badge and Title */}
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 flex-wrap mb-2">
+                            <span className={`px-2.5 py-1 rounded-md text-xs font-medium border ${getActivityTypeColor(activity.activity_type)}`}>
+                              {getActivityTypeLabel(activity.activity_type)}
+                            </span>
+                            {activity.is_featured && (
+                              <span className="px-2.5 py-1 rounded-md text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center gap-1">
+                                <Star className="w-3 h-3" />
+                                Featured
+                              </span>
+                            )}
                           </div>
-                        )}
+                          <h3 className="text-xl font-bold group-hover:text-primary transition-colors">{activity.title}</h3>
+                        </div>
                       </div>
 
-                      {/* Title */}
-                      <div className="mt-3">
-                        <h3 className="text-xl font-bold group-hover:text-primary transition-colors">{activity.title}</h3>
-                        <div className="flex flex-col gap-1 mt-1">
-                          <div className="flex items-center gap-2 text-muted-foreground text-sm">
-                            <span>{activity.organization}</span>
+                      {/* Organization & Location */}
+                      <div className="mt-2 text-muted-foreground">
+                        <p className="text-sm">{activity.organization}</p>
+                        {activity.location && (
+                          <div className="flex items-center gap-1.5 mt-1 text-xs">
+                            <MapPin className="w-3 h-3 flex-shrink-0" />
+                            <span>{activity.location}</span>
                           </div>
-                          {activity.location && (
-                            <div className="flex items-center gap-2 text-muted-foreground text-sm">
-                              <MapPin className="w-3 h-3 flex-shrink-0" />
-                              <span>{activity.location}</span>
-                            </div>
-                          )}
-                        </div>
+                        )}
                       </div>
 
                       {/* Description */}
@@ -169,7 +169,7 @@ const Activities = () => {
                         </p>
                       )}
 
-                      {/* Photos Gallery - Prominent Display */}
+                      {/* Photos Gallery */}
                       {activity.photos && activity.photos.length > 0 && (
                         <div className="mt-4 pt-4 border-t border-border">
                           <div className="flex items-center justify-between mb-3">
