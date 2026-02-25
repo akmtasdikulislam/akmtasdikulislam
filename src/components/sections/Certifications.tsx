@@ -27,22 +27,22 @@ interface Certification {
 const Certifications = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  const { data: certifications, isLoading: loading } = useQuery<Certification[]>({
+  const { data: certifications = [], isLoading: loading } = useQuery<Certification[]>({
     queryKey: ['certifications'],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('certifications' as any)
         .select('*')
-        .eq('is_visible', true)
         .order('display_order', { ascending: true });
 
       if (error) {
         toast.error('Failed to load certifications');
         throw error;
       }
-      return data as unknown as Certification[];
+      const items = (data as unknown as Certification[]) || [];
+      return items.filter((cert) => cert.is_visible !== false);
     },
-    initialData: [], // Provide initial data to ensure 'certifications' is always an array
+    placeholderData: [],
   });
 
   if (loading || certifications.length === 0) {

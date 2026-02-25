@@ -46,33 +46,22 @@ const navSections: NavSection[] = [
     ],
   },
   {
-    title: 'Site Sections',
+    title: 'Homepage',
     items: [
       { icon: LayoutDashboard, label: 'Navbar', path: '/admin/homepage/navbar' },
       { icon: Home, label: 'Hero Section', path: '/admin/homepage/hero' },
       { icon: MessageSquare, label: 'About', path: '/admin/homepage/about' },
-      { icon: Target, label: 'Why Choose Me', path: '/admin/homepage/why-choose-me' },
       { icon: Code, label: 'Expertise', path: '/admin/homepage/expertise' },
+      { icon: Target, label: 'Why Choose Me', path: '/admin/homepage/why-choose-me' },
       { icon: Zap, label: 'Services', path: '/admin/homepage/services' },
+      { icon: FolderKanban, label: 'Projects', path: '/admin/projects' },
+      { icon: FileText, label: 'Blog Posts', path: '/admin/blogs' },
+      { icon: Briefcase, label: 'Work History', path: '/admin/work-history' },
+      { icon: Award, label: 'Certifications', path: '/admin/certifications' },
+      { icon: Calendar, label: 'Activities', path: '/admin/activities' },
       { icon: Quote, label: 'Testimonials', path: '/admin/testimonials' },
       { icon: Phone, label: 'Contact', path: '/admin/homepage/contact' },
       { icon: Terminal, label: 'Footer', path: '/admin/homepage/footer' },
-    ],
-  },
-  {
-    title: 'Collections',
-    items: [
-      { icon: FolderKanban, label: 'Projects', path: '/admin/projects' },
-      { icon: FileText, label: 'Blog Posts', path: '/admin/blogs' },
-    ],
-  },
-  {
-    title: 'Professional',
-    items: [
-
-      { icon: Award, label: 'Certifications', path: '/admin/certifications' },
-      { icon: Briefcase, label: 'Work History', path: '/admin/work-history' },
-      { icon: Calendar, label: 'Activities', path: '/admin/activities' },
     ],
   },
   {
@@ -89,7 +78,7 @@ const AdminLayout = () => {
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
-  const [expandedSections, setExpandedSections] = useState<string[]>(['Overview', 'Site Sections', 'Collections', 'Professional', 'System']);
+  const [expandedSections, setExpandedSections] = useState<string[]>(['Overview', 'Homepage', 'System']);
 
   useEffect(() => {
     if (!loading && (!user || !isAdmin)) {

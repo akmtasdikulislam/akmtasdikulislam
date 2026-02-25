@@ -28,13 +28,13 @@ const Index = () => {
       {isVisible('hero') && <Hero />}
       {isVisible('about') && <About />}
       {isVisible('expertise') && <Expertise />}
-      {isVisible('work_history') && <EmploymentTimeline />}
-      {isVisible('certifications') && <Certifications />}
-      {isVisible('activities') && <Activities />}
       {isVisible('why_choose_me') && <WhyChooseMe />}
       {isVisible('services') && <Services />}
       {isVisible('projects') && <Projects />}
       {isVisible('blogs') && <Blog />}
+      {isVisible('work_history') && <EmploymentTimeline />}
+      {isVisible('certifications') && <Certifications />}
+      {isVisible('activities') && <Activities />}
       {isVisible('testimonials') && <Testimonials />}
       {isVisible('contact') && <Contact />}
       {isVisible('footer') && <Footer />}

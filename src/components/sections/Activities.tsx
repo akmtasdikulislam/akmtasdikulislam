@@ -51,13 +51,12 @@ const getActivityTypeLabel = (type: string) => {
 };
 
 const Activities = () => {
-  const { data: activities, isLoading: loading } = useQuery<Activity[]>({
+  const { data: activities = [], isLoading: loading } = useQuery<Activity[]>({
     queryKey: ['activities'],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('activities' as any)
         .select('*')
-        .eq('is_visible', true)
         .order('event_date', { ascending: false });
 
       if (error) {
@@ -65,9 +64,10 @@ const Activities = () => {
         throw error;
       }
 
-      return (data as unknown as Activity[]) || [];
+      const items = (data as unknown as Activity[]) || [];
+      return items.filter((activity) => activity.is_visible !== false);
     },
-    initialData: [],
+    placeholderData: [],
   });
 
   const { data: heading, isLoading: headingLoading } = useSectionHeading('activities');
