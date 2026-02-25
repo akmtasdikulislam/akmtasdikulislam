@@ -8,6 +8,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import SectionHeadingEditor from '@/components/admin/SectionHeadingEditor';
+import SectionVisibilityToggle from '@/components/admin/SectionVisibilityToggle';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -75,22 +77,7 @@ const ActivitiesList = () => {
   const [uploading, setUploading] = useState(false);
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
 
-  const { data: sectionVisible = true } = useQuery({
-    queryKey: ['section_visibility', 'activities'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('section_visibility' as any)
-        .select('is_visible')
-        .eq('section_key', 'activities')
-        .single();
-
-      if (error && error.code !== 'PGRST116') throw error;
-      return data ? data.is_visible : true;
-    },
-    staleTime: 0,
-  });
-
-  const { data: activities = [], isLoading: loading } = useQuery({
+  const { data: activities = [], isLoading: loading } = useQuery<Activity[]>({
     queryKey: ['activities_admin'],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -100,25 +87,11 @@ const ActivitiesList = () => {
 
       if (error) throw error;
 
-      return (data as Activity[] || []);
+      return (data as unknown as Activity[]) || [];
     },
+    initialData: [],
   });
 
-  const toggleSectionVisibility = async (checked: boolean) => {
-    try {
-      const { error } = await supabase
-        .from('section_visibility' as any)
-        .upsert({ section_key: 'activities', is_visible: checked }, { onConflict: 'section_key' });
-
-      if (error) throw error;
-
-      toast.success(`Activities section ${checked ? 'visible' : 'hidden'}`);
-      queryClient.invalidateQueries({ queryKey: ['section_visibility', 'activities'] });
-    } catch (error) {
-      console.error('Error updating section visibility:', error);
-      toast.error('Failed to update section visibility');
-    }
-  };
 
   const handleOpenDialog = (item?: Activity) => {
     if (item) {
@@ -327,109 +300,119 @@ const ActivitiesList = () => {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold">Activities</h1>
-          <p className="text-muted-foreground mt-1">Manage your latest activities and events</p>
-        </div>
-        <div className="flex flex-wrap items-center gap-2 sm:gap-4">
-          <div className="flex items-center gap-2 bg-secondary/50 p-2 rounded-lg border border-border">
-            <Switch
-              checked={sectionVisible}
-              onCheckedChange={toggleSectionVisibility}
-            />
-            <span className="text-sm font-medium">
-              {sectionVisible ? 'Section Visible' : 'Section Hidden'}
-            </span>
+    <div className="space-y-6 w-full pb-20">
+      <div className="max-w-6xl mx-auto w-full px-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold">Activities</h1>
+            <p className="text-muted-foreground mt-1">Manage your latest activities and events</p>
           </div>
-          <Button onClick={() => handleOpenDialog()} className="min-h-[44px]">
-            <Plus className="w-4 h-4 mr-2" />
-            Add Activity
-          </Button>
+          <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+            <SectionVisibilityToggle sectionKey="activities" label="Activities section" />
+            <Button onClick={() => handleOpenDialog()} className="min-h-[44px]">
+              <Plus className="w-4 h-4 mr-2" />
+              Add Activity
+            </Button>
+          </div>
         </div>
       </div>
 
-      {activities.length === 0 ? (
-        <div className="text-center py-12 bg-card border border-border rounded-xl">
-          <Calendar className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-          <p className="text-muted-foreground mb-4">No activities yet</p>
-          <Button onClick={() => handleOpenDialog()}>Add your first activity</Button>
-        </div>
-      ) : (
-        <div className="space-y-4">
-          {activities.map((item, index) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 }}
-              className={`bg-card border border-border rounded-xl p-4 flex flex-col sm:flex-row sm:items-start gap-4 ${!item.is_visible ? 'opacity-60' : ''}`}
-            >
-              <div className="w-full sm:w-32 h-24 rounded-lg bg-secondary overflow-hidden flex-shrink-0 flex items-center justify-center">
-                <Calendar className="w-6 h-6 text-muted-foreground" />
-              </div>
+      <div className="max-w-6xl mx-auto w-full px-4">
+        <SectionHeadingEditor
+          sectionKey="activities"
+          defaultValues={{
+            section_badge: 'Latest',
+            section_title: 'Activities',
+            section_highlight: "What's Up",
+            section_description: 'Conferences, events, and adventures'
+          }}
+        />
+      </div>
 
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <h3 className="font-semibold">{item.title}</h3>
-                  {item.is_featured && (
-                    <span className="text-xs px-2 py-0.5 bg-amber-500/10 text-amber-500 rounded-full flex items-center gap-1">
-                      <Star className="w-3 h-3" /> Featured
-                    </span>
-                  )}
+      <div className="max-w-6xl mx-auto w-full px-4">
+        {activities.length === 0 ? (
+          <div className="text-center py-12 bg-card border border-border rounded-xl">
+            <Calendar className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+            <p className="text-muted-foreground mb-4">No activities yet</p>
+            <Button onClick={() => handleOpenDialog()}>Add your first activity</Button>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {activities.map((item, index) => (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.05 }}
+                className={`bg-card border border-border rounded-xl p-4 flex flex-col sm:flex-row sm:items-start gap-4 ${!item.is_visible ? 'opacity-60' : ''}`}
+              >
+                <div className="w-full sm:w-32 h-24 rounded-lg bg-secondary overflow-hidden flex-shrink-0 flex items-center justify-center">
+                  <Calendar className="w-6 h-6 text-muted-foreground" />
                 </div>
-                <p className="text-sm text-muted-foreground">{item.organization}</p>
-                <div className="flex items-center gap-2 mt-1 text-xs text-muted-foreground">
-                  <Calendar className="w-3 h-3" />
-                  <span>{format(new Date(item.event_date), 'MMM d, yyyy')}</span>
-                  {item.location && (
-                    <>
-                      <span>•</span>
-                      <MapPin className="w-3 h-3" />
-                      <span>{item.location}</span>
-                    </>
-                  )}
-                </div>
-                {item.description && (
-                  <p className="text-sm text-muted-foreground mt-2 line-clamp-2">{item.description}</p>
-                )}
-                {item.photos && item.photos.length > 0 && (
-                  <div className="flex items-center gap-1 mt-2">
-                    <span className="text-xs px-2 py-0.5 bg-secondary rounded-md">
-                      {item.photos.length} photo(s)
-                    </span>
+
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h3 className="font-semibold">{item.title}</h3>
+                    {item.is_featured && (
+                      <span className="text-xs px-2 py-0.5 bg-amber-500/10 text-amber-500 rounded-full flex items-center gap-1">
+                        <Star className="w-3 h-3" /> Featured
+                      </span>
+                    )}
                   </div>
-                )}
-              </div>
+                  <p className="text-sm text-muted-foreground">{item.organization}</p>
+                  <div className="flex items-center gap-2 mt-1 text-xs text-muted-foreground">
+                    <Calendar className="w-3 h-3" />
+                    <span>{format(new Date(item.event_date), 'MMM d, yyyy')}</span>
+                    {item.location && (
+                      <>
+                        <span>•</span>
+                        <MapPin className="w-3 h-3" />
+                        <span>{item.location}</span>
+                      </>
+                    )}
+                  </div>
+                  {item.description && (
+                    <p className="text-sm text-muted-foreground mt-2 line-clamp-2">{item.description}</p>
+                  )}
+                  {item.photos && item.photos.length > 0 && (
+                    <div className="flex items-center gap-1 mt-2">
+                      <span className="text-xs px-2 py-0.5 bg-secondary rounded-md">
+                        {item.photos.length} photo(s)
+                      </span>
+                    </div>
+                  )}
+                </div>
 
-              <div className="grid grid-cols-2 gap-1.5 sm:flex sm:gap-2 flex-shrink-0">
-                <Switch
-                  checked={item.is_featured}
-                  onCheckedChange={() => toggleFeatured(item)}
-                  title="Featured"
-                />
-                <Switch
-                  checked={item.is_visible}
-                  onCheckedChange={() => toggleVisibility(item)}
-                  title="Visible"
-                />
-                <Button variant="outline" size="icon" onClick={() => handleOpenDialog(item)}>
-                  <Edit className="w-4 h-4" />
-                </Button>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => setDeleteId(item.id)}
-                  className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </Button>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      )}
+                <div className="grid grid-cols-2 gap-1.5 sm:flex sm:gap-2 flex-shrink-0">
+                  <div className="flex items-center gap-2 mr-2">
+                    <Switch
+                      checked={item.is_featured}
+                      onCheckedChange={() => toggleFeatured(item)}
+                    />
+                  </div>
+                  <div className="flex items-center gap-2 mr-2">
+                    <Switch
+                      checked={item.is_visible}
+                      onCheckedChange={() => toggleVisibility(item)}
+                    />
+                  </div>
+                  <Button variant="outline" size="icon" onClick={() => handleOpenDialog(item)}>
+                    <Edit className="w-4 h-4" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => setDeleteId(item.id)}
+                    className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        )}
+      </div>
 
       {/* Add/Edit Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>

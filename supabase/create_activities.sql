@@ -66,8 +66,8 @@ END $$;
 -- Add section heading (only if table exists)
 DO $$
 BEGIN
-    IF EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'section_headings') THEN
-        INSERT INTO public.section_headings (section_key, badge_first, badge_highlight, title, description)
+    IF EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'homepage_section_headings') THEN
+        INSERT INTO public.homepage_section_headings (section_key, section_badge, section_title, section_highlight, section_description)
         VALUES ('activities', 'Latest', 'Activities', 'What I''m Up To', 'Conferences, events, and adventures')
         ON CONFLICT (section_key) DO NOTHING;
     END IF;

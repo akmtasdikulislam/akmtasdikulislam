@@ -53,6 +53,6 @@ VALUES ('activities', true)
 ON CONFLICT (section_key) DO NOTHING;
 
 -- Add section heading for activities
-INSERT INTO public.section_headings (section_key, badge_first, badge_highlight, title, description)
+INSERT INTO public.homepage_section_headings (section_key, section_badge, section_title, section_highlight, section_description)
 VALUES ('activities', 'Latest', 'Activities', 'What I''m Up To', 'Conferences, events, and adventures')
 ON CONFLICT (section_key) DO NOTHING;
