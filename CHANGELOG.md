@@ -9,6 +9,9 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 - Fixed floating tech items and badges on the Hero section to be visible across all screen sizes (mobile, tablet, desktop).
 - Modified the description paragraph to utilize the full available width on smaller screens, removing previous centering constraints.
+- Centered the social media links block on mobile screens for improved aesthetics.
+- Added vertical spacing (y-axis padding) around the profile photo container on mobile to prevent floating items from clipping or overlapping text.
+- Fixed a layout regression where rotating decorative circles around the profile photo became elliptical on smaller screens due to vertical padding.
 
 ## [2026-02-24] - Frontend Visibility Toggle Fix
 

@@ -108,7 +108,7 @@ const Hero = () => {
               </Button>
             </div>
 
-            <div className="flex items-center gap-3 sm:gap-4">
+            <div className="flex items-center gap-3 sm:gap-4 justify-center w-full lg:justify-start">
               {mappedSocialLinks.map((social) => (
                 <motion.a
                   key={social.id}
@@ -134,7 +134,7 @@ const Hero = () => {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="order-1 lg:order-2 flex justify-center"
+            className="order-1 lg:order-2 flex justify-center py-12 lg:py-0 my-8 lg:my-0"
           >
             <div className="relative">
               <motion.div
