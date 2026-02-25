@@ -15,6 +15,7 @@ interface Activity {
   event_date: string;
   description: string | null;
   activity_type: string;
+  cover_image: string | null;
   photos: string[] | null;
   is_featured: boolean;
   display_order: number;
@@ -90,6 +91,15 @@ const Activities = () => {
     return null;
   }
 
+  const getAllImages = (activity: Activity) => {
+    const images: string[] = [];
+    if (activity.cover_image) images.push(activity.cover_image);
+    if (activity.photos && activity.photos.length > 0) {
+      images.push(...activity.photos);
+    }
+    return images;
+  };
+
   return (
     <section id="activities" className="py-24 relative overflow-hidden">
       <div className="absolute inset-0 bg-grid-pattern opacity-10" />
@@ -108,146 +118,236 @@ const Activities = () => {
           <div className="absolute left-[28px] md:left-1/2 top-0 bottom-0 w-[2px] bg-border md:-translate-x-1/2" />
 
           <div className="space-y-12">
-            {activities.map((activity, index) => (
-              <motion.div
-                key={activity.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className={`flex flex-col md:flex-row gap-8 relative ${index % 2 === 0 ? 'md:flex-row-reverse' : ''
-                  }`}
-              >
-                {/* Timeline Dot */}
-                <div className="absolute left-[28px] md:left-1/2 top-0 w-4 h-4 rounded-full bg-background border-4 border-primary z-10 -translate-x-1/2 md:-translate-x-1/2 shadow-[0_0_0_4px_rgba(var(--background),1)]" />
+            {activities.map((activity, index) => {
+              const allImages = getAllImages(activity);
+              
+              return (
+                <motion.div
+                  key={activity.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className={`flex flex-col md:flex-row gap-8 relative ${index % 2 === 0 ? 'md:flex-row-reverse' : ''
+                    }`}
+                >
+                  {/* Timeline Dot */}
+                  <div className="absolute left-[28px] md:left-1/2 top-0 w-4 h-4 rounded-full bg-background border-4 border-primary z-10 -translate-x-1/2 md:-translate-x-1/2 shadow-[0_0_0_4px_rgba(var(--background),1)]" />
 
-                {/* Content Card */}
-                <div className={`flex-1 ml-16 md:ml-0 ${index % 2 === 0 ? 'md:pl-12' : 'md:pr-12 md:text-right md:items-end'
-                  }`}>
-                  <div className={`flex flex-col items-start ${index % 2 === 0 ? '' : 'md:items-end'
+                  {/* Content Card */}
+                  <div className={`flex-1 ml-16 md:ml-0 ${index % 2 === 0 ? 'md:pl-12' : 'md:pr-12 md:text-right md:items-end'
                     }`}>
-                    {/* Date Bubble */}
-                    <div className={`inline-flex items-center gap-2 px-3 py-1 bg-secondary/50 rounded-full text-xs font-medium text-primary mb-3 border border-primary/20 w-fit`}>
-                      <Calendar className="w-3 h-3" />
-                      <span>{format(new Date(activity.event_date), 'MMM yyyy')}</span>
-                    </div>
-
-                    <div className={`bg-card border border-border rounded-2xl p-6 hover:border-primary/50 transition-all group w-full ${index % 2 === 0 ? 'text-left' : 'md:text-left'}`}>
-                      {/* Header with Type Badge and Title */}
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 flex-wrap mb-2">
-                            <span className={`px-2.5 py-1 rounded-md text-xs font-medium border ${getActivityTypeColor(activity.activity_type)}`}>
-                              {getActivityTypeLabel(activity.activity_type)}
-                            </span>
-                            {activity.is_featured && (
-                              <span className="px-2.5 py-1 rounded-md text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center gap-1">
-                                <Star className="w-3 h-3" />
-                                Featured
-                              </span>
-                            )}
-                          </div>
-                          <h3 className="text-xl font-bold group-hover:text-primary transition-colors">{activity.title}</h3>
-                        </div>
+                    <div className={`flex flex-col items-start ${index % 2 === 0 ? '' : 'md:items-end'
+                      }`}>
+                      {/* Date Bubble */}
+                      <div className={`inline-flex items-center gap-2 px-3 py-1 bg-secondary/50 rounded-full text-xs font-medium text-primary mb-3 border border-primary/20 w-fit`}>
+                        <Calendar className="w-3 h-3" />
+                        <span>{format(new Date(activity.event_date), 'MMMM d, yyyy')}</span>
                       </div>
 
-                      {/* Organization & Location */}
-                      <div className="mt-2 text-muted-foreground">
-                        <p className="text-sm">{activity.organization}</p>
-                        {activity.location && (
-                          <div className="flex items-center gap-1.5 mt-1 text-xs">
-                            <MapPin className="w-3 h-3 flex-shrink-0" />
-                            <span>{activity.location}</span>
+                      <div className={`bg-card border border-border rounded-2xl p-6 hover:border-primary/50 transition-all group w-full ${index % 2 === 0 ? 'text-left' : 'md:text-left'}`}>
+                        {/* Cover Photo / Media Gallery */}
+                        {allImages.length > 0 && (
+                          <div className="relative -mt-2 -mx-6 mb-4">
+                            {allImages.length === 1 ? (
+                              <div className="h-56 overflow-hidden rounded-t-2xl">
+                                <Dialog>
+                                  <DialogTrigger asChild>
+                                    <div className="cursor-pointer w-full h-full">
+                                      <img
+                                        src={allImages[0]}
+                                        alt={activity.title}
+                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                      />
+                                    </div>
+                                  </DialogTrigger>
+                                  <DialogContent className="max-w-4xl p-0 overflow-hidden bg-black/95 border-none">
+                                    <DialogTitle className="sr-only">{activity.title}</DialogTitle>
+                                    <div className="relative w-full h-[85vh] flex items-center justify-center">
+                                      <img
+                                        src={allImages[0]}
+                                        alt={activity.title}
+                                        className="max-w-full max-h-full object-contain"
+                                      />
+                                    </div>
+                                  </DialogContent>
+                                </Dialog>
+                              </div>
+                            ) : allImages.length === 2 ? (
+                              <div className="h-56 flex gap-1 overflow-hidden rounded-t-2xl">
+                                {allImages.slice(0, 2).map((img, idx) => (
+                                  <Dialog key={idx}>
+                                    <DialogTrigger asChild>
+                                      <div className="cursor-pointer flex-1 h-full">
+                                        <img
+                                          src={img}
+                                          alt={`${activity.title} ${idx + 1}`}
+                                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                        />
+                                      </div>
+                                    </DialogTrigger>
+                                    <DialogContent className="max-w-4xl p-0 overflow-hidden bg-black/95 border-none">
+                                      <DialogTitle className="sr-only">{activity.title}</DialogTitle>
+                                      <div className="relative w-full h-[85vh] flex items-center justify-center">
+                                        <img
+                                          src={img}
+                                          alt={`${activity.title} ${idx + 1}`}
+                                          className="max-w-full max-h-full object-contain"
+                                        />
+                                      </div>
+                                    </DialogContent>
+                                  </Dialog>
+                                ))}
+                              </div>
+                            ) : allImages.length === 3 ? (
+                              <div className="h-56 flex gap-1 overflow-hidden rounded-t-2xl">
+                                <Dialog>
+                                  <DialogTrigger asChild>
+                                    <div className="cursor-pointer flex-1 h-full">
+                                      <img
+                                        src={allImages[0]}
+                                        alt={`${activity.title} 1`}
+                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                      />
+                                    </div>
+                                  </DialogTrigger>
+                                  <DialogContent className="max-w-4xl p-0 overflow-hidden bg-black/95 border-none">
+                                    <DialogTitle className="sr-only">{activity.title}</DialogTitle>
+                                    <div className="relative w-full h-[85vh] flex items-center justify-center">
+                                      <img
+                                        src={allImages[0]}
+                                        alt={`${activity.title} 1`}
+                                        className="max-w-full max-h-full object-contain"
+                                      />
+                                    </div>
+                                  </DialogContent>
+                                </Dialog>
+                                <div className="flex-1 flex flex-col gap-1">
+                                  {allImages.slice(1, 3).map((img, idx) => (
+                                    <Dialog key={idx}>
+                                      <DialogTrigger asChild>
+                                        <div className="cursor-pointer flex-1">
+                                          <img
+                                            src={img}
+                                            alt={`${activity.title} ${idx + 2}`}
+                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                          />
+                                        </div>
+                                      </DialogTrigger>
+                                      <DialogContent className="max-w-4xl p-0 overflow-hidden bg-black/95 border-none">
+                                        <DialogTitle className="sr-only">{activity.title}</DialogTitle>
+                                        <div className="relative w-full h-[85vh] flex items-center justify-center">
+                                          <img
+                                            src={img}
+                                            alt={`${activity.title} ${idx + 2}`}
+                                            className="max-w-full max-h-full object-contain"
+                                          />
+                                        </div>
+                                      </DialogContent>
+                                    </Dialog>
+                                  ))}
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="h-56 grid grid-cols-3 grid-rows-2 gap-1 overflow-hidden rounded-t-2xl">
+                                <Dialog>
+                                  <DialogTrigger asChild>
+                                    <div className="cursor-pointer row-span-2">
+                                      <img
+                                        src={allImages[0]}
+                                        alt={`${activity.title} 1`}
+                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                      />
+                                    </div>
+                                  </DialogTrigger>
+                                  <DialogContent className="max-w-4xl p-0 overflow-hidden bg-black/95 border-none">
+                                    <DialogTitle className="sr-only">{activity.title}</DialogTitle>
+                                    <div className="relative w-full h-[85vh] flex items-center justify-center">
+                                      <img
+                                        src={allImages[0]}
+                                        alt={`${activity.title} 1`}
+                                        className="max-w-full max-h-full object-contain"
+                                      />
+                                    </div>
+                                  </DialogContent>
+                                </Dialog>
+                                {allImages.slice(1, 4).map((img, idx) => (
+                                  <Dialog key={idx}>
+                                    <DialogTrigger asChild>
+                                      <div className="cursor-pointer relative">
+                                        <img
+                                          src={img}
+                                          alt={`${activity.title} ${idx + 2}`}
+                                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                        />
+                                        {idx === 2 && allImages.length > 4 && (
+                                          <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                                            <span className="text-white font-semibold text-lg">+{allImages.length - 4}</span>
+                                          </div>
+                                        )}
+                                      </div>
+                                    </DialogTrigger>
+                                    <DialogContent className="max-w-4xl p-0 overflow-hidden bg-black/95 border-none">
+                                      <DialogTitle className="sr-only">{activity.title}</DialogTitle>
+                                      <div className="relative w-full h-[85vh] flex items-center justify-center">
+                                        <img
+                                          src={img}
+                                          alt={`${activity.title} ${idx + 2}`}
+                                          className="max-w-full max-h-full object-contain"
+                                        />
+                                      </div>
+                                    </DialogContent>
+                                  </Dialog>
+                                ))}
+                              </div>
+                            )}
                           </div>
                         )}
-                      </div>
 
-                      {/* Description */}
-                      {activity.description && (
-                        <p className="text-muted-foreground text-sm leading-relaxed mt-4">
-                          {activity.description}
-                        </p>
-                      )}
-
-                      {/* Photos Gallery */}
-                      {activity.photos && activity.photos.length > 0 && (
-                        <div className="mt-4 pt-4 border-t border-border">
-                          <div className="flex items-center justify-between mb-3">
-                            <span className="text-xs font-medium text-muted-foreground">Photos</span>
-                            <span className="text-xs text-muted-foreground">{activity.photos.length} photo(s)</span>
-                          </div>
-                          <div className="flex gap-2 overflow-x-auto pb-1">
-                            {activity.photos.slice(0, 4).map((photo, idx) => (
-                              <Dialog key={idx}>
-                                <DialogTrigger asChild>
-                                  <div className="relative w-20 h-20 rounded-lg overflow-hidden cursor-pointer flex-shrink-0 border border-border hover:border-primary/50 transition-all group-hover:scale-105">
-                                    <img
-                                      src={photo}
-                                      alt={`Activity photo ${idx + 1}`}
-                                      className="w-full h-full object-cover"
-                                    />
-                                  </div>
-                                </DialogTrigger>
-                                <DialogContent className="max-w-4xl p-0 overflow-hidden bg-black/95 border-none">
-                                  <DialogTitle className="sr-only">Activity Photo</DialogTitle>
-                                  <div className="relative w-full h-[85vh] flex items-center justify-center">
-                                    <img
-                                      src={photo}
-                                      alt={`Activity photo ${idx + 1}`}
-                                      className="max-w-full max-h-full object-contain"
-                                    />
-                                  </div>
-                                </DialogContent>
-                              </Dialog>
-                            ))}
-                            {activity.photos.length > 4 && (
-                              <Dialog>
-                                <DialogTrigger asChild>
-                                  <div className="w-20 h-20 rounded-lg bg-secondary/50 flex items-center justify-center cursor-pointer flex-shrink-0 border border-border hover:border-primary/50 transition-all">
-                                    <span className="text-xs font-medium">+{activity.photos.length - 4}</span>
-                                  </div>
-                                </DialogTrigger>
-                                <DialogContent className="max-w-6xl p-0 overflow-hidden bg-black/95 border-none">
-                                  <DialogTitle className="sr-only">All Photos</DialogTitle>
-                                  <div className="p-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-h-[80vh] overflow-y-auto">
-                                    {activity.photos.map((photo, idx) => (
-                                      <Dialog key={idx}>
-                                        <DialogTrigger asChild>
-                                          <div className="relative aspect-square rounded-lg overflow-hidden cursor-pointer">
-                                            <img
-                                              src={photo}
-                                              alt={`Activity photo ${idx + 1}`}
-                                              className="w-full h-full object-cover hover:opacity-90 transition-opacity"
-                                            />
-                                          </div>
-                                        </DialogTrigger>
-                                        <DialogContent className="max-w-4xl p-0 overflow-hidden bg-black/95 border-none">
-                                          <DialogTitle className="sr-only">Activity Photo {idx + 1}</DialogTitle>
-                                          <div className="relative w-full h-[85vh] flex items-center justify-center">
-                                            <img
-                                              src={photo}
-                                              alt={`Activity photo ${idx + 1}`}
-                                              className="max-w-full max-h-full object-contain"
-                                            />
-                                          </div>
-                                        </DialogContent>
-                                      </Dialog>
-                                    ))}
-                                  </div>
-                                </DialogContent>
-                              </Dialog>
-                            )}
+                        {/* Header with Type Badge and Title */}
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 flex-wrap mb-2">
+                              <span className={`px-2 py-1 rounded-md text-xs font-medium border tag-chip ${getActivityTypeColor(activity.activity_type)}`}>
+                                {getActivityTypeLabel(activity.activity_type)}
+                              </span>
+                              {activity.is_featured && (
+                                <span className="px-2 py-1 rounded-md text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center gap-1 tag-chip">
+                                  <Star className="w-3 h-3" />
+                                  Featured
+                                </span>
+                              )}
+                            </div>
+                            <h3 className="text-xl font-bold group-hover:text-primary transition-colors">{activity.title}</h3>
                           </div>
                         </div>
-                      )}
+
+                        {/* Organization & Location */}
+                        <div className="mt-2 text-muted-foreground">
+                          <p className="text-sm">{activity.organization}</p>
+                          {activity.location && (
+                            <div className="flex items-center gap-1.5 mt-1 text-xs">
+                              <MapPin className="w-3 h-3 flex-shrink-0" />
+                              <span>{activity.location}</span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Description */}
+                        {activity.description && (
+                          <p className="text-muted-foreground text-sm leading-relaxed mt-4">
+                            {activity.description}
+                          </p>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Empty space for opposite side on desktop */}
-                <div className="hidden md:block flex-1" />
-              </motion.div>
-            ))}
+                  {/* Empty space for opposite side on desktop */}
+                  <div className="hidden md:block flex-1" />
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </div>

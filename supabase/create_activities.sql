@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS public.activities (
     event_date DATE NOT NULL,
     description TEXT,
     activity_type TEXT NOT NULL DEFAULT 'event',
+    cover_image TEXT,
     photos TEXT[] DEFAULT '{}',
     is_featured BOOLEAN DEFAULT false,
     display_order INTEGER DEFAULT 0,

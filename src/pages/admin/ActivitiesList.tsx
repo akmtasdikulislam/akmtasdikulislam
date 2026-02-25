@@ -36,6 +36,7 @@ interface Activity {
   event_date: string;
   description: string | null;
   activity_type: string;
+  cover_image: string | null;
   photos: string[] | null;
   is_featured: boolean;
   display_order: number;
@@ -49,6 +50,7 @@ const emptyActivity = {
   event_date: '',
   description: '',
   activity_type: 'event',
+  cover_image: '',
   photos: [] as string[],
   is_featured: false,
   is_visible: true,
@@ -70,6 +72,7 @@ const ActivitiesList = () => {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState(emptyActivity);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
 
   const { data: sectionVisible = true } = useQuery({
@@ -127,6 +130,7 @@ const ActivitiesList = () => {
         event_date: item.event_date,
         description: item.description || '',
         activity_type: item.activity_type,
+        cover_image: item.cover_image || '',
         photos: item.photos || [],
         is_featured: item.is_featured,
         is_visible: item.is_visible,
@@ -153,6 +157,7 @@ const ActivitiesList = () => {
         event_date: formData.event_date,
         description: formData.description || null,
         activity_type: formData.activity_type,
+        cover_image: formData.cover_image || null,
         photos: formData.photos.length > 0 ? formData.photos : null,
         is_featured: formData.is_featured,
         is_visible: formData.is_visible,
@@ -202,6 +207,36 @@ const ActivitiesList = () => {
       toast.error('Failed to delete activity');
     } finally {
       setDeleteId(null);
+    }
+  };
+
+  const handleCoverUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `cover-${Date.now()}.${fileExt}`;
+      const filePath = `activities/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('cms-uploads')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: urlData } = supabase.storage
+        .from('cms-uploads')
+        .getPublicUrl(filePath);
+
+      setFormData(prev => ({ ...prev, cover_image: urlData.publicUrl }));
+      toast.success('Cover image uploaded');
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      toast.error('Failed to upload cover image');
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -480,7 +515,32 @@ const ActivitiesList = () => {
             </div>
 
             <div className="space-y-2">
-              <Label>Photos (multiple)</Label>
+              <Label>Cover Photo (optional)</Label>
+              <div className="flex items-center gap-4">
+                {formData.cover_image && (
+                  <div className="relative w-24 h-24 rounded-lg overflow-hidden border border-border">
+                    <img src={formData.cover_image} alt="Cover" className="w-full h-full object-cover" />
+                    <button
+                      onClick={() => setFormData(prev => ({ ...prev, cover_image: '' }))}
+                      className="absolute top-1 right-1 bg-black/70 rounded-full p-0.5"
+                    >
+                      <X className="w-3 h-3 text-white" />
+                    </button>
+                  </div>
+                )}
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleCoverUpload}
+                  disabled={uploading}
+                  className="flex-1"
+                />
+              </div>
+              <p className="text-xs text-muted-foreground">This will be the first image shown in the gallery</p>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Additional Photos</Label>
               <div className="flex flex-wrap gap-2 mb-2">
                 {formData.photos.map((photo, idx) => (
                   <div key={idx} className="relative w-16 h-16 rounded-lg overflow-hidden">
