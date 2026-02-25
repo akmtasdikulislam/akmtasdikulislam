@@ -44,6 +44,7 @@ interface Activity {
   is_featured: boolean;
   display_order: number;
   is_visible: boolean;
+  slideshow_interval_seconds?: number | null;
 }
 
 const emptyActivity = {
@@ -58,6 +59,7 @@ const emptyActivity = {
   tags: '',
   is_featured: false,
   is_visible: true,
+  slideshow_interval_seconds: 3.5,
 } as {
   title: string;
   organization: string;
@@ -70,6 +72,7 @@ const emptyActivity = {
   tags: string;
   is_featured: boolean;
   is_visible: boolean;
+  slideshow_interval_seconds: number | '';
 };
 
 const activityTypes = [
@@ -123,6 +126,7 @@ const ActivitiesList = () => {
         tags: item.tags?.join(', ') || '',
         is_featured: item.is_featured,
         is_visible: item.is_visible,
+        slideshow_interval_seconds: item.slideshow_interval_seconds ?? 3.5,
       });
       setLastSnapshot({
         title: item.title,
@@ -136,6 +140,7 @@ const ActivitiesList = () => {
         tags: item.tags?.join(', ') || '',
         is_featured: item.is_featured,
         is_visible: item.is_visible,
+        slideshow_interval_seconds: item.slideshow_interval_seconds ?? 3.5,
       });
     } else {
       setEditingId(null);
@@ -153,6 +158,11 @@ const ActivitiesList = () => {
 
     setSaving(true);
     try {
+      const intervalValue = formData.slideshow_interval_seconds;
+      const normalizedInterval =
+        typeof intervalValue === 'number' && Number.isFinite(intervalValue) && intervalValue > 0
+          ? intervalValue
+          : null;
       const payload = {
         title: formData.title,
         organization: formData.organization,
@@ -167,6 +177,7 @@ const ActivitiesList = () => {
           : null,
         is_featured: formData.is_featured,
         is_visible: formData.is_visible,
+        slideshow_interval_seconds: normalizedInterval,
       };
 
       if (editingId) {
@@ -591,6 +602,26 @@ const ActivitiesList = () => {
                 value={formData.event_date}
                 onChange={(e) => setFormData({ ...formData, event_date: e.target.value })}
               />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Slideshow Timing (seconds)</Label>
+              <Input
+                type="number"
+                min="2"
+                step="0.5"
+                value={formData.slideshow_interval_seconds}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    slideshow_interval_seconds: e.target.value === '' ? '' : Number(e.target.value),
+                  })
+                }
+                placeholder="3.5"
+              />
+              <p className="text-xs text-muted-foreground">
+                Sets the per-slide duration. Cover slide is slightly longer.
+              </p>
             </div>
 
             <div className="space-y-2">

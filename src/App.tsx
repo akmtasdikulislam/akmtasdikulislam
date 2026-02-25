@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "@/contexts/AuthContext";
 import CursorProvider from "@/contexts/CursorProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Analytics } from "@vercel/analytics/react";
 import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import AdminLayout from "./components/admin/AdminLayout";
@@ -15,8 +16,6 @@ import Dashboard from "./pages/admin/Dashboard";
 import ProjectEditor from "./pages/admin/ProjectEditor";
 import ProjectsList from "./pages/admin/ProjectsList";
 import TestimonialsList from "./pages/admin/TestimonialsList";
-
-
 
 import AboutEditor from "./pages/admin/AboutEditor";
 import ActivitiesList from "./pages/admin/ActivitiesList";
@@ -69,6 +68,7 @@ const AppContent = () => {
   return (
     <>
       {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
+      <Analytics />
       <Toaster />
       <Sonner />
       <Routes>

@@ -5,9 +5,9 @@ import { supabase } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { motion } from 'framer-motion';
-import { Calendar, MapPin, Star } from 'lucide-react';
+import { Calendar, MapPin, Pause, Play, Star } from 'lucide-react';
 import { toast } from 'sonner';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface Activity {
   id: string;
@@ -23,12 +23,12 @@ interface Activity {
   is_featured: boolean;
   display_order: number;
   is_visible: boolean;
+  slideshow_interval_seconds?: number | null;
 }
 
-const SLIDE_TIMERS = {
-  cover: 6000,
-  other: 3500,
-};
+const DEFAULT_SLIDE_SECONDS = 3.5;
+const COVER_MULTIPLIER = 1.7;
+const MIN_SLIDE_SECONDS = 2;
 
 const activityTypeColors: Record<string, string> = {
   conference: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
@@ -75,10 +75,36 @@ const getSlideImages = (activity: Activity) => {
   return [cover, ...additional];
 };
 
+const getSlideSeconds = (activity: Activity) => {
+  const value = activity.slideshow_interval_seconds;
+  if (typeof value !== 'number' || Number.isNaN(value) || value <= 0) {
+    return DEFAULT_SLIDE_SECONDS;
+  }
+  return Math.max(value, MIN_SLIDE_SECONDS);
+};
+
+const getSlideDelayMs = (activity: Activity, index: number) => {
+  const baseMs = getSlideSeconds(activity) * 1000;
+  return Math.round(index === 0 ? baseMs * COVER_MULTIPLIER : baseMs);
+};
+
+const getInitialPausedSlides = (items: Activity[]) =>
+  items.reduce<Record<string, boolean>>((acc, item) => {
+    const hasSlides = getSlideImages(item).length > 1;
+    if (hasSlides) acc[item.id] = false;
+    return acc;
+  }, {});
+
 const Activities = () => {
   const [activeSlides, setActiveSlides] = useState<Record<string, number>>({});
+  const [pausedSlides, setPausedSlides] = useState<Record<string, boolean>>({});
   const activeSlidesRef = useRef<Record<string, number>>({});
-  const timersRef = useRef<number[]>([]);
+  const pausedSlidesRef = useRef<Record<string, boolean>>({});
+  const timersRef = useRef<Record<string, number>>({});
+  const slideStartRef = useRef<Record<string, number>>({});
+  const slideDelayRef = useRef<Record<string, number>>({});
+  const remainingTimesRef = useRef<Record<string, number | null>>({});
+  const progressStartRef = useRef<Record<string, number>>({});
   const { data: activities = [], isLoading: loading } = useQuery<Activity[]>({
     queryKey: ['activities'],
     queryFn: async () => {
@@ -98,46 +124,70 @@ const Activities = () => {
     placeholderData: [],
   });
 
+  const clearActivityTimer = useCallback((activityId: string) => {
+    const timerId = timersRef.current[activityId];
+    if (timerId != null) {
+      window.clearTimeout(timerId);
+      delete timersRef.current[activityId];
+    }
+  }, []);
+
+  const startActivitySlideshow = useCallback((activity: Activity) => {
+    const images = getSlideImages(activity);
+    if (images.length <= 1) return;
+    if (pausedSlidesRef.current[activity.id]) return;
+
+    const currentIndex = activeSlidesRef.current[activity.id] ?? 0;
+    const baseDelay = getSlideDelayMs(activity, currentIndex);
+    const remainingDelay = remainingTimesRef.current[activity.id];
+    const delay = typeof remainingDelay === 'number' ? remainingDelay : baseDelay;
+    const progressStart = baseDelay > 0 ? Math.min(((baseDelay - delay) / baseDelay) * 100, 100) : 0;
+
+    slideDelayRef.current[activity.id] = baseDelay;
+    remainingTimesRef.current[activity.id] = null;
+    slideStartRef.current[activity.id] = Date.now();
+    progressStartRef.current[activity.id] = Number.isFinite(progressStart) ? progressStart : 0;
+
+    clearActivityTimer(activity.id);
+    const timeoutId = window.setTimeout(() => {
+      if (pausedSlidesRef.current[activity.id]) return;
+      const nextIndex = (currentIndex + 1) % images.length;
+      activeSlidesRef.current = { ...activeSlidesRef.current, [activity.id]: nextIndex };
+      setActiveSlides((prev) => ({ ...prev, [activity.id]: nextIndex }));
+      startActivitySlideshow(activity);
+    }, delay);
+
+    timersRef.current[activity.id] = timeoutId;
+  }, [clearActivityTimer]);
+
   useEffect(() => {
     activeSlidesRef.current = activeSlides;
   }, [activeSlides]);
 
   useEffect(() => {
+    pausedSlidesRef.current = pausedSlides;
+  }, [pausedSlides]);
+
+  useEffect(() => {
     if (!activities || activities.length === 0) return;
 
-    let cancelled = false;
-    timersRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
-    timersRef.current = [];
-
-    const scheduleNext = (activityId: string, images: string[]) => {
-      if (cancelled) return;
-      const currentIndex = activeSlidesRef.current[activityId] ?? 0;
-      const delay = currentIndex === 0 ? SLIDE_TIMERS.cover : SLIDE_TIMERS.other;
-      const timeoutId = window.setTimeout(() => {
-        if (cancelled) return;
-        const nextIndex = (currentIndex + 1) % images.length;
-        activeSlidesRef.current = { ...activeSlidesRef.current, [activityId]: nextIndex };
-        setActiveSlides((prev) => ({ ...prev, [activityId]: nextIndex }));
-        scheduleNext(activityId, images);
-      }, delay);
-      timersRef.current.push(timeoutId);
-    };
+    setPausedSlides((prev) => ({
+      ...getInitialPausedSlides(activities),
+      ...prev,
+    }));
 
     activities.forEach((activity) => {
-      const images = getSlideImages(activity);
-      if (images.length <= 1) return;
       if (activeSlidesRef.current[activity.id] == null) {
         activeSlidesRef.current = { ...activeSlidesRef.current, [activity.id]: 0 };
       }
-      scheduleNext(activity.id, images);
+      startActivitySlideshow(activity);
     });
 
     return () => {
-      cancelled = true;
-      timersRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
-      timersRef.current = [];
+      Object.values(timersRef.current).forEach((timerId) => window.clearTimeout(timerId));
+      timersRef.current = {};
     };
-  }, [activities]);
+  }, [activities, startActivitySlideshow]);
 
   const { data: heading, isLoading: headingLoading } = useSectionHeading('activities');
 
@@ -171,7 +221,10 @@ const Activities = () => {
                 const slideImages = getSlideImages(activity);
                 const activeSlideIndex = activeSlides[activity.id] ?? 0;
                 const activeSlide = slideImages[activeSlideIndex] || coverImage;
-                const activeSlideDuration = activeSlideIndex === 0 ? SLIDE_TIMERS.cover : SLIDE_TIMERS.other;
+                const hasSlideshow = slideImages.length > 1;
+                const activeSlideDuration = slideDelayRef.current[activity.id] ?? getSlideDelayMs(activity, activeSlideIndex);
+                const progressStart = progressStartRef.current[activity.id] ?? 0;
+                const isPaused = pausedSlides[activity.id] ?? false;
 
                 return (
                   <motion.div
@@ -233,15 +286,53 @@ const Activities = () => {
                                   </div>
                                 </DialogContent>
                               </Dialog>
-                              <div className="absolute bottom-0 left-0 right-0 h-1 bg-black/30 z-20 pointer-events-none">
-                                <motion.div
-                                  key={`${activity.id}-${activeSlideIndex}`}
-                                  initial={{ width: 0 }}
-                                  animate={{ width: '100%' }}
-                                  transition={{ duration: activeSlideDuration / 1000, ease: 'linear' }}
-                                  className="h-full bg-primary/80"
-                                />
-                              </div>
+                              {hasSlideshow && (
+                                <div className="absolute bottom-0 left-0 right-0 h-1 bg-black/30 z-20 pointer-events-none">
+                                  <motion.div
+                                    key={`${activity.id}-${activeSlideIndex}-${isPaused ? 'paused' : 'playing'}`}
+                                    initial={{ width: `${progressStart}%` }}
+                                    animate={{ width: isPaused ? `${progressStart}%` : '100%' }}
+                                    transition={{ duration: isPaused ? 0 : Math.max((activeSlideDuration * (1 - progressStart / 100)) / 1000, 0), ease: 'linear' }}
+                                    className="h-full bg-primary/80"
+                                  />
+                                </div>
+                              )}
+                              {hasSlideshow && (
+                                <div className="absolute top-3 right-3 z-30">
+                                  <button
+                                    type="button"
+                                    onClick={(event) => {
+                                      event.stopPropagation();
+                                      const nextPaused = !isPaused;
+                                      pausedSlidesRef.current = { ...pausedSlidesRef.current, [activity.id]: nextPaused };
+                                      if (nextPaused) {
+                                        clearActivityTimer(activity.id);
+                                        const startedAt = slideStartRef.current[activity.id];
+                                        const total = slideDelayRef.current[activity.id];
+                                        if (startedAt && total) {
+                                          const elapsed = Date.now() - startedAt;
+                                          remainingTimesRef.current[activity.id] = Math.max(total - elapsed, 0);
+                                        }
+                                        const baseDelay = slideDelayRef.current[activity.id] ?? getSlideDelayMs(activity, activeSlideIndex);
+                                        const remaining = remainingTimesRef.current[activity.id] ?? baseDelay;
+                                        progressStartRef.current[activity.id] = baseDelay > 0
+                                          ? Math.min(((baseDelay - remaining) / baseDelay) * 100, 100)
+                                          : 0;
+                                      } else {
+                                        if (remainingTimesRef.current[activity.id] == null) {
+                                          remainingTimesRef.current[activity.id] = getSlideDelayMs(activity, activeSlideIndex);
+                                        }
+                                        startActivitySlideshow(activity);
+                                      }
+                                      setPausedSlides((prev) => ({ ...prev, [activity.id]: nextPaused }));
+                                    }}
+                                    className="h-8 w-8 rounded-full border border-primary/40 bg-background/70 text-primary backdrop-blur-sm flex items-center justify-center hover:border-primary hover:text-primary"
+                                    aria-label={isPaused ? 'Play slideshow' : 'Pause slideshow'}
+                                  >
+                                    {isPaused ? <Play className="w-4 h-4" /> : <Pause className="w-4 h-4" />}
+                                  </button>
+                                </div>
+                              )}
                             </div>
                           </div>
                         )}
