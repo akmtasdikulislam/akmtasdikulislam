@@ -71,7 +71,7 @@ const TestimonialsList = () => {
         .single(); // Ensure single row fetch
 
       if (error && error.code !== 'PGRST116') throw error;
-      return data ? data.is_visible : true;
+      return data ? (data as any).is_visible : true;
     },
     initialData: true,
     staleTime: 0,
@@ -279,7 +279,7 @@ const TestimonialsList = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-6xl mx-auto w-full px-4 pb-20">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold">Testimonials</h1>
