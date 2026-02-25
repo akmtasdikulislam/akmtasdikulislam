@@ -31,7 +31,7 @@ const Certifications = () => {
     queryKey: ['certifications'],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('certifications')
+        .from('certifications' as any)
         .select('*')
         .eq('is_visible', true)
         .order('display_order', { ascending: true });
@@ -40,7 +40,7 @@ const Certifications = () => {
         toast.error('Failed to load certifications');
         throw error;
       }
-      return data as Certification[];
+      return data as unknown as Certification[];
     },
     initialData: [], // Provide initial data to ensure 'certifications' is always an array
   });
@@ -49,7 +49,7 @@ const Certifications = () => {
     queryKey: ['section_visibility', 'certifications'],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('section_visibility')
+        .from('section_visibility' as any)
         .select('is_visible')
         .eq('section_key', 'certifications')
         .single();
@@ -59,7 +59,7 @@ const Certifications = () => {
         console.error('Error fetching section visibility:', error);
       }
       // If data is null (no setting found) or is_visible is true, default to true
-      return data ? data.is_visible : true;
+      return data ? (data as any).is_visible : true;
     },
     initialData: true, // Default to true if the query hasn't run or no data is found
   });
