@@ -76,7 +76,7 @@ const Hero = () => {
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="order-2 lg:order-1"
+            className="order-2 lg:order-1 flex flex-col items-center lg:items-start text-center lg:text-left w-full"
           >
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -97,9 +97,9 @@ const Hero = () => {
               <TypeWriter words={roles.map(r => r.role_text)} typingSpeed={80} deletingSpeed={40} />
             </div>
 
-            <p className="text-muted-foreground mb-8 max-w-lg leading-relaxed">{hero.description}</p>
+            <p className="text-muted-foreground mb-8 max-w-lg leading-relaxed mx-auto lg:mx-0">{hero.description}</p>
 
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-10">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-10 justify-center w-full lg:justify-start">
               <Button size="lg" variant="glow" asChild className="w-full sm:w-auto min-h-[48px]">
                 <a href="#contact"><Terminal className="w-4 h-4" /> Let's Talk</a>
               </Button>
@@ -108,7 +108,7 @@ const Hero = () => {
               </Button>
             </div>
 
-            <div className="flex items-center gap-3 sm:gap-4">
+            <div className="flex items-center gap-3 sm:gap-4 justify-center w-full lg:justify-start">
               {mappedSocialLinks.map((social) => (
                 <motion.a
                   key={social.id}
@@ -164,7 +164,7 @@ const Hero = () => {
                     transition={{ delay: tech.delay, duration: 0.5 }}
                     whileHover={{ scale: 1.3, rotate: [0, -10, 10, 0], transition: { duration: 0.3 } }}
                     whileTap={{ scale: 0.9 }}
-                    className={`absolute ${tech.position_class} ${tech.animation_class} hidden lg:block z-20 cursor-pointer`}
+                    className={`absolute ${tech.position_class} ${tech.animation_class} z-20 cursor-pointer`}
                   >
                     <motion.div
                       className="w-9 h-9 p-1.5 bg-card/90 border border-border/50 rounded-lg backdrop-blur-sm shadow-lg hover:border-primary/50 hover:shadow-primary/20 hover:shadow-lg transition-all duration-300"
@@ -184,7 +184,7 @@ const Hero = () => {
                     transition={{ delay: 0.5 + index * 0.2, duration: 0.4 }}
                     whileHover={{ scale: 1.1, y: -5, transition: { duration: 0.2 } }}
                     whileTap={{ scale: 0.95 }}
-                    className={`${badge.position_class} hidden lg:block z-10 cursor-pointer`}
+                    className={`${badge.position_class} z-10 cursor-pointer`}
                   >
                     <motion.span
                       className="px-3 py-1 text-xs font-mono bg-card/80 border border-border/50 rounded-full text-muted-foreground backdrop-blur-sm whitespace-nowrap hover:border-primary/50 hover:text-primary transition-all duration-300 inline-block"
