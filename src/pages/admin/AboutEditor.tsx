@@ -3,6 +3,12 @@ import SectionVisibilityToggle from '@/components/admin/SectionVisibilityToggle'
 import TipTapEditor from '@/components/editor/TipTapEditor';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+} from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -11,7 +17,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useAboutContent } from '@/hooks/useHomepageContent';
 import { supabase } from '@/integrations/supabase/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { GripVertical, Loader2, Plus, Save, Trash2 } from 'lucide-react';
+import { GripVertical, Loader2, Pencil, Plus, Save, Trash2 } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 
 
@@ -32,6 +38,21 @@ const AboutEditor = () => {
     const [focusedHighlight, setFocusedHighlight] = useState<number | null>(null);
     const [focusedInterest, setFocusedInterest] = useState<number | null>(null);
     const [focusedValue, setFocusedValue] = useState<number | null>(null);
+
+    // Edit mode states
+    const [isEditingHighlights, setIsEditingHighlights] = useState(false);
+    const [isEditingInterests, setIsEditingInterests] = useState(false);
+    const [isEditingValues, setIsEditingValues] = useState(false);
+
+    // Dialog states
+    const [highlightDialogOpen, setHighlightDialogOpen] = useState(false);
+    const [interestDialogOpen, setInterestDialogOpen] = useState(false);
+    const [valueDialogOpen, setValueDialogOpen] = useState(false);
+
+    // Form data states
+    const [highlightFormData, setHighlightFormData] = useState({ title: '', description: '', detail: '', icon_name: '' });
+    const [interestFormData, setInterestFormData] = useState({ label: '', icon_name: '' });
+    const [valueFormData, setValueFormData] = useState({ value_text: '', description: '', icon_name: '' });
 
     useEffect(() => {
         if (data) {
@@ -66,6 +87,54 @@ const AboutEditor = () => {
         setAboutData(prev => ({ ...prev, main_content: json }));
     }, []);
 
+    // Dialog handlers — Highlights
+    const handleOpenHighlightDialog = () => {
+        setHighlightFormData({ title: '', description: '', detail: '', icon_name: '' });
+        setHighlightDialogOpen(true);
+    };
+
+    const handleSaveHighlight = () => {
+        if (!highlightFormData.title) {
+            toast({ title: 'Error', description: 'Please provide a title for the highlight.', variant: 'destructive' });
+            return;
+        }
+        setHighlights([...highlights, { ...highlightFormData, display_order: highlights.length }]);
+        setHighlightDialogOpen(false);
+        setTimeout(() => document.getElementById(`highlight-${highlights.length}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+    };
+
+    // Dialog handlers — Interests
+    const handleOpenInterestDialog = () => {
+        setInterestFormData({ label: '', icon_name: '' });
+        setInterestDialogOpen(true);
+    };
+
+    const handleSaveInterest = () => {
+        if (!interestFormData.label) {
+            toast({ title: 'Error', description: 'Please provide a label for the interest.', variant: 'destructive' });
+            return;
+        }
+        setInterests([...interests, { ...interestFormData, display_order: interests.length }]);
+        setInterestDialogOpen(false);
+        setTimeout(() => document.getElementById(`interest-${interests.length}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+    };
+
+    // Dialog handlers — Values
+    const handleOpenValueDialog = () => {
+        setValueFormData({ value_text: '', description: '', icon_name: '' });
+        setValueDialogOpen(true);
+    };
+
+    const handleSaveValue = () => {
+        if (!valueFormData.value_text) {
+            toast({ title: 'Error', description: 'Please provide a title for the value.', variant: 'destructive' });
+            return;
+        }
+        setValues([...values, { ...valueFormData, display_order: values.length }]);
+        setValueDialogOpen(false);
+        setTimeout(() => document.getElementById(`value-${values.length}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+    };
+
     const updateAboutMutation = useMutation({
         mutationFn: async (updatedData: typeof aboutData) => {
             const { data: result, error } = await supabase
@@ -99,6 +168,9 @@ const AboutEditor = () => {
             queryClient.invalidateQueries({ queryKey: ['homepage', 'about'] });
             toast({ title: 'Success', description: 'Highlights updated successfully' });
         },
+        onError: (err: any) => {
+            toast({ title: 'Error', description: err.message, variant: 'destructive' });
+        },
     });
 
     const updateInterestsMutation = useMutation({
@@ -114,6 +186,9 @@ const AboutEditor = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['homepage', 'about'] });
             toast({ title: 'Success', description: 'Interests updated successfully' });
+        },
+        onError: (err: any) => {
+            toast({ title: 'Error', description: err.message, variant: 'destructive' });
         },
     });
 
@@ -131,6 +206,9 @@ const AboutEditor = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['homepage', 'about'] });
             toast({ title: 'Success', description: 'Values updated successfully' });
+        },
+        onError: (err: any) => {
+            toast({ title: 'Error', description: err.message, variant: 'destructive' });
         },
     });
 
@@ -178,8 +256,8 @@ const AboutEditor = () => {
                     </TabsList>
                 </div>
 
+                {/* CONTENT */}
                 <TabsContent value="content" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
-
                     <Card>
                         <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                             <div className="space-y-1.5">
@@ -226,6 +304,7 @@ const AboutEditor = () => {
                     </Card>
                 </TabsContent>
 
+                {/* HIGHLIGHTS */}
                 <TabsContent value="highlights" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
                     <Card>
                         <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -234,32 +313,56 @@ const AboutEditor = () => {
                                 <CardDescription>Key information cards (Education, Location, etc.)</CardDescription>
                             </div>
                             <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-                                <Button
-                                    onClick={() => {
-                                        setHighlights([...highlights, { title: '', description: '', detail: '', icon_name: '', display_order: highlights.length }]);
-                                        setFocusedHighlight(highlights.length);
-                                        setTimeout(() => document.getElementById(`highlight-${highlights.length}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
-                                    }}
-                                    variant="outline"
-                                    className="w-full sm:w-auto"
-                                >
-                                    <Plus className="w-4 h-4 mr-2" />
-                                    Add Highlight
-                                </Button>
-
-                                <Button onClick={() => updateHighlightsMutation.mutate(highlights)} disabled={updateHighlightsMutation.isPending} className="w-full sm:w-auto">
-                                    {updateHighlightsMutation.isPending ? (
-                                        <>
-                                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                                            Saving...
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Save className="w-4 h-4 mr-2" />
-                                            Save Highlights
-                                        </>
-                                    )}
-                                </Button>
+                                {!isEditingHighlights && (
+                                    <Button onClick={handleOpenHighlightDialog} variant="outline" className="w-full sm:w-auto">
+                                        <Plus className="w-4 h-4 mr-2" />
+                                        Add Highlight
+                                    </Button>
+                                )}
+                                {isEditingHighlights ? (
+                                    <>
+                                        <Button
+                                            onClick={() => {
+                                                setHighlights(data?.highlights ?? []);
+                                                setIsEditingHighlights(false);
+                                            }}
+                                            variant="outline"
+                                            className="w-full sm:w-auto"
+                                        >
+                                            Cancel Edit
+                                        </Button>
+                                        <Button
+                                            onClick={() =>
+                                                updateHighlightsMutation.mutate(highlights, {
+                                                    onSuccess: () => setIsEditingHighlights(false),
+                                                })
+                                            }
+                                            disabled={updateHighlightsMutation.isPending}
+                                            className="w-full sm:w-auto"
+                                        >
+                                            {updateHighlightsMutation.isPending ? (
+                                                <>
+                                                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                                    Saving...
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Save className="w-4 h-4 mr-2" />
+                                                    Save Highlights
+                                                </>
+                                            )}
+                                        </Button>
+                                    </>
+                                ) : (
+                                    <Button
+                                        onClick={() => setIsEditingHighlights(true)}
+                                        variant="outline"
+                                        className="w-full sm:w-auto"
+                                    >
+                                        <Pencil className="w-4 h-4 mr-2" />
+                                        Edit Highlights
+                                    </Button>
+                                )}
                             </div>
                         </CardHeader>
                         <CardContent className="space-y-4">
@@ -275,7 +378,9 @@ const AboutEditor = () => {
                                 >
                                     <CardContent className="pt-6">
                                         <div className="flex gap-2 items-end">
-                                            <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mb-3" />
+                                            {isEditingHighlights && (
+                                                <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mb-3" />
+                                            )}
                                             <div className="flex-1 space-y-3 pr-8">
                                                 <div className="grid gap-2 md:grid-cols-2">
                                                     <div className="space-y-1">
@@ -288,6 +393,7 @@ const AboutEditor = () => {
                                                                 setHighlights(updated);
                                                             }}
                                                             placeholder="Title (e.g., Education)"
+                                                            disabled={!isEditingHighlights}
                                                         />
                                                     </div>
                                                     <div className="space-y-1">
@@ -300,6 +406,7 @@ const AboutEditor = () => {
                                                                 setHighlights(updated);
                                                             }}
                                                             placeholder="Icon (e.g., GraduationCap)"
+                                                            disabled={!isEditingHighlights}
                                                         />
                                                     </div>
                                                 </div>
@@ -313,6 +420,7 @@ const AboutEditor = () => {
                                                             setHighlights(updated);
                                                         }}
                                                         placeholder="Description"
+                                                        disabled={!isEditingHighlights}
                                                     />
                                                 </div>
                                                 <div className="space-y-1">
@@ -325,20 +433,22 @@ const AboutEditor = () => {
                                                             setHighlights(updated);
                                                         }}
                                                         placeholder="Detail"
+                                                        disabled={!isEditingHighlights}
                                                     />
                                                 </div>
                                             </div>
-                                            <Button
-                                                variant="ghost"
-                                                size="icon"
-                                                className="absolute top-2 right-2 text-destructive hover:bg-destructive/10"
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    setHighlights(highlights.filter((_, i) => i !== index));
-                                                }}
-                                            >
-                                                <Trash2 className="w-4 h-4" />
-                                            </Button>
+                                            {isEditingHighlights && (
+                                                <Button
+                                                    variant="ghost"
+                                                    className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        setHighlights(highlights.filter((_, i) => i !== index));
+                                                    }}
+                                                >
+                                                    <Trash2 className="w-4 h-4" />
+                                                </Button>
+                                            )}
                                         </div>
                                     </CardContent>
                                 </Card>
@@ -359,6 +469,7 @@ const AboutEditor = () => {
                     </Card>
                 </TabsContent>
 
+                {/* INTERESTS */}
                 <TabsContent value="interests" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
                     <Card>
                         <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -367,32 +478,56 @@ const AboutEditor = () => {
                                 <CardDescription>Tags showing your interests and hobbies</CardDescription>
                             </div>
                             <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-                                <Button
-                                    onClick={() => {
-                                        setInterests([...interests, { label: '', icon_name: '', display_order: interests.length }]);
-                                        setFocusedInterest(interests.length);
-                                        setTimeout(() => document.getElementById(`interest-${interests.length}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
-                                    }}
-                                    variant="outline"
-                                    className="w-full sm:w-auto"
-                                >
-                                    <Plus className="w-4 h-4 mr-2" />
-                                    Add Interest
-                                </Button>
-
-                                <Button onClick={() => updateInterestsMutation.mutate(interests)} disabled={updateInterestsMutation.isPending} className="w-full sm:w-auto">
-                                    {updateInterestsMutation.isPending ? (
-                                        <>
-                                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                                            Saving...
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Save className="w-4 h-4 mr-2" />
-                                            Save Interests
-                                        </>
-                                    )}
-                                </Button>
+                                {!isEditingInterests && (
+                                    <Button onClick={handleOpenInterestDialog} variant="outline" className="w-full sm:w-auto">
+                                        <Plus className="w-4 h-4 mr-2" />
+                                        Add Interest
+                                    </Button>
+                                )}
+                                {isEditingInterests ? (
+                                    <>
+                                        <Button
+                                            onClick={() => {
+                                                setInterests(data?.interests ?? []);
+                                                setIsEditingInterests(false);
+                                            }}
+                                            variant="outline"
+                                            className="w-full sm:w-auto"
+                                        >
+                                            Cancel Edit
+                                        </Button>
+                                        <Button
+                                            onClick={() =>
+                                                updateInterestsMutation.mutate(interests, {
+                                                    onSuccess: () => setIsEditingInterests(false),
+                                                })
+                                            }
+                                            disabled={updateInterestsMutation.isPending}
+                                            className="w-full sm:w-auto"
+                                        >
+                                            {updateInterestsMutation.isPending ? (
+                                                <>
+                                                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                                    Saving...
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Save className="w-4 h-4 mr-2" />
+                                                    Save Interests
+                                                </>
+                                            )}
+                                        </Button>
+                                    </>
+                                ) : (
+                                    <Button
+                                        onClick={() => setIsEditingInterests(true)}
+                                        variant="outline"
+                                        className="w-full sm:w-auto"
+                                    >
+                                        <Pencil className="w-4 h-4 mr-2" />
+                                        Edit Interests
+                                    </Button>
+                                )}
                             </div>
                         </CardHeader>
                         <CardContent className="space-y-4">
@@ -402,13 +537,15 @@ const AboutEditor = () => {
                                         key={index}
                                         id={`interest-${index}`}
                                         onClick={() => setFocusedInterest(index)}
-                                        className={`relative flex gap-2 items-start mb-4 p-4 rounded-lg border transition-all duration-300 cursor-pointer ${focusedInterest === index
+                                        className={`relative flex gap-2 items-end p-4 rounded-lg border transition-all duration-300 cursor-pointer ${focusedInterest === index
                                             ? 'bg-primary/5 border-primary ring-2 ring-primary/10'
                                             : 'bg-muted/20 border-border/50'
                                             }`}
                                     >
-                                        <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mt-3" />
-                                        <div className="flex-1 grid grid-cols-2 gap-2 pr-8">
+                                        {isEditingInterests && (
+                                            <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mb-3" />
+                                        )}
+                                        <div className="flex-1 grid grid-cols-2 gap-2">
                                             <div className="space-y-1">
                                                 <Label>Interest Label</Label>
                                                 <Input
@@ -420,6 +557,7 @@ const AboutEditor = () => {
                                                     }}
                                                     placeholder="Interest label"
                                                     className="w-full"
+                                                    disabled={!isEditingInterests}
                                                 />
                                             </div>
                                             <div className="space-y-1">
@@ -433,20 +571,22 @@ const AboutEditor = () => {
                                                     }}
                                                     placeholder="Icon name"
                                                     className="w-full"
+                                                    disabled={!isEditingInterests}
                                                 />
                                             </div>
                                         </div>
-                                        <Button
-                                            variant="ghost"
-                                            size="icon"
-                                            className="absolute top-2 right-2 text-destructive hover:bg-destructive/10"
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                setInterests(interests.filter((_, i) => i !== index));
-                                            }}
-                                        >
-                                            <Trash2 className="w-4 h-4" />
-                                        </Button>
+                                        {isEditingInterests && (
+                                            <Button
+                                                variant="ghost"
+                                                className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setInterests(interests.filter((_, i) => i !== index));
+                                                }}
+                                            >
+                                                <Trash2 className="w-4 h-4" />
+                                            </Button>
+                                        )}
                                     </div>
                                 ))}
                             </div>
@@ -464,6 +604,7 @@ const AboutEditor = () => {
                     </Card>
                 </TabsContent>
 
+                {/* CORE VALUES */}
                 <TabsContent value="values" className="space-y-4 mt-10 max-w-6xl mx-auto w-full px-4">
                     <Card>
                         <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -472,32 +613,56 @@ const AboutEditor = () => {
                                 <CardDescription>Your core professional values</CardDescription>
                             </div>
                             <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-                                <Button
-                                    onClick={() => {
-                                        setValues([...values, { value_text: '', description: '', icon_name: '', display_order: values.length }]);
-                                        setFocusedValue(values.length);
-                                        setTimeout(() => document.getElementById(`value-${values.length}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
-                                    }}
-                                    variant="outline"
-                                    className="w-full sm:w-auto"
-                                >
-                                    <Plus className="w-4 h-4 mr-2" />
-                                    Add Value
-                                </Button>
-
-                                <Button onClick={() => updateValuesMutation.mutate(values)} disabled={updateValuesMutation.isPending} className="w-full sm:w-auto">
-                                    {updateValuesMutation.isPending ? (
-                                        <>
-                                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                                            Saving...
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Save className="w-4 h-4 mr-2" />
-                                            Save Values
-                                        </>
-                                    )}
-                                </Button>
+                                {!isEditingValues && (
+                                    <Button onClick={handleOpenValueDialog} variant="outline" className="w-full sm:w-auto">
+                                        <Plus className="w-4 h-4 mr-2" />
+                                        Add Value
+                                    </Button>
+                                )}
+                                {isEditingValues ? (
+                                    <>
+                                        <Button
+                                            onClick={() => {
+                                                setValues(data?.values ?? []);
+                                                setIsEditingValues(false);
+                                            }}
+                                            variant="outline"
+                                            className="w-full sm:w-auto"
+                                        >
+                                            Cancel Edit
+                                        </Button>
+                                        <Button
+                                            onClick={() =>
+                                                updateValuesMutation.mutate(values, {
+                                                    onSuccess: () => setIsEditingValues(false),
+                                                })
+                                            }
+                                            disabled={updateValuesMutation.isPending}
+                                            className="w-full sm:w-auto"
+                                        >
+                                            {updateValuesMutation.isPending ? (
+                                                <>
+                                                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                                    Saving...
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Save className="w-4 h-4 mr-2" />
+                                                    Save Values
+                                                </>
+                                            )}
+                                        </Button>
+                                    </>
+                                ) : (
+                                    <Button
+                                        onClick={() => setIsEditingValues(true)}
+                                        variant="outline"
+                                        className="w-full sm:w-auto"
+                                    >
+                                        <Pencil className="w-4 h-4 mr-2" />
+                                        Edit Values
+                                    </Button>
+                                )}
                             </div>
                         </CardHeader>
                         <CardContent className="space-y-4">
@@ -513,7 +678,9 @@ const AboutEditor = () => {
                                 >
                                     <CardContent className="pt-6">
                                         <div className="flex gap-2 items-end">
-                                            <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mb-3" />
+                                            {isEditingValues && (
+                                                <GripVertical className="w-4 h-4 text-muted-foreground cursor-grab mb-3" />
+                                            )}
                                             <div className="flex-1 space-y-3 pr-8">
                                                 <div className="grid gap-2 md:grid-cols-2">
                                                     <div className="space-y-1">
@@ -526,6 +693,7 @@ const AboutEditor = () => {
                                                                 setValues(updated);
                                                             }}
                                                             placeholder="Value (e.g., Innovation)"
+                                                            disabled={!isEditingValues}
                                                         />
                                                     </div>
                                                     <div className="space-y-1">
@@ -538,6 +706,7 @@ const AboutEditor = () => {
                                                                 setValues(updated);
                                                             }}
                                                             placeholder="Icon (e.g., Lightbulb)"
+                                                            disabled={!isEditingValues}
                                                         />
                                                     </div>
                                                 </div>
@@ -552,20 +721,22 @@ const AboutEditor = () => {
                                                         }}
                                                         placeholder="Description"
                                                         rows={2}
+                                                        disabled={!isEditingValues}
                                                     />
                                                 </div>
                                             </div>
-                                            <Button
-                                                variant="ghost"
-                                                size="icon"
-                                                className="absolute top-2 right-2 text-destructive hover:bg-destructive/10"
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    setValues(values.filter((_, i) => i !== index));
-                                                }}
-                                            >
-                                                <Trash2 className="w-4 h-4" />
-                                            </Button>
+                                            {isEditingValues && (
+                                                <Button
+                                                    variant="ghost"
+                                                    className="h-10 px-3 text-destructive hover:bg-destructive/10 transition-colors"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        setValues(values.filter((_, i) => i !== index));
+                                                    }}
+                                                >
+                                                    <Trash2 className="w-4 h-4" />
+                                                </Button>
+                                            )}
                                         </div>
                                     </CardContent>
                                 </Card>
@@ -585,6 +756,136 @@ const AboutEditor = () => {
                     </Card>
                 </TabsContent>
             </Tabs>
+
+            {/* Add Highlight Dialog */}
+            <Dialog open={highlightDialogOpen} onOpenChange={setHighlightDialogOpen}>
+                <DialogContent className="max-w-md bg-background/95 backdrop-blur-xl border-border/50">
+                    <DialogHeader>
+                        <DialogTitle>Add New Highlight</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4 mt-4">
+                        <div className="space-y-1">
+                            <Label>Title *</Label>
+                            <Input
+                                value={highlightFormData.title}
+                                onChange={(e) => setHighlightFormData({ ...highlightFormData, title: e.target.value })}
+                                placeholder="e.g., Education"
+                            />
+                        </div>
+                        <div className="space-y-1">
+                            <Label>Icon Name</Label>
+                            <Input
+                                value={highlightFormData.icon_name}
+                                onChange={(e) => setHighlightFormData({ ...highlightFormData, icon_name: e.target.value })}
+                                placeholder="e.g., GraduationCap"
+                            />
+                        </div>
+                        <div className="space-y-1">
+                            <Label>Description</Label>
+                            <Input
+                                value={highlightFormData.description}
+                                onChange={(e) => setHighlightFormData({ ...highlightFormData, description: e.target.value })}
+                                placeholder="e.g., BSc in CSE"
+                            />
+                        </div>
+                        <div className="space-y-1">
+                            <Label>Detail</Label>
+                            <Input
+                                value={highlightFormData.detail}
+                                onChange={(e) => setHighlightFormData({ ...highlightFormData, detail: e.target.value })}
+                                placeholder="e.g., CGPA: 3.8/4.0"
+                            />
+                        </div>
+                        <div className="flex gap-2 pt-2">
+                            <Button variant="outline" onClick={() => setHighlightDialogOpen(false)} className="flex-1">
+                                Cancel
+                            </Button>
+                            <Button onClick={handleSaveHighlight} className="flex-1">
+                                Save
+                            </Button>
+                        </div>
+                    </div>
+                </DialogContent>
+            </Dialog>
+
+            {/* Add Interest Dialog */}
+            <Dialog open={interestDialogOpen} onOpenChange={setInterestDialogOpen}>
+                <DialogContent className="max-w-md bg-background/95 backdrop-blur-xl border-border/50">
+                    <DialogHeader>
+                        <DialogTitle>Add New Interest</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4 mt-4">
+                        <div className="space-y-1">
+                            <Label>Label *</Label>
+                            <Input
+                                value={interestFormData.label}
+                                onChange={(e) => setInterestFormData({ ...interestFormData, label: e.target.value })}
+                                placeholder="e.g., Open Source"
+                            />
+                        </div>
+                        <div className="space-y-1">
+                            <Label>Icon Name</Label>
+                            <Input
+                                value={interestFormData.icon_name}
+                                onChange={(e) => setInterestFormData({ ...interestFormData, icon_name: e.target.value })}
+                                placeholder="e.g., Code2"
+                            />
+                        </div>
+                        <div className="flex gap-2 pt-2">
+                            <Button variant="outline" onClick={() => setInterestDialogOpen(false)} className="flex-1">
+                                Cancel
+                            </Button>
+                            <Button onClick={handleSaveInterest} className="flex-1">
+                                Save
+                            </Button>
+                        </div>
+                    </div>
+                </DialogContent>
+            </Dialog>
+
+            {/* Add Value Dialog */}
+            <Dialog open={valueDialogOpen} onOpenChange={setValueDialogOpen}>
+                <DialogContent className="max-w-md bg-background/95 backdrop-blur-xl border-border/50">
+                    <DialogHeader>
+                        <DialogTitle>Add New Core Value</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4 mt-4">
+                        <div className="space-y-1">
+                            <Label>Value Title *</Label>
+                            <Input
+                                value={valueFormData.value_text}
+                                onChange={(e) => setValueFormData({ ...valueFormData, value_text: e.target.value })}
+                                placeholder="e.g., Innovation"
+                            />
+                        </div>
+                        <div className="space-y-1">
+                            <Label>Icon Name</Label>
+                            <Input
+                                value={valueFormData.icon_name}
+                                onChange={(e) => setValueFormData({ ...valueFormData, icon_name: e.target.value })}
+                                placeholder="e.g., Lightbulb"
+                            />
+                        </div>
+                        <div className="space-y-1">
+                            <Label>Description</Label>
+                            <Textarea
+                                value={valueFormData.description}
+                                onChange={(e) => setValueFormData({ ...valueFormData, description: e.target.value })}
+                                placeholder="A brief explanation of this value..."
+                                rows={3}
+                            />
+                        </div>
+                        <div className="flex gap-2 pt-2">
+                            <Button variant="outline" onClick={() => setValueDialogOpen(false)} className="flex-1">
+                                Cancel
+                            </Button>
+                            <Button onClick={handleSaveValue} className="flex-1">
+                                Save
+                            </Button>
+                        </div>
+                    </div>
+                </DialogContent>
+            </Dialog>
         </div>
     );
 };
