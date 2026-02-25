@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import {
   Award,
   Briefcase,
+  Calendar,
   ChevronDown,
   ChevronRight,
   Code,
@@ -71,6 +72,7 @@ const navSections: NavSection[] = [
 
       { icon: Award, label: 'Certifications', path: '/admin/certifications' },
       { icon: Briefcase, label: 'Work History', path: '/admin/work-history' },
+      { icon: Calendar, label: 'Activities', path: '/admin/activities' },
     ],
   },
   {

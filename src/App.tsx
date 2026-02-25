@@ -19,6 +19,7 @@ import TestimonialsList from "./pages/admin/TestimonialsList";
 
 
 import AboutEditor from "./pages/admin/AboutEditor";
+import ActivitiesList from "./pages/admin/ActivitiesList";
 import ContactEditor from "./pages/admin/ContactEditor";
 import ExpertiseEditor from "./pages/admin/ExpertiseEditor";
 import FooterEditor from "./pages/admin/FooterEditor";
@@ -88,6 +89,7 @@ const AppContent = () => {
 
           <Route path="certifications" element={<CertificationsList />} />
           <Route path="work-history" element={<WorkHistoryList />} />
+          <Route path="activities" element={<ActivitiesList />} />
           <Route path="testimonials" element={<TestimonialsList />} />
 
 

@@ -1,4 +1,5 @@
 import About from "@/components/sections/About";
+import Activities from "@/components/sections/Activities";
 import Blog from "@/components/sections/Blog";
 import Contact from "@/components/sections/Contact";
 import Expertise from "@/components/sections/Expertise";
@@ -29,6 +30,7 @@ const Index = () => {
       {isVisible('expertise') && <Expertise />}
       {isVisible('work_history') && <EmploymentTimeline />}
       {isVisible('certifications') && <Certifications />}
+      {isVisible('activities') && <Activities />}
       {isVisible('why_choose_me') && <WhyChooseMe />}
       {isVisible('services') && <Services />}
       {isVisible('projects') && <Projects />}
