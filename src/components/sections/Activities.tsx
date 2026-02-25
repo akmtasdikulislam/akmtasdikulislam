@@ -15,7 +15,6 @@ interface Activity {
   event_date: string;
   description: string | null;
   activity_type: string;
-  cover_image: string | null;
   photos: string[] | null;
   is_featured: boolean;
   display_order: number;
@@ -134,25 +133,8 @@ const Activities = () => {
                     </div>
 
                     <div className={`bg-card border border-border rounded-2xl p-6 hover:border-primary/50 transition-all group w-full ${index % 2 === 0 ? 'text-left' : 'md:text-left'}`}>
-                      {/* Cover Image */}
-                      {activity.cover_image && (
-                        <div className="relative h-40 -mt-2 -mx-6 mb-4 overflow-hidden rounded-t-2xl">
-                          <img
-                            src={activity.cover_image}
-                            alt={activity.title}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                          {activity.photos && activity.photos.length > 0 && (
-                            <div className="absolute bottom-3 right-3 bg-black/70 px-2 py-1 rounded-full text-xs text-white">
-                              {activity.photos.length} photos
-                            </div>
-                          )}
-                        </div>
-                      )}
-
-                      <div className="flex items-start gap-4">
-                        {/* Activity Type Badge */}
+                      {/* Activity Type & Featured */}
+                      <div className="flex items-start gap-2 flex-wrap">
                         <div className={`px-2.5 py-1 rounded-full text-xs font-medium border flex-shrink-0 ${getActivityTypeColor(activity.activity_type)}`}>
                           {getActivityTypeLabel(activity.activity_type)}
                         </div>
@@ -164,6 +146,7 @@ const Activities = () => {
                         )}
                       </div>
 
+                      {/* Title */}
                       <div className="mt-3">
                         <h3 className="text-xl font-bold group-hover:text-primary transition-colors">{activity.title}</h3>
                         <div className="flex flex-col gap-1 mt-1">
@@ -179,23 +162,25 @@ const Activities = () => {
                         </div>
                       </div>
 
+                      {/* Description */}
                       {activity.description && (
                         <p className="text-muted-foreground text-sm leading-relaxed mt-4">
                           {activity.description}
                         </p>
                       )}
 
-                      {/* Photos Gallery */}
+                      {/* Photos Gallery - Prominent Display */}
                       {activity.photos && activity.photos.length > 0 && (
                         <div className="mt-4 pt-4 border-t border-border">
-                          <div className="flex items-center gap-2 mb-3">
-                            <span className="text-xs font-medium text-muted-foreground">Photos ({activity.photos.length})</span>
+                          <div className="flex items-center justify-between mb-3">
+                            <span className="text-xs font-medium text-muted-foreground">Photos</span>
+                            <span className="text-xs text-muted-foreground">{activity.photos.length} photo(s)</span>
                           </div>
                           <div className="flex gap-2 overflow-x-auto pb-1">
                             {activity.photos.slice(0, 4).map((photo, idx) => (
                               <Dialog key={idx}>
                                 <DialogTrigger asChild>
-                                  <div className="relative w-16 h-16 rounded-lg overflow-hidden cursor-pointer flex-shrink-0 border border-border hover:border-primary/50 transition-all">
+                                  <div className="relative w-20 h-20 rounded-lg overflow-hidden cursor-pointer flex-shrink-0 border border-border hover:border-primary/50 transition-all group-hover:scale-105">
                                     <img
                                       src={photo}
                                       alt={`Activity photo ${idx + 1}`}
@@ -218,7 +203,7 @@ const Activities = () => {
                             {activity.photos.length > 4 && (
                               <Dialog>
                                 <DialogTrigger asChild>
-                                  <div className="w-16 h-16 rounded-lg bg-secondary/50 flex items-center justify-center cursor-pointer flex-shrink-0 border border-border hover:border-primary/50 transition-all">
+                                  <div className="w-20 h-20 rounded-lg bg-secondary/50 flex items-center justify-center cursor-pointer flex-shrink-0 border border-border hover:border-primary/50 transition-all">
                                     <span className="text-xs font-medium">+{activity.photos.length - 4}</span>
                                   </div>
                                 </DialogTrigger>

@@ -36,7 +36,6 @@ interface Activity {
   event_date: string;
   description: string | null;
   activity_type: string;
-  cover_image: string | null;
   photos: string[] | null;
   is_featured: boolean;
   display_order: number;
@@ -50,7 +49,6 @@ const emptyActivity = {
   event_date: '',
   description: '',
   activity_type: 'event',
-  cover_image: '',
   photos: [] as string[],
   is_featured: false,
   is_visible: true,
@@ -72,7 +70,6 @@ const ActivitiesList = () => {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState(emptyActivity);
   const [saving, setSaving] = useState(false);
-  const [uploading, setUploading] = useState(false);
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
 
   const { data: sectionVisible = true } = useQuery({
@@ -130,7 +127,6 @@ const ActivitiesList = () => {
         event_date: item.event_date,
         description: item.description || '',
         activity_type: item.activity_type,
-        cover_image: item.cover_image || '',
         photos: item.photos || [],
         is_featured: item.is_featured,
         is_visible: item.is_visible,
@@ -157,7 +153,6 @@ const ActivitiesList = () => {
         event_date: formData.event_date,
         description: formData.description || null,
         activity_type: formData.activity_type,
-        cover_image: formData.cover_image || null,
         photos: formData.photos.length > 0 ? formData.photos : null,
         is_featured: formData.is_featured,
         is_visible: formData.is_visible,
@@ -207,36 +202,6 @@ const ActivitiesList = () => {
       toast.error('Failed to delete activity');
     } finally {
       setDeleteId(null);
-    }
-  };
-
-  const handleCoverUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    setUploading(true);
-    try {
-      const fileExt = file.name.split('.').pop();
-      const fileName = `cover-${Date.now()}.${fileExt}`;
-      const filePath = `activities/${fileName}`;
-
-      const { error: uploadError } = await supabase.storage
-        .from('cms-uploads')
-        .upload(filePath, file);
-
-      if (uploadError) throw uploadError;
-
-      const { data: urlData } = supabase.storage
-        .from('cms-uploads')
-        .getPublicUrl(filePath);
-
-      setFormData(prev => ({ ...prev, cover_image: urlData.publicUrl }));
-      toast.success('Cover image uploaded');
-    } catch (error) {
-      console.error('Error uploading image:', error);
-      toast.error('Failed to upload cover image');
-    } finally {
-      setUploading(false);
     }
   };
 
@@ -366,14 +331,8 @@ const ActivitiesList = () => {
               transition={{ delay: index * 0.05 }}
               className={`bg-card border border-border rounded-xl p-4 flex flex-col sm:flex-row sm:items-start gap-4 ${!item.is_visible ? 'opacity-60' : ''}`}
             >
-              <div className="w-full sm:w-32 h-24 rounded-lg bg-secondary overflow-hidden flex-shrink-0">
-                {item.cover_image ? (
-                  <img src={item.cover_image} alt={item.title} className="w-full h-full object-cover" />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <Calendar className="w-6 h-6 text-muted-foreground" />
-                  </div>
-                )}
+              <div className="w-full sm:w-32 h-24 rounded-lg bg-secondary overflow-hidden flex-shrink-0 flex items-center justify-center">
+                <Calendar className="w-6 h-6 text-muted-foreground" />
               </div>
 
               <div className="flex-1 min-w-0">
@@ -518,30 +477,6 @@ const ActivitiesList = () => {
                 value={formData.event_date}
                 onChange={(e) => setFormData({ ...formData, event_date: e.target.value })}
               />
-            </div>
-
-            <div className="space-y-2">
-              <Label>Cover Image</Label>
-              <div className="flex items-center gap-4">
-                {formData.cover_image && (
-                  <div className="relative w-20 h-20 rounded-lg overflow-hidden">
-                    <img src={formData.cover_image} alt="Cover" className="w-full h-full object-cover" />
-                    <button
-                      onClick={() => setFormData(prev => ({ ...prev, cover_image: '' }))}
-                      className="absolute top-1 right-1 bg-black/70 rounded-full p-0.5"
-                    >
-                      <X className="w-3 h-3 text-white" />
-                    </button>
-                  </div>
-                )}
-                <Input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleCoverUpload}
-                  disabled={uploading}
-                  className="flex-1"
-                />
-              </div>
             </div>
 
             <div className="space-y-2">
