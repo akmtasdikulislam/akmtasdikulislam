@@ -14,6 +14,9 @@ All notable changes to this project will be documented in this file.
 - Fixed a layout regression where rotating decorative circles around the profile photo became elliptical on smaller screens due to vertical padding.
 - Prevented timeline date badges from stretching to full width on mobile screens by enforcing fitting widths and `items-start` flex alignments.
 
+### Added
+- Replicated the animated bottom gradient bar styling and hover gradients from the Services section items onto the items within the "Why Choose Me" section.
+
 ## [2026-02-24] - Frontend Visibility Toggle Fix
 
 ### Fixed

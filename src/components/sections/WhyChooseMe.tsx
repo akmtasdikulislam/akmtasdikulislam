@@ -64,15 +64,23 @@ function WhyChooseMe() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ y: -8 }}
-                className="p-6 bg-card border border-border rounded-2xl service-card group hover:border-primary/30 transition-all"
+                className="relative overflow-hidden p-6 bg-card border border-border rounded-2xl service-card group hover:border-primary/30 transition-all"
               >
-                <div className="w-14 h-14 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-center mb-4 group-hover:glow-green-sm transition-all">
-                  <IconComponent className="w-7 h-7 text-primary" />
+                {/* Hover gradient */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+
+                <div className="relative z-10">
+                  <div className="w-14 h-14 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-center mb-4 group-hover:glow-green-sm transition-all">
+                    <IconComponent className="w-7 h-7 text-primary" />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2">{reason.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {reason.description}
+                  </p>
                 </div>
-                <h3 className="text-lg font-semibold mb-2">{reason.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {reason.description}
-                </p>
+
+                {/* Bottom accent line */}
+                <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-accent transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
               </motion.div>
             );
           })}
