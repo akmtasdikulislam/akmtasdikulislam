@@ -4,9 +4,10 @@ import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Calendar, MapPin, Star } from 'lucide-react';
 import { toast } from 'sonner';
+import { useEffect, useRef, useState } from 'react';
 
 interface Activity {
   id: string;
@@ -23,6 +24,11 @@ interface Activity {
   display_order: number;
   is_visible: boolean;
 }
+
+const SLIDE_TIMERS = {
+  cover: 6000,
+  other: 3500,
+};
 
 const activityTypeColors: Record<string, string> = {
   conference: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
@@ -50,7 +56,29 @@ const getActivityTypeLabel = (type: string) => {
   return labels[type] || type;
 };
 
+const getCoverImage = (activity: Activity) => {
+  if (activity.cover_image) return activity.cover_image;
+  if (activity.photos && activity.photos.length > 0) return activity.photos[0];
+  return null;
+};
+
+const getAdditionalPhotos = (activity: Activity) => {
+  if (!activity.photos || activity.photos.length === 0) return [];
+  if (activity.cover_image) return activity.photos;
+  return activity.photos.slice(1);
+};
+
+const getSlideImages = (activity: Activity) => {
+  const cover = getCoverImage(activity);
+  if (!cover) return [];
+  const additional = getAdditionalPhotos(activity).filter((photo) => photo !== cover);
+  return [cover, ...additional];
+};
+
 const Activities = () => {
+  const [activeSlides, setActiveSlides] = useState<Record<string, number>>({});
+  const activeSlidesRef = useRef<Record<string, number>>({});
+  const timersRef = useRef<number[]>([]);
   const { data: activities = [], isLoading: loading } = useQuery<Activity[]>({
     queryKey: ['activities'],
     queryFn: async () => {
@@ -78,17 +106,46 @@ const Activities = () => {
     return null;
   }
 
-  const getCoverImage = (activity: Activity) => {
-    if (activity.cover_image) return activity.cover_image;
-    if (activity.photos && activity.photos.length > 0) return activity.photos[0];
-    return null;
-  };
+  useEffect(() => {
+    activeSlidesRef.current = activeSlides;
+  }, [activeSlides]);
 
-  const getAdditionalPhotos = (activity: Activity) => {
-    if (!activity.photos || activity.photos.length === 0) return [];
-    if (activity.cover_image) return activity.photos;
-    return activity.photos.slice(1);
-  };
+  useEffect(() => {
+    if (!activities || activities.length === 0) return;
+
+    let cancelled = false;
+    timersRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
+    timersRef.current = [];
+
+    const scheduleNext = (activityId: string, images: string[]) => {
+      if (cancelled) return;
+      const currentIndex = activeSlidesRef.current[activityId] ?? 0;
+      const delay = currentIndex === 0 ? SLIDE_TIMERS.cover : SLIDE_TIMERS.other;
+      const timeoutId = window.setTimeout(() => {
+        if (cancelled) return;
+        const nextIndex = (currentIndex + 1) % images.length;
+        activeSlidesRef.current = { ...activeSlidesRef.current, [activityId]: nextIndex };
+        setActiveSlides((prev) => ({ ...prev, [activityId]: nextIndex }));
+        scheduleNext(activityId, images);
+      }, delay);
+      timersRef.current.push(timeoutId);
+    };
+
+    activities.forEach((activity) => {
+      const images = getSlideImages(activity);
+      if (images.length <= 1) return;
+      if (activeSlidesRef.current[activity.id] == null) {
+        activeSlidesRef.current = { ...activeSlidesRef.current, [activity.id]: 0 };
+      }
+      scheduleNext(activity.id, images);
+    });
+
+    return () => {
+      cancelled = true;
+      timersRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
+      timersRef.current = [];
+    };
+  }, [activities]);
 
   return (
     <section id="activities" className="py-24 relative overflow-hidden">
@@ -108,12 +165,16 @@ const Activities = () => {
           <div className="absolute left-[28px] md:left-1/2 top-0 bottom-0 w-[2px] bg-border md:-translate-x-1/2" />
 
           <div className="space-y-12">
-            {activities.map((activity, index) => {
-              const coverImage = getCoverImage(activity);
-              const additionalPhotos = getAdditionalPhotos(activity);
+              {activities.map((activity, index) => {
+                const coverImage = getCoverImage(activity);
+                const additionalPhotos = getAdditionalPhotos(activity);
+                const slideImages = getSlideImages(activity);
+                const activeSlideIndex = activeSlides[activity.id] ?? 0;
+                const activeSlide = slideImages[activeSlideIndex] || coverImage;
+                const activeSlideDuration = activeSlideIndex === 0 ? SLIDE_TIMERS.cover : SLIDE_TIMERS.other;
 
-              return (
-                <motion.div
+                return (
+                  <motion.div
                   key={activity.id}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -138,30 +199,53 @@ const Activities = () => {
 
                       <div className={`bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/50 transition-all group w-full ${index % 2 === 0 ? 'text-left' : 'md:text-left'}`}>
                         {/* Cover Photo */}
-                        {coverImage && (
+                        {activeSlide && (
                           <div className="relative">
-                            <div className="h-56 overflow-hidden rounded-t-2xl">
+                            <div className="relative aspect-video overflow-hidden rounded-t-2xl bg-secondary/40 flex items-center justify-center">
+                              <div
+                                className="absolute inset-0 bg-center bg-cover blur-sm scale-105 opacity-40 transition-opacity duration-700"
+                                style={{ backgroundImage: `url(${activeSlide})` }}
+                                aria-hidden="true"
+                              />
                               <Dialog>
                                 <DialogTrigger asChild>
                                   <div className="cursor-pointer w-full h-full">
-                                    <img
-                                      src={coverImage}
-                                      alt={activity.title}
-                                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                    />
+                                    <div className="relative z-10 w-full h-full">
+                                      <AnimatePresence mode="wait">
+                                        <motion.img
+                                          key={activeSlide}
+                                          src={activeSlide}
+                                          alt={activity.title}
+                                          className="absolute inset-0 w-full h-full object-contain"
+                                          initial={{ opacity: 0 }}
+                                          animate={{ opacity: 1 }}
+                                          exit={{ opacity: 0 }}
+                                          transition={{ duration: 0.6, ease: 'easeInOut' }}
+                                        />
+                                      </AnimatePresence>
+                                    </div>
                                   </div>
                                 </DialogTrigger>
                                 <DialogContent className="max-w-4xl p-0 overflow-hidden bg-black/95 border-none">
                                   <DialogTitle className="sr-only">{activity.title}</DialogTitle>
                                   <div className="relative w-full h-[85vh] flex items-center justify-center">
                                     <img
-                                      src={coverImage}
+                                      src={activeSlide}
                                       alt={activity.title}
                                       className="max-w-full max-h-full object-contain"
                                     />
                                   </div>
                                 </DialogContent>
                               </Dialog>
+                              <div className="absolute bottom-0 left-0 right-0 h-1 bg-black/30 z-20 pointer-events-none">
+                                <motion.div
+                                  key={`${activity.id}-${activeSlideIndex}`}
+                                  initial={{ width: 0 }}
+                                  animate={{ width: '100%' }}
+                                  transition={{ duration: activeSlideDuration / 1000, ease: 'linear' }}
+                                  className="h-full bg-primary/80"
+                                />
+                              </div>
                             </div>
                           </div>
                         )}
@@ -230,7 +314,9 @@ const Activities = () => {
                                 {additionalPhotos.slice(0, 4).map((photo, idx) => (
                                   <Dialog key={idx}>
                                     <DialogTrigger asChild>
-                                      <div className="relative w-16 h-16 rounded-lg overflow-hidden cursor-pointer flex-shrink-0 border border-border hover:border-primary/50 transition-all">
+                                      <div
+                                        className={`relative w-16 h-16 rounded-lg overflow-hidden cursor-pointer flex-shrink-0 border transition-all ${photo === activeSlide ? 'border-primary shadow-[0_0_0_1px_rgba(var(--primary),0.6)]' : 'border-border hover:border-primary/50'}`}
+                                      >
                                         <img
                                           src={photo}
                                           alt={`Activity photo ${idx + 1}`}

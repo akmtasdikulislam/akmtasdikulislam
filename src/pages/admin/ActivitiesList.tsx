@@ -615,7 +615,9 @@ const ActivitiesList = () => {
                   className="flex-1"
                 />
               </div>
-              <p className="text-xs text-muted-foreground">This will be the first image shown in the gallery</p>
+              <p className="text-xs text-muted-foreground">
+                Recommended size: 1600x900 (16:9). Taller posters will be auto-fit to show full image.
+              </p>
             </div>
 
             <div className="space-y-2">
