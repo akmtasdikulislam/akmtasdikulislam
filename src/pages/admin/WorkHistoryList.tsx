@@ -25,7 +25,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { motion } from 'framer-motion';
-import { Briefcase, Building2, Edit, Plus, Trash2 } from 'lucide-react';
+import { Briefcase, Building2, Edit, Eye, EyeOff, Plus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -330,10 +330,18 @@ const WorkHistoryList = () => {
                 <div className="flex items-center gap-2 flex-wrap">
                   <h3 className="font-semibold">{item.position}</h3>
                   {item.is_current && (
-                    <span className="text-xs px-2 py-0.5 bg-primary/10 text-primary rounded-full">
+                    <span className="text-xs px-2 py-0.5 bg-primary/10 text-primary rounded-full whitespace-nowrap">
                       Current
                     </span>
                   )}
+                  <span
+                    className={`text-xs px-2 py-0.5 rounded-full whitespace-nowrap ${item.is_visible
+                      ? 'bg-primary/10 text-primary'
+                      : 'bg-muted text-muted-foreground'
+                      }`}
+                  >
+                    {item.is_visible ? 'Visible' : 'Hidden'}
+                  </span>
                 </div>
                 <p className="text-sm text-muted-foreground">{item.company}</p>
                 <div className="flex items-center gap-2 mt-1 text-xs text-muted-foreground">
@@ -360,21 +368,33 @@ const WorkHistoryList = () => {
                 )}
               </div>
 
-              <div className="grid grid-cols-2 gap-1.5 sm:flex sm:gap-2 flex-shrink-0">
-                <div className="flex items-center gap-2 mr-2">
-                  <Switch
-                    checked={item.is_visible}
-                    onCheckedChange={() => toggleVisibility(item)}
-                  />
-                </div>
-                <Button variant="outline" size="icon" onClick={() => handleOpenDialog(item)}>
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 flex-shrink-0">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => toggleVisibility(item)}
+                  title={item.is_visible ? 'Hide' : 'Show'}
+                  className="min-h-[44px] min-w-[44px]"
+                >
+                  {item.is_visible ? (
+                    <EyeOff className="w-4 h-4" />
+                  ) : (
+                    <Eye className="w-4 h-4" />
+                  )}
+                </Button>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => handleOpenDialog(item)}
+                  className="min-h-[44px] min-w-[44px]"
+                >
                   <Edit className="w-4 h-4" />
                 </Button>
                 <Button
                   variant="outline"
                   size="icon"
                   onClick={() => setDeleteId(item.id)}
-                  className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                  className="text-destructive hover:bg-destructive hover:text-destructive-foreground min-h-[44px] min-w-[44px]"
                 >
                   <Trash2 className="w-4 h-4" />
                 </Button>

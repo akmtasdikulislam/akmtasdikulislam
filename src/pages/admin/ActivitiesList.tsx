@@ -26,7 +26,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { motion } from 'framer-motion';
-import { Calendar, Edit, MapPin, Plus, Star, Trash2, X } from 'lucide-react';
+import { Calendar, Edit, Eye, EyeOff, MapPin, Plus, Star, Trash2, X } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -412,14 +412,22 @@ const ActivitiesList = () => {
                 </div>
 
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <h3 className="font-semibold">{item.title}</h3>
-                    {item.is_featured && (
-                      <span className="text-xs px-2 py-0.5 bg-amber-500/10 text-amber-500 rounded-full flex items-center gap-1">
-                        <Star className="w-3 h-3" /> Featured
-                      </span>
-                    )}
-                  </div>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h3 className="font-semibold">{item.title}</h3>
+                  {item.is_featured && (
+                    <span className="text-xs px-2 py-0.5 bg-amber-500/10 text-amber-500 rounded-full flex items-center gap-1 whitespace-nowrap">
+                      <Star className="w-3 h-3" /> Featured
+                    </span>
+                  )}
+                  <span
+                    className={`text-xs px-2 py-0.5 rounded-full whitespace-nowrap ${item.is_visible
+                      ? 'bg-primary/10 text-primary'
+                      : 'bg-muted text-muted-foreground'
+                      }`}
+                  >
+                    {item.is_visible ? 'Visible' : 'Hidden'}
+                  </span>
+                </div>
                   <p className="text-sm text-muted-foreground">{item.organization}</p>
                   <div className="flex items-center gap-2 mt-1 text-xs text-muted-foreground">
                     <Calendar className="w-3 h-3" />
@@ -456,33 +464,46 @@ const ActivitiesList = () => {
                   )}
                 </div>
 
-                <div className="grid grid-cols-2 gap-1.5 sm:flex sm:gap-2 flex-shrink-0">
-                  <div className="flex items-center gap-2 mr-2">
-                    <Switch
-                      checked={item.is_featured}
-                      onCheckedChange={() => toggleFeatured(item)}
-                    />
-                    <span className="text-xs text-muted-foreground">Featured</span>
-                  </div>
-                  <div className="flex items-center gap-2 mr-2">
-                    <Switch
-                      checked={item.is_visible}
-                      onCheckedChange={() => toggleVisibility(item)}
-                    />
-                    <span className="text-xs text-muted-foreground">Visible</span>
-                  </div>
-                  <Button variant="outline" size="icon" onClick={() => handleOpenDialog(item)}>
-                    <Edit className="w-4 h-4" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => setDeleteId(item.id)}
-                    className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
-                </div>
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 flex-shrink-0">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => toggleFeatured(item)}
+                  title={item.is_featured ? 'Unfeature' : 'Feature'}
+                  className="min-h-[44px] min-w-[44px]"
+                >
+                  <Star className={`w-4 h-4 ${item.is_featured ? 'fill-yellow-500 text-yellow-500' : ''}`} />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => toggleVisibility(item)}
+                  title={item.is_visible ? 'Hide' : 'Show'}
+                  className="min-h-[44px] min-w-[44px]"
+                >
+                  {item.is_visible ? (
+                    <EyeOff className="w-4 h-4" />
+                  ) : (
+                    <Eye className="w-4 h-4" />
+                  )}
+                </Button>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => handleOpenDialog(item)}
+                  className="min-h-[44px] min-w-[44px]"
+                >
+                  <Edit className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setDeleteId(item.id)}
+                  className="text-destructive hover:bg-destructive hover:text-destructive-foreground min-h-[44px] min-w-[44px]"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </Button>
+              </div>
               </motion.div>
             ))}
           </div>

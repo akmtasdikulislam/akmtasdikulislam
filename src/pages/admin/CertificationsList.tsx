@@ -24,7 +24,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { motion } from 'framer-motion';
-import { Award, Edit, ExternalLink, GripVertical, Image as ImageIcon, Plus, Trash2 } from 'lucide-react';
+import { Award, Edit, ExternalLink, Eye, EyeOff, GripVertical, Image as ImageIcon, Plus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -343,7 +343,17 @@ const CertificationsList = () => {
               </div>
 
               <div className="flex-1 min-w-0">
-                <h3 className="font-semibold">{cert.title}</h3>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h3 className="font-semibold">{cert.title}</h3>
+                  <span
+                    className={`text-xs px-2 py-0.5 rounded-full whitespace-nowrap ${cert.is_visible
+                      ? 'bg-primary/10 text-primary'
+                      : 'bg-muted text-muted-foreground'
+                      }`}
+                  >
+                    {cert.is_visible ? 'Visible' : 'Hidden'}
+                  </span>
+                </div>
                 <p className="text-sm text-muted-foreground">{cert.issuer}</p>
                 <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
                   <span>Issued: {format(new Date(cert.issue_date), 'MMM yyyy')}</span>
@@ -360,28 +370,40 @@ const CertificationsList = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-1.5 sm:flex sm:gap-2 flex-shrink-0">
-                <div className="flex items-center gap-2 mr-2">
-                  <Switch
-                    checked={cert.is_visible}
-                    onCheckedChange={() => toggleVisibility(cert)}
-                  />
-                </div>
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 flex-shrink-0">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => toggleVisibility(cert)}
+                  title={cert.is_visible ? 'Hide' : 'Show'}
+                  className="min-h-[44px] min-w-[44px]"
+                >
+                  {cert.is_visible ? (
+                    <EyeOff className="w-4 h-4" />
+                  ) : (
+                    <Eye className="w-4 h-4" />
+                  )}
+                </Button>
                 {cert.credential_url && (
-                  <Button variant="outline" size="icon" asChild>
+                  <Button variant="outline" size="icon" asChild className="min-h-[44px] min-w-[44px]">
                     <a href={cert.credential_url} target="_blank" rel="noopener noreferrer">
                       <ExternalLink className="w-4 h-4" />
                     </a>
                   </Button>
                 )}
-                <Button variant="outline" size="icon" onClick={() => handleOpenDialog(cert)}>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => handleOpenDialog(cert)}
+                  className="min-h-[44px] min-w-[44px]"
+                >
                   <Edit className="w-4 h-4" />
                 </Button>
                 <Button
                   variant="outline"
                   size="icon"
                   onClick={() => setDeleteId(cert.id)}
-                  className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                  className="text-destructive hover:bg-destructive hover:text-destructive-foreground min-h-[44px] min-w-[44px]"
                 >
                   <Trash2 className="w-4 h-4" />
                 </Button>

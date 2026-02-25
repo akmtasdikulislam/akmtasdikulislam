@@ -24,7 +24,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { Edit, Plus, Quote, Star, Trash2, User } from 'lucide-react';
+import { Edit, Eye, EyeOff, Plus, Quote, Star, Trash2, User } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -311,49 +311,16 @@ const TestimonialsList = () => {
           <Button onClick={() => handleOpenDialog()}>Add your first testimonial</Button>
         </div>
       ) : (
-        <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
-          {testimonials.map((testimonial, index) => (
-            <motion.div
-              key={testimonial.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 }}
-              className={`bg-card border border-border rounded-xl p-6 relative ${!testimonial.is_visible ? 'opacity-60' : ''}`}
-            >
-              <div className="absolute top-4 right-4 flex items-center gap-2">
-                <Switch
-                  checked={testimonial.is_visible}
-                  onCheckedChange={() => toggleVisibility(testimonial)}
-                />
-                {testimonial.is_featured && (
-                  <span className="text-xs px-2 py-1 bg-yellow-500/10 text-yellow-500 rounded-full">
-                    Featured
-                  </span>
-                )}
-              </div>
-
-              {/* Quote icon */}
-              <Quote className="w-8 h-8 text-primary/30 mb-4" />
-
-              {/* Content */}
-              <p className="text-muted-foreground line-clamp-4 mb-4">
-                "{testimonial.content}"
-              </p>
-
-              {/* Rating */}
-              <div className="flex gap-1 mb-4">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`w-4 h-4 ${i < testimonial.rating ? 'text-yellow-500 fill-yellow-500' : 'text-muted-foreground'
-                      }`}
-                  />
-                ))}
-              </div>
-
-              {/* Author */}
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-secondary overflow-hidden">
+          <div className="space-y-4">
+            {testimonials.map((testimonial, index) => (
+              <motion.div
+                key={testimonial.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.05 }}
+                className={`bg-card border border-border rounded-xl p-6 flex flex-col sm:flex-row sm:items-start gap-4 ${!testimonial.is_visible ? 'opacity-60' : ''}`}
+              >
+                <div className="w-12 h-12 rounded-full bg-secondary overflow-hidden flex-shrink-0">
                   {testimonial.avatar_url ? (
                     <img src={testimonial.avatar_url} alt={testimonial.name} className="w-full h-full object-cover" />
                   ) : (
@@ -363,40 +330,83 @@ const TestimonialsList = () => {
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium text-sm">{testimonial.name}</p>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h3 className="font-semibold">{testimonial.name}</h3>
+                    {testimonial.is_featured && (
+                      <span className="text-xs px-2 py-0.5 bg-yellow-500/10 text-yellow-500 rounded-full whitespace-nowrap">
+                        Featured
+                      </span>
+                    )}
+                    <span
+                      className={`text-xs px-2 py-0.5 rounded-full whitespace-nowrap ${testimonial.is_visible
+                        ? 'bg-primary/10 text-primary'
+                        : 'bg-muted text-muted-foreground'
+                        }`}
+                    >
+                      {testimonial.is_visible ? 'Visible' : 'Hidden'}
+                    </span>
+                  </div>
                   {(testimonial.position || testimonial.company) && (
-                    <p className="text-xs text-muted-foreground truncate">
+                    <p className="text-xs text-muted-foreground mt-1">
                       {[testimonial.position, testimonial.company].filter(Boolean).join(' at ')}
                     </p>
                   )}
+                  <div className="flex gap-1 mt-2">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star
+                        key={i}
+                        className={`w-4 h-4 ${i < testimonial.rating ? 'text-yellow-500 fill-yellow-500' : 'text-muted-foreground'
+                          }`}
+                      />
+                    ))}
+                  </div>
+                  <p className="text-muted-foreground line-clamp-3 mt-3">
+                    "{testimonial.content}"
+                  </p>
                 </div>
-              </div>
 
-              {/* Actions */}
-              <div className="flex items-center gap-2 mt-4 pt-4 border-t border-border">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => toggleFeatured(testimonial)}
-                >
-                  <Star className={`w-4 h-4 mr-1 ${testimonial.is_featured ? 'fill-yellow-500 text-yellow-500' : ''}`} />
-                  {testimonial.is_featured ? 'Unfeature' : 'Feature'}
-                </Button>
-                <div className="flex-1" />
-                <Button variant="ghost" size="icon" onClick={() => handleOpenDialog(testimonial)}>
-                  <Edit className="w-4 h-4" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setDeleteId(testimonial.id)}
-                  className="text-destructive hover:bg-destructive/10"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </Button>
-              </div>
-            </motion.div>
-          ))}
+                <div className="flex flex-wrap gap-1.5 sm:gap-2 flex-shrink-0">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => toggleFeatured(testimonial)}
+                    title={testimonial.is_featured ? 'Unfeature' : 'Feature'}
+                    className="min-h-[44px] min-w-[44px]"
+                  >
+                    <Star className={`w-4 h-4 ${testimonial.is_featured ? 'fill-yellow-500 text-yellow-500' : ''}`} />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => toggleVisibility(testimonial)}
+                    title={testimonial.is_visible ? 'Hide' : 'Show'}
+                    className="min-h-[44px] min-w-[44px]"
+                  >
+                    {testimonial.is_visible ? (
+                      <EyeOff className="w-4 h-4" />
+                    ) : (
+                      <Eye className="w-4 h-4" />
+                    )}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => handleOpenDialog(testimonial)}
+                    className="min-h-[44px] min-w-[44px]"
+                  >
+                    <Edit className="w-4 h-4" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => setDeleteId(testimonial.id)}
+                    className="text-destructive hover:bg-destructive hover:text-destructive-foreground min-h-[44px] min-w-[44px]"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                </div>
+              </motion.div>
+            ))}
         </div>
       )}
 
