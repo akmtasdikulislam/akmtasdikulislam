@@ -34,15 +34,29 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const payload = {
+      name: formData.name.trim(),
+      email: formData.email.trim(),
+      subject: formData.subject.trim(),
+      message: formData.message.trim(),
+    };
+
+    if (!payload.name || !payload.email || !payload.subject || !payload.message) {
+      toast({
+        title: "Missing information",
+        description: "Please fill out all fields before sending.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
-      const { error } = await supabase.from('contact_messages').insert([{
-        name: formData.name,
-        email: formData.email,
-        subject: formData.subject,
-        message: formData.message
-      }]);
+      const { error } = await supabase.functions.invoke('contact-message', {
+        body: payload,
+      });
 
       if (error) throw error;
 

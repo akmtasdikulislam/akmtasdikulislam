@@ -26,6 +26,8 @@ const ContactEditor = () => {
         location_url: '',
         available_for_work: true,
         available_text: 'Available for Work',
+        notification_email: 'akmtasdikulislam@gmail.com',
+        notify_on_message: true,
         linkedin_url: '',
         upwork_url: '',
         linkedin_label: 'Connect on LinkedIn',
@@ -39,6 +41,27 @@ const ContactEditor = () => {
         if (profilesData) setProfiles(profilesData);
         if (freelanceData) setFreelanceProfiles(freelanceData);
     }, [contactData, profilesData, freelanceData]);
+
+    useEffect(() => {
+        const channel = supabase
+            .channel('contact_messages_changes')
+            .on(
+                'postgres_changes',
+                { event: 'INSERT', schema: 'public', table: 'contact_messages' },
+                () => {
+                    queryClient.invalidateQueries({ queryKey: ['contact_messages'] });
+                    toast({
+                        title: 'New message received',
+                        description: 'A new contact message just arrived.',
+                    });
+                }
+            )
+            .subscribe();
+
+        return () => {
+            supabase.removeChannel(channel);
+        };
+    }, [queryClient, toast]);
 
     const updateContactMutation = useMutation({
         mutationFn: async (data: any) => {
@@ -176,7 +199,7 @@ const ContactEditor = () => {
         }
     });
 
-    if (contactLoading || profilesLoading || messagesLoading) return <div className="flex justify-center p-8"><Loader2 className="animate-spin" /></div>;
+    if (contactLoading || profilesLoading || freelanceLoading || messagesLoading) return <div className="flex justify-center p-8"><Loader2 className="animate-spin" /></div>;
 
     const unreadCount = messagesData?.filter(m => !m.is_read).length || 0;
 
@@ -325,6 +348,27 @@ const ContactEditor = () => {
                                         onChange={(e) => setContact({ ...contact, linkedin_label: e.target.value })}
                                         placeholder="Connect on LinkedIn"
                                     />
+                                </div>
+                            </div>
+                            <div className="grid md:grid-cols-2 gap-4">
+                                <div className="space-y-1">
+                                    <Label>Notification Email</Label>
+                                    <Input
+                                        value={contact.notification_email || ''}
+                                        onChange={(e) => setContact({ ...contact, notification_email: e.target.value })}
+                                        placeholder="akmtasdikulislam@gmail.com"
+                                        type="email"
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <Label>Notify on New Message</Label>
+                                    <div className="flex items-center gap-3">
+                                        <Switch
+                                            checked={contact.notify_on_message !== false}
+                                            onCheckedChange={(c) => setContact({ ...contact, notify_on_message: c })}
+                                        />
+                                        <span className="text-sm text-muted-foreground">Send email alerts</span>
+                                    </div>
                                 </div>
                             </div>
                             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-4 border-t">

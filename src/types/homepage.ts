@@ -248,6 +248,8 @@ export interface HomepageContactInfo {
   upwork_url: string | null;
   linkedin_label: string | null;
   upwork_label: string | null;
+  notification_email: string | null;
+  notify_on_message: boolean | null;
   created_at: string;
   updated_at?: string;
 }

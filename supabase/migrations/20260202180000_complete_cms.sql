@@ -111,7 +111,14 @@ CREATE TABLE IF NOT EXISTS public.homepage_contact_info (
     location_url text,
     available_for_work boolean DEFAULT true,
     available_text text DEFAULT 'Available for Work',
-    created_at timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL
+    linkedin_url text,
+    upwork_url text,
+    linkedin_label text,
+    upwork_label text,
+    notification_email text DEFAULT 'akmtasdikulislam@gmail.com',
+    notify_on_message boolean DEFAULT true,
+    created_at timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL,
+    updated_at timestamp with time zone DEFAULT timezone('utc'::text, now())
 );
 
 ALTER TABLE public.homepage_contact_info ENABLE ROW LEVEL SECURITY;
