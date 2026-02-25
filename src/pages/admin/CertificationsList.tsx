@@ -8,6 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import SectionHeadingEditor from '@/components/admin/SectionHeadingEditor';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -75,21 +76,21 @@ const CertificationsList = () => {
         .single();
 
       if (error && error.code !== 'PGRST116') throw error;
-      return data ? data.is_visible : true;
+      return data ? (data as any).is_visible : true;
     },
     staleTime: 0,
   });
 
-  const { data: certifications = [], isLoading: loading } = useQuery({
+  const { data: certifications = [], isLoading: loading } = useQuery<Certification[]>({
     queryKey: ['certifications_admin'],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('certifications')
+        .from('certifications' as any)
         .select('*')
         .order('display_order', { ascending: true });
 
       if (error) throw error;
-      return (data as Certification[]) || [];
+      return (data as unknown as Certification[]) || [];
     },
   });
 
@@ -264,7 +265,7 @@ const CertificationsList = () => {
   const toggleVisibility = async (cert: Certification) => {
     try {
       const { error } = await supabase
-        .from('certifications')
+        .from('certifications' as any)
         .update({ is_visible: !cert.is_visible })
         .eq('id', cert.id);
 
@@ -309,6 +310,8 @@ const CertificationsList = () => {
           </Button>
         </div>
       </div>
+
+      <SectionHeadingEditor sectionKey="certifications" />
 
       {certifications.length === 0 ? (
         <div className="text-center py-12 bg-card border border-border rounded-xl">

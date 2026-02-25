@@ -8,6 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import SectionHeadingEditor from '@/components/admin/SectionHeadingEditor';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -75,22 +76,22 @@ const WorkHistoryList = () => {
         .single();
 
       if (error && error.code !== 'PGRST116') throw error;
-      return data ? data.is_visible : true;
+      return data ? (data as any).is_visible : true;
     },
     staleTime: 0,
   });
 
-  const { data: workHistory = [], isLoading: loading } = useQuery({
+  const { data: workHistory = [], isLoading: loading } = useQuery<WorkHistory[]>({
     queryKey: ['work_history_admin'],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('work_history')
+        .from('work_history' as any)
         .select('*')
         .order('start_date', { ascending: false });
 
       if (error) throw error;
 
-      return (data as WorkHistory[] || []).sort((a, b) => {
+      return ((data as unknown as WorkHistory[]) || []).sort((a, b) => {
         const getEndTime = (item: WorkHistory) =>
           item.is_current ? 8640000000000000 : (item.end_date ? new Date(item.end_date).getTime() : 0);
 
@@ -251,7 +252,7 @@ const WorkHistoryList = () => {
   const toggleVisibility = async (item: WorkHistory) => {
     try {
       const { error } = await supabase
-        .from('work_history')
+        .from('work_history' as any)
         .update({ is_visible: !item.is_visible })
         .eq('id', item.id);
 
@@ -296,6 +297,8 @@ const WorkHistoryList = () => {
           </Button>
         </div>
       </div>
+
+      <SectionHeadingEditor sectionKey="work_history" />
 
       {workHistory.length === 0 ? (
         <div className="text-center py-12 bg-card border border-border rounded-xl">
