@@ -69,27 +69,9 @@ const Activities = () => {
     initialData: [],
   });
 
-  const { data: sectionVisible = true } = useQuery<boolean>({
-    queryKey: ['section_visibility', 'activities'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('section_visibility' as any)
-        .select('is_visible')
-        .eq('section_key', 'activities')
-        .single();
-
-      if (error && error.code !== 'PGRST116') {
-        console.error('Error fetching section visibility:', error);
-      }
-      return data ? (data as any).is_visible : true;
-    },
-    initialData: true,
-    staleTime: 0,
-  });
-
   const { data: heading, isLoading: headingLoading } = useSectionHeading('activities');
 
-  if (sectionVisible === false || headingLoading) return null;
+  if (headingLoading) return null;
 
   if (loading || !activities || activities.length === 0) {
     return null;

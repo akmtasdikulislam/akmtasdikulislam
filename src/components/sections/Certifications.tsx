@@ -45,27 +45,6 @@ const Certifications = () => {
     initialData: [], // Provide initial data to ensure 'certifications' is always an array
   });
 
-  const { data: sectionVisible } = useQuery<boolean>({
-    queryKey: ['section_visibility', 'certifications'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('section_visibility' as any)
-        .select('is_visible')
-        .eq('section_key', 'certifications')
-        .single();
-
-      // PGRST116 is the error code for "No rows found"
-      if (error && error.code !== 'PGRST116') {
-        console.error('Error fetching section visibility:', error);
-      }
-      // If data is null (no setting found) or is_visible is true, default to true
-      return data ? (data as any).is_visible : true;
-    },
-    initialData: true, // Default to true if the query hasn't run or no data is found
-  });
-
-  if (!sectionVisible) return null;
-
   if (loading || certifications.length === 0) {
     return null;
   }
