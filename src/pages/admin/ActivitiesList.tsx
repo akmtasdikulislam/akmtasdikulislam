@@ -1,3 +1,5 @@
+import SectionHeadingEditor from '@/components/admin/SectionHeadingEditor';
+import SectionVisibilityToggle from '@/components/admin/SectionVisibilityToggle';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -8,8 +10,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import SectionHeadingEditor from '@/components/admin/SectionHeadingEditor';
-import SectionVisibilityToggle from '@/components/admin/SectionVisibilityToggle';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -26,7 +26,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { motion } from 'framer-motion';
-import { Calendar, Edit, MapPin, Plus, Star, Trash2, Upload, X } from 'lucide-react';
+import { Calendar, Edit, MapPin, Plus, Star, Trash2, X } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -399,17 +399,17 @@ const ActivitiesList = () => {
                 transition={{ delay: index * 0.05 }}
                 className={`bg-card border border-border rounded-xl p-4 flex flex-col sm:flex-row sm:items-start gap-4 ${!item.is_visible ? 'opacity-60' : ''}`}
               >
-              <div className="w-full sm:w-32 h-24 rounded-lg bg-secondary overflow-hidden flex-shrink-0 flex items-center justify-center">
-                {item.cover_image ? (
-                  <img
-                    src={item.cover_image}
-                    alt={item.title}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <Calendar className="w-6 h-6 text-muted-foreground" />
-                )}
-              </div>
+                <div className="w-full sm:w-32 h-24 rounded-lg bg-secondary overflow-hidden flex-shrink-0 flex items-center justify-center">
+                  {item.cover_image ? (
+                    <img
+                      src={item.cover_image}
+                      alt={item.title}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <Calendar className="w-6 h-6 text-muted-foreground" />
+                  )}
+                </div>
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
@@ -435,25 +435,25 @@ const ActivitiesList = () => {
                   {item.description && (
                     <p className="text-sm text-muted-foreground mt-2 line-clamp-2">{item.description}</p>
                   )}
-                {item.photos && item.photos.length > 0 && (
-                  <div className="flex items-center gap-1 mt-2">
-                    <span className="text-xs px-2 py-0.5 bg-secondary rounded-md">
-                      {item.photos.length} photo(s)
-                    </span>
-                  </div>
-                )}
-                {item.tags && item.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-1 mt-2">
-                    {item.tags.slice(0, 5).map((tag) => (
-                      <span key={tag} className="text-xs px-2 py-0.5 bg-secondary rounded-md">
-                        {tag}
+                  {item.photos && item.photos.length > 0 && (
+                    <div className="flex items-center gap-1 mt-2">
+                      <span className="text-xs px-2 py-0.5 bg-secondary rounded-md">
+                        {item.photos.length} photo(s)
                       </span>
-                    ))}
-                    {item.tags.length > 5 && (
-                      <span className="text-xs text-muted-foreground">+{item.tags.length - 5} more</span>
-                    )}
-                  </div>
-                )}
+                    </div>
+                  )}
+                  {item.tags && item.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-1 mt-2">
+                      {item.tags.slice(0, 5).map((tag) => (
+                        <span key={tag} className="text-xs px-2 py-0.5 bg-secondary rounded-md">
+                          {tag}
+                        </span>
+                      ))}
+                      {item.tags.length > 5 && (
+                        <span className="text-xs text-muted-foreground">+{item.tags.length - 5} more</span>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 <div className="grid grid-cols-2 gap-1.5 sm:flex sm:gap-2 flex-shrink-0">
@@ -642,7 +642,7 @@ const ActivitiesList = () => {
                 })}
                 placeholder="e.g., leadership, discipline"
               />
-              <p className="text-xs text-muted-foreground">Comma-separated tags (same style as Work History chips)</p>
+
             </div>
 
             <div className="flex gap-3 pt-4">
