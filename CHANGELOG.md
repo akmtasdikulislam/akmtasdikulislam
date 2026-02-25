@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Changed
+- Refactored the "Roles", "Stats", "Badges", "Social Links", and "Tech Stack" tabs in `HeroEditor.tsx` to include an explicit Edit Mode.
+- Implemented modal-based pop-up dialogs for adding new items in all these tabs, matching the continuous design pattern in `NavbarEditor.tsx`.
+- Updated the list UI across all tabs: input fields, switches, and selects are disabled outside Edit Mode, while drag handles and delete buttons are only visible in Edit Mode.
+- The "Social Links" and "Tech Stack" tab modals simulate a grid layout and feature a dual icon selection mode (URL or Upload) with an empty state placeholder.
+
 ## [2026-02-25] - Hero Section Responsive Layout Adjustments
 
 ### Fixed
