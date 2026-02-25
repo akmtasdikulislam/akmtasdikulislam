@@ -208,7 +208,7 @@ const Activities = () => {
                               {activity.tags.map((tag) => (
                                 <span
                                   key={tag}
-                                  className="px-2 py-1 text-xs bg-secondary border border-transparent rounded-md text-muted-foreground tag-chip"
+                                  className="px-2 py-1 bg-secondary rounded-md text-xs font-medium text-foreground/80 hover:text-primary transition-colors border border-transparent hover:border-primary/20"
                                 >
                                   {tag}
                                 </span>
