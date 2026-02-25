@@ -357,7 +357,7 @@ const ActivitiesList = () => {
       <div className="max-w-6xl mx-auto w-full px-4">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold">Activities</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold">Activities ({activities.length})</h1>
             <p className="text-muted-foreground mt-1">Manage your latest activities and events</p>
           </div>
           <div className="flex flex-wrap items-center gap-2 sm:gap-4">

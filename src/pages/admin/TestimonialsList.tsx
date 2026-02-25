@@ -282,7 +282,7 @@ const TestimonialsList = () => {
     <div className="space-y-6 max-w-6xl mx-auto w-full px-4 pb-20">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold">Testimonials</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold">Testimonials ({testimonials.length})</h1>
           <p className="text-muted-foreground mt-1">Manage client testimonials and reviews</p>
         </div>
         <div className="flex flex-wrap items-center gap-2 sm:gap-4">

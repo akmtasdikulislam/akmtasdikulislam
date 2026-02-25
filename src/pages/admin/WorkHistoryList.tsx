@@ -278,7 +278,7 @@ const WorkHistoryList = () => {
     <div className="space-y-6 max-w-6xl mx-auto w-full px-4 pb-20">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold">Work History</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold">Work History ({workHistory.length})</h1>
           <p className="text-muted-foreground mt-1">Manage your employment timeline</p>
         </div>
         <div className="flex flex-wrap items-center gap-2 sm:gap-4">
