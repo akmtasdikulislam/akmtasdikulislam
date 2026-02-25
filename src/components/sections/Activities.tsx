@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Calendar, MapPin, Star } from 'lucide-react';
 import { toast } from 'sonner';
 import { useEffect, useRef, useState } from 'react';
@@ -98,14 +98,6 @@ const Activities = () => {
     placeholderData: [],
   });
 
-  const { data: heading, isLoading: headingLoading } = useSectionHeading('activities');
-
-  if (headingLoading) return null;
-
-  if (loading || !activities || activities.length === 0) {
-    return null;
-  }
-
   useEffect(() => {
     activeSlidesRef.current = activeSlides;
   }, [activeSlides]);
@@ -146,6 +138,14 @@ const Activities = () => {
       timersRef.current = [];
     };
   }, [activities]);
+
+  const { data: heading, isLoading: headingLoading } = useSectionHeading('activities');
+
+  if (headingLoading) return null;
+
+  if (loading || !activities || activities.length === 0) {
+    return null;
+  }
 
   return (
     <section id="activities" className="py-24 relative overflow-hidden">
@@ -211,18 +211,14 @@ const Activities = () => {
                                 <DialogTrigger asChild>
                                   <div className="cursor-pointer w-full h-full">
                                     <div className="relative z-10 w-full h-full">
-                                      <AnimatePresence mode="wait">
-                                        <motion.img
-                                          key={activeSlide}
-                                          src={activeSlide}
+                                      {slideImages.map((image, slideIndex) => (
+                                        <img
+                                          key={`${activity.id}-${image}`}
+                                          src={image}
                                           alt={activity.title}
-                                          className="absolute inset-0 w-full h-full object-contain"
-                                          initial={{ opacity: 0 }}
-                                          animate={{ opacity: 1 }}
-                                          exit={{ opacity: 0 }}
-                                          transition={{ duration: 0.6, ease: 'easeInOut' }}
+                                          className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-700 ease-in-out ${slideIndex === activeSlideIndex ? 'opacity-100' : 'opacity-0'}`}
                                         />
-                                      </AnimatePresence>
+                                      ))}
                                     </div>
                                   </div>
                                 </DialogTrigger>
