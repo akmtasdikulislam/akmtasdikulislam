@@ -92,7 +92,6 @@ const ActivitiesList = () => {
 
       return (data as unknown as Activity[]) || [];
     },
-    initialData: [],
     refetchOnWindowFocus: false,
   });
 

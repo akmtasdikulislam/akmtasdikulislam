@@ -205,7 +205,7 @@ const Activities = () => {
 
                           {activity.tags && activity.tags.length > 0 && (
                             <div className="flex flex-wrap gap-2 mt-4">
-                              {activity.tags.map((tag) => (
+                              {activity.tags.slice(0, 5).map((tag) => (
                                 <span
                                   key={tag}
                                   className="px-2 py-1 bg-secondary rounded-md text-xs font-medium text-foreground/80 hover:text-primary transition-colors border border-transparent hover:border-primary/20"
@@ -213,6 +213,9 @@ const Activities = () => {
                                   {tag}
                                 </span>
                               ))}
+                              {activity.tags.length > 5 && (
+                                <span className="text-xs text-muted-foreground">+{activity.tags.length - 5} more</span>
+                              )}
                             </div>
                           )}
 
