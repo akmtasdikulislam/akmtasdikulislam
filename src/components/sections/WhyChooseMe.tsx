@@ -73,10 +73,14 @@ function WhyChooseMe() {
                   <div className="w-14 h-14 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-center mb-4 group-hover:glow-green-sm transition-all">
                     <IconComponent className="w-7 h-7 text-primary" />
                   </div>
-                  <h3 className="text-lg font-semibold mb-2">{reason.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <h3 className="text-lg font-semibold mb-3">{reason.title}</h3>
+                  <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
                     {reason.description}
                   </p>
+
+                  <div className="flex flex-wrap gap-2">
+                    {/* Placeholder to match Services.tsx spacing */}
+                  </div>
                 </div>
 
                 {/* Bottom accent line */}

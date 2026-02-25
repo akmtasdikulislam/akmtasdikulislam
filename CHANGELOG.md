@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 - Replicated the animated bottom gradient bar styling and hover gradients from the Services section items onto the items within the "Why Choose Me" section.
+- Equalized structural dimensions within "Why Choose Me" item blocks to flawlessly match "Services" blocks, resolving an uneven alignment issue on the animated bottom borders.
 
 ## [2026-02-24] - Frontend Visibility Toggle Fix
 
