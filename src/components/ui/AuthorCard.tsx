@@ -19,6 +19,7 @@ interface AuthorCardProps {
 }
 
 const AuthorCard = ({ showSocials = true }: AuthorCardProps) => {
+  const authorProfileId = '00000000-0000-0000-0000-000000000001';
   const [profile, setProfile] = useState<AuthorProfile | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -28,11 +29,12 @@ const AuthorCard = ({ showSocials = true }: AuthorCardProps) => {
         const { data, error } = await supabase
           .from('author_profile')
           .select('*')
-          .limit(1)
-          .single();
+          .eq('id', authorProfileId)
+          .limit(1);
 
-        if (error && error.code !== 'PGRST116') throw error;
-        setProfile(data);
+        if (error) throw error;
+        const row = Array.isArray(data) ? data[0] : null;
+        setProfile(row ?? null);
       } catch (error) {
         console.error('Error fetching author profile:', error);
       } finally {

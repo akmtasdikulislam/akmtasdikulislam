@@ -24,6 +24,7 @@ interface AuthorProfileData {
 }
 
 const ProfileDropdown = () => {
+  const authorProfileId = '00000000-0000-0000-0000-000000000001';
   const [profile, setProfile] = useState<AuthorProfileData | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -39,14 +40,66 @@ const ProfileDropdown = () => {
       const { data, error } = await supabase
         .from('author_profile')
         .select('*')
-        .limit(1)
+        .eq('id', authorProfileId)
+        .limit(1);
+
+      if (error) {
+        console.error('Error fetching profile:', error);
+        setProfile({
+          id: authorProfileId,
+          name: 'Akm Tasdikul Islam',
+          title: 'Full Stack Developer',
+          bio: null,
+          avatar_url: null,
+          github_url: null,
+          linkedin_url: null,
+          email: null,
+        });
+        return;
+      }
+
+      const row = Array.isArray(data) ? data[0] : null;
+
+      if (row) {
+        setProfile(row);
+        return;
+      }
+
+      const fallbackProfile = {
+        id: authorProfileId,
+        name: 'Akm Tasdikul Islam',
+        title: 'Full Stack Developer',
+        bio: null,
+        avatar_url: null,
+        github_url: null,
+        linkedin_url: null,
+        email: null,
+      };
+
+      const { data: inserted, error: insertError } = await supabase
+        .from('author_profile')
+        .upsert([fallbackProfile], { onConflict: 'id' })
+        .select('*')
         .single();
 
-      if (error && error.code !== 'PGRST116') throw error;
-      setProfile(data);
+      if (insertError) {
+        console.error('Error creating profile:', insertError);
+        setProfile(fallbackProfile);
+        return;
+      }
+      setProfile(inserted);
     } catch (error) {
       console.error('Error fetching profile:', error);
-      toast.error('Failed to load author profile');
+      setProfile({
+        id: authorProfileId,
+        name: 'Akm Tasdikul Islam',
+        title: 'Full Stack Developer',
+        bio: null,
+        avatar_url: null,
+        github_url: null,
+        linkedin_url: null,
+        email: null,
+      });
     } finally {
       setLoading(false);
     }
@@ -59,7 +112,8 @@ const ProfileDropdown = () => {
     try {
       const { error } = await supabase
         .from('author_profile')
-        .update({
+        .upsert({
+          id: profile.id || authorProfileId,
           name: profile.name,
           title: profile.title,
           bio: profile.bio,
@@ -67,8 +121,7 @@ const ProfileDropdown = () => {
           github_url: profile.github_url,
           linkedin_url: profile.linkedin_url,
           email: profile.email,
-        })
-        .eq('id', profile.id);
+        }, { onConflict: 'id' });
 
       if (error) throw error;
       toast.success('Profile updated successfully');
