@@ -55,9 +55,21 @@ const emptyActivity = {
   activity_type: 'event',
   cover_image: '',
   photos: [] as string[],
-  tags: [] as string[],
+  tags: '',
   is_featured: false,
   is_visible: true,
+} as {
+  title: string;
+  organization: string;
+  location: string;
+  event_date: string;
+  description: string;
+  activity_type: string;
+  cover_image: string;
+  photos: string[];
+  tags: string;
+  is_featured: boolean;
+  is_visible: boolean;
 };
 
 const activityTypes = [
@@ -108,7 +120,7 @@ const ActivitiesList = () => {
         activity_type: item.activity_type,
         cover_image: item.cover_image || '',
         photos: item.photos || [],
-        tags: item.tags || [],
+        tags: item.tags?.join(', ') || '',
         is_featured: item.is_featured,
         is_visible: item.is_visible,
       });
@@ -121,7 +133,7 @@ const ActivitiesList = () => {
         activity_type: item.activity_type,
         cover_image: item.cover_image || '',
         photos: item.photos || [],
-        tags: item.tags || [],
+        tags: item.tags?.join(', ') || '',
         is_featured: item.is_featured,
         is_visible: item.is_visible,
       });
@@ -150,7 +162,9 @@ const ActivitiesList = () => {
         activity_type: formData.activity_type,
         cover_image: formData.cover_image || null,
         photos: formData.photos.length > 0 ? formData.photos : null,
-        tags: formData.tags.length > 0 ? formData.tags : null,
+        tags: formData.tags
+          ? formData.tags.split(',').map(tag => tag.trim()).filter(Boolean)
+          : null,
         is_featured: formData.is_featured,
         is_visible: formData.is_visible,
       };
@@ -421,13 +435,25 @@ const ActivitiesList = () => {
                   {item.description && (
                     <p className="text-sm text-muted-foreground mt-2 line-clamp-2">{item.description}</p>
                   )}
-                  {item.photos && item.photos.length > 0 && (
-                    <div className="flex items-center gap-1 mt-2">
-                      <span className="text-xs px-2 py-0.5 bg-secondary rounded-md">
-                        {item.photos.length} photo(s)
+                {item.photos && item.photos.length > 0 && (
+                  <div className="flex items-center gap-1 mt-2">
+                    <span className="text-xs px-2 py-0.5 bg-secondary rounded-md">
+                      {item.photos.length} photo(s)
+                    </span>
+                  </div>
+                )}
+                {item.tags && item.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-1 mt-2">
+                    {item.tags.slice(0, 5).map((tag) => (
+                      <span key={tag} className="text-xs px-2 py-0.5 bg-secondary rounded-md">
+                        {tag}
                       </span>
-                    </div>
-                  )}
+                    ))}
+                    {item.tags.length > 5 && (
+                      <span className="text-xs text-muted-foreground">+{item.tags.length - 5} more</span>
+                    )}
+                  </div>
+                )}
                 </div>
 
                 <div className="grid grid-cols-2 gap-1.5 sm:flex sm:gap-2 flex-shrink-0">
@@ -609,10 +635,10 @@ const ActivitiesList = () => {
             <div className="space-y-2">
               <Label>Tags</Label>
               <Input
-                value={formData.tags.join(', ')}
+                value={formData.tags}
                 onChange={(e) => setFormData({
                   ...formData,
-                  tags: e.target.value.split(',').map(tag => tag.trim()).filter(Boolean)
+                  tags: e.target.value
                 })}
                 placeholder="e.g., leadership, discipline"
               />
