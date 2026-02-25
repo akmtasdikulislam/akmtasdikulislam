@@ -108,10 +108,10 @@ const EmploymentTimeline = () => {
                 {/* Content Card */}
                 <div className={`flex-1 ml-16 md:ml-0 ${index % 2 === 0 ? 'md:pl-12' : 'md:pr-12 md:text-right md:items-end'
                   }`}>
-                  <div className={`flex flex-col ${index % 2 === 0 ? 'items-start' : 'md:items-end'
+                  <div className={`flex flex-col items-start ${index % 2 === 0 ? '' : 'md:items-end'
                     }`}>
                     {/* Date Bubble (Mobile only - Desktop handled differently or same?) */}
-                    <div className={`inline-flex items-center gap-2 px-3 py-1 bg-secondary/50 rounded-full text-xs font-medium text-primary mb-3 border border-primary/20`}>
+                    <div className={`inline-flex items-center gap-2 px-3 py-1 bg-secondary/50 rounded-full text-xs font-medium text-primary mb-3 border border-primary/20 w-fit`}>
                       <Calendar className="w-3 h-3" />
                       <span>
                         {format(new Date(job.start_date), 'MMM yyyy')} -{' '}

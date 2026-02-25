@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - Centered the social media links block on mobile screens for improved aesthetics.
 - Added vertical spacing (y-axis padding) around the profile photo container on mobile to prevent floating items from clipping or overlapping text.
 - Fixed a layout regression where rotating decorative circles around the profile photo became elliptical on smaller screens due to vertical padding.
+- Prevented timeline date badges from stretching to full width on mobile screens by enforcing fitting widths and `items-start` flex alignments.
 
 ## [2026-02-24] - Frontend Visibility Toggle Fix
 
