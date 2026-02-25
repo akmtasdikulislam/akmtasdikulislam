@@ -40,6 +40,7 @@ interface Activity {
   activity_type: string;
   cover_image: string | null;
   photos: string[] | null;
+  tags?: string[] | null;
   is_featured: boolean;
   display_order: number;
   is_visible: boolean;
@@ -54,6 +55,7 @@ const emptyActivity = {
   activity_type: 'event',
   cover_image: '',
   photos: [] as string[],
+  tags: [] as string[],
   is_featured: false,
   is_visible: true,
 };
@@ -73,6 +75,7 @@ const ActivitiesList = () => {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState(emptyActivity);
+  const [lastSnapshot, setLastSnapshot] = useState(emptyActivity);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
@@ -90,6 +93,7 @@ const ActivitiesList = () => {
       return (data as unknown as Activity[]) || [];
     },
     initialData: [],
+    refetchOnWindowFocus: false,
   });
 
 
@@ -105,12 +109,27 @@ const ActivitiesList = () => {
         activity_type: item.activity_type,
         cover_image: item.cover_image || '',
         photos: item.photos || [],
+        tags: item.tags || [],
+        is_featured: item.is_featured,
+        is_visible: item.is_visible,
+      });
+      setLastSnapshot({
+        title: item.title,
+        organization: item.organization,
+        location: item.location || '',
+        event_date: item.event_date,
+        description: item.description || '',
+        activity_type: item.activity_type,
+        cover_image: item.cover_image || '',
+        photos: item.photos || [],
+        tags: item.tags || [],
         is_featured: item.is_featured,
         is_visible: item.is_visible,
       });
     } else {
       setEditingId(null);
       setFormData(emptyActivity);
+      setLastSnapshot(emptyActivity);
     }
     setDialogOpen(true);
   };
@@ -132,6 +151,7 @@ const ActivitiesList = () => {
         activity_type: formData.activity_type,
         cover_image: formData.cover_image || null,
         photos: formData.photos.length > 0 ? formData.photos : null,
+        tags: formData.tags.length > 0 ? formData.tags : null,
         is_featured: formData.is_featured,
         is_visible: formData.is_visible,
       };
@@ -151,6 +171,7 @@ const ActivitiesList = () => {
         toast.success('Activity added successfully');
       }
 
+      setLastSnapshot(formData);
       setDialogOpen(false);
       queryClient.invalidateQueries({ queryKey: ['activities_admin'] });
       queryClient.invalidateQueries({ queryKey: ['activities'] });
@@ -257,6 +278,17 @@ const ActivitiesList = () => {
     }));
   };
 
+  const handleDialogChange = (open: boolean) => {
+    if (!open) {
+      if (editingId) {
+        setFormData(lastSnapshot);
+      } else {
+        setFormData(emptyActivity);
+      }
+    }
+    setDialogOpen(open);
+  };
+
   const toggleVisibility = async (item: Activity) => {
     try {
       const { error } = await supabase
@@ -265,6 +297,10 @@ const ActivitiesList = () => {
         .eq('id', item.id);
 
       if (error) throw error;
+      if (editingId === item.id) {
+        setFormData(prev => ({ ...prev, is_visible: !item.is_visible }));
+        setLastSnapshot(prev => ({ ...prev, is_visible: !item.is_visible }));
+      }
       queryClient.invalidateQueries({ queryKey: ['activities_admin'] });
       queryClient.invalidateQueries({ queryKey: ['activities'] });
       toast.success(`Activity ${!item.is_visible ? 'visible' : 'hidden'}`);
@@ -282,6 +318,10 @@ const ActivitiesList = () => {
         .eq('id', item.id);
 
       if (error) throw error;
+      if (editingId === item.id) {
+        setFormData(prev => ({ ...prev, is_featured: !item.is_featured }));
+        setLastSnapshot(prev => ({ ...prev, is_featured: !item.is_featured }));
+      }
       queryClient.invalidateQueries({ queryKey: ['activities_admin'] });
       queryClient.invalidateQueries({ queryKey: ['activities'] });
       toast.success(`Activity ${!item.is_featured ? 'featured' : 'unfeatured'}`);
@@ -346,9 +386,17 @@ const ActivitiesList = () => {
                 transition={{ delay: index * 0.05 }}
                 className={`bg-card border border-border rounded-xl p-4 flex flex-col sm:flex-row sm:items-start gap-4 ${!item.is_visible ? 'opacity-60' : ''}`}
               >
-                <div className="w-full sm:w-32 h-24 rounded-lg bg-secondary overflow-hidden flex-shrink-0 flex items-center justify-center">
+              <div className="w-full sm:w-32 h-24 rounded-lg bg-secondary overflow-hidden flex-shrink-0 flex items-center justify-center">
+                {item.cover_image ? (
+                  <img
+                    src={item.cover_image}
+                    alt={item.title}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
                   <Calendar className="w-6 h-6 text-muted-foreground" />
-                </div>
+                )}
+              </div>
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
@@ -389,12 +437,14 @@ const ActivitiesList = () => {
                       checked={item.is_featured}
                       onCheckedChange={() => toggleFeatured(item)}
                     />
+                    <span className="text-xs text-muted-foreground">Featured</span>
                   </div>
                   <div className="flex items-center gap-2 mr-2">
                     <Switch
                       checked={item.is_visible}
                       onCheckedChange={() => toggleVisibility(item)}
                     />
+                    <span className="text-xs text-muted-foreground">Visible</span>
                   </div>
                   <Button variant="outline" size="icon" onClick={() => handleOpenDialog(item)}>
                     <Edit className="w-4 h-4" />
@@ -415,7 +465,7 @@ const ActivitiesList = () => {
       </div>
 
       {/* Add/Edit Dialog */}
-      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+      <Dialog open={dialogOpen} onOpenChange={handleDialogChange}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{editingId ? 'Edit Activity' : 'Add Activity'}</DialogTitle>
@@ -555,6 +605,19 @@ const ActivitiesList = () => {
                 placeholder="Describe the activity..."
                 rows={4}
               />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Tags</Label>
+              <Input
+                value={formData.tags.join(', ')}
+                onChange={(e) => setFormData({
+                  ...formData,
+                  tags: e.target.value.split(',').map(tag => tag.trim()).filter(Boolean)
+                })}
+                placeholder="e.g., leadership, discipline"
+              />
+              <p className="text-xs text-muted-foreground">Comma-separated tags (same style as Work History chips)</p>
             </div>
 
             <div className="flex gap-3 pt-4">

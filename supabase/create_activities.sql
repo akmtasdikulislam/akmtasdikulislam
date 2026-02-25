@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS public.activities (
     activity_type TEXT NOT NULL DEFAULT 'event',
     cover_image TEXT,
     photos TEXT[] DEFAULT '{}',
+    tags TEXT[] DEFAULT '{}',
     is_featured BOOLEAN DEFAULT false,
     display_order INTEGER DEFAULT 0,
     is_visible BOOLEAN DEFAULT true,

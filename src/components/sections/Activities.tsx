@@ -18,6 +18,7 @@ interface Activity {
   activity_type: string;
   cover_image: string | null;
   photos: string[] | null;
+  tags?: string[] | null;
   is_featured: boolean;
   display_order: number;
   is_visible: boolean;
@@ -200,6 +201,19 @@ const Activities = () => {
                             <p className="text-muted-foreground text-sm leading-relaxed mt-4">
                               {activity.description}
                             </p>
+                          )}
+
+                          {activity.tags && activity.tags.length > 0 && (
+                            <div className="flex flex-wrap gap-2 mt-4">
+                              {activity.tags.map((tag) => (
+                                <span
+                                  key={tag}
+                                  className="px-2 py-1 text-xs bg-secondary border border-transparent rounded-md text-muted-foreground tag-chip"
+                                >
+                                  {tag}
+                                </span>
+                              ))}
+                            </div>
                           )}
 
                           {/* Additional Photos */}
