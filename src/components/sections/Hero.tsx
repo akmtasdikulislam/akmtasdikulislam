@@ -103,9 +103,11 @@ const Hero = () => {
               <Button size="lg" variant="glow" asChild className="w-full sm:w-auto min-h-[48px]">
                 <a href="#contact"><Terminal className="w-4 h-4" /> Let's Talk</a>
               </Button>
-              <Button size="lg" variant="outline" asChild className="w-full sm:w-auto min-h-[48px]">
-                <a href="#" download><Download className="w-4 h-4" /> Download CV</a>
-              </Button>
+              {hero.cv_url && (
+                <Button size="lg" variant="outline" asChild className="w-full sm:w-auto min-h-[48px]">
+                  <a href={hero.cv_url} target="_blank" rel="noopener noreferrer" download><Download className="w-4 h-4" /> Download CV</a>
+                </Button>
+              )}
             </div>
 
             <div className="flex items-center gap-3 sm:gap-4 justify-center w-full lg:justify-start">

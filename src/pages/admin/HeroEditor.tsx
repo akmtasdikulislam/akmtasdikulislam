@@ -30,6 +30,7 @@ const HeroEditor = () => {
         greeting_badge: '',
         description: '',
         profile_photo_url: '',
+        cv_url: '',
     });
 
     const [roles, setRoles] = useState<Array<{ id?: string; role_text: string; display_order: number }>>([]);
@@ -71,6 +72,7 @@ const HeroEditor = () => {
                 greeting_badge: data.hero.greeting_badge,
                 description: data.hero.description,
                 profile_photo_url: data.hero.profile_photo_url || '',
+                cv_url: data.hero.cv_url || '',
             });
             setRoles(data.roles || []);
             setStats(data.stats || []);
@@ -274,6 +276,37 @@ const HeroEditor = () => {
         }
     };
 
+    const handleCvUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        if (file.type !== 'application/pdf') {
+            toast({ title: 'Error', description: 'Please upload a PDF file', variant: 'destructive' });
+            return;
+        }
+
+        try {
+            const fileExt = file.name.split('.').pop();
+            const fileName = `cv-${Date.now()}.${fileExt}`;
+            const filePath = `cv/${fileName}`;
+
+            const { error: uploadError } = await supabase.storage
+                .from('hero-assets')
+                .upload(filePath, file);
+
+            if (uploadError) throw uploadError;
+
+            const { data: { publicUrl } } = supabase.storage
+                .from('hero-assets')
+                .getPublicUrl(filePath);
+
+            setHeroData({ ...heroData, cv_url: publicUrl });
+            toast({ title: 'CV uploaded successfully' });
+        } catch (error: any) {
+            toast({ title: 'Error uploading CV', description: error.message, variant: 'destructive' });
+        }
+    };
+
     const updateRolesMutation = updateArrayMutation('homepage_hero_roles', 'Roles');
     const updateStatsMutation = updateArrayMutation('homepage_hero_stats', 'Stats');
     const updateSocialLinksMutation = updateArrayMutation('homepage_social_links', 'Social Links');
@@ -402,6 +435,44 @@ const HeroEditor = () => {
                                 </div>
                             </div>
 
+                            <div>
+                                <Label htmlFor="cv">CV (PDF)</Label>
+                                <div className="flex gap-2 items-center">
+                                    <Input
+                                        id="cv"
+                                        value={heroData.cv_url}
+                                        onChange={(e) => setHeroData({ ...heroData, cv_url: e.target.value })}
+                                        placeholder="Upload or enter CV URL"
+                                        className="flex-1"
+                                    />
+                                    <label htmlFor="cv-upload">
+                                        <Button variant="outline" size="icon" asChild className="cursor-pointer">
+                                            <span>
+                                                <Upload className="w-4 h-4" />
+                                            </span>
+                                        </Button>
+                                    </label>
+                                    <input
+                                        type="file"
+                                        id="cv-upload"
+                                        accept="application/pdf"
+                                        className="hidden"
+                                        onChange={handleCvUpload}
+                                    />
+                                    {heroData.cv_url && (
+                                        <a
+                                            href={heroData.cv_url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-primary hover:underline text-sm"
+                                        >
+                                            View
+                                        </a>
+                                    )}
+                                </div>
+                                <p className="text-xs text-muted-foreground mt-1">Upload your CV as a PDF file</p>
+                            </div>
+
                             <div className="bg-muted/50 p-3 rounded-lg text-sm">
                                 <p className="font-medium mb-1">Hero Configuration:</p>
                                 <ul className="space-y-1 text-muted-foreground">
@@ -409,6 +480,7 @@ const HeroEditor = () => {
                                     <li>• <strong>Greeting Badge:</strong> Small highlighted text above your name.</li>
                                     <li>• <strong>Description:</strong> Introduction text explaining what you do.</li>
                                     <li>• <strong>Profile Photo:</strong> Your main avatar image.</li>
+                                    <li>• <strong>CV (PDF):</strong> Your resume/CV for download.</li>
                                 </ul>
                             </div>
 

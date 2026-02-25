@@ -6,6 +6,7 @@ export interface HomepageHero {
   greeting_badge: string;
   description: string;
   profile_photo_url: string | null;
+  cv_url: string | null;
   created_at: string;
   updated_at: string;
 }

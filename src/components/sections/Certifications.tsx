@@ -121,6 +121,40 @@ const Certifications = () => {
                 </p>
               )}
 
+              {cert.certificate_image && (
+                <div className="mb-4">
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <div className="relative group cursor-pointer rounded-lg overflow-hidden border border-border hover:border-primary/50 transition-all">
+                        <div className="aspect-[16/9] bg-secondary/30">
+                          <img
+                            src={cert.certificate_image}
+                            alt={`${cert.title} Certificate`}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                        </div>
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                          <div className="bg-primary/90 text-primary-foreground px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5">
+                            <FileImage className="w-3 h-3" />
+                            View Certificate
+                          </div>
+                        </div>
+                      </div>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-4xl p-0 overflow-hidden bg-black/95 border-none">
+                      <DialogTitle className="sr-only">Certificate View - {cert.title}</DialogTitle>
+                      <div className="relative w-full h-[85vh] flex items-center justify-center">
+                        <img
+                          src={cert.certificate_image}
+                          alt={`${cert.title} Certificate`}
+                          className="max-w-full max-h-full object-contain"
+                        />
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                </div>
+              )}
+
               <div className="mt-auto pt-4 border-t border-border flex items-center justify-between gap-4 flex-wrap">
                 <div className="flex flex-col text-xs text-muted-foreground">
                   <div className="flex items-center gap-1.5">
@@ -133,27 +167,6 @@ const Certifications = () => {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  {cert.certificate_image && (
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <Button variant="outline" size="sm" className="h-8 px-2 gap-1.5">
-                          <FileImage className="w-3 h-3" />
-                          <span className="text-xs">View</span>
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent className="max-w-3xl p-0 overflow-hidden bg-black/90 border-none">
-                        <DialogTitle className="sr-only">Certificate View</DialogTitle>
-                        <div className="relative w-full h-[80vh] flex items-center justify-center p-4">
-                          <img
-                            src={cert.certificate_image}
-                            alt={`${cert.title} Certificate`}
-                            className="max-w-full max-h-full object-contain rounded-md"
-                          />
-                        </div>
-                      </DialogContent>
-                    </Dialog>
-                  )}
-
                   {cert.credential_url && (
                     <Button variant="ghost" size="sm" asChild className="h-8 px-2">
                       <a
