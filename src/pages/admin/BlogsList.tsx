@@ -184,7 +184,7 @@ const BlogsList = () => {
                 <div className="flex items-center gap-2 flex-wrap">
                   <h3 className="font-semibold truncate">{post.title}</h3>
                   {post.featured && (
-                    <span className="text-xs px-2 py-0.5 bg-yellow-500/10 text-yellow-500 rounded-full">
+                    <span className="text-xs px-2 py-0.5 bg-yellow-500/10 text-yellow-500 rounded-full whitespace-nowrap">
                       Featured
                     </span>
                   )}

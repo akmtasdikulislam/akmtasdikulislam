@@ -415,8 +415,8 @@ const ActivitiesList = () => {
                 <div className="flex items-center gap-2 flex-wrap">
                   <h3 className="font-semibold">{item.title}</h3>
                   {item.is_featured && (
-                    <span className="text-xs px-2 py-0.5 bg-amber-500/10 text-amber-500 rounded-full flex items-center gap-1 whitespace-nowrap">
-                      <Star className="w-3 h-3" /> Featured
+                    <span className="text-xs px-2 py-0.5 bg-yellow-500/10 text-yellow-500 rounded-full whitespace-nowrap">
+                      Featured
                     </span>
                   )}
                   <span

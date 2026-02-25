@@ -179,7 +179,7 @@ const ProjectsList = () => {
                 <div className="flex items-start sm:items-center gap-2 flex-wrap">
                   <h3 className="font-semibold text-base sm:text-lg break-words">{project.title}</h3>
                   {project.featured && (
-                    <span className="text-xs px-2 py-0.5 bg-yellow-500/10 text-yellow-500 rounded-full whitespace-nowrap flex-shrink-0">
+                    <span className="text-xs px-2 py-0.5 bg-yellow-500/10 text-yellow-500 rounded-full whitespace-nowrap">
                       Featured
                     </span>
                   )}
