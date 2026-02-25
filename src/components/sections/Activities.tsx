@@ -145,10 +145,10 @@ const Activities = () => {
                         <span>{format(new Date(activity.event_date), 'MMMM d, yyyy')}</span>
                       </div>
 
-                      <div className={`bg-card border border-border rounded-2xl p-6 hover:border-primary/50 transition-all group w-full ${index % 2 === 0 ? 'text-left' : 'md:text-left'}`}>
+                      <div className={`bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/50 transition-all group w-full ${index % 2 === 0 ? 'text-left' : 'md:text-left'}`}>
                         {/* Cover Photo / Media Gallery */}
-                        {allImages.length > 0 && (
-                          <div className="relative -mt-2 -mx-6 mb-4">
+                        {allImages.length > 0 ? (
+                          <div className="relative">
                             {allImages.length === 1 ? (
                               <div className="h-56 overflow-hidden rounded-t-2xl">
                                 <Dialog>
@@ -302,10 +302,10 @@ const Activities = () => {
                               </div>
                             )}
                           </div>
-                        )}
+                        ) : null}
 
                         {/* Header with Type Badge and Title */}
-                        <div className="flex items-start justify-between gap-4">
+                        <div className={`flex items-start justify-between gap-4 ${allImages.length > 0 ? 'p-6' : ''}`}>
                           <div className="flex-1">
                             <div className="flex items-center gap-2 flex-wrap mb-2">
                               <span className={`px-2 py-1 rounded-md text-xs font-medium border tag-chip ${getActivityTypeColor(activity.activity_type)}`}>
@@ -323,7 +323,7 @@ const Activities = () => {
                         </div>
 
                         {/* Organization & Location */}
-                        <div className="mt-2 text-muted-foreground">
+                        <div className={`mt-2 text-muted-foreground ${allImages.length > 0 ? '' : 'px-6'}`}>
                           <p className="text-sm">{activity.organization}</p>
                           {activity.location && (
                             <div className="flex items-center gap-1.5 mt-1 text-xs">
@@ -335,7 +335,7 @@ const Activities = () => {
 
                         {/* Description */}
                         {activity.description && (
-                          <p className="text-muted-foreground text-sm leading-relaxed mt-4">
+                          <p className={`text-muted-foreground text-sm leading-relaxed mt-4 ${allImages.length > 0 ? '' : 'px-6'}`}>
                             {activity.description}
                           </p>
                         )}
