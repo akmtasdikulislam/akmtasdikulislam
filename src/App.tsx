@@ -5,6 +5,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import CursorProvider from "@/contexts/CursorProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import AdminLayout from "./components/admin/AdminLayout";
@@ -69,6 +70,7 @@ const AppContent = () => {
     <>
       {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
       <Analytics />
+      <SpeedInsights />
       <Toaster />
       <Sonner />
       <Routes>
