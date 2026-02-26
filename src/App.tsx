@@ -5,28 +5,28 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import CursorProvider from "@/contexts/CursorProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import AdminLayout from "./components/admin/AdminLayout";
 import LoadingScreen from "./components/ui/LoadingScreen";
+import AboutEditor from "./pages/admin/AboutEditor";
+import ActivitiesList from "./pages/admin/ActivitiesList";
 import BlogEditor from "./pages/admin/BlogEditor";
 import BlogsList from "./pages/admin/BlogsList";
 import CertificationsList from "./pages/admin/CertificationsList";
-import Dashboard from "./pages/admin/Dashboard";
-import ProjectEditor from "./pages/admin/ProjectEditor";
-import ProjectsList from "./pages/admin/ProjectsList";
-import TestimonialsList from "./pages/admin/TestimonialsList";
-
-import AboutEditor from "./pages/admin/AboutEditor";
-import ActivitiesList from "./pages/admin/ActivitiesList";
 import ContactEditor from "./pages/admin/ContactEditor";
+import Dashboard from "./pages/admin/Dashboard";
 import ExpertiseEditor from "./pages/admin/ExpertiseEditor";
 import FooterEditor from "./pages/admin/FooterEditor";
 import GeneralSettings from "./pages/admin/GeneralSettings";
 import HeroEditor from "./pages/admin/HeroEditor";
 import HomepageEditor from "./pages/admin/HomepageEditor";
 import NavbarEditor from "./pages/admin/NavbarEditor";
+import ProjectEditor from "./pages/admin/ProjectEditor";
+import ProjectsList from "./pages/admin/ProjectsList";
 import ServicesEditor from "./pages/admin/ServicesEditor";
+import TestimonialsList from "./pages/admin/TestimonialsList";
 import WhyChooseMeEditor from "./pages/admin/WhyChooseMeEditor";
 import WorkHistoryList from "./pages/admin/WorkHistoryList";
 import AdminAuth from "./pages/AdminAuth";
@@ -69,6 +69,7 @@ const AppContent = () => {
     <>
       {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
       <Analytics />
+      <SpeedInsights />
       <Toaster />
       <Sonner />
       <Routes>
