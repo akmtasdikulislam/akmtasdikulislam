@@ -13,11 +13,17 @@
       }
     </style>
   </defs>
-  <rect x="330" y="10" width="140" height="28" rx="14" ry="14" class="pill-stroke"/>
-  <circle cx="354" cy="24" r="4.5" fill="#10B77F"/>
-  <text x="365" y="29" class="pill-text">MY SKILLS</text>
+
+  <!-- Pill -->
+  <rect x="347" y="10" width="107" height="28" rx="14" ry="14" class="pill-stroke"/>
+  <circle cx="363" cy="24" r="4.5" fill="#10B77F"/>
+  <text x="375.5" y="29" class="pill-text">CONTACT</text>
+
+  <!-- Heading -->
   <text x="400" y="84" text-anchor="middle">
-    <tspan class="head-w">Tech </tspan><tspan class="head-g">Expertise</tspan>
+    <tspan class="head-w">Get In </tspan><tspan class="head-g">Touch</tspan>
   </text>
-  <text x="400" y="110" text-anchor="middle" class="sub">I work with modern technologies to build scalable and efficient solutions</text>
+
+  <!-- Subtitle -->
+  <text x="400" y="110" text-anchor="middle" class="sub">Have a project in mind? Let’s discuss how we can work together</text>
 </svg>

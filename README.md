@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/assets/hero-heading.svg" alt="Hi, I'm Akm Tasdikul Islam" width="700"/>
+<img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/assets/hero-heading.svg" alt="Hi, I'm Akm Tasdikul Islam" width="800"/>
 
 [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=18&duration=2500&pause=800&color=10B77F&center=false&vCenter=true&width=500&lines=%3E+Full+Stack+Developer%7C;%3E+MERN+Stack+Expert%7C;%3E+n8n+Automation+Specialist%7C;%3E+AI+Agent+%26+Chatbot+Builder%7C;%3E+Problem+Solver%7C)](https://git.io/typing-svg)
 
@@ -13,7 +13,7 @@
 
 ---
 
-## About
+<div align="center"><img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/assets/about-heading.svg" alt="Who I Am?" width="800"/></div>
 
 Full Stack Web Developer and Computer Science student at **Bangladesh University of Professionals** with **2+ years** of hands-on MERN stack experience building production-ready web applications. Strong in clean architecture, scalable code, and delivering high-quality SaaS-ready solutions.
 
@@ -25,7 +25,7 @@ Experienced with AI-assisted development tools like **Cursor**, **GitHub Copilot
 
 ---
 
-## What I Build
+<div align="center"><img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/assets/services-heading.svg" alt="How Can I Help You?" width="800"/></div>
 
 | | |
 |---|---|
@@ -282,7 +282,7 @@ Experienced with AI-assisted development tools like **Cursor**, **GitHub Copilot
 
 ---
 
-## Featured Projects
+<div align="center"><img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/assets/portfolio-heading.svg" alt="Featured Projects" width="800"/></div>
 
 <div align="center">
 
@@ -344,7 +344,7 @@ Actively participating in competitive programming contests and CTF challenges â€
 
 ---
 
-## Certifications
+<div align="center"><img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/assets/credentials-heading.svg" alt="My Certifications" width="800"/></div>
 
 | Course | Provider | Year |
 |---|---|---|
@@ -373,7 +373,7 @@ Completed 7-day BNCC Battalion Camp emphasizing discipline, teamwork, and leader
 
 ---
 
-## Connect
+<div align="center"><img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/assets/contact-heading.svg" alt="Get In Touch" width="800"/></div>
 
 I'm always open to collaborating on interesting projects, open-source contributions, and freelance opportunities.
 
