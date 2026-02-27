@@ -6,14 +6,14 @@
 
 <table width="100%">
   <tr>
-    <td width="33%"><a href="https://www.linkedin.com/in/akmtasdikulislam"><img src="https://img.icons8.com/fluency/20/linkedin.png" width="18" height="18" valign="middle"/>&nbsp;LinkedIn</a></td>
-    <td width="33%"><a href="https://akmtasdikulislam.dev"><img src="https://img.icons8.com/fluency/20/internet.png" width="18" height="18" valign="middle"/>&nbsp;akmtasdikulislam.dev</a></td>
-    <td width="33%"><a href="https://www.upwork.com/freelancers/~01fe1fc80c8877ffe2"><img src="https://img.icons8.com/fluency/20/upwork.png" width="18" height="18" valign="middle"/>&nbsp;Upwork</a></td>
+    <td width="33%"><a href="https://www.linkedin.com/in/akmtasdikulislam"><img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/src/assets/icons/linkedin.png" width="18" height="18" valign="middle"/>&nbsp;LinkedIn</a></td>
+    <td width="33%"><a href="https://akmtasdikulislam.dev"><img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/src/assets/icons/internet.png" width="18" height="18" valign="middle"/>&nbsp;akmtasdikulislam.dev</a></td>
+    <td width="33%"><a href="https://www.upwork.com/freelancers/~01fe1fc80c8877ffe2"><img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/src/assets/icons/upwork.png" width="18" height="18" valign="middle"/>&nbsp;Upwork</a></td>
   </tr>
   <tr>
-    <td width="33%"><a href="mailto:akmtasdikulislam@gmail.com"><img src="https://img.icons8.com/fluency/20/gmail-new.png" width="18" height="18" valign="middle"/>&nbsp;akmtasdikulislam@gmail.com</a></td>
-    <td width="33%"><a href="https://x.com/Akm_Tasdikul"><img src="https://img.icons8.com/fluency/20/twitterx--v1.png" width="18" height="18" valign="middle"/>&nbsp;@Akm_Tasdikul</a></td>
-    <td width="33%"><a href="https://github.com/akmtasdikulislam"><img src="https://img.icons8.com/fluency/20/github.png" width="18" height="18" valign="middle"/>&nbsp;GitHub</a></td>
+    <td width="33%"><a href="mailto:akmtasdikulislam@gmail.com"><img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/src/assets/icons/gmail-new.png" width="18" height="18" valign="middle"/>&nbsp;akmtasdikulislam@gmail.com</a></td>
+    <td width="33%"><a href="https://x.com/Akm_Tasdikul"><img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/src/assets/icons/twitterx--v1.png" width="18" height="18" valign="middle"/>&nbsp;@Akm_Tasdikul</a></td>
+    <td width="33%"><a href="https://github.com/akmtasdikulislam"><img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/src/assets/icons/github.png" width="18" height="18" valign="middle"/>&nbsp;GitHub</a></td>
   </tr>
 </table>
 
@@ -351,10 +351,10 @@ Full MERN stack agency management system â€” customers place orders, admins mana
 
 <table width="100%">
 <tr>
-  <td width="25%"><a href="https://codeforces.com/profile/akmtasdikulislam"><img src="https://cdn.simpleicons.org/codeforces/1F8ACB" width="20" valign="middle"/>&nbsp; <strong>Codeforces</strong></a></td>
-  <td width="25%"><a href="https://leetcode.com/u/akmtasdikulislam/"><img src="https://cdn.simpleicons.org/leetcode/FFA116" width="20" valign="middle"/>&nbsp; <strong>LeetCode</strong></a></td>
-  <td width="25%"><a href="https://www.hackerrank.com/profile/akmtasdikulislam"><img src="https://cdn.simpleicons.org/hackerrank/00EA64" width="20" valign="middle"/>&nbsp; <strong>HackerRank</strong></a></td>
-  <td width="25%"><a href="https://www.codechef.com/users/akmtasdikul"><img src="https://cdn.simpleicons.org/codechef/B92B27" width="20" valign="middle"/>&nbsp; <strong>CodeChef</strong></a></td>
+  <td width="25%"><a href="https://codeforces.com/profile/akmtasdikulislam"><img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/src/assets/icons/codeforces.png" width="20" valign="middle"/>&nbsp; <strong>Codeforces</strong></a></td>
+  <td width="25%"><a href="https://leetcode.com/u/akmtasdikulislam/"><img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/src/assets/icons/leetcode.png" width="20" valign="middle"/>&nbsp; <strong>LeetCode</strong></a></td>
+  <td width="25%"><a href="https://www.hackerrank.com/profile/akmtasdikulislam"><img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/src/assets/icons/hackerrank.png" width="20" valign="middle"/>&nbsp; <strong>HackerRank</strong></a></td>
+  <td width="25%"><a href="https://www.codechef.com/users/akmtasdikul"><img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/src/assets/icons/codechef.png" width="20" valign="middle"/>&nbsp; <strong>CodeChef</strong></a></td>
 </tr>
 </table>
 
@@ -401,17 +401,17 @@ Actively participating in competitive programming contests and CTF challenges â€
 <table width="100%">
   <tr>
     <td width="33%" align="center">
-      <img src="https://img.icons8.com/fluency/48/bangladesh.png" width="32"/><br/>
+      <img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/src/assets/icons/bangladesh-circular.png" width="32"/><br/>
       <strong>Bangla</strong><br/>
       <sub>Native</sub>
     </td>
     <td width="33%" align="center">
-      <img src="https://img.icons8.com/fluency/48/great-britain.png" width="32"/><br/>
+      <img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/src/assets/icons/great-britain-circular.png" width="32"/><br/>
       <strong>English</strong><br/>
       <sub>Near-native</sub>
     </td>
     <td width="33%" align="center">
-      <img src="https://img.icons8.com/fluency/48/germany.png" width="32"/><br/>
+      <img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/src/assets/icons/germany-circular.png" width="32"/><br/>
       <strong>German</strong><br/>
       <sub>Basic</sub>
     </td>
@@ -430,7 +430,7 @@ I'm always open to collaborating on interesting projects, open-source contributi
 <tr>
   <td><a href="https://www.linkedin.com/in/akmtasdikulislam"><img src="https://cdn.simpleicons.org/linkedin/0A66C2" width="18" valign="middle"/>&nbsp; LinkedIn</a></td>
   <td><a href="https://akmtasdikulislam.dev"><img src="https://cdn.simpleicons.org/googlechrome/10B77F" width="18" valign="middle"/>&nbsp; akmtasdikulislam.dev</a></td>
-  <td><a href="https://www.upwork.com/freelancers/~01fe1fc80c8877ffe2"><img src="https://cdn.simpleicons.org/upwork/6FDA44" width="18" valign="middle"/>&nbsp; Upwork</a></td>
+  <td><a href="https://www.upwork.com/freelancers/~01fe1fc80c8877ffe2"><img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/src/assets/icons/upwork.png" width="18" valign="middle"/>&nbsp; Upwork</a></td>
   <td><a href="mailto:akmtasdikulislam@gmail.com"><img src="https://cdn.simpleicons.org/gmail/EA4335" width="18" valign="middle"/>&nbsp; akmtasdikulislam@gmail.com</a></td>
   <td><a href="https://x.com/Akm_Tasdikul"><img src="https://cdn.simpleicons.org/x/ffffff" width="18" valign="middle"/>&nbsp; @Akm_Tasdikul</a></td>
 </tr>
