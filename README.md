@@ -52,7 +52,7 @@ Experienced with AI-assisted development tools like **Cursor**, **GitHub Copilot
 
 ### Programming Languages
 
-<table>
+<table width="100%">
   <tr>
     <td align="center" width="110">
       <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" width="48" height="48" alt="C"/><br/><sub><b>C</b></sub>
@@ -88,14 +88,14 @@ Experienced with AI-assisted development tools like **Cursor**, **GitHub Copilot
 
 <br/>
 
-<table>
+<table width="100%">
 <tr>
 
 <td valign="top" width="50%">
 
 ### <img src="https://img.shields.io/badge/●-10B77F?style=flat&logoColor=10B77F" height="14"/> Frontend
 
-<table>
+<table width="100%">
   <tr>
     <td align="center" width="100">
       <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width="40" height="40" alt="React"/><br/><sub>React</sub>
@@ -132,7 +132,7 @@ Experienced with AI-assisted development tools like **Cursor**, **GitHub Copilot
 
 ### <img src="https://img.shields.io/badge/●-3B82F6?style=flat" height="14"/> Frameworks & Integrations
 
-<table>
+<table width="100%">
   <tr>
     <td align="center" width="100">
       <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/materialui/materialui-original.svg" width="40" height="40" alt="Material UI"/><br/><sub>Material UI</sub>
@@ -172,7 +172,7 @@ Experienced with AI-assisted development tools like **Cursor**, **GitHub Copilot
 
 ### <img src="https://img.shields.io/badge/●-EA4335?style=flat" height="14"/> Backend & Database
 
-<table>
+<table width="100%">
   <tr>
     <td align="center" width="100">
       <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" width="40" height="40" alt="Node.js"/><br/><sub>Node.js</sub>
@@ -223,7 +223,7 @@ Experienced with AI-assisted development tools like **Cursor**, **GitHub Copilot
 
 ### <img src="https://img.shields.io/badge/●-10B77F?style=flat" height="14"/> Tools & Platforms
 
-<table>
+<table width="100%">
   <tr>
     <td align="center" width="100">
       <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" width="40" height="40" alt="Git"/><br/><sub>Git</sub>
