@@ -4,11 +4,7 @@
 
 <br/>
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/akmtasdikulislam)
-[![Portfolio](https://img.shields.io/badge/akmtasdikulislam.dev-10B77F?style=for-the-badge&logo=googlechrome&logoColor=white)](https://akmtasdikulislam.dev)
-[![Upwork](https://img.shields.io/badge/Upwork-6FDA44?style=for-the-badge&logo=upwork&logoColor=white)](https://www.upwork.com/freelancers/~01fe1fc80c8877ffe2)
-[![Gmail](https://img.shields.io/badge/Gmail-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:akmtasdikulislam@gmail.com)
-[![X](https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/Akm_Tasdikul)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-1a1a1a?style=flat-square&logo=linkedin&logoColor=0A66C2)](https://www.linkedin.com/in/akmtasdikulislam)&nbsp;[![Portfolio](https://img.shields.io/badge/akmtasdikulislam.dev-1a1a1a?style=flat-square&logo=googlechrome&logoColor=10B77F)](https://akmtasdikulislam.dev)&nbsp;[![Upwork](https://img.shields.io/badge/Upwork-1a1a1a?style=flat-square&logo=upwork&logoColor=6FDA44)](https://www.upwork.com/freelancers/~01fe1fc80c8877ffe2)&nbsp;[![Gmail](https://img.shields.io/badge/Gmail-1a1a1a?style=flat-square&logo=gmail&logoColor=EA4335)](mailto:akmtasdikulislam@gmail.com)&nbsp;[![X](https://img.shields.io/badge/X-1a1a1a?style=flat-square&logo=x&logoColor=ffffff)](https://x.com/Akm_Tasdikul)&nbsp;[![GitHub](https://img.shields.io/badge/GitHub-1a1a1a?style=flat-square&logo=github&logoColor=ffffff)](https://github.com/akmtasdikulislam)
 
 ![Profile Views](https://komarev.com/ghpvc/?username=akmtasdikulislam&color=10B77F&style=flat-square&label=profile+views)
 
@@ -22,9 +18,10 @@ Full Stack Web Developer and Computer Science student at **Bangladesh University
 
 Experienced with AI-assisted development tools like **Cursor**, **GitHub Copilot**, and **Windsurf** while applying solid manual debugging to ensure code reliability. Expert in **n8n** — building complex AI agentic workflows, chatbot systems, and multi-platform integrations from scratch.
 
-![BUP](https://img.shields.io/badge/BSc_CSE-Bangladesh_University_of_Professionals-10B77F?style=flat-square&logo=googlescholar&logoColor=white)
-![CGPA](https://img.shields.io/badge/CGPA-3.67-3B82F6?style=flat-square&logo=academia&logoColor=white)
-![Status](https://img.shields.io/badge/Available_for-Freelance_%26_Remote_Work-10B77F?style=flat-square&logo=briefcase&logoColor=white)
+| | |
+|---|---|
+| 🎓 **BSc in CSE** · Bangladesh University of Professionals | CGPA **3.67** · Feb 2025 – Present |
+| 💻 Active in **Competitive Programming** & **CTF** | 🌐 Open to **Freelance & Remote Work** |
 
 ---
 
@@ -342,10 +339,7 @@ Full MERN stack agency management system — customers place orders, admins mana
 
 ## Competitive Programming
 
-[![Codeforces](https://img.shields.io/badge/Codeforces-1F8ACB?style=for-the-badge&logo=codeforces&logoColor=white)](https://codeforces.com/profile/akmtasdikulislam)
-[![LeetCode](https://img.shields.io/badge/LeetCode-FFA116?style=for-the-badge&logo=leetcode&logoColor=black)](https://leetcode.com/u/akmtasdikulislam/)
-[![HackerRank](https://img.shields.io/badge/HackerRank-00EA64?style=for-the-badge&logo=hackerrank&logoColor=black)](https://www.hackerrank.com/profile/akmtasdikulislam)
-[![CodeChef](https://img.shields.io/badge/CodeChef-5B4638?style=for-the-badge&logo=codechef&logoColor=white)](https://www.codechef.com/users/akmtasdikul)
+[![Codeforces](https://img.shields.io/badge/Codeforces-1a1a1a?style=flat-square&logo=codeforces&logoColor=1F8ACB)](https://codeforces.com/profile/akmtasdikulislam)&nbsp;[![LeetCode](https://img.shields.io/badge/LeetCode-1a1a1a?style=flat-square&logo=leetcode&logoColor=FFA116)](https://leetcode.com/u/akmtasdikulislam/)&nbsp;[![HackerRank](https://img.shields.io/badge/HackerRank-1a1a1a?style=flat-square&logo=hackerrank&logoColor=00EA64)](https://www.hackerrank.com/profile/akmtasdikulislam)&nbsp;[![CodeChef](https://img.shields.io/badge/CodeChef-1a1a1a?style=flat-square&logo=codechef&logoColor=B92B27)](https://www.codechef.com/users/akmtasdikul)
 
 Actively participating in competitive programming contests and CTF challenges — **Data Structures**, **Algorithms**, **Dynamic Programming**, and **Problem Solving** in C, C++, and Python.
 
@@ -376,9 +370,11 @@ Completed 7-day BNCC Battalion Camp emphasizing discipline, teamwork, and leader
 
 ## Languages
 
-![Bangla](https://img.shields.io/badge/Bangla-Native-10B77F?style=for-the-badge)
-![English](https://img.shields.io/badge/English-Near--Native-3B82F6?style=for-the-badge)
-![German](https://img.shields.io/badge/German-Basic-333333?style=for-the-badge)
+| Language | Proficiency |
+|---|---|
+| Bangla | Native |
+| English | Near-native |
+| German | Basic |
 
 ---
 
@@ -388,11 +384,7 @@ Completed 7-day BNCC Battalion Camp emphasizing discipline, teamwork, and leader
 
 I'm always open to collaborating on interesting projects, open-source contributions, and freelance opportunities.
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/akmtasdikulislam)
-[![Portfolio](https://img.shields.io/badge/Portfolio-Visit-10B77F?style=for-the-badge&logo=googlechrome&logoColor=white)](https://akmtasdikulislam.dev)
-[![Upwork](https://img.shields.io/badge/Upwork-Hire_Me-6FDA44?style=for-the-badge&logo=upwork)](https://www.upwork.com/freelancers/~01fe1fc80c8877ffe2)
-[![Email](https://img.shields.io/badge/Email-Say_Hi-EA4335?style=for-the-badge&logo=gmail)](mailto:akmtasdikulislam@gmail.com)
-[![X](https://img.shields.io/badge/X-Follow-000000?style=for-the-badge&logo=x)](https://x.com/Akm_Tasdikul)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-1a1a1a?style=flat-square&logo=linkedin&logoColor=0A66C2)](https://www.linkedin.com/in/akmtasdikulislam)&nbsp;[![Portfolio](https://img.shields.io/badge/akmtasdikulislam.dev-1a1a1a?style=flat-square&logo=googlechrome&logoColor=10B77F)](https://akmtasdikulislam.dev)&nbsp;[![Upwork](https://img.shields.io/badge/Upwork-1a1a1a?style=flat-square&logo=upwork&logoColor=6FDA44)](https://www.upwork.com/freelancers/~01fe1fc80c8877ffe2)&nbsp;[![Gmail](https://img.shields.io/badge/Gmail-1a1a1a?style=flat-square&logo=gmail&logoColor=EA4335)](mailto:akmtasdikulislam@gmail.com)&nbsp;[![X](https://img.shields.io/badge/X-1a1a1a?style=flat-square&logo=x&logoColor=ffffff)](https://x.com/Akm_Tasdikul)
 
 <br/>
 
