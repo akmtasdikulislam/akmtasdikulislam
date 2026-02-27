@@ -1,152 +1,264 @@
-# Hi there! <img src="https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif" width="30px"/>
+# Akm Tasdikul Islam
 
-<div align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=28&duration=3000&pause=1000&color=3B82F6&center=true&vCenter=true&multiline=true&repeat=true&width=800&height=100&lines=Akm+Tasdikul+Islam;Full-Stack+MERN+Developer+%7C+AI+Automation+Expert;Building+Scalable+Web+Solutions+%F0%9F%9A%80" alt="Typing SVG" />
-</div>
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=18&duration=2500&pause=800&color=10B77F&center=false&vCenter=true&width=500&lines=%3E+Full+Stack+Developer%7C;%3E+MERN+Stack+Expert%7C;%3E+n8n+Automation+Specialist%7C;%3E+AI+Agent+%26+Chatbot+Builder%7C;%3E+Problem+Solver%7C)](https://git.io/typing-svg)
 
-<div align="center">
-  
-  [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](your-linkedin-url)
-  [![Portfolio](https://img.shields.io/badge/Portfolio-000000?style=for-the-badge&logo=vercel&logoColor=white)](your-portfolio-url)
-  [![Email](https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:your-email)
-  [![Upwork](https://img.shields.io/badge/Upwork-6FDA44?style=for-the-badge&logo=upwork&logoColor=white)](your-upwork-url)
-  
-  ![Profile Views](https://komarev.com/ghpvc/?username=akmtasdikulislam&color=3B82F6&style=for-the-badge&label=PROFILE+VIEWS)
-  
-</div>
+<br/>
 
-<br>
-
-<div align="center">
-  <img src="https://media.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif" width="500" alt="Coding GIF"/>
-</div>
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/akmtasdikulislam)
+[![Portfolio](https://img.shields.io/badge/akmtasdikulislam.dev-10B77F?style=flat&logo=googlechrome&logoColor=white)](https://akmtasdikulislam.dev)
+[![Upwork](https://img.shields.io/badge/Upwork-6FDA44?style=flat&logo=upwork&logoColor=white)](https://www.upwork.com/freelancers/~01fe1fc80c8877ffe2)
+[![Gmail](https://img.shields.io/badge/Gmail-EA4335?style=flat&logo=gmail&logoColor=white)](mailto:akmtasdikulislam@gmail.com)
+[![X](https://img.shields.io/badge/X-000000?style=flat&logo=x&logoColor=white)](https://x.com/Akm_Tasdikul)
+&nbsp;![Profile Views](https://komarev.com/ghpvc/?username=akmtasdikulislam&color=10B77F&style=flat&label=profile+views)
 
 ---
 
-## 🚀 About Me
+## About
 
-<img align="right" alt="Coding" width="400" src="https://media.giphy.com/media/Y4ak9Ki2GZCbJxAnJD/giphy.gif">
+Full Stack Web Developer and Computer Science student at **Bangladesh University of Professionals** with **2+ years** of hands-on MERN stack experience building production-ready web applications. Strong in clean architecture, scalable code, and delivering high-quality SaaS-ready solutions.
 
-### Hey! I'm Akm 👨‍💻
+Experienced with AI-assisted development tools like **Cursor**, **GitHub Copilot**, and **Windsurf** while applying solid manual debugging to ensure code reliability. Expert in **n8n** — building complex AI agentic workflows, chatbot systems, and multi-platform integrations from scratch.
 
-I'm a **Full-Stack MERN Developer** and **AI Automation Expert** from Bangladesh, passionate about transforming ideas into powerful web applications. With over **2 years of hands-on experience**, I specialize in building scalable, production-ready solutions that solve real-world problems.
-
-🎓 Currently pursuing **B.Sc. in Computer Science & Engineering** at **Bangladesh University of Professionals**
-
-💼 I build everything from modern **e-commerce platforms** to **complex automation workflows** using **n8n** and AI technologies
-
-🌟 My code philosophy: **Clean, efficient, and scalable** — Every line should serve a purpose
-
-⚡ Fun fact: I achieved **GPA 5.00** in both SSC & HSC, and now I'm applying that same dedication to craft exceptional digital experiences
-
-<br clear="right"/>
+- **BSc in Computer Science & Engineering** — Bangladesh University of Professionals _(Feb 2025 – Present · CGPA: 3.67)_
+- Active in **Competitive Programming** and **CTF** challenges
+- Open to **Freelance & Remote Work**
 
 ---
 
-## ⚡ Tech Stack
+## What I Build
 
-<div align="center">
-
-### 🎨 Frontend Development
-
-![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
-
-### ⚙️ Backend Development
-
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
-![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
-![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
-
-### 🗄️ Database & Cloud
-
-![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
-![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
-
-### 🤖 Automation & Tools
-
-![n8n](https://img.shields.io/badge/n8n-EA4B71?style=for-the-badge&logo=n8n&logoColor=white)
-![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
-![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
-![WordPress](https://img.shields.io/badge/WordPress-21759B?style=for-the-badge&logo=wordpress&logoColor=white)
-![VS Code](https://img.shields.io/badge/VS_Code-007ACC?style=for-the-badge&logo=visual-studio-code&logoColor=white)
-
-### 💻 Programming Languages
-
-![C](https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white)
-![C++](https://img.shields.io/badge/C++-00599C?style=for-the-badge&logo=cplusplus&logoColor=white)
-![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-
-</div>
+| | |
+|---|---|
+| **Full-Stack Web Applications** — End-to-end MERN stack apps from schema design to React UI, with RESTful APIs, JWT auth, and cloud deployment. | **AI Agentic Workflows** — n8n automation pipelines integrating LLMs, webhooks, APIs, and databases to automate business processes end-to-end. |
+| **Modern UI Interfaces** — Pixel-perfect, responsive UIs with Next.js, Tailwind CSS, GSAP, and Three.js — every interaction built with intention. | **AI Chatbots & Agents** — Custom AI agents on web platforms using OpenAI/Claude APIs, RAG pipelines, and MCP server integrations. |
 
 ---
 
-## 📊 GitHub Statistics
+## Tech Expertise
 
 <div align="center">
-  <img width="49%" src="https://github-readme-stats.vercel.app/api?username=akmtasdikulislam&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=3B82F6&icon_color=3B82F6&text_color=FFFFFF" alt="GitHub Stats" />
-  <img width="49%" src="https://github-readme-streak-stats.herokuapp.com/?user=akmtasdikulislam&theme=tokyonight&hide_border=true&background=0D1117&stroke=3B82F6&ring=3B82F6&fire=EF4444&currStreakLabel=3B82F6" alt="GitHub Streak" />
+
+<img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/assets/tech-expertise-heading.svg" alt="Tech Expertise" width="800"/>
+
+<br/>
+
+### Programming Languages
+
+<table>
+  <tr>
+    <td align="center" width="110">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" width="48" height="48" alt="C"/><br/><sub><b>C</b></sub>
+    </td>
+    <td align="center" width="110">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" width="48" height="48" alt="C++"/><br/><sub><b>C++</b></sub>
+    </td>
+    <td align="center" width="110">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" width="48" height="48" alt="Java"/><br/><sub><b>Java</b></sub>
+    </td>
+    <td align="center" width="110">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" width="48" height="48" alt="Python"/><br/><sub><b>Python</b></sub>
+    </td>
+    <td align="center" width="110">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" width="48" height="48" alt="JavaScript"/><br/><sub><b>JavaScript</b></sub>
+    </td>
+    <td align="center" width="110">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" width="48" height="48" alt="TypeScript"/><br/><sub><b>TypeScript</b></sub>
+    </td>
+    <td align="center" width="110">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" width="48" height="48" alt="PHP"/><br/><sub><b>PHP</b></sub>
+    </td>
+    <td align="center" width="110">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" width="48" height="48" alt="HTML5"/><br/><sub><b>HTML5</b></sub>
+    </td>
+    <td align="center" width="110">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" width="48" height="48" alt="CSS3"/><br/><sub><b>CSS3</b></sub>
+    </td>
+  </tr>
+</table>
+
 </div>
 
-<div align="center">
-  <img width="49%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=akmtasdikulislam&layout=compact&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=3B82F6&text_color=FFFFFF" alt="Top Languages" />
-  <img width="49%" src="https://github-profile-trophy.vercel.app/?username=akmtasdikulislam&theme=tokyonight&no-frame=true&no-bg=true&column=4&margin-w=15&margin-h=15" alt="GitHub Trophies" />
-</div>
-
-<div align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=akmtasdikulislam&theme=tokyo-night&hide_border=true&bg_color=0D1117&color=3B82F6&line=3B82F6&point=FFFFFF" alt="Contribution Graph" />
-</div>
-
----
-
-## 🐍 Contribution Snake
-
-<div align="center">
-  <img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/output/github-contribution-grid-snake-dark.svg" alt="Snake animation" />
-</div>
-
----
-
-## 💼 What I Build
+<br/>
 
 <table>
 <tr>
-<td width="50%">
 
-### 🌐 Web Applications
-Building full-stack applications with **React**, **Node.js**, and **MongoDB** that are fast, responsive, and user-friendly. From concept to deployment, I handle the entire development lifecycle.
+<td valign="top" width="50%">
+
+### <img src="https://img.shields.io/badge/●-10B77F?style=flat&logoColor=10B77F" height="14"/> Frontend
+
+<table>
+  <tr>
+    <td align="center" width="100">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width="40" height="40" alt="React"/><br/><sub>React</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" width="40" height="40" alt="Next.js"/><br/><sub>Next.js</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" width="40" height="40" alt="Tailwind CSS"/><br/><sub>Tailwind CSS</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" width="40" height="40" alt="Bootstrap"/><br/><sub>Bootstrap</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="100">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg" width="40" height="40" alt="Sass"/><br/><sub>Sass</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width="40" height="40" alt="React Native"/><br/><sub>React Native</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg" width="40" height="40" alt="WordPress"/><br/><sub>WordPress</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.simpleicons.org/wix/FAAD4D" width="40" height="40" alt="Wix"/><br/><sub>Wix</sub>
+    </td>
+  </tr>
+</table>
 
 </td>
-<td width="50%">
 
-### 🤖 AI Automation
-Expert in **n8n** workflows — creating intelligent automation systems that integrate AI capabilities, streamline business processes, and connect multiple platforms seamlessly.
+<td valign="top" width="50%">
+
+### <img src="https://img.shields.io/badge/●-3B82F6?style=flat" height="14"/> Frameworks & Integrations
+
+<table>
+  <tr>
+    <td align="center" width="100">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/materialui/materialui-original.svg" width="40" height="40" alt="Material UI"/><br/><sub>Material UI</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.simpleicons.org/shadcnui/ffffff" width="40" height="40" alt="Shadcn UI"/><br/><sub>Shadcn UI</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.simpleicons.org/daisyui/5A0EF8" width="40" height="40" alt="DaisyUI"/><br/><sub>DaisyUI</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/threejs/threejs-original.svg" width="40" height="40" alt="Three.js"/><br/><sub>Three.js</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="100">
+      <img src="https://cdn.simpleicons.org/greensock/88CE02" width="40" height="40" alt="GSAP"/><br/><sub>GSAP</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.simpleicons.org/framer/0055FF" width="40" height="40" alt="Framer Motion"/><br/><sub>Framer Motion</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.simpleicons.org/mapbox/ffffff" width="40" height="40" alt="Mapbox"/><br/><sub>Mapbox</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.simpleicons.org/stripe/635BFF" width="40" height="40" alt="Stripe"/><br/><sub>Stripe</sub>
+    </td>
+  </tr>
+</table>
 
 </td>
 </tr>
-<tr>
-<td width="50%">
 
-### 🎨 Modern UIs
-Crafting beautiful, responsive interfaces with **Next.js**, **Tailwind CSS**, and modern design principles. Every pixel matters, every interaction counts.
+<tr>
+
+<td valign="top" width="50%">
+
+### <img src="https://img.shields.io/badge/●-EA4335?style=flat" height="14"/> Backend & Database
+
+<table>
+  <tr>
+    <td align="center" width="100">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" width="40" height="40" alt="Node.js"/><br/><sub>Node.js</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" width="40" height="40" alt="Express.js"/><br/><sub>Express.js</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" width="40" height="40" alt="Django"/><br/><sub>Django</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" width="40" height="40" alt="MongoDB"/><br/><sub>MongoDB</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="100">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" width="40" height="40" alt="PostgreSQL"/><br/><sub>PostgreSQL</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" width="40" height="40" alt="MySQL"/><br/><sub>MySQL</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" width="40" height="40" alt="Firebase"/><br/><sub>Firebase</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg" width="40" height="40" alt="Supabase"/><br/><sub>Supabase</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="100">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" width="40" height="40" alt="Redis"/><br/><sub>Redis</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.simpleicons.org/cloudinary/3448C5" width="40" height="40" alt="Cloudinary"/><br/><sub>Cloudinary</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.simpleicons.org/openai/ffffff" width="40" height="40" alt="OpenAI"/><br/><sub>OpenAI</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.simpleicons.org/anthropic/D97706" width="40" height="40" alt="Claude AI"/><br/><sub>Claude AI</sub>
+    </td>
+  </tr>
+</table>
 
 </td>
-<td width="50%">
 
-### ⚡ Backend Systems
-Developing robust RESTful APIs, authentication systems, and database architectures that scale. Performance and security are non-negotiable.
+<td valign="top" width="50%">
+
+### <img src="https://img.shields.io/badge/●-10B77F?style=flat" height="14"/> Tools & Platforms
+
+<table>
+  <tr>
+    <td align="center" width="100">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" width="40" height="40" alt="Git"/><br/><sub>Git</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" width="40" height="40" alt="Docker"/><br/><sub>Docker</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" width="40" height="40" alt="Figma"/><br/><sub>Figma</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.simpleicons.org/n8n/EA4B71" width="40" height="40" alt="n8n"/><br/><sub>n8n</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="100">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg" width="40" height="40" alt="WordPress"/><br/><sub>WordPress</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original.svg" width="40" height="40" alt="Arduino"/><br/><sub>Arduino</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-plain.svg" width="40" height="40" alt="Photoshop"/><br/><sub>Photoshop</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/illustrator/illustrator-plain.svg" width="40" height="40" alt="Illustrator"/><br/><sub>Illustrator</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="100">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" width="40" height="40" alt="VS Code"/><br/><sub>VS Code</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" width="40" height="40" alt="Postman"/><br/><sub>Postman</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.simpleicons.org/cursor/ffffff" width="40" height="40" alt="Cursor"/><br/><sub>Cursor</sub>
+    </td>
+    <td align="center" width="100">
+      <img src="https://cdn.simpleicons.org/autocad/E51837" width="40" height="40" alt="AutoCAD"/><br/><sub>AutoCAD</sub>
+    </td>
+  </tr>
+</table>
 
 </td>
 </tr>
@@ -154,121 +266,123 @@ Developing robust RESTful APIs, authentication systems, and database architectur
 
 ---
 
-## 🎯 What I'm Up To
+## GitHub Statistics
 
 <div align="center">
 
-<img src="https://media.giphy.com/media/SWoSkN6DxTszqIKEqv/giphy.gif" width="300" alt="Developer">
+<img height="185" src="https://github-readme-streak-stats.herokuapp.com/?user=akmtasdikulislam&hide_border=true&background=0d0d0d&stroke=10B77F&ring=10B77F&fire=3B82F6&currStreakLabel=10B77F&sideLabels=c9d1d9&dates=6e7681&currStreakNum=ffffff&sideNums=ffffff" alt="GitHub Streak" />
 
-**🔨 Building** production-ready web apps with cutting-edge tech  
-**📚 Exploring** cloud technologies, system design, and advanced algorithms  
-**🚀 Contributing** to open-source and collaborating on exciting projects  
-**💡 Innovating** with AI integrations and automation solutions  
+</div>
+
+<div align="center">
+
+<img src="https://github-readme-activity-graph.vercel.app/graph?username=akmtasdikulislam&hide_border=true&bg_color=0d0d0d&color=10B77F&line=10B77F&point=3B82F6&area=true&area_color=10B77F&custom_title=Contribution%20Graph" alt="Contribution Graph" />
 
 </div>
 
 ---
 
-## 🏆 Milestones & Recognition
+## Featured Projects
 
 <div align="center">
 
-<table>
-<tr>
-<td align="center" width="33%">
-<img src="https://media.giphy.com/media/l0HlQXlQ3nHyLMvte/giphy.gif" width="80"><br>
-<b>Academic Excellence</b><br>
-🎓 GPA 5.00 in SSC & HSC<br>
-🏅 Scholarship Recipient
-</td>
-<td align="center" width="33%">
-<img src="https://media.giphy.com/media/LmNwrBhejkK9EFP504/giphy.gif" width="80"><br>
-<b>Development Experience</b><br>
-💻 2+ Years in MERN Stack<br>
-🚀 10+ Projects Delivered
-</td>
-<td align="center" width="33%">
-<img src="https://media.giphy.com/media/KzKgTJEaJNuhauhGEo/giphy.gif" width="80"><br>
-<b>Specialized Skills</b><br>
-🤖 n8n Automation Expert<br>
-⚡ Full-Stack Specialist
-</td>
-</tr>
-</table>
-
-</div>
-
----
-
-## 🎨 Featured Projects
-
-<div align="center">
-
-<a href="https://github.com/akmtasdikulislam/project1">
-  <img align="center" src="https://github-readme-stats.vercel.app/api/pin/?username=akmtasdikulislam&repo=project1&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=3B82F6&icon_color=3B82F6&text_color=FFFFFF" />
+<a href="https://github.com/akmtasdikulislam/ema-john-client">
+  <img src="https://github-readme-stats.vercel.app/api/pin/?username=akmtasdikulislam&repo=ema-john-client&hide_border=true&bg_color=0d0d0d&title_color=10B77F&icon_color=3B82F6&text_color=c9d1d9&cache_seconds=1800" />
 </a>
-
-<a href="https://github.com/akmtasdikulislam/project2">
-  <img align="center" src="https://github-readme-stats.vercel.app/api/pin/?username=akmtasdikulislam&repo=project2&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=3B82F6&icon_color=3B82F6&text_color=FFFFFF" />
+<a href="https://github.com/akmtasdikulislam/driver-monitoring-system-client">
+  <img src="https://github-readme-stats.vercel.app/api/pin/?username=akmtasdikulislam&repo=driver-monitoring-system-client&hide_border=true&bg_color=0d0d0d&title_color=10B77F&icon_color=3B82F6&text_color=c9d1d9&cache_seconds=1800" />
+</a>
+<a href="https://github.com/akmtasdikulislam/creative-agency-client">
+  <img src="https://github-readme-stats.vercel.app/api/pin/?username=akmtasdikulislam&repo=creative-agency-client&hide_border=true&bg_color=0d0d0d&title_color=10B77F&icon_color=3B82F6&text_color=c9d1d9&cache_seconds=1800" />
 </a>
 
 </div>
 
----
+<br/>
 
-## 💡 Dev Wisdom
+**[Ema-John](https://github.com/akmtasdikulislam/ema-john-client) — E-Commerce Platform**
+Amazon-inspired full-stack e-commerce app with React SPA + Express/MongoDB backend, Firebase auth, order workflows, reviews, and Stripe payments.
 
-<div align="center">
-  
-<img src="https://quotes-github-readme.vercel.app/api?type=horizontal&theme=tokyonight" alt="Random Dev Quote"/>
+![React](https://img.shields.io/badge/React-1a1a1a?style=flat&logo=react&logoColor=61DAFB)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-1a1a1a?style=flat&logo=bootstrap&logoColor=7952B3)
+![Node.js](https://img.shields.io/badge/Node.js-1a1a1a?style=flat&logo=nodedotjs&logoColor=339933)
+![Express.js](https://img.shields.io/badge/Express.js-1a1a1a?style=flat&logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-1a1a1a?style=flat&logo=mongodb&logoColor=47A248)
+![Firebase](https://img.shields.io/badge/Firebase-1a1a1a?style=flat&logo=firebase&logoColor=FFCA28)
+![Stripe](https://img.shields.io/badge/Stripe-1a1a1a?style=flat&logo=stripe&logoColor=635BFF)
 
-**💭 "First, solve the problem. Then, write the code." — John Johnson**
+**[Driver Monitoring System](https://github.com/akmtasdikulislam/driver-monitoring-system-client) — Admin Portal**
+Authenticated portal for driver profile management, sleep-record history, and detailed reporting — Express REST API with MongoDB and Cloudinary.
 
-</div>
+![React](https://img.shields.io/badge/React-1a1a1a?style=flat&logo=react&logoColor=61DAFB)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-1a1a1a?style=flat&logo=bootstrap&logoColor=7952B3)
+![Express.js](https://img.shields.io/badge/Express.js-1a1a1a?style=flat&logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-1a1a1a?style=flat&logo=mongodb&logoColor=47A248)
+![Firebase](https://img.shields.io/badge/Firebase-1a1a1a?style=flat&logo=firebase&logoColor=FFCA28)
+![Cloudinary](https://img.shields.io/badge/Cloudinary-1a1a1a?style=flat&logo=cloudinary&logoColor=3448C5)
 
----
+**[Creative Agency](https://github.com/akmtasdikulislam/creative-agency-client) — Role-Based Platform**
+Full MERN stack agency management system — customers place orders, admins manage services and users via a secure dashboard.
 
-## 🎮 When I'm Not Coding
-
-<div align="center">
-  
-<img src="https://media.giphy.com/media/L1R1tvI9svkIWwpVYr/giphy.gif" width="400" alt="Learning GIF"/>
-
-**I'm constantly learning, building, and exploring new technologies!**
-
-</div>
-
----
-
-## 🤝 Let's Connect & Collaborate
-
-<div align="center">
-  
-I'm always excited to work on innovative projects and collaborate with other developers!
-
-### 📫 Reach me at:
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin)](your-linkedin-url)
-[![Email](https://img.shields.io/badge/Email-Send-EA4335?style=for-the-badge&logo=gmail)](mailto:your-email)
-[![Upwork](https://img.shields.io/badge/Upwork-Hire_Me-6FDA44?style=for-the-badge&logo=upwork)](your-upwork-url)
-[![Portfolio](https://img.shields.io/badge/Portfolio-Visit-000000?style=for-the-badge&logo=vercel)](your-portfolio-url)
-
-</div>
+![React](https://img.shields.io/badge/React-1a1a1a?style=flat&logo=react&logoColor=61DAFB)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-1a1a1a?style=flat&logo=tailwindcss&logoColor=06B6D4)
+![DaisyUI](https://img.shields.io/badge/DaisyUI-1a1a1a?style=flat&logo=daisyui&logoColor=5A0EF8)
+![Express.js](https://img.shields.io/badge/Express.js-1a1a1a?style=flat&logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-1a1a1a?style=flat&logo=mongodb&logoColor=47A248)
+![Firebase](https://img.shields.io/badge/Firebase-1a1a1a?style=flat&logo=firebase&logoColor=FFCA28)
 
 ---
 
-<div align="center">
-  
-### ⭐ From [akmtasdikulislam](https://github.com/akmtasdikulislam) with 💙
+## Competitive Programming
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=18&duration=2000&pause=1000&color=3B82F6&center=true&vCenter=true&width=600&lines=Thanks+for+visiting!+%F0%9F%91%8B;Let's+build+something+amazing+together!+%F0%9F%9A%80;Happy+Coding!+%F0%9F%92%BB" alt="Typing SVG" />
+[![Codeforces](https://img.shields.io/badge/Codeforces-1a1a1a?style=flat&logo=codeforces&logoColor=1F8ACB)](https://codeforces.com/profile/akmtasdikulislam)
+[![LeetCode](https://img.shields.io/badge/LeetCode-1a1a1a?style=flat&logo=leetcode&logoColor=FFA116)](https://leetcode.com/u/akmtasdikulislam/)
+[![HackerRank](https://img.shields.io/badge/HackerRank-1a1a1a?style=flat&logo=hackerrank&logoColor=00EA64)](https://www.hackerrank.com/profile/akmtasdikulislam)
+[![CodeChef](https://img.shields.io/badge/CodeChef-1a1a1a?style=flat&logo=codechef&logoColor=B92B27)](https://www.codechef.com/users/akmtasdikul)
 
-</div>
+Actively participating in competitive programming contests and CTF challenges — **Data Structures**, **Algorithms**, **Dynamic Programming**, and **Problem Solving** in C, C++, and Python.
 
 ---
 
-<div align="center">
-  
-![Footer](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=100&section=footer&text=&fontSize=0)
+## Certifications
 
-</div>
+| Course | Provider | Year |
+|---|---|---|
+| CSE Fundamentals — Fall 2025 | Phitron | 2025 – Present |
+| Technical Support Fundamentals | Google / Coursera | 2022 |
+| Photography Basics | Robi 10 Minute School | 2022 |
+| Digital Security Essentials | Digital Security Agency, a2i | 2020 |
+
+---
+
+## Leadership
+
+**Founder & President — Iconic IT Club, BAFSK** &nbsp;_Session 2021–22_
+Founded and led the campus IT club to drive technical skill development. Engaged 600+ students in ICTOB Season 1. Awarded **Best Campus Ambassador**.
+
+**CADET Lance Corporal — Bangladesh National Cadet Corps (BNCC)** &nbsp;_Jun 2022 – Jun 2024_
+Completed 7-day BNCC Battalion Camp emphasizing discipline, teamwork, and leadership. Participated in Firing Competition with a 4-inch grouping score.
+
+---
+
+## Languages
+
+![Bangla](https://img.shields.io/badge/Bangla-Native-10B77F?style=flat)
+![English](https://img.shields.io/badge/English-Near--Native-3B82F6?style=flat)
+![German](https://img.shields.io/badge/German-Basic-333333?style=flat)
+
+---
+
+## Connect
+
+I'm always open to collaborating on interesting projects, open-source contributions, and freelance opportunities.
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat&logo=linkedin)](https://www.linkedin.com/in/akmtasdikulislam)
+[![Portfolio](https://img.shields.io/badge/Portfolio-Visit-10B77F?style=flat&logo=googlechrome&logoColor=white)](https://akmtasdikulislam.dev)
+[![Upwork](https://img.shields.io/badge/Upwork-Hire_Me-6FDA44?style=flat&logo=upwork)](https://www.upwork.com/freelancers/~01fe1fc80c8877ffe2)
+[![Email](https://img.shields.io/badge/Email-Say_Hi-EA4335?style=flat&logo=gmail)](mailto:akmtasdikulislam@gmail.com)
+[![X](https://img.shields.io/badge/X-Follow-000000?style=flat&logo=x)](https://x.com/Akm_Tasdikul)
+
+<br/>
+
+<sub>Made with precision · [akmtasdikulislam](https://github.com/akmtasdikulislam)</sub>
