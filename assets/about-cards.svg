@@ -1,68 +1,68 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="380" viewBox="0 0 800 380">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800" height="260" viewBox="0 0 800 260">
   <defs>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&amp;display=swap');
-      .card-bg   { fill: #111a17; rx: 12; }
-      .icon-box  { fill: #0d2b22; }
-      .icon-str  { stroke: #10B77F; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
-      .card-title{ font-family: 'Space Grotesk', Inter, sans-serif; font-size: 16px; font-weight: 700; fill: #ffffff; }
-      .card-body { font-family: 'Space Grotesk', Inter, sans-serif; font-size: 13px; font-weight: 400; fill: #c9d1d9; }
-      .card-accent{ font-family: 'Space Grotesk', Inter, sans-serif; font-size: 12.5px; font-weight: 500; fill: #10B77F; }
+      .title  { font-family: 'Space Grotesk', Inter, sans-serif; font-size: 16px; font-weight: 700; fill: #ffffff; }
+      .body   { font-family: 'Space Grotesk', Inter, sans-serif; font-size: 13px; font-weight: 400; fill: #c9d1d9; }
+      .accent { font-family: 'Space Grotesk', Inter, sans-serif; font-size: 12.5px; font-weight: 500; fill: #10B77F; }
+      .divider { stroke: #1e3a2e; stroke-width: 1; }
       @media (prefers-color-scheme: light) {
-        .card-bg   { fill: #f0faf6; }
-        .icon-box  { fill: #d4f0e5; }
-        .card-title{ fill: #0d0d0d; }
-        .card-body { fill: #444444; }
+        .title  { fill: #0d0d0d; }
+        .body   { fill: #444444; }
+        .divider { stroke: #c8e6d8; }
       }
     </style>
   </defs>
 
-  <!-- Card 1: Education (top-left) -->
-  <rect x="0" y="0" width="388" height="178" rx="12" class="card-bg"/>
-  <rect x="18" y="18" width="48" height="48" rx="10" class="icon-box"/>
-  <!-- Lucide graduation-cap -->
-  <g transform="translate(30, 30)">
-    <path d="M12 3L1 9l11 6 11-6-11-6z" class="icon-str"/>
-    <path d="M5 12v5c3.6 2.4 10.4 2.4 14 0v-5" class="icon-str"/>
-    <line x1="23" y1="9" x2="23" y2="15" class="icon-str"/>
-  </g>
-  <text x="18" y="88" class="card-title">Education</text>
-  <text x="18" y="110" class="card-body">CSE at Bangladesh University of</text>
-  <text x="18" y="128" class="card-body">Professionals</text>
-  <text x="18" y="152" class="card-accent">3rd Semester | 2025 Batch</text>
+  <!-- Dividers -->
+  <line x1="400" y1="0" x2="400" y2="260" class="divider"/>
+  <line x1="0" y1="130" x2="800" y2="130" class="divider"/>
 
-  <!-- Card 2: Location (top-right) -->
-  <rect x="412" y="0" width="388" height="178" rx="12" class="card-bg"/>
-  <rect x="430" y="18" width="48" height="48" rx="10" class="icon-box"/>
-  <!-- Lucide map-pin -->
-  <g transform="translate(442, 30)">
-    <path d="M12 2a8 8 0 0 0-8 8c0 5.4 7.1 11.5 7.4 11.8a1 1 0 0 0 1.2 0C13 21.5 20 15.4 20 10a8 8 0 0 0-8-8z" class="icon-str"/>
-    <circle cx="12" cy="10" r="3" class="icon-str"/>
+  <!-- ── Card 1: Education (top-left) ── -->
+  <g transform="translate(0, 20)">
+    <!-- Lucide GraduationCap icon inline with title -->
+    <g transform="translate(0, 2)">
+      <path d="M12 3L1 9l11 6 11-6-11-6z" stroke="#10B77F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M5 12v5c3.6 2.4 10.4 2.4 14 0v-5" stroke="#10B77F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <line x1="23" y1="9" x2="23" y2="14" stroke="#10B77F" stroke-width="1.8" stroke-linecap="round"/>
+    </g>
+    <text x="30" y="17" class="title">Education</text>
+    <text x="0" y="45" class="body">CSE — Bangladesh University of Professionals</text>
+    <text x="0" y="65" class="accent">3rd Semester · CGPA 3.67 · 2025 Batch</text>
   </g>
-  <text x="430" y="88" class="card-title">Location</text>
-  <text x="430" y="110" class="card-body">Dhaka, Bangladesh</text>
-  <text x="430" y="134" class="card-accent">Available for remote work</text>
 
-  <!-- Card 3: Specialization (bottom-left) -->
-  <rect x="0" y="202" width="388" height="178" rx="12" class="card-bg"/>
-  <rect x="18" y="220" width="48" height="48" rx="10" class="icon-box"/>
-  <!-- Lucide code-2 -->
-  <g transform="translate(30, 232)">
-    <polyline points="17,17 22,12 17,7" class="icon-str"/>
-    <polyline points="7,7 2,12 7,17" class="icon-str"/>
+  <!-- ── Card 2: Location (top-right) ── -->
+  <g transform="translate(424, 20)">
+    <!-- Lucide MapPin -->
+    <g transform="translate(0, 2)">
+      <path d="M12 2a7 7 0 0 0-7 7c0 5 7 11 7 11s7-6 7-11a7 7 0 0 0-7-7z" stroke="#10B77F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <circle cx="12" cy="9" r="2.5" stroke="#10B77F" stroke-width="1.8" fill="none"/>
+    </g>
+    <text x="30" y="17" class="title">Location</text>
+    <text x="0" y="45" class="body">Dhaka, Bangladesh</text>
+    <text x="0" y="65" class="accent">Available for remote work</text>
   </g>
-  <text x="18" y="290" class="card-title">Specialization</text>
-  <text x="18" y="312" class="card-body">Full Stack Development</text>
-  <text x="18" y="336" class="card-accent">MERN Stack &amp; n8n Automation</text>
 
-  <!-- Card 4: Experience (bottom-right) -->
-  <rect x="412" y="202" width="388" height="178" rx="12" class="card-bg"/>
-  <rect x="430" y="220" width="48" height="48" rx="10" class="icon-box"/>
-  <!-- Lucide zap / lightning -->
-  <g transform="translate(442, 232)">
-    <polygon points="13,2 3,14 12,14 11,22 21,10 12,10" class="icon-str"/>
+  <!-- ── Card 3: Specialization (bottom-left) ── -->
+  <g transform="translate(0, 150)">
+    <!-- Lucide Code2 -->
+    <g transform="translate(0, 2)">
+      <polyline points="17,17 22,12 17,7" stroke="#10B77F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <polyline points="7,7 2,12 7,17" stroke="#10B77F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </g>
+    <text x="30" y="17" class="title">Specialization</text>
+    <text x="0" y="45" class="body">Full Stack Development</text>
+    <text x="0" y="65" class="accent">MERN Stack &amp; n8n Automation</text>
   </g>
-  <text x="430" y="290" class="card-title">Experience</text>
-  <text x="430" y="312" class="card-body">2+ Years</text>
-  <text x="430" y="336" class="card-accent">Web Development &amp; Automation</text>
+
+  <!-- ── Card 4: Experience (bottom-right) ── -->
+  <g transform="translate(424, 150)">
+    <!-- Lucide Zap -->
+    <g transform="translate(0, 2)">
+      <polygon points="13,2 3,14 12,14 11,22 21,10 12,10" stroke="#10B77F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </g>
+    <text x="30" y="17" class="title">Experience</text>
+    <text x="0" y="45" class="body">2+ Years</text>
+    <text x="0" y="65" class="accent">Web Development &amp; Automation</text>
+  </g>
 </svg>

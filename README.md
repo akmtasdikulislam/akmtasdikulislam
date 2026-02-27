@@ -6,12 +6,12 @@
 
 <table width="100%">
 <tr>
-  <td><a href="https://www.linkedin.com/in/akmtasdikulislam"><img src="https://cdn.simpleicons.org/linkedin/0A66C2" width="18" valign="middle"/>&nbsp; LinkedIn</a></td>
-  <td><a href="https://akmtasdikulislam.dev"><img src="https://cdn.simpleicons.org/googlechrome/10B77F" width="18" valign="middle"/>&nbsp; akmtasdikulislam.dev</a></td>
-  <td><a href="https://www.upwork.com/freelancers/~01fe1fc80c8877ffe2"><img src="https://cdn.simpleicons.org/upwork/6FDA44" width="18" valign="middle"/>&nbsp; Upwork</a></td>
-  <td><a href="mailto:akmtasdikulislam@gmail.com"><img src="https://cdn.simpleicons.org/gmail/EA4335" width="18" valign="middle"/>&nbsp; akmtasdikulislam@gmail.com</a></td>
-  <td><a href="https://x.com/Akm_Tasdikul"><img src="https://cdn.simpleicons.org/x/ffffff" width="18" valign="middle"/>&nbsp; @Akm_Tasdikul</a></td>
-  <td><a href="https://github.com/akmtasdikulislam"><img src="https://cdn.simpleicons.org/github/ffffff" width="18" valign="middle"/>&nbsp; GitHub</a></td>
+  <td><a href="https://www.linkedin.com/in/akmtasdikulislam"><img src="https://img.icons8.com/fluency/24/linkedin.png" width="20" valign="middle"/>&nbsp; LinkedIn</a></td>
+  <td><a href="https://akmtasdikulislam.dev"><img src="https://img.icons8.com/fluency/24/internet.png" width="20" valign="middle"/>&nbsp; akmtasdikulislam.dev</a></td>
+  <td><a href="https://www.upwork.com/freelancers/~01fe1fc80c8877ffe2"><img src="https://cdn.simpleicons.org/upwork/6FDA44" width="20" valign="middle"/>&nbsp; Upwork</a></td>
+  <td><a href="mailto:akmtasdikulislam@gmail.com"><img src="https://img.icons8.com/fluency/24/gmail-new.png" width="20" valign="middle"/>&nbsp; akmtasdikulislam@gmail.com</a></td>
+  <td><a href="https://x.com/Akm_Tasdikul"><img src="https://img.icons8.com/fluency/24/twitterx--v1.png" width="20" valign="middle"/>&nbsp; @Akm_Tasdikul</a></td>
+  <td><a href="https://github.com/akmtasdikulislam"><img src="https://img.icons8.com/fluency/24/github.png" width="20" valign="middle"/>&nbsp; GitHub</a></td>
 </tr>
 </table>
 
@@ -399,17 +399,17 @@ Actively participating in competitive programming contests and CTF challenges â€
 <table width="100%">
   <tr>
     <td width="33%" align="center">
-      <img src="https://cdn.simpleicons.org/duolingo/58CC02" width="28"/><br/>
+      <img src="https://img.icons8.com/fluency/28/bangladesh-circular.png" width="32"/><br/>
       <strong>Bangla</strong><br/>
       <sub>Native</sub>
     </td>
     <td width="33%" align="center">
-      <img src="https://cdn.simpleicons.org/duolingo/58CC02" width="28"/><br/>
+      <img src="https://img.icons8.com/fluency/28/great-britain-circular.png" width="32"/><br/>
       <strong>English</strong><br/>
       <sub>Near-native</sub>
     </td>
     <td width="33%" align="center">
-      <img src="https://cdn.simpleicons.org/duolingo/58CC02" width="28"/><br/>
+      <img src="https://img.icons8.com/fluency/28/germany-circular.png" width="32"/><br/>
       <strong>German</strong><br/>
       <sub>Basic</sub>
     </td>
