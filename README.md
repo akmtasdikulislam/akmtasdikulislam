@@ -4,7 +4,7 @@
 
 <br/>
 
-<table>
+<table width="100%">
 <tr>
   <td><a href="https://www.linkedin.com/in/akmtasdikulislam"><img src="https://cdn.simpleicons.org/linkedin/0A66C2" width="18" valign="middle"/>&nbsp; LinkedIn</a></td>
   <td><a href="https://akmtasdikulislam.dev"><img src="https://cdn.simpleicons.org/googlechrome/10B77F" width="18" valign="middle"/>&nbsp; akmtasdikulislam.dev</a></td>
@@ -27,7 +27,7 @@ Full Stack Web Developer and Computer Science student at **Bangladesh University
 
 Experienced with AI-assisted development tools like **Cursor**, **GitHub Copilot**, and **Windsurf** while applying solid manual debugging to ensure code reliability. Expert in **n8n** — building complex AI agentic workflows, chatbot systems, and multi-platform integrations from scratch.
 
-<table>
+<table width="100%">
   <tr>
     <td><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" width="16" valign="middle"/>&nbsp; <strong>BSc in CSE</strong> — Bangladesh University of Professionals</td>
     <td>CGPA <strong>3.67</strong> &nbsp;·&nbsp; Feb 2025 – Present</td>
@@ -50,8 +50,6 @@ Experienced with AI-assisted development tools like **Cursor**, **GitHub Copilot
 | **Modern UI Interfaces** — Pixel-perfect, responsive UIs with Next.js, Tailwind CSS, GSAP, and Three.js — every interaction built with intention. | **AI Chatbots & Agents** — Custom AI agents on web platforms using OpenAI/Claude APIs, RAG pipelines, and MCP server integrations. |
 
 ---
-
-## Tech Expertise
 
 <div align="center">
 
@@ -283,7 +281,9 @@ Experienced with AI-assisted development tools like **Cursor**, **GitHub Copilot
 
 ---
 
-## GitHub Statistics
+<div align="center"><img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/assets/stats-heading.svg" alt="GitHub Statistics" width="800"/></div>
+
+<br/>
 
 <div align="center">
 
@@ -352,14 +352,16 @@ Full MERN stack agency management system — customers place orders, admins mana
 
 ---
 
-## Competitive Programming
+<div align="center"><img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/assets/competitive-heading.svg" alt="Competitive Programming" width="800"/></div>
 
-<table>
+<br/>
+
+<table width="100%">
 <tr>
-  <td><a href="https://codeforces.com/profile/akmtasdikulislam"><img src="https://cdn.simpleicons.org/codeforces/1F8ACB" width="18" valign="middle"/>&nbsp; Codeforces</a></td>
-  <td><a href="https://leetcode.com/u/akmtasdikulislam/"><img src="https://cdn.simpleicons.org/leetcode/FFA116" width="18" valign="middle"/>&nbsp; LeetCode</a></td>
-  <td><a href="https://www.hackerrank.com/profile/akmtasdikulislam"><img src="https://cdn.simpleicons.org/hackerrank/00EA64" width="18" valign="middle"/>&nbsp; HackerRank</a></td>
-  <td><a href="https://www.codechef.com/users/akmtasdikul"><img src="https://cdn.simpleicons.org/codechef/B92B27" width="18" valign="middle"/>&nbsp; CodeChef</a></td>
+  <td width="25%"><a href="https://codeforces.com/profile/akmtasdikulislam"><img src="https://cdn.simpleicons.org/codeforces/1F8ACB" width="20" valign="middle"/>&nbsp; <strong>Codeforces</strong></a></td>
+  <td width="25%"><a href="https://leetcode.com/u/akmtasdikulislam/"><img src="https://cdn.simpleicons.org/leetcode/FFA116" width="20" valign="middle"/>&nbsp; <strong>LeetCode</strong></a></td>
+  <td width="25%"><a href="https://www.hackerrank.com/profile/akmtasdikulislam"><img src="https://cdn.simpleicons.org/hackerrank/00EA64" width="20" valign="middle"/>&nbsp; <strong>HackerRank</strong></a></td>
+  <td width="25%"><a href="https://www.codechef.com/users/akmtasdikul"><img src="https://cdn.simpleicons.org/codechef/B92B27" width="20" valign="middle"/>&nbsp; <strong>CodeChef</strong></a></td>
 </tr>
 </table>
 
@@ -380,26 +382,46 @@ Actively participating in competitive programming contests and CTF challenges �
 
 ---
 
-## Leadership
+<div align="center"><img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/assets/leadership-heading.svg" alt="Leadership &amp; Impact" width="800"/></div>
 
-**Founder & President — Iconic IT Club, BAFSK** &nbsp;_Session 2021–22_
-Founded and led the campus IT club to drive technical skill development. Engaged 600+ students in ICTOB Season 1. Awarded **Best Campus Ambassador**.
+<br/>
 
-**CADET Lance Corporal — Bangladesh National Cadet Corps (BNCC)** &nbsp;_Jun 2022 – Jun 2024_
-Completed 7-day BNCC Battalion Camp emphasizing discipline, teamwork, and leadership. Participated in Firing Competition with a 4-inch grouping score.
+<table width="100%">
+  <tr>
+    <td width="50%" valign="top">
+      <img src="https://cdn.simpleicons.org/instructure/10B77F" width="20" valign="middle"/>&nbsp; <strong>Founder &amp; President — Iconic IT Club, BAFSK</strong> &nbsp;<em>2021–22</em><br/>
+      Founded and led the campus IT club. Engaged <strong>600+ students</strong> in ICTOB Season 1. Awarded <strong>Best Campus Ambassador</strong>.
+    </td>
+    <td width="50%" valign="top">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="20" valign="middle"/>&nbsp; <strong>CADET Lance Corporal — BNCC</strong> &nbsp;<em>Jun 2022 – Jun 2024</em><br/>
+      Completed 7-day Battalion Camp. Participated in Firing Competition with a <strong>4-inch grouping score</strong>.
+    </td>
+  </tr>
+</table>
 
 ---
 
-## Languages
+<div align="center"><img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/assets/languages-heading.svg" alt="Spoken Languages" width="800"/></div>
 
-<table>
+<br/>
+
+<table width="100%">
   <tr>
-    <td><img src="https://cdn.simpleicons.org/googletranslate/10B77F" width="16" valign="middle"/>&nbsp; <strong>Bangla</strong></td>
-    <td>Native</td>
-    <td><img src="https://cdn.simpleicons.org/googletranslate/3B82F6" width="16" valign="middle"/>&nbsp; <strong>English</strong></td>
-    <td>Near-native</td>
-    <td><img src="https://cdn.simpleicons.org/googletranslate/888888" width="16" valign="middle"/>&nbsp; <strong>German</strong></td>
-    <td>Basic</td>
+    <td width="33%" align="center">
+      <img src="https://cdn.simpleicons.org/duolingo/58CC02" width="28"/><br/>
+      <strong>Bangla</strong><br/>
+      <sub>Native</sub>
+    </td>
+    <td width="33%" align="center">
+      <img src="https://cdn.simpleicons.org/duolingo/58CC02" width="28"/><br/>
+      <strong>English</strong><br/>
+      <sub>Near-native</sub>
+    </td>
+    <td width="33%" align="center">
+      <img src="https://cdn.simpleicons.org/duolingo/58CC02" width="28"/><br/>
+      <strong>German</strong><br/>
+      <sub>Basic</sub>
+    </td>
   </tr>
 </table>
 
@@ -411,7 +433,7 @@ Completed 7-day BNCC Battalion Camp emphasizing discipline, teamwork, and leader
 
 I'm always open to collaborating on interesting projects, open-source contributions, and freelance opportunities.
 
-<table>
+<table width="100%">
 <tr>
   <td><a href="https://www.linkedin.com/in/akmtasdikulislam"><img src="https://cdn.simpleicons.org/linkedin/0A66C2" width="18" valign="middle"/>&nbsp; LinkedIn</a></td>
   <td><a href="https://akmtasdikulislam.dev"><img src="https://cdn.simpleicons.org/googlechrome/10B77F" width="18" valign="middle"/>&nbsp; akmtasdikulislam.dev</a></td>

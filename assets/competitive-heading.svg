@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="120" viewBox="0 0 800 120">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&amp;display=swap');
+      .pill-stroke { fill: none; stroke: #10B77F; stroke-width: 1.2; }
+      .pill-text   { fill: #ffffff; font-family: 'Space Grotesk', Inter, sans-serif; font-size: 11.5px; font-weight: 500; letter-spacing: 1.8px; }
+      .head-w      { fill: #ffffff; font-family: 'Space Grotesk', Inter, sans-serif; font-size: 44px; font-weight: 700; }
+      .head-g      { fill: #10B77F; font-family: 'Space Grotesk', Inter, sans-serif; font-size: 44px; font-weight: 700; }
+      .sub         { fill: #6b7280; font-family: 'Space Grotesk', Inter, sans-serif; font-size: 13.5px; font-weight: 400; }
+      @media (prefers-color-scheme: light) {
+        .pill-text { fill: #0d0d0d; }
+        .head-w    { fill: #0d0d0d; }
+      }
+    </style>
+  </defs>
+  <rect x="309" y="10" width="182" height="28" rx="14" ry="14" class="pill-stroke"/>
+  <circle cx="325" cy="24" r="4.5" fill="#10B77F"/>
+  <text x="337.5" y="29" class="pill-text">PROBLEM SOLVING</text>
+  <text x="400" y="84" text-anchor="middle">
+    <tspan class="head-w">Competitive </tspan><tspan class="head-g">Programming</tspan>
+  </text>
+  <text x="400" y="110" text-anchor="middle" class="sub">Algorithms, data structures and competitive coding</text>
+</svg>
