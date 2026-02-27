@@ -4,7 +4,16 @@
 
 <br/>
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-1a1a1a?style=flat-square&logo=linkedin&logoColor=0A66C2)](https://www.linkedin.com/in/akmtasdikulislam)&nbsp;[![Portfolio](https://img.shields.io/badge/akmtasdikulislam.dev-1a1a1a?style=flat-square&logo=googlechrome&logoColor=10B77F)](https://akmtasdikulislam.dev)&nbsp;[![Upwork](https://img.shields.io/badge/Upwork-1a1a1a?style=flat-square&logo=upwork&logoColor=6FDA44)](https://www.upwork.com/freelancers/~01fe1fc80c8877ffe2)&nbsp;[![Gmail](https://img.shields.io/badge/Gmail-1a1a1a?style=flat-square&logo=gmail&logoColor=EA4335)](mailto:akmtasdikulislam@gmail.com)&nbsp;[![X](https://img.shields.io/badge/X-1a1a1a?style=flat-square&logo=x&logoColor=ffffff)](https://x.com/Akm_Tasdikul)&nbsp;[![GitHub](https://img.shields.io/badge/GitHub-1a1a1a?style=flat-square&logo=github&logoColor=ffffff)](https://github.com/akmtasdikulislam)
+<table>
+<tr>
+  <td><a href="https://www.linkedin.com/in/akmtasdikulislam"><img src="https://cdn.simpleicons.org/linkedin/0A66C2" width="18" valign="middle"/>&nbsp; LinkedIn</a></td>
+  <td><a href="https://akmtasdikulislam.dev"><img src="https://cdn.simpleicons.org/googlechrome/10B77F" width="18" valign="middle"/>&nbsp; akmtasdikulislam.dev</a></td>
+  <td><a href="https://www.upwork.com/freelancers/~01fe1fc80c8877ffe2"><img src="https://cdn.simpleicons.org/upwork/6FDA44" width="18" valign="middle"/>&nbsp; Upwork</a></td>
+  <td><a href="mailto:akmtasdikulislam@gmail.com"><img src="https://cdn.simpleicons.org/gmail/EA4335" width="18" valign="middle"/>&nbsp; akmtasdikulislam@gmail.com</a></td>
+  <td><a href="https://x.com/Akm_Tasdikul"><img src="https://cdn.simpleicons.org/x/ffffff" width="18" valign="middle"/>&nbsp; @Akm_Tasdikul</a></td>
+  <td><a href="https://github.com/akmtasdikulislam"><img src="https://cdn.simpleicons.org/github/ffffff" width="18" valign="middle"/>&nbsp; GitHub</a></td>
+</tr>
+</table>
 
 ![Profile Views](https://komarev.com/ghpvc/?username=akmtasdikulislam&color=10B77F&style=flat-square&label=profile+views)
 
@@ -18,10 +27,16 @@ Full Stack Web Developer and Computer Science student at **Bangladesh University
 
 Experienced with AI-assisted development tools like **Cursor**, **GitHub Copilot**, and **Windsurf** while applying solid manual debugging to ensure code reliability. Expert in **n8n** — building complex AI agentic workflows, chatbot systems, and multi-platform integrations from scratch.
 
-| | |
-|---|---|
-| 🎓 **BSc in CSE** · Bangladesh University of Professionals | CGPA **3.67** · Feb 2025 – Present |
-| 💻 Active in **Competitive Programming** & **CTF** | 🌐 Open to **Freelance & Remote Work** |
+<table>
+  <tr>
+    <td><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" width="16" valign="middle"/>&nbsp; <strong>BSc in CSE</strong> — Bangladesh University of Professionals</td>
+    <td>CGPA <strong>3.67</strong> &nbsp;·&nbsp; Feb 2025 – Present</td>
+  </tr>
+  <tr>
+    <td><img src="https://cdn.simpleicons.org/codeforces/1F8ACB" width="16" valign="middle"/>&nbsp; Active in <strong>Competitive Programming</strong> &amp; <strong>CTF</strong></td>
+    <td><img src="https://cdn.simpleicons.org/upwork/6FDA44" width="16" valign="middle"/>&nbsp; Open to <strong>Freelance &amp; Remote Work</strong></td>
+  </tr>
+</table>
 
 ---
 
@@ -339,7 +354,14 @@ Full MERN stack agency management system — customers place orders, admins mana
 
 ## Competitive Programming
 
-[![Codeforces](https://img.shields.io/badge/Codeforces-1a1a1a?style=flat-square&logo=codeforces&logoColor=1F8ACB)](https://codeforces.com/profile/akmtasdikulislam)&nbsp;[![LeetCode](https://img.shields.io/badge/LeetCode-1a1a1a?style=flat-square&logo=leetcode&logoColor=FFA116)](https://leetcode.com/u/akmtasdikulislam/)&nbsp;[![HackerRank](https://img.shields.io/badge/HackerRank-1a1a1a?style=flat-square&logo=hackerrank&logoColor=00EA64)](https://www.hackerrank.com/profile/akmtasdikulislam)&nbsp;[![CodeChef](https://img.shields.io/badge/CodeChef-1a1a1a?style=flat-square&logo=codechef&logoColor=B92B27)](https://www.codechef.com/users/akmtasdikul)
+<table>
+<tr>
+  <td><a href="https://codeforces.com/profile/akmtasdikulislam"><img src="https://cdn.simpleicons.org/codeforces/1F8ACB" width="18" valign="middle"/>&nbsp; Codeforces</a></td>
+  <td><a href="https://leetcode.com/u/akmtasdikulislam/"><img src="https://cdn.simpleicons.org/leetcode/FFA116" width="18" valign="middle"/>&nbsp; LeetCode</a></td>
+  <td><a href="https://www.hackerrank.com/profile/akmtasdikulislam"><img src="https://cdn.simpleicons.org/hackerrank/00EA64" width="18" valign="middle"/>&nbsp; HackerRank</a></td>
+  <td><a href="https://www.codechef.com/users/akmtasdikul"><img src="https://cdn.simpleicons.org/codechef/B92B27" width="18" valign="middle"/>&nbsp; CodeChef</a></td>
+</tr>
+</table>
 
 Actively participating in competitive programming contests and CTF challenges — **Data Structures**, **Algorithms**, **Dynamic Programming**, and **Problem Solving** in C, C++, and Python.
 
@@ -370,11 +392,16 @@ Completed 7-day BNCC Battalion Camp emphasizing discipline, teamwork, and leader
 
 ## Languages
 
-| Language | Proficiency |
-|---|---|
-| Bangla | Native |
-| English | Near-native |
-| German | Basic |
+<table>
+  <tr>
+    <td><img src="https://cdn.simpleicons.org/googletranslate/10B77F" width="16" valign="middle"/>&nbsp; <strong>Bangla</strong></td>
+    <td>Native</td>
+    <td><img src="https://cdn.simpleicons.org/googletranslate/3B82F6" width="16" valign="middle"/>&nbsp; <strong>English</strong></td>
+    <td>Near-native</td>
+    <td><img src="https://cdn.simpleicons.org/googletranslate/888888" width="16" valign="middle"/>&nbsp; <strong>German</strong></td>
+    <td>Basic</td>
+  </tr>
+</table>
 
 ---
 
@@ -384,7 +411,15 @@ Completed 7-day BNCC Battalion Camp emphasizing discipline, teamwork, and leader
 
 I'm always open to collaborating on interesting projects, open-source contributions, and freelance opportunities.
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-1a1a1a?style=flat-square&logo=linkedin&logoColor=0A66C2)](https://www.linkedin.com/in/akmtasdikulislam)&nbsp;[![Portfolio](https://img.shields.io/badge/akmtasdikulislam.dev-1a1a1a?style=flat-square&logo=googlechrome&logoColor=10B77F)](https://akmtasdikulislam.dev)&nbsp;[![Upwork](https://img.shields.io/badge/Upwork-1a1a1a?style=flat-square&logo=upwork&logoColor=6FDA44)](https://www.upwork.com/freelancers/~01fe1fc80c8877ffe2)&nbsp;[![Gmail](https://img.shields.io/badge/Gmail-1a1a1a?style=flat-square&logo=gmail&logoColor=EA4335)](mailto:akmtasdikulislam@gmail.com)&nbsp;[![X](https://img.shields.io/badge/X-1a1a1a?style=flat-square&logo=x&logoColor=ffffff)](https://x.com/Akm_Tasdikul)
+<table>
+<tr>
+  <td><a href="https://www.linkedin.com/in/akmtasdikulislam"><img src="https://cdn.simpleicons.org/linkedin/0A66C2" width="18" valign="middle"/>&nbsp; LinkedIn</a></td>
+  <td><a href="https://akmtasdikulislam.dev"><img src="https://cdn.simpleicons.org/googlechrome/10B77F" width="18" valign="middle"/>&nbsp; akmtasdikulislam.dev</a></td>
+  <td><a href="https://www.upwork.com/freelancers/~01fe1fc80c8877ffe2"><img src="https://cdn.simpleicons.org/upwork/6FDA44" width="18" valign="middle"/>&nbsp; Upwork</a></td>
+  <td><a href="mailto:akmtasdikulislam@gmail.com"><img src="https://cdn.simpleicons.org/gmail/EA4335" width="18" valign="middle"/>&nbsp; akmtasdikulislam@gmail.com</a></td>
+  <td><a href="https://x.com/Akm_Tasdikul"><img src="https://cdn.simpleicons.org/x/ffffff" width="18" valign="middle"/>&nbsp; @Akm_Tasdikul</a></td>
+</tr>
+</table>
 
 <br/>
 
