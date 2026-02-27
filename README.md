@@ -4,28 +4,33 @@
 
 <br/>
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/akmtasdikulislam)
-[![Portfolio](https://img.shields.io/badge/akmtasdikulislam.dev-10B77F?style=flat&logo=googlechrome&logoColor=white)](https://akmtasdikulislam.dev)
-[![Upwork](https://img.shields.io/badge/Upwork-6FDA44?style=flat&logo=upwork&logoColor=white)](https://www.upwork.com/freelancers/~01fe1fc80c8877ffe2)
-[![Gmail](https://img.shields.io/badge/Gmail-EA4335?style=flat&logo=gmail&logoColor=white)](mailto:akmtasdikulislam@gmail.com)
-[![X](https://img.shields.io/badge/X-000000?style=flat&logo=x&logoColor=white)](https://x.com/Akm_Tasdikul)
-&nbsp;![Profile Views](https://komarev.com/ghpvc/?username=akmtasdikulislam&color=10B77F&style=flat&label=profile+views)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/akmtasdikulislam)
+[![Portfolio](https://img.shields.io/badge/akmtasdikulislam.dev-10B77F?style=for-the-badge&logo=googlechrome&logoColor=white)](https://akmtasdikulislam.dev)
+[![Upwork](https://img.shields.io/badge/Upwork-6FDA44?style=for-the-badge&logo=upwork&logoColor=white)](https://www.upwork.com/freelancers/~01fe1fc80c8877ffe2)
+[![Gmail](https://img.shields.io/badge/Gmail-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:akmtasdikulislam@gmail.com)
+[![X](https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/Akm_Tasdikul)
+
+![Profile Views](https://komarev.com/ghpvc/?username=akmtasdikulislam&color=10B77F&style=flat-square&label=profile+views)
 
 ---
 
 <div align="center"><img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/assets/about-heading.svg" alt="Who I Am?" width="800"/></div>
 
+<br/>
+
 Full Stack Web Developer and Computer Science student at **Bangladesh University of Professionals** with **2+ years** of hands-on MERN stack experience building production-ready web applications. Strong in clean architecture, scalable code, and delivering high-quality SaaS-ready solutions.
 
 Experienced with AI-assisted development tools like **Cursor**, **GitHub Copilot**, and **Windsurf** while applying solid manual debugging to ensure code reliability. Expert in **n8n** — building complex AI agentic workflows, chatbot systems, and multi-platform integrations from scratch.
 
-- **BSc in Computer Science & Engineering** — Bangladesh University of Professionals _(Feb 2025 – Present · CGPA: 3.67)_
-- Active in **Competitive Programming** and **CTF** challenges
-- Open to **Freelance & Remote Work**
+![BUP](https://img.shields.io/badge/BSc_CSE-Bangladesh_University_of_Professionals-10B77F?style=flat-square&logo=googlescholar&logoColor=white)
+![CGPA](https://img.shields.io/badge/CGPA-3.67-3B82F6?style=flat-square&logo=academia&logoColor=white)
+![Status](https://img.shields.io/badge/Available_for-Freelance_%26_Remote_Work-10B77F?style=flat-square&logo=briefcase&logoColor=white)
 
 ---
 
 <div align="center"><img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/assets/services-heading.svg" alt="How Can I Help You?" width="800"/></div>
+
+<br/>
 
 | | |
 |---|---|
@@ -284,6 +289,8 @@ Experienced with AI-assisted development tools like **Cursor**, **GitHub Copilot
 
 <div align="center"><img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/assets/portfolio-heading.svg" alt="Featured Projects" width="800"/></div>
 
+<br/>
+
 <div align="center">
 
 <a href="https://github.com/akmtasdikulislam/ema-john-client">
@@ -303,48 +310,50 @@ Experienced with AI-assisted development tools like **Cursor**, **GitHub Copilot
 **[Ema-John](https://github.com/akmtasdikulislam/ema-john-client) — E-Commerce Platform**
 Amazon-inspired full-stack e-commerce app with React SPA + Express/MongoDB backend, Firebase auth, order workflows, reviews, and Stripe payments.
 
-![React](https://img.shields.io/badge/React-1a1a1a?style=flat&logo=react&logoColor=61DAFB)
-![Bootstrap](https://img.shields.io/badge/Bootstrap-1a1a1a?style=flat&logo=bootstrap&logoColor=7952B3)
-![Node.js](https://img.shields.io/badge/Node.js-1a1a1a?style=flat&logo=nodedotjs&logoColor=339933)
-![Express.js](https://img.shields.io/badge/Express.js-1a1a1a?style=flat&logo=express&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-1a1a1a?style=flat&logo=mongodb&logoColor=47A248)
-![Firebase](https://img.shields.io/badge/Firebase-1a1a1a?style=flat&logo=firebase&logoColor=FFCA28)
-![Stripe](https://img.shields.io/badge/Stripe-1a1a1a?style=flat&logo=stripe&logoColor=635BFF)
+![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=flat-square&logo=bootstrap&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-1a2e1a?style=flat-square&logo=nodedotjs&logoColor=339933)
+![Express.js](https://img.shields.io/badge/Express.js-1a1a1a?style=flat-square&logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-1a2e1a?style=flat-square&logo=mongodb&logoColor=47A248)
+![Firebase](https://img.shields.io/badge/Firebase-2a1f00?style=flat-square&logo=firebase&logoColor=FFCA28)
+![Stripe](https://img.shields.io/badge/Stripe-1a1a2e?style=flat-square&logo=stripe&logoColor=635BFF)
 
 **[Driver Monitoring System](https://github.com/akmtasdikulislam/driver-monitoring-system-client) — Admin Portal**
 Authenticated portal for driver profile management, sleep-record history, and detailed reporting — Express REST API with MongoDB and Cloudinary.
 
-![React](https://img.shields.io/badge/React-1a1a1a?style=flat&logo=react&logoColor=61DAFB)
-![Bootstrap](https://img.shields.io/badge/Bootstrap-1a1a1a?style=flat&logo=bootstrap&logoColor=7952B3)
-![Express.js](https://img.shields.io/badge/Express.js-1a1a1a?style=flat&logo=express&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-1a1a1a?style=flat&logo=mongodb&logoColor=47A248)
-![Firebase](https://img.shields.io/badge/Firebase-1a1a1a?style=flat&logo=firebase&logoColor=FFCA28)
-![Cloudinary](https://img.shields.io/badge/Cloudinary-1a1a1a?style=flat&logo=cloudinary&logoColor=3448C5)
+![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=flat-square&logo=bootstrap&logoColor=white)
+![Express.js](https://img.shields.io/badge/Express.js-1a1a1a?style=flat-square&logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-1a2e1a?style=flat-square&logo=mongodb&logoColor=47A248)
+![Firebase](https://img.shields.io/badge/Firebase-2a1f00?style=flat-square&logo=firebase&logoColor=FFCA28)
+![Cloudinary](https://img.shields.io/badge/Cloudinary-1a1c2e?style=flat-square&logo=cloudinary&logoColor=3448C5)
 
 **[Creative Agency](https://github.com/akmtasdikulislam/creative-agency-client) — Role-Based Platform**
 Full MERN stack agency management system — customers place orders, admins manage services and users via a secure dashboard.
 
-![React](https://img.shields.io/badge/React-1a1a1a?style=flat&logo=react&logoColor=61DAFB)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-1a1a1a?style=flat&logo=tailwindcss&logoColor=06B6D4)
-![DaisyUI](https://img.shields.io/badge/DaisyUI-1a1a1a?style=flat&logo=daisyui&logoColor=5A0EF8)
-![Express.js](https://img.shields.io/badge/Express.js-1a1a1a?style=flat&logo=express&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-1a1a1a?style=flat&logo=mongodb&logoColor=47A248)
-![Firebase](https://img.shields.io/badge/Firebase-1a1a1a?style=flat&logo=firebase&logoColor=FFCA28)
+![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-0f2a30?style=flat-square&logo=tailwindcss&logoColor=06B6D4)
+![DaisyUI](https://img.shields.io/badge/DaisyUI-1a1030?style=flat-square&logo=daisyui&logoColor=5A0EF8)
+![Express.js](https://img.shields.io/badge/Express.js-1a1a1a?style=flat-square&logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-1a2e1a?style=flat-square&logo=mongodb&logoColor=47A248)
+![Firebase](https://img.shields.io/badge/Firebase-2a1f00?style=flat-square&logo=firebase&logoColor=FFCA28)
 
 ---
 
 ## Competitive Programming
 
-[![Codeforces](https://img.shields.io/badge/Codeforces-1a1a1a?style=flat&logo=codeforces&logoColor=1F8ACB)](https://codeforces.com/profile/akmtasdikulislam)
-[![LeetCode](https://img.shields.io/badge/LeetCode-1a1a1a?style=flat&logo=leetcode&logoColor=FFA116)](https://leetcode.com/u/akmtasdikulislam/)
-[![HackerRank](https://img.shields.io/badge/HackerRank-1a1a1a?style=flat&logo=hackerrank&logoColor=00EA64)](https://www.hackerrank.com/profile/akmtasdikulislam)
-[![CodeChef](https://img.shields.io/badge/CodeChef-1a1a1a?style=flat&logo=codechef&logoColor=B92B27)](https://www.codechef.com/users/akmtasdikul)
+[![Codeforces](https://img.shields.io/badge/Codeforces-1F8ACB?style=for-the-badge&logo=codeforces&logoColor=white)](https://codeforces.com/profile/akmtasdikulislam)
+[![LeetCode](https://img.shields.io/badge/LeetCode-FFA116?style=for-the-badge&logo=leetcode&logoColor=black)](https://leetcode.com/u/akmtasdikulislam/)
+[![HackerRank](https://img.shields.io/badge/HackerRank-00EA64?style=for-the-badge&logo=hackerrank&logoColor=black)](https://www.hackerrank.com/profile/akmtasdikulislam)
+[![CodeChef](https://img.shields.io/badge/CodeChef-5B4638?style=for-the-badge&logo=codechef&logoColor=white)](https://www.codechef.com/users/akmtasdikul)
 
 Actively participating in competitive programming contests and CTF challenges — **Data Structures**, **Algorithms**, **Dynamic Programming**, and **Problem Solving** in C, C++, and Python.
 
 ---
 
 <div align="center"><img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/assets/credentials-heading.svg" alt="My Certifications" width="800"/></div>
+
+<br/>
 
 | Course | Provider | Year |
 |---|---|---|
@@ -367,21 +376,23 @@ Completed 7-day BNCC Battalion Camp emphasizing discipline, teamwork, and leader
 
 ## Languages
 
-![Bangla](https://img.shields.io/badge/Bangla-Native-10B77F?style=flat)
-![English](https://img.shields.io/badge/English-Near--Native-3B82F6?style=flat)
-![German](https://img.shields.io/badge/German-Basic-333333?style=flat)
+![Bangla](https://img.shields.io/badge/Bangla-Native-10B77F?style=for-the-badge)
+![English](https://img.shields.io/badge/English-Near--Native-3B82F6?style=for-the-badge)
+![German](https://img.shields.io/badge/German-Basic-333333?style=for-the-badge)
 
 ---
 
 <div align="center"><img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/assets/contact-heading.svg" alt="Get In Touch" width="800"/></div>
 
+<br/>
+
 I'm always open to collaborating on interesting projects, open-source contributions, and freelance opportunities.
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat&logo=linkedin)](https://www.linkedin.com/in/akmtasdikulislam)
-[![Portfolio](https://img.shields.io/badge/Portfolio-Visit-10B77F?style=flat&logo=googlechrome&logoColor=white)](https://akmtasdikulislam.dev)
-[![Upwork](https://img.shields.io/badge/Upwork-Hire_Me-6FDA44?style=flat&logo=upwork)](https://www.upwork.com/freelancers/~01fe1fc80c8877ffe2)
-[![Email](https://img.shields.io/badge/Email-Say_Hi-EA4335?style=flat&logo=gmail)](mailto:akmtasdikulislam@gmail.com)
-[![X](https://img.shields.io/badge/X-Follow-000000?style=flat&logo=x)](https://x.com/Akm_Tasdikul)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/akmtasdikulislam)
+[![Portfolio](https://img.shields.io/badge/Portfolio-Visit-10B77F?style=for-the-badge&logo=googlechrome&logoColor=white)](https://akmtasdikulislam.dev)
+[![Upwork](https://img.shields.io/badge/Upwork-Hire_Me-6FDA44?style=for-the-badge&logo=upwork)](https://www.upwork.com/freelancers/~01fe1fc80c8877ffe2)
+[![Email](https://img.shields.io/badge/Email-Say_Hi-EA4335?style=for-the-badge&logo=gmail)](mailto:akmtasdikulislam@gmail.com)
+[![X](https://img.shields.io/badge/X-Follow-000000?style=for-the-badge&logo=x)](https://x.com/Akm_Tasdikul)
 
 <br/>
 
