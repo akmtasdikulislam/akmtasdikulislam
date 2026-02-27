@@ -27,16 +27,7 @@ Full Stack Web Developer and Computer Science student at **Bangladesh University
 
 Experienced with AI-assisted development tools like **Cursor**, **GitHub Copilot**, and **Windsurf** while applying solid manual debugging to ensure code reliability. Expert in **n8n** — building complex AI agentic workflows, chatbot systems, and multi-platform integrations from scratch.
 
-<table width="100%">
-  <tr>
-    <td><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" width="16" valign="middle"/>&nbsp; <strong>BSc in CSE</strong> — Bangladesh University of Professionals</td>
-    <td>CGPA <strong>3.67</strong> &nbsp;·&nbsp; Feb 2025 – Present</td>
-  </tr>
-  <tr>
-    <td><img src="https://cdn.simpleicons.org/codeforces/1F8ACB" width="16" valign="middle"/>&nbsp; Active in <strong>Competitive Programming</strong> &amp; <strong>CTF</strong></td>
-    <td><img src="https://cdn.simpleicons.org/upwork/6FDA44" width="16" valign="middle"/>&nbsp; Open to <strong>Freelance &amp; Remote Work</strong></td>
-  </tr>
-</table>
+<img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/assets/about-cards.svg" alt="About Info" width="800"/>
 
 ---
 
@@ -44,10 +35,10 @@ Experienced with AI-assisted development tools like **Cursor**, **GitHub Copilot
 
 <br/>
 
-| | |
-|---|---|
-| **Full-Stack Web Applications** — End-to-end MERN stack apps from schema design to React UI, with RESTful APIs, JWT auth, and cloud deployment. | **AI Agentic Workflows** — n8n automation pipelines integrating LLMs, webhooks, APIs, and databases to automate business processes end-to-end. |
-| **Modern UI Interfaces** — Pixel-perfect, responsive UIs with Next.js, Tailwind CSS, GSAP, and Three.js — every interaction built with intention. | **AI Chatbots & Agents** — Custom AI agents on web platforms using OpenAI/Claude APIs, RAG pipelines, and MCP server integrations. |
+|                                                                                                                                                   |                                                                                                                                                |
+| ------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Full-Stack Web Applications** — End-to-end MERN stack apps from schema design to React UI, with RESTful APIs, JWT auth, and cloud deployment.   | **AI Agentic Workflows** — n8n automation pipelines integrating LLMs, webhooks, APIs, and databases to automate business processes end-to-end. |
+| **Modern UI Interfaces** — Pixel-perfect, responsive UIs with Next.js, Tailwind CSS, GSAP, and Three.js — every interaction built with intention. | **AI Chatbots & Agents** — Custom AI agents on web platforms using OpenAI/Claude APIs, RAG pipelines, and MCP server integrations.             |
 
 ---
 
@@ -373,12 +364,12 @@ Actively participating in competitive programming contests and CTF challenges �
 
 <br/>
 
-| Course | Provider | Year |
-|---|---|---|
-| CSE Fundamentals — Fall 2025 | Phitron | 2025 – Present |
-| Technical Support Fundamentals | Google / Coursera | 2022 |
-| Photography Basics | Robi 10 Minute School | 2022 |
-| Digital Security Essentials | Digital Security Agency, a2i | 2020 |
+| Course                         | Provider                     | Year           |
+| ------------------------------ | ---------------------------- | -------------- |
+| CSE Fundamentals — Fall 2025   | Phitron                      | 2025 – Present |
+| Technical Support Fundamentals | Google / Coursera            | 2022           |
+| Photography Basics             | Robi 10 Minute School        | 2022           |
+| Digital Security Essentials    | Digital Security Agency, a2i | 2020           |
 
 ---
 

@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="380" viewBox="0 0 800 380">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&amp;display=swap');
+      .card-bg   { fill: #111a17; rx: 12; }
+      .icon-box  { fill: #0d2b22; }
+      .icon-str  { stroke: #10B77F; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+      .card-title{ font-family: 'Space Grotesk', Inter, sans-serif; font-size: 16px; font-weight: 700; fill: #ffffff; }
+      .card-body { font-family: 'Space Grotesk', Inter, sans-serif; font-size: 13px; font-weight: 400; fill: #c9d1d9; }
+      .card-accent{ font-family: 'Space Grotesk', Inter, sans-serif; font-size: 12.5px; font-weight: 500; fill: #10B77F; }
+      @media (prefers-color-scheme: light) {
+        .card-bg   { fill: #f0faf6; }
+        .icon-box  { fill: #d4f0e5; }
+        .card-title{ fill: #0d0d0d; }
+        .card-body { fill: #444444; }
+      }
+    </style>
+  </defs>
+
+  <!-- Card 1: Education (top-left) -->
+  <rect x="0" y="0" width="388" height="178" rx="12" class="card-bg"/>
+  <rect x="18" y="18" width="48" height="48" rx="10" class="icon-box"/>
+  <!-- Lucide graduation-cap -->
+  <g transform="translate(30, 30)">
+    <path d="M12 3L1 9l11 6 11-6-11-6z" class="icon-str"/>
+    <path d="M5 12v5c3.6 2.4 10.4 2.4 14 0v-5" class="icon-str"/>
+    <line x1="23" y1="9" x2="23" y2="15" class="icon-str"/>
+  </g>
+  <text x="18" y="88" class="card-title">Education</text>
+  <text x="18" y="110" class="card-body">CSE at Bangladesh University of</text>
+  <text x="18" y="128" class="card-body">Professionals</text>
+  <text x="18" y="152" class="card-accent">3rd Semester | 2025 Batch</text>
+
+  <!-- Card 2: Location (top-right) -->
+  <rect x="412" y="0" width="388" height="178" rx="12" class="card-bg"/>
+  <rect x="430" y="18" width="48" height="48" rx="10" class="icon-box"/>
+  <!-- Lucide map-pin -->
+  <g transform="translate(442, 30)">
+    <path d="M12 2a8 8 0 0 0-8 8c0 5.4 7.1 11.5 7.4 11.8a1 1 0 0 0 1.2 0C13 21.5 20 15.4 20 10a8 8 0 0 0-8-8z" class="icon-str"/>
+    <circle cx="12" cy="10" r="3" class="icon-str"/>
+  </g>
+  <text x="430" y="88" class="card-title">Location</text>
+  <text x="430" y="110" class="card-body">Dhaka, Bangladesh</text>
+  <text x="430" y="134" class="card-accent">Available for remote work</text>
+
+  <!-- Card 3: Specialization (bottom-left) -->
+  <rect x="0" y="202" width="388" height="178" rx="12" class="card-bg"/>
+  <rect x="18" y="220" width="48" height="48" rx="10" class="icon-box"/>
+  <!-- Lucide code-2 -->
+  <g transform="translate(30, 232)">
+    <polyline points="17,17 22,12 17,7" class="icon-str"/>
+    <polyline points="7,7 2,12 7,17" class="icon-str"/>
+  </g>
+  <text x="18" y="290" class="card-title">Specialization</text>
+  <text x="18" y="312" class="card-body">Full Stack Development</text>
+  <text x="18" y="336" class="card-accent">MERN Stack &amp; n8n Automation</text>
+
+  <!-- Card 4: Experience (bottom-right) -->
+  <rect x="412" y="202" width="388" height="178" rx="12" class="card-bg"/>
+  <rect x="430" y="220" width="48" height="48" rx="10" class="icon-box"/>
+  <!-- Lucide zap / lightning -->
+  <g transform="translate(442, 232)">
+    <polygon points="13,2 3,14 12,14 11,22 21,10 12,10" class="icon-str"/>
+  </g>
+  <text x="430" y="290" class="card-title">Experience</text>
+  <text x="430" y="312" class="card-body">2+ Years</text>
+  <text x="430" y="336" class="card-accent">Web Development &amp; Automation</text>
+</svg>
