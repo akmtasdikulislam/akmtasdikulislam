@@ -1,4 +1,4 @@
-# Akm Tasdikul Islam
+<img src="https://raw.githubusercontent.com/akmtasdikulislam/akmtasdikulislam/main/assets/hero-heading.svg" alt="Hi, I'm Akm Tasdikul Islam" width="700"/>
 
 [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=18&duration=2500&pause=800&color=10B77F&center=false&vCenter=true&width=500&lines=%3E+Full+Stack+Developer%7C;%3E+MERN+Stack+Expert%7C;%3E+n8n+Automation+Specialist%7C;%3E+AI+Agent+%26+Chatbot+Builder%7C;%3E+Problem+Solver%7C)](https://git.io/typing-svg)
 

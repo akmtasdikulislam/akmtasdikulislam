@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="75" viewBox="0 0 800 75">
+  <defs>
+    <style>
+      .hi   { fill: #ffffff; font-family: 'Space Grotesk', Inter, sans-serif; font-size: 52px; font-weight: 700; }
+      .name { fill: #10B77F; font-family: 'Space Grotesk', Inter, sans-serif; font-size: 52px; font-weight: 700; }
+      @media (prefers-color-scheme: light) {
+        .hi { fill: #0d0d0d; }
+      }
+    </style>
+  </defs>
+  <text x="0" y="58">
+    <tspan class="hi">Hi, I'm </tspan><tspan class="name">Akm Tasdikul Islam</tspan>
+  </text>
+</svg>
